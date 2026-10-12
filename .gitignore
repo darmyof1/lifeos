@@ -1,0 +1,24 @@
+# OS and editor junk
+.DS_Store
+*.swp
+
+# Private inputs: never commit
+bootstrap/_seed
+seed/
+secrets/
+*.key
+*.gpg
+*.env
+.env*
+
+# Backups and scratch
+*.bk
+*.bk.*
+tmp/
+cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
