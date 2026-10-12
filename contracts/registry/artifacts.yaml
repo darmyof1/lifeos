@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-all.sh",
+  "generated_by": "fix-2.sh",
   "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -904,10 +904,6 @@
       "status": "planned"
     },
     {
-      "path": "fix-all.sh",
-      "status": "planned"
-    },
-    {
       "path": "ops/README.md",
       "status": "planned"
     },
@@ -970,10 +966,6 @@
     {
       "path": "pyproject.toml",
       "status": "planned"
-    },
-    {
-      "path": "remote-files.txt",
-      "status": "draft"
     },
     {
       "path": "research/README.md",
