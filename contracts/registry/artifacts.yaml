@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-3.sh",
+  "generated_by": "fix-4.sh",
   "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1029,6 +1029,10 @@
     },
     {
       "path": "research/spikes/SPK-07-gpg-restore-drill.md",
+      "status": "planned"
+    },
+    {
+      "path": "research/spikes/_TEMPLATE.md",
       "status": "planned"
     },
     {

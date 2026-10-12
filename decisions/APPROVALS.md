@@ -151,3 +151,23 @@ Decided by: CEO
 Your answer: "CEO: yes, all correct" (P-06)
 Applies to: aliases.yaml (genesis-brain, cloud-reasoning-high: claude-opus-5-5; cloud-code: GPT-6-Luna; cloud-cheap: gemini-3.8-flash-medium)
 Note: no provider probe is recorded in research/spikes/ for these three yet. Only SPK-06 (local) has evidence.
+
+## APR-0025 — Local backup model is qwen3.5:latest (digest 6488c96fa5fa)
+Status: approved
+Decided by: CEO
+Your answer: installed models, "llama3.1:8b is ok", "these are my current local models i might change them later"
+Evidence: `ollama list` output recorded in contracts/models/aliases.yaml
+Supersedes: APR-0020 (the qwen2.5 14B tag). APR-0020 is not edited.
+Applies to: contracts/models/aliases.yaml (local-backup)
+
+## APR-0026 — gemma4:latest (digest c6eb396dbd59) is installed, not assigned to a route
+Status: approved
+Decided by: CEO
+Your answer: installed; no role assigned yet
+Applies to: nothing routed. It may be evaluated later under a new spike, and assigned only by a new APR entry.
+
+## APR-0027 — Local model tags are pinned by digest in the aliases file
+Status: approved
+Decided by: CEO
+Your answer: "i might change them later as I do upgrades"
+Rule: a model change is a new APR entry plus an edit to aliases.yaml. Tags such as :latest move, so the digest is what the record uses.

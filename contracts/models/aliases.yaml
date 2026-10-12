@@ -1,21 +1,27 @@
 # contracts/models/aliases.yaml
-# Routing code uses ONLY these alias names. To change a model, edit this file only.
-# Approvals: decisions/APPROVALS.md (APR-0001, 0002, 0003, 0018, 0019, 0020, 0021, 0024).
-# Status: draft until the probes in research/spikes are recorded.
+# Routing code uses ONLY these alias names. To change a model, edit this file only (APR-0027).
+# Approvals: decisions/APPROVALS.md (APR-0001, 0002, 0003, 0018, 0019, 0021, 0024, 0025, 0026, 0027).
+# Status: draft until probes are recorded in research/spikes/.
 schema_version: "1.0"
 status: draft
+
+# Installed on the VM (ollama list). Digests pin the exact model version.
+installed:
+  - tag: llama3.1:8b          digest: 46e0c10c039e   size: 4.9 GB   role: local-primary
+  - tag: qwen3.5:latest       digest: 6488c96fa5fa   size: 6.6 GB   role: local-backup
+  - tag: gemma4:latest        digest: c6eb396dbd59   size: 9.6 GB   role: none (APR-0026)
 
 aliases:
   triage:
     model: local-primary                 # APR-0001: triage is always local
   local-primary:
     provider: ollama
-    model_id: "llama3.1:8b"              # APR-0019 (tested in SPK-06)
+    model_id: "llama3.1:8b"              # APR-0019; digest 46e0c10c039e
     endpoint: "http://localhost:11434"
     privacy_max: high
   local-backup:
     provider: ollama
-    model_id: "qwen2.5:14b-instruct-q4_K_M"   # APR-0020; tag to confirm (P-08)
+    model_id: "qwen3.5:latest"           # APR-0025; digest 6488c96fa5fa
     endpoint: "http://localhost:11434"
     privacy_max: high
   cloud-cheap:
