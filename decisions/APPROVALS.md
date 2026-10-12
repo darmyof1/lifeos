@@ -171,3 +171,21 @@ Status: approved
 Decided by: CEO
 Your answer: "i might change them later as I do upgrades"
 Rule: a model change is a new APR entry plus an edit to aliases.yaml. Tags such as :latest move, so the digest is what the record uses.
+
+## APR-0028 — CoS owns the combined calendar view
+Status: approved
+Decided by: CEO
+Your answer: "the answer is CoS" (P-03, option a)
+Meaning: CoS builds and holds the single combined calendar. It reads family events from CFA and personal events from CLO. It is the one place where conflicts across domains are checked.
+Not decided here: which agent may WRITE a calendar entry (see P-10).
+Applies to: design/ (calendar section, when written); agent-files/executive/cos/
+
+## APR-0029 — The three draft ADRs are approved as decisions
+Status: approved
+Decided by: CEO
+Your answer: "approve" (P-07)
+Decisions:
+  1. Per-domain access instead of universal symlinks (ADR-0016)
+  2. OpenClaw is the initial runtime (ADR-0014)
+  3. Repo, runtime, and seed are separate (ADR-0015)
+Applies to: decisions/adr/ADR-0014, ADR-0015, ADR-0016 (the text is still to be written)
