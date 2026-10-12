@@ -28,6 +28,12 @@ Responds to a plain prompt; resident memory under 8 GB; time to first token unde
 - Overall: partial. Enough to pick the model, not enough to size the VM.
 
 ## Evidence
+### Propose test
+```
+ollama run llama3.1:8b --verbose    # prints load time, prompt eval rate, and eval rate (tokens/s)
+ollama ps                           # shows what's loaded and its memory
+free -h                             # total memory used
+```
 ### Prompt and response (redacted)
 ```text
 >>> Testing, how are you
