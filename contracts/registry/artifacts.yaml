@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-4.sh",
+  "generated_by": "fix-5.sh",
   "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -720,10 +720,6 @@
       "status": "planned"
     },
     {
-      "path": "decisions/.DS_Store",
-      "status": "draft"
-    },
-    {
       "path": "decisions/APPROVALS.md",
       "status": "draft"
     },
@@ -970,10 +966,6 @@
     {
       "path": "pyproject.toml",
       "status": "planned"
-    },
-    {
-      "path": "research/.DS_Store",
-      "status": "draft"
     },
     {
       "path": "research/README.md",
