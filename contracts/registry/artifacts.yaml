@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-2.sh",
+  "generated_by": "fix-3.sh",
   "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -720,6 +720,10 @@
       "status": "planned"
     },
     {
+      "path": "decisions/.DS_Store",
+      "status": "draft"
+    },
+    {
       "path": "decisions/APPROVALS.md",
       "status": "draft"
     },
@@ -968,6 +972,10 @@
       "status": "planned"
     },
     {
+      "path": "research/.DS_Store",
+      "status": "draft"
+    },
+    {
       "path": "research/README.md",
       "status": "planned"
     },
@@ -1017,7 +1025,7 @@
     },
     {
       "path": "research/spikes/SPK-06-local-model-on-vm.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "research/spikes/SPK-07-gpg-restore-drill.md",

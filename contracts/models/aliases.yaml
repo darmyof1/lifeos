@@ -1,32 +1,43 @@
 # contracts/models/aliases.yaml
 # Routing code uses ONLY these alias names. To change a model, edit this file only.
-# Approvals: decisions/APPROVALS.md (APR-0001, 0002, 0003, 0004, 0018).
-# Status: draft. Model IDs are unverified until probes pass (PENDING P-06).
+# Approvals: decisions/APPROVALS.md (APR-0001, 0002, 0003, 0018, 0019, 0020, 0021, 0024).
+# Status: draft until the probes in research/spikes are recorded.
 schema_version: "1.0"
 status: draft
 
 aliases:
   triage:
-    model: local-primary              # APR-0001: triage is always local
+    model: local-primary                 # APR-0001: triage is always local
   local-primary:
     provider: ollama
-    model_id: "qwen2.5:14b-instruct-q4_K_M"   # APR-0004 size; exact model pending P-05
+    model_id: "llama3.1:8b"              # APR-0019 (tested in SPK-06)
+    endpoint: "http://localhost:11434"
+    privacy_max: high
+  local-backup:
+    provider: ollama
+    model_id: "qwen2.5:14b-instruct-q4_K_M"   # APR-0020; tag to confirm (P-08)
     endpoint: "http://localhost:11434"
     privacy_max: high
   cloud-cheap:
     provider: cli:agy
-    model_id: "gemini-3.8-flash-medium"        # APR-0018
+    model_id: "gemini-3.8-flash-medium"  # APR-0018 default
+    options:                             # APR-0021: switch by changing 'active'
+      - id: gemini-3.8-flash-medium
+        provider: cli:agy
+      - id: claude-haiku-5-5             # ID not yet probed (P-08)
+        provider: cli:claude
+    active: gemini-3.8-flash-medium
     privacy_max: low
   cloud-code:
     provider: cli:codex
-    model_id: "GPT-6-Luna"                     # APR-0002
+    model_id: "GPT-6-Luna"               # APR-0002, APR-0024
     privacy_max: low
   genesis-brain:
     provider: cli:claude
-    model_id: "claude-opus-5-5"                # APR-0003
-    scope: genesis-only                        # APR-0006
+    model_id: "claude-opus-5-5"          # APR-0003, APR-0024
+    scope: genesis-only                  # APR-0006
     privacy_max: low
   cloud-reasoning-high:
     provider: cli:claude
-    model_id: "claude-opus-5-5"                # APR-0003
+    model_id: "claude-opus-5-5"          # APR-0003, APR-0024
     privacy_max: low

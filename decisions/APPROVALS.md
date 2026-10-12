@@ -111,3 +111,43 @@ Status: approved
 Decided by: CEO
 Your answer: "gemini-3.8-flash-medium" (the Claude Haiku 5.5 toggle is NOT approved; see PENDING P-01)
 Applies to: contracts/models/aliases.yaml (cloud-cheap)
+
+## APR-0019 — Local primary model is llama3.1:8b
+Status: approved
+Decided by: CEO
+Your answer: "approve llama3.1:8b to be the local"
+Evidence: research/spikes/SPK-06-local-model-on-vm.md (model ran on the VM, about 5.3 GB resident)
+Supersedes: the size part of APR-0004 (12–14B). The new primary is 8B. APR-0004 is not edited.
+Applies to: contracts/models/aliases.yaml (local-primary, triage)
+
+## APR-0020 — Local backup model is Qwen 2.5 14B
+Status: approved
+Decided by: CEO
+Your answer: "qwen2 as backup to it"
+Applies to: contracts/models/aliases.yaml (local-backup)
+Open: the exact tag must be confirmed (PENDING P-08).
+
+## APR-0021 — Cloud-cheap can be switched by a provider field (Haiku 5.5 toggle)
+Status: approved
+Decided by: CEO
+Your answer: "CEO: yes" to the proposal in P-01
+Applies to: contracts/models/aliases.yaml (cloud-cheap, options list). Default stays gemini-3.8-flash-medium (APR-0018).
+
+## APR-0022 — Minimum Genesis seed set
+Status: approved
+Decided by: CEO
+Your answer: "CEO: yes" to the proposal in P-02: ceo-soul, ceo-identity, 2026-vision, constitution, genesis-interview-answers, health-baseline. Everything else is generated.
+Applies to: bootstrap/genesis-primer.md, bootstrap/genesis-runbook.md (when written); APR-0005
+
+## APR-0023 — ADRs required before Genesis
+Status: approved
+Decided by: CEO
+Your answer: "CEO: yes" to the proposal in P-04: ADR-0003 (privacy), ADR-0004 (triage), ADR-0007 (CISO escalation), ADR-0016 (per-domain access). The rest follow after Genesis.
+Applies to: decisions/adr/
+
+## APR-0024 — Model IDs for Opus, GPT, and Gemini are correct
+Status: approved
+Decided by: CEO
+Your answer: "CEO: yes, all correct" (P-06)
+Applies to: aliases.yaml (genesis-brain, cloud-reasoning-high: claude-opus-5-5; cloud-code: GPT-6-Luna; cloud-cheap: gemini-3.8-flash-medium)
+Note: no provider probe is recorded in research/spikes/ for these three yet. Only SPK-06 (local) has evidence.

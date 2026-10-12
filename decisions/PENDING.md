@@ -1,30 +1,22 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
+Resolved in this round: P-01, P-02, P-04, P-05, P-06 (see APPROVALS.md, APR-0019 to APR-0024).
 
-## P-01 — Haiku 5.5 toggle for cloud-cheap
-Proposal: keep one `provider` field per alias in contracts/models/aliases.yaml. Switching to Haiku 5.5 is then a one-line change.
-Needs: your yes or no.
-CEO: yes
-## P-02 — Minimum Genesis seed set
-Proposal: five hand-written documents only (ceo-soul, ceo-identity, 2026-vision, constitution, genesis-interview-answers) plus health-baseline. Everything else is generated.
-Needs: your yes or no.
-CEO: yes
-## P-03 — Calendar owner
-Proposal: CoS aggregates the calendar. CFA (family) and CLO (lifestyle) supply their events.
-Needs: your yes or no.
-CEO: what exactly is this Calendar owner?? i dont understand it
-## P-04 — How many ADRs must exist before Genesis
-Proposal: ADR-0003 (privacy), ADR-0004 (triage), ADR-0007 (CISO escalation), ADR-0016 (per-domain access). The rest can follow after Genesis.
-Needs: your yes or no.
-CEO: yes
-## P-05 — Exact local model
-The size is approved (APR-0004). The exact model is not. Candidate: qwen2.5:14b-instruct-q4_K_M. Needs a test on the VM (research/spikes/SPK-06).
-Let's set it to "model_id": "llama3:8b",
-
-## P-06 — Verify model IDs against each provider's own CLI or API
-Needs probes for: claude-opus-5-5 (genesis-brain), GPT-6-Luna (cloud-code), gemini-3.8-flash-medium (cloud-cheap), and the local model tag. Record the results in research/spikes/.
-CEO: yes, all correct
+## P-03 — Calendar owner (still open)
+What it means: one place that shows all your events together (family, personal, work). Someone has to own building that combined view.
+Options:
+  a) CoS builds the combined calendar, reading family events from CFA and personal events from CLO. (recommended)
+  b) CFA owns it.
+  c) CLO owns it.
+Needs: a, b, or c.
 
 ## P-07 — Draft ADRs not yet approved
-The following were proposed by the audit, not approved by you: per-domain access instead of universal symlinks; OpenClaw as the initial runtime; repo, runtime, and seed separation. Keep them as drafts until you approve each one.
+Proposed by the audit, not approved by you: per-domain access instead of universal symlinks; OpenClaw as the initial runtime; repo, runtime, and seed separation. Keep as drafts until each is approved.
+Needs: yes or no for each.
+
+## P-08 — Exact model tags to confirm
+1. Local primary: you approved "llama3.1:8b". The PENDING note said "llama3:8b". Which one?
+2. Local backup: "qwen2" was approved. Confirm the exact tag. Candidate: qwen2.5:14b-instruct-q4_K_M.
+3. Haiku 5.5 API model ID (needed for the APR-0021 toggle) is not yet verified. Needs a probe.
+Needs: confirmation of 1 and 2, and a probe result for 3.
