@@ -1,698 +1,1459 @@
 {
   "schema_version": "1.0",
-  "format_note": "JSON syntax is a valid YAML 1.2 subset for dependency-free validation.",
+  "generated_by": "fix-all.sh",
+  "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
+      "path": ".gitignore",
+      "status": "draft"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "status": "planned"
+    },
+    {
+      "path": "LICENSE",
+      "status": "planned"
+    },
+    {
+      "path": "MANIFEST.md",
+      "status": "planned"
+    },
+    {
+      "path": "Makefile",
+      "status": "planned"
+    },
+    {
+      "path": "PATHS.md",
+      "status": "planned"
+    },
+    {
+      "path": "READING_MAP.md",
+      "status": "planned"
+    },
+    {
       "path": "README.md",
-      "status": "draft"
+      "status": "planned"
     },
     {
-      "path": "PROJECT_STRUCTURE.md",
-      "status": "draft"
+      "path": "agent-files/README.md",
+      "status": "planned"
     },
     {
-      "path": "manifest/SOVEREIGN_LIFE_OS.md",
-      "status": "draft"
+      "path": "agent-files/_template/AGENTS.md",
+      "status": "planned"
     },
     {
-      "path": "models/registry.yaml",
-      "status": "approved",
-      "approved_by": "CEO"
+      "path": "agent-files/_template/HEARTBEAT.md",
+      "status": "planned"
     },
     {
-      "path": "models/aliases.yaml",
-      "status": "approved",
-      "approved_by": "CEO"
+      "path": "agent-files/_template/IDENTITY.md",
+      "status": "planned"
     },
     {
-      "path": "policy/privacy.yaml",
-      "status": "approved",
-      "approved_by": "CEO"
+      "path": "agent-files/_template/MEMORY.md",
+      "status": "planned"
     },
     {
-      "path": "policy/archive.yaml",
-      "status": "draft",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "policy/escalation.yaml",
-      "status": "approved",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "policy/schedule.yaml",
-      "status": "draft",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "registry/manifest.yaml",
-      "status": "approved",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/README.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/agent-roster.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/agent-identity-stack.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/agent-lifecycle.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/event-bus-protocol.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/llm-routing-design.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/file-format-specifications.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/memory-architecture.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/security-and-vpc.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/runtime-directory-structure.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/template-system-design.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/bootstrap-genesis.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/archive-and-recovery.md",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/specs/operations-and-validation.md",
-      "status": "draft"
-    },
-    {
-      "path": "templates/llm-router/model-config.template.json",
-      "status": "draft"
-    },
-    {
-      "path": "templates/llm-router/routing-rules.template.json",
-      "status": "draft"
-    },
-    {
-      "path": "bootstrap/genesis-primer.md",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/ops/graceful-shutdown.sh",
-      "status": "approved",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "scripts/verify/validate-repo.py",
-      "status": "approved",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "scripts/verify/runtime-gate.sh",
-      "status": "approved",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-01-model-routing-alias-infrastructure.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-02-local-primary-cloud-tiering.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-03-genesis-seed-and-ai-boundaries.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-04-privacy-precedence-and-override.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-05-dual-authority-direct-ciso-escalation.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-06-coo-single-owner-event-dispatcher.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-07-phased-gpg-and-s3-object-lock-archive.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-08-append-only-logs-and-state-projections.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-09-heartbeat-naming-and-directory-structure.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-10-timezone-standardization-ast.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-11-transient-specialist-prompt-templates.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "architecture/adrs/ADR-12-cos-cross-domain-calendar-aggregation.md",
-      "status": "accepted",
-      "approved_by": "CEO"
-    },
-    {
-      "path": "models/schemas/aliases.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "models/schemas/registry.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/audit/audit-log-entry.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/events/event-envelope.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/events/event-payload.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/policy/archive.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/policy/escalation.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/policy/privacy.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/policy/schedule.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/projections/state-snapshot.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "schemas/templates/transient-prompt.schema.json",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/budget-auditor/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/gym-bot/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/habit-tracker/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/journal-bot/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/lab-analyst/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/nutritionist/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/reflect-bot/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/sleep-bot/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/study-coach/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/travel-planner/PROMPT.md",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/etl/common.py",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/etl/etl-bank-csv.py",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/etl/etl-lab-pdf.py",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/etl/etl-sleep-json.py",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/etl/project-state.py",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/genesis/spawn-aurelius.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/genesis/spawn-cho.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/genesis/spawn-coo.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/genesis/verify-genesis.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/ops/agent-spawn-helper.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/ops/archive-monthly.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/ops/backup-daily.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/ops/backup-hourly.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/ops/cko-janitor.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/ops/cko-template-promote.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/ops/kill-switch.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/setup/01-oracle-vm-provision.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/setup/02-docker-install.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/setup/03-ollama-install.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/setup/04-openclaw-install.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/setup/05-directory-create.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/setup/06-symlinks-create.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/verify/test-kill-switch.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/verify/test-recovery.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/verify/verify-archive-integrity.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/verify/verify-backup.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/verify/verify-privacy-gate.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/README.md",
-      "status": "draft"
-    },
-    {
-      "path": "agent-files/transient/README.md",
+      "path": "agent-files/_template/PROMPT.md",
       "status": "draft"
     },
     {
       "path": "agent-files/_template/SOUL.md",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/verify/test-event-etl.sh",
-      "status": "draft"
-    },
-    {
-      "path": "scripts/etl/etl-excel-to-events.py",
-      "status": "draft"
-    },
-    {
-      "path": "architecture/decisions/ADR-001-markdown-as-truth.md",
-      "status": "superseded"
-    },
-    {
-      "path": "architecture/decisions/ADR-002-dual-authority-model.md",
-      "status": "superseded"
-    },
-    {
-      "path": "architecture/decisions/ADR-003-spawn-on-demand.md",
-      "status": "superseded"
-    },
-    {
-      "path": "architecture/decisions/ADR-004-privacy-gate-in-code.md",
-      "status": "superseded"
-    },
-    {
-      "path": "architecture/decisions/ADR-005-cio-ciso-separation.md",
-      "status": "superseded"
-    },
-    {
-      "path": "architecture/decisions/ADR-006-oracle-aws-hybrid.md",
-      "status": "superseded"
-    },
-    {
-      "path": "scripts/verify/test-setup-layout.sh",
-      "status": "draft"
-    }
-  ],
-  "empty_files": [
-    {
-      "path": ".gitignore",
-      "status": "stub"
-    },
-    {
-      "path": "LICENSE",
-      "status": "stub"
-    },
-    {
-      "path": "agent-files/README.md",
-      "status": "stub"
-    },
-    {
-      "path": "agent-files/_template/AGENTS.md",
-      "status": "stub"
-    },
-    {
-      "path": "agent-files/_template/HEARTBEAT.md",
-      "status": "stub"
-    },
-    {
-      "path": "agent-files/_template/IDENTITY.md",
-      "status": "stub"
-    },
-    {
-      "path": "agent-files/_template/MEMORY.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
       "path": "agent-files/_template/TOOLS.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/_template/USER.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cco/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cco/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cco/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cco/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cco/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/department/cco/USER.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cdo/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cdo/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cdo/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cdo/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cdo/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/department/cdo/USER.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfa/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfa/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfa/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfa/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfa/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/department/cfa/USER.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfo/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfo/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfo/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfo/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cfo/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/department/cfo/USER.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cho/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cho/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cho/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cho/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cho/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/department/cho/USER.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/clo/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/clo/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/clo/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/clo/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/clo/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/department/clo/USER.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cso/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cso/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cso/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cso/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/cso/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/department/cso/USER.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/csp/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/csp/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/csp/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/csp/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/department/csp/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/department/csp/USER.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cio/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cio/HEARTBEAT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cio/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cio/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cio/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cio/TOOLS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/ciso/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/ciso/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/ciso/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/ciso/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/ciso/TOOLS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cko/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cko/HEARTBEAT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cko/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cko/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cko/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cko/TOOLS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cmo/AGENTS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cmo/IDENTITY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cmo/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cmo/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/cmo/TOOLS.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/executive/coo/AGENTS.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/coo/HEARTBEAT.md",
+      "status": "planned"
     },
     {
       "path": "agent-files/executive/coo/IDENTITY.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
       "path": "agent-files/executive/coo/MEMORY.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
       "path": "agent-files/executive/coo/SOUL.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
       "path": "agent-files/executive/coo/TOOLS.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
-      "path": "bootstrap/foundation-docs/2026-vision.md",
-      "status": "stub"
+      "path": "agent-files/executive/coo/USER.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/foundation-docs/2026-vision.template.md",
-      "status": "stub"
+      "path": "agent-files/executive/cos/AGENTS.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/foundation-docs/ceo-identity.md",
-      "status": "stub"
+      "path": "agent-files/executive/cos/IDENTITY.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/foundation-docs/ceo-identity.template.md",
-      "status": "stub"
+      "path": "agent-files/executive/cos/MEMORY.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/foundation-docs/ceo-soul.md",
-      "status": "stub"
+      "path": "agent-files/executive/cos/SOUL.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/foundation-docs/ceo-soul.template.md",
-      "status": "stub"
+      "path": "agent-files/executive/cos/TOOLS.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/foundation-docs/constitution.md",
-      "status": "stub"
+      "path": "agent-files/executive/cos/USER.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/foundation-docs/constitution.template.md",
-      "status": "stub"
+      "path": "agent-files/executive/csto/AGENTS.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/genesis-interview-answers.md",
-      "status": "stub"
+      "path": "agent-files/executive/csto/IDENTITY.md",
+      "status": "planned"
     },
     {
-      "path": "bootstrap/genesis-interview-answers.template.md",
-      "status": "stub"
+      "path": "agent-files/executive/csto/MEMORY.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/csto/SOUL.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/csto/TOOLS.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/executive/csto/USER.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/shared/safety-rails.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/shared/user-core.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/budget-auditor/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/grocery-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/growth-coach/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/gym-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/habit-tracker/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/interview-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/journal-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/lab-analyst/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/legacy-planner/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/network-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/nutritionist/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/reflect-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/sleep-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/study-coach/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/tax-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/trader-bot/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "agent-files/transient/travel-planner/PROMPT.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/a-day-in-the-life.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/bootstrap-story.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/glossary.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/how-the-organization-works.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/principles.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/the-eight-domains.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/vision.md",
+      "status": "planned"
+    },
+    {
+      "path": "book/what-we-chose-not-to-do.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/dry-run/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/dry-run/synthetic-seed/2026-vision.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/dry-run/synthetic-seed/ceo-identity.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/dry-run/synthetic-seed/ceo-soul.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/dry-run/synthetic-seed/constitution.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/dry-run/synthetic-seed/genesis-interview-answers.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/genesis-primer.md",
+      "status": "planned"
     },
     {
       "path": "bootstrap/genesis-runbook.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
-      "path": "changelog/2026-04-05-v0.1-initial.md",
-      "status": "stub"
+      "path": "bootstrap/post-genesis.md",
+      "status": "planned"
     },
     {
-      "path": "changelog/2026-04-10-v0.2-llm-router.md",
-      "status": "stub"
+      "path": "bootstrap/pre-flight-checks.md",
+      "status": "planned"
     },
     {
-      "path": "changelog/2026-04-15-v0.3-genesis.md",
-      "status": "stub"
+      "path": "bootstrap/seed-guide.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/seed-templates/2026-vision.template.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/seed-templates/ceo-identity.template.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/seed-templates/ceo-soul.template.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/seed-templates/constitution.template.md",
+      "status": "planned"
+    },
+    {
+      "path": "bootstrap/seed-templates/genesis-interview-answers.template.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/agents.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/channels.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/events.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/identity-access.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/models/aliases.yaml",
+      "status": "draft"
+    },
+    {
+      "path": "contracts/models/registry.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/policy/archive.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/policy/budget.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/policy/change-control.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/policy/escalation.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/policy/privacy.yaml",
+      "status": "draft"
+    },
+    {
+      "path": "contracts/policy/schedule.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/agent.schema.json",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/event.schema.json",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/agent-file.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/archive-manifest.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/daily-log.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/domain-data.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/event.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/memory-fingerprint.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/retrospective.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/sop.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/formats/template.md",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/model.schema.json",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/policy.schema.json",
+      "status": "planned"
+    },
+    {
+      "path": "contracts/schemas/template.schema.json",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/APPROVALS.md",
+      "status": "draft"
+    },
+    {
+      "path": "decisions/INDEX.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/PENDING.md",
+      "status": "draft"
+    },
+    {
+      "path": "decisions/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr-template.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0001-markdown-is-truth.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0002-dual-authority-model.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0003-privacy-gate-in-code.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0004-local-first-triage.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0005-model-alias-indirection.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0006-cloud-tiering-and-budget.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0007-direct-ciso-p1-escalation.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0008-coo-as-event-dispatcher.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0009-department-chiefs-on-demand.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0010-transients-are-prompt-templates.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0011-append-only-history-projected-state.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0012-archive-local-then-object-lock.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0013-oracle-compute-aws-storage.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0014-openclaw-initial-runtime.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0015-repo-runtime-seed-separation.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0016-per-domain-access-not-universal-symlinks.md",
+      "status": "planned"
+    },
+    {
+      "path": "decisions/adr/ADR-0017-genesis-seed-authored-by-ceo.md",
+      "status": "planned"
+    },
+    {
+      "path": "deploy/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "deploy/deploy-map.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "deploy/expected-runtime-tree.yaml",
+      "status": "planned"
+    },
+    {
+      "path": "deploy/render/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/agent-lifecycle.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/archive-and-recovery.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/authority-and-roles.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/channels-and-communication.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/diagrams/src/architecture.drawio",
+      "status": "planned"
+    },
+    {
+      "path": "design/diagrams/src/llm-routing-pipeline.drawio",
+      "status": "planned"
+    },
+    {
+      "path": "design/event-bus.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/generated/file-matrix.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/generated/identity-table.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/generated/roster.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/genesis.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/identity-and-access.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/memory-and-data.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/observability-and-cost.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/portability-and-migration.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/routing-and-privacy.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/runtime-layout.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/security-and-network.md",
+      "status": "planned"
+    },
+    {
+      "path": "design/templates-and-learning.md",
+      "status": "planned"
+    },
+    {
+      "path": "fix-all.sh",
+      "status": "planned"
+    },
+    {
+      "path": "ops/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/change-control.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/cost-and-budget.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/incident/graceful-shutdown.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/incident/kill-switch.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/incident/p1-response.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/maintenance-schedule.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/model-update.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/notification-strategy.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/openclaw-update-policy.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/recovery/agent-recovery.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/recovery/host-loss.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/recovery/restore-drill.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/risk-register.md",
+      "status": "planned"
+    },
+    {
+      "path": "ops/success-metrics.md",
+      "status": "planned"
+    },
+    {
+      "path": "pyproject.toml",
+      "status": "planned"
+    },
+    {
+      "path": "remote-files.txt",
+      "status": "draft"
     },
     {
       "path": "research/README.md",
-      "status": "stub"
-    },
-    {
-      "path": "research/community-implementations.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
       "path": "research/cost-analysis.md",
-      "status": "stub"
+      "status": "planned"
+    },
+    {
+      "path": "research/hardware.md",
+      "status": "planned"
     },
     {
       "path": "research/llm-comparison.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
       "path": "research/multi-agent-patterns.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
-      "path": "research/openclaw-research.md",
-      "status": "stub"
+      "path": "research/open-questions.md",
+      "status": "planned"
     },
     {
-      "path": "research/references/links.md",
-      "status": "stub"
+      "path": "research/references.md",
+      "status": "planned"
     },
     {
-      "path": "research/security-threats.md",
-      "status": "stub"
+      "path": "research/spikes/SPK-01-egress-interception.md",
+      "status": "planned"
     },
     {
-      "path": "supporting-docs/README.md",
-      "status": "stub"
+      "path": "research/spikes/SPK-02-openclaw-state-dir.md",
+      "status": "planned"
     },
     {
-      "path": "supporting-docs/acronyms.md",
-      "status": "stub"
+      "path": "research/spikes/SPK-03-workspace-isolation.md",
+      "status": "planned"
     },
     {
-      "path": "supporting-docs/faq.md",
-      "status": "stub"
+      "path": "research/spikes/SPK-04-slack-multibot.md",
+      "status": "planned"
     },
     {
-      "path": "supporting-docs/glossary.md",
-      "status": "stub"
+      "path": "research/spikes/SPK-05-cli-adapters.md",
+      "status": "planned"
     },
     {
-      "path": "supporting-docs/risk-register.md",
-      "status": "stub"
+      "path": "research/spikes/SPK-06-local-model-on-vm.md",
+      "status": "planned"
     },
     {
-      "path": "supporting-docs/success-metrics.md",
-      "status": "stub"
+      "path": "research/spikes/SPK-07-gpg-restore-drill.md",
+      "status": "planned"
+    },
+    {
+      "path": "research/threat-model.md",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/genesis/post-genesis.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/genesis/preflight.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/genesis/render-workspaces.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/ops/archive-pack.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/ops/backup-daily.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/ops/backup-hourly.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/ops/cko-janitor.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/ops/graceful-shutdown.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/ops/kill-switch.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/setup/01-oracle-vm-provision.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/setup/02-docker-install.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/setup/03-ollama-install.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/setup/04-openclaw-install.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/setup/05-directory-create.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/setup/06-symlinks-create.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/verify/test-recovery.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/verify/test-runtime-gate.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/verify/validate-repo.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/verify/verify-archive.sh",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/archive/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/archive/pack.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/archive/sign.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/archive/sync_s3.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/archive/verify.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/contracts.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/deploy/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/deploy/diff.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/deploy/render.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/etl/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/etl/bank_csv.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/etl/common.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/etl/excel_events.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/etl/lab_pdf.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/events/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/events/dispatcher.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/events/envelope.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/events/queue.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/genesis/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/genesis/adopt.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/genesis/load_seed.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/genesis/preflight.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/genesis/render_workspaces.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/memory/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/memory/index.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/memory/janitor.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/memory/logs.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/memory/projector.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/paths.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/adapters/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/adapters/cli_wrapper.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/adapters/ollama.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/gate.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/optimizer.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/overrides.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/prefilter.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/route.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/router/triage.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/__init__.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/generated_no_drift.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/ledger_resolves.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/no_personal_markers.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/nonempty_or_planned.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/paths_resolve.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/refs_resolve.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/runtime_paths.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/checks/triage_local.py",
+      "status": "planned"
+    },
+    {
+      "path": "src/lifeos/validate/run.py",
+      "status": "planned"
     },
     {
       "path": "templates/README.md",
-      "status": "stub"
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/career/daily-priorities.md",
-      "status": "stub"
+      "path": "templates/responses/career/README.md",
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/career/skill-gap-analysis.md",
-      "status": "stub"
+      "path": "templates/responses/career/daily-priorities.md",
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/finance/budget-status.md",
-      "status": "stub"
+      "path": "templates/responses/career/skill-gap-analysis.md",
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/finance/investment-review.md",
-      "status": "stub"
+      "path": "templates/responses/development/README.md",
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/health/nutrition-audit.md",
-      "status": "stub"
+      "path": "templates/responses/family/README.md",
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/health/sleep-check.md",
-      "status": "stub"
+      "path": "templates/responses/finance/README.md",
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/health/workout-plan.md",
-      "status": "stub"
+      "path": "templates/responses/finance/budget-status.md",
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/system/agent-retrospective.md",
-      "status": "stub"
+      "path": "templates/responses/finance/investment-review.md",
+      "status": "planned"
     },
     {
-      "path": "templates/domain-responses/system/morning-briefing.md",
-      "status": "stub"
+      "path": "templates/responses/health/README.md",
+      "status": "planned"
     },
     {
-      "path": "templates/llm-router/optimizers/cloud-cheap.md",
-      "status": "stub"
+      "path": "templates/responses/health/nutrition-audit.md",
+      "status": "planned"
     },
     {
-      "path": "templates/llm-router/optimizers/cloud-code.md",
-      "status": "stub"
+      "path": "templates/responses/health/sleep-check.md",
+      "status": "planned"
     },
     {
-      "path": "templates/llm-router/optimizers/cloud-reasoning-high.md",
-      "status": "stub"
+      "path": "templates/responses/health/workout-plan.md",
+      "status": "planned"
     },
     {
-      "path": "templates/llm-router/optimizers/local-primary.md",
-      "status": "stub"
+      "path": "templates/responses/lifestyle/README.md",
+      "status": "planned"
     },
     {
-      "path": "templates/llm-router/optimizers/triage-local.md",
-      "status": "stub"
+      "path": "templates/responses/social/README.md",
+      "status": "planned"
     },
     {
-      "path": "templates/llm-router/triage-system-prompt.md",
-      "status": "stub"
+      "path": "templates/responses/spirituality/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/responses/system/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/responses/system/agent-retrospective.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/responses/system/morning-briefing.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/router/optimizers/cloud-cheap.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/router/optimizers/cloud-code.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/router/optimizers/cloud-reasoning-high.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/router/optimizers/genesis-brain.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/router/optimizers/local-primary.md",
+      "status": "planned"
+    },
+    {
+      "path": "templates/router/triage-system-prompt.md",
+      "status": "planned"
+    },
+    {
+      "path": "tests/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "tests/contract/test_contracts.py",
+      "status": "planned"
+    },
+    {
+      "path": "tests/dry-run/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "tests/scenario/README.md",
+      "status": "planned"
+    },
+    {
+      "path": "tests/scenario/bad-sleep-reschedule.md",
+      "status": "planned"
+    },
+    {
+      "path": "tests/scenario/privacy-override.md",
+      "status": "planned"
+    },
+    {
+      "path": "tests/unit/test_envelope.py",
+      "status": "planned"
+    },
+    {
+      "path": "tests/unit/test_gate.py",
+      "status": "planned"
+    },
+    {
+      "path": "tests/unit/test_prefilter.py",
+      "status": "planned"
     }
   ]
 }

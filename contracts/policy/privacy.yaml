@@ -1,0 +1,17 @@
+# contracts/policy/privacy.yaml
+# Status: draft, enforced in code (ADR-0003). Approvals: APR-0001, APR-0007.
+schema_version: "1.0"
+status: draft
+precedence: privacy_wins            # APR-0007: critical complexity never unlocks cloud for high privacy
+gate:
+  high:
+    cloud: denied
+    override: "--override-privacy with explicit CEO confirmation; logged; CISO notified"
+  medium:
+    cloud: low_sensitivity_only
+  low:
+    cloud: allowed
+    budget_gate: true
+triage:
+  runs_before_gate: true
+  model_alias: triage               # APR-0001: local only
