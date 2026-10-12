@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-5.sh",
+  "generated_by": "fix-6.sh",
   "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1096,6 +1096,10 @@
       "status": "planned"
     },
     {
+      "path": "scripts/verify/install-hook.sh",
+      "status": "draft"
+    },
+    {
       "path": "scripts/verify/test-recovery.sh",
       "status": "planned"
     },
@@ -1105,7 +1109,11 @@
     },
     {
       "path": "scripts/verify/validate-repo.sh",
-      "status": "planned"
+      "status": "draft"
+    },
+    {
+      "path": "scripts/verify/validate_repo.py",
+      "status": "draft"
     },
     {
       "path": "scripts/verify/verify-archive.sh",
