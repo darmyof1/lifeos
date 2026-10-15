@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-7.sh",
+  "generated_by": "fix-8.sh",
   "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -749,11 +749,11 @@
     },
     {
       "path": "decisions/adr/ADR-0003-privacy-gate-in-code.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "decisions/adr/ADR-0004-local-first-triage.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "decisions/adr/ADR-0005-model-alias-indirection.md",
@@ -765,7 +765,7 @@
     },
     {
       "path": "decisions/adr/ADR-0007-direct-ciso-p1-escalation.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "decisions/adr/ADR-0008-coo-as-event-dispatcher.md",
@@ -801,7 +801,7 @@
     },
     {
       "path": "decisions/adr/ADR-0016-per-domain-access-not-universal-symlinks.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "decisions/adr/ADR-0017-genesis-seed-authored-by-ceo.md",
@@ -1093,6 +1093,10 @@
     },
     {
       "path": "scripts/setup/06-symlinks-create.sh",
+      "status": "planned"
+    },
+    {
+      "path": "scripts/verify/check-decisions.sh",
       "status": "planned"
     },
     {

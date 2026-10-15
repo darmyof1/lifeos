@@ -189,3 +189,19 @@ Decisions:
   2. OpenClaw is the initial runtime (ADR-0014)
   3. Repo, runtime, and seed are separate (ADR-0015)
 Applies to: decisions/adr/ADR-0014, ADR-0015, ADR-0016 (the text is still to be written)
+
+## APR-0030 — CoS is the only agent that writes calendar entries
+Status: approved
+Decided by: CEO
+Your answer: "ok cos handles my calendar, approve" (P-10, option a)
+Meaning: only CoS creates, changes, or deletes calendar entries. Other agents send CoS a request.
+The COO is the front door: it receives your request, routes it, and relays the result. It does not write calendar entries.
+Reason for the split: the COO holds conversation context and is already the single point of failure (see design/). Scheduling conflicts need the full picture, which belongs to CoS.
+Applies to: decisions/adr/ (none directly); agent-files/executive/cos/ and agent-files/executive/coo/ (when written)
+
+## APR-0031 — Google Calendar is the calendar store
+Status: approved
+Decided by: CEO
+Your answer: "google calendar" (P-11)
+Open consequence: calendar entries are personal data stored with a cloud provider. What may be stored there is a separate decision (PENDING P-12).
+Applies to: design/ (calendar section, when written); contracts/channels.yaml or a calendar contract (when written)

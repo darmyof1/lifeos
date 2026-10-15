@@ -1,21 +1,22 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Resolved since the last version: P-03 (APR-0028), P-07 (APR-0029).
+Resolved since the last version: P-10 (APR-0030), P-11 (APR-0031).
 
 ## P-08 — Haiku 5.5 API model ID (still open)
-The toggle (APR-0021) needs the exact model ID. It is not verified.
 Needs: a probe result recorded in research/spikes/.
 
 ## P-09 — Spikes not yet run
-SPK-01 to SPK-05 and SPK-07 are planned. SPK-05 comes first. See the spike files for order.
+SPK-01 to SPK-05 and SPK-07 are planned. SPK-05 is recorded as passed in conversation only. It needs a file entry before the router depends on it.
 
-## P-10 — Who may WRITE calendar entries
-CoS owns the combined view (APR-0028). Your gym example needs a rule for writing.
+## P-12 — What may be stored in Google Calendar
+Calendar events can reveal health, family, and money details. The privacy gate (APR-0007) says high-privacy data stays local.
 Options:
-  a) Only CoS writes calendar entries. Other agents send CoS a request. (recommended: one writer, conflicts checked in one place)
-  b) Each domain chief writes its own entries. CoS only reads and reports conflicts.
-Needs: a or b.
+  a) Titles only in Google Calendar; details stay local. Events with high privacy show as "busy".
+  b) Full details in Google Calendar, accepting that the provider holds them.
+  c) A private calendar that is not synced to Google, with a Google "busy" mirror only.
+Needs: a, b, or c.
 
-## P-11 — Where the calendar is stored
-Needs: which calendar you use today (for example Google Calendar, Apple Calendar, or a local file), so the design can name the real store.
+## P-13 — Who holds the Google Calendar access token
+Connecting Google Calendar needs a sign-in in your browser. This is a human-gated step, like Slack.
+Needs: confirm that you will do this step yourself, and that the token lives only on the VM (never in the repo).
