@@ -54,3 +54,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-16 - model probe and token path (fix-17)
 - SPK-09: claude-haiku-5-5 accepted by the API (HTTP 200) and by the CLI. Account identifiers removed. Exit codes of the CLI runs were not captured (zsh PIPESTATUS issue).
 - Calendar token path corrected: gcalcli 4.5.1 stores the OAuth token at ~/.local/share/gcalcli/oauth. The guide used ~/.gcalcli_oauth. A test host showed no file at the old path. Confirmation on the VM is pending (P-13).
+
+## 2026-10-16 - token check on the VM (fix-18)
+- Token file found at ~/.local/share/gcalcli/oauth, owner ubuntu. Mode was 664, changed to 600 and confirmed with stat. P-13 awaits CEO yes.
+- P-08 approved (APR-0040).

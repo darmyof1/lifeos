@@ -282,3 +282,12 @@ To add an agent: add its row to design/roster.md, run the script, add its folder
 Closes: P-16
 Changeable: yes. A change is a new APR entry plus an edit to this rule.
 Applies to: design/roster.md; contracts/agents.yaml; scripts/verify/roster_to_agents.py; scripts/verify/validate_repo.py
+
+## APR-0040 - Model ID claude-haiku-5-5 confirmed (P-08)
+Status: approved
+Decided by: CEO
+Your answer: "P-08 > yes" (after SPK-09: HTTP 200 from the API, and the CLI works with the model)
+Meaning: the model ID claude-haiku-5-5 is confirmed as usable. Switching the active model is still APR-0021.
+Closes: P-08
+Changeable: yes. A change is a new APR entry.
+Applies to: research/spikes/SPK-09-haiku-model-probe.md; contracts/models/aliases.yaml
