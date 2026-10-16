@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-8.sh",
+  "generated_by": "fix-9.sh",
   "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -904,6 +904,18 @@
       "status": "planned"
     },
     {
+      "path": "guides/README.md",
+      "status": "draft"
+    },
+    {
+      "path": "guides/_TEMPLATE.md",
+      "status": "draft"
+    },
+    {
+      "path": "guides/calendar-gcalcli.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/README.md",
       "status": "planned"
     },
@@ -926,6 +938,10 @@
     {
       "path": "ops/incident/p1-response.md",
       "status": "planned"
+    },
+    {
+      "path": "ops/install-log.md",
+      "status": "draft"
     },
     {
       "path": "ops/maintenance-schedule.md",
@@ -1013,7 +1029,7 @@
     },
     {
       "path": "research/spikes/SPK-05-cli-adapters.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "research/spikes/SPK-06-local-model-on-vm.md",
@@ -1425,6 +1441,10 @@
     },
     {
       "path": "templates/router/triage-system-prompt.md",
+      "status": "planned"
+    },
+    {
+      "path": "test123.txt",
       "status": "planned"
     },
     {

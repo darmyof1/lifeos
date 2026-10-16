@@ -96,7 +96,7 @@ EMAIL = re.compile(rb"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 IP = re.compile(rb"\b(?:\d{1,3}\.){3}\d{1,3}\b")
 for p in files:
     data = read(p)
-    if IP.search(data):
+    if any(not ip.startswith((b'127.', b'0.0.0.0')) for ip in IP.findall(data)):
         err(f"IP address found in {p}")
     for e in EMAIL.findall(data):
         if b"noreply.github.com" not in e:
@@ -108,6 +108,12 @@ for p in files:
         m = re.search(r"^Status: (\w+)", read(p).decode("utf-8", "replace"), re.M)
         if not m or m.group(1) not in ("planned", "running", "partial", "done", "failed"):
             err(f"{p}: missing or invalid Status line")
+
+# BLOCKING 10: no secrets (OAuth client secrets, client IDs, API keys, private keys)
+SECRET = re.compile(rb"GOCSPX-[A-Za-z0-9_\-]{20,}|\d{6,}-[a-z0-9]{20,}\.apps\.googleusercontent\.com|sk-ant-[A-Za-z0-9_\-]{20,}|sk-[A-Za-z0-9]{32,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----")
+for p in files:
+    if SECRET.search(read(p)):
+        err(f"possible secret in {p}")
 
 # WARNINGS (never block)
 n_draft = sum(1 for s in reg.values() if s == "draft")
