@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-11.sh",
+  "generated_by": "fix-12.sh",
   "note": "Generated from git ls-files (tracked files only). No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -642,6 +642,10 @@
     {
       "path": "contracts/policy/budget.yaml",
       "status": "planned"
+    },
+    {
+      "path": "contracts/policy/calendar.yaml",
+      "status": "draft"
     },
     {
       "path": "contracts/policy/change-control.yaml",

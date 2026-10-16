@@ -32,3 +32,10 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - The fix-10 that ran on the Mac was an older version. It did not include validator check 12 or guide rule 6. fix-11 adds them.
 - The registry generators (fix-4 to fix-10) listed files from the disk, so local git-ignored files such as execution.log appeared in the registry. The validator then failed on any clean clone. fix-11 generates the registry from git's tracked-file list. Use this method in all future scripts.
 - Local test output stays outside the repo or in ignored paths.
+
+## 2026-10-16 - decisions and tests
+- APR-0032: calendar content in Google is titles only for now (changeable by a new APR entry). contracts/policy/calendar.yaml added as a draft.
+- APR-0033: ADR-0003 accepted.
+- Test logs moved from the AI workbench to ~/lifeos-ops/logs (outside the repo). Create it once with mkdir -p.
+- Calendar guide: search and delete commands added, with <calendar-email> placeholder.
+- SPK-06 done: 3.68 tokens per second. Triage latency opened as P-14.

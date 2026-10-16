@@ -1,8 +1,8 @@
 # ADR-0003 — Privacy gate is enforced in code
 
-Status: proposed
+Status: accepted
 Date: 2026-10-12
-Approval basis: APR-0007 (precedence: privacy wins). The mechanism "enforced in code, not in prompts" is not yet approved. Approve it before this ADR becomes accepted.
+Approval basis: APR-0007 (precedence: privacy wins); APR-0033 (accepted, including the in-code mechanism).
 
 ## Context
 Some queries contain high-privacy data (health, finance, family, journal). A prompt instruction such as "do not send health data to the cloud" can be ignored or misread by a model. The gate must not depend on the model's behaviour.

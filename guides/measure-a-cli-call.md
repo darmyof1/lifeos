@@ -20,9 +20,13 @@ This is correct because `$?` is read immediately after the command.
 
 To also keep the output, write it to a file outside the repo (the repo is public and tracked):
 ```
-<command> "<prompt>" > "$HOME/lifeos-workbench/state/run.log" 2>&1
+<command> "<prompt>" > "$HOME/lifeos-ops/logs/run.log" 2>&1
 echo "exit=$?"
 ```
+
+
+Test logs live in ~/lifeos-ops/logs, outside the repo. Create it once with: mkdir -p "$HOME/lifeos-ops/logs"
+The AI workbench (~/lifeos-workbench) holds audit rounds only. Do not write test logs there.
 
 ## Do NOT use
 - `echo "Exit code: ${PIPESTATUS[0]}"` after a pipeline. On macOS the shell is zsh, which has no `PIPESTATUS`. The line prints an empty value. We recorded empty exit codes this way on 2026-10-16.

@@ -204,3 +204,17 @@ Decided by: CEO
 Your answer: "google calendar" (P-11)
 Open consequence: calendar entries are personal data stored with a cloud provider. What may be stored there is a separate decision (PENDING P-12).
 Applies to: design/ (calendar section, when written); contracts/channels.yaml or a calendar contract (when written)
+
+## APR-0032 - Calendar content in Google: titles only for now
+Status: approved
+Decided by: CEO
+Your answer: "P-12 should be titles only for now, i should be able to change this later ... i approve"
+Meaning: Google Calendar stores event titles, start, and end. Details, locations, attendees, and health or family notes stay local. High-privacy events appear in Google as "busy" (option a of P-12).
+Changeable: yes. A change is a new APR entry plus an edit to contracts/policy/calendar.yaml.
+Applies to: contracts/policy/calendar.yaml; guides/calendar-gcalcli.md
+
+## APR-0033 - ADR-0003 accepted (privacy gate enforced in code)
+Status: approved
+Decided by: CEO
+Your answer: "I approve ADR-003 that you decided"
+Applies to: decisions/adr/ADR-0003-privacy-gate-in-code.md (status changed to accepted)

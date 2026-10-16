@@ -63,21 +63,22 @@ If step 5 shows `/usr/bin/gcalcli`, the old apt package is still installed: `sud
 | `Cannot access ~/.gcalcli_oauth` | Not initialized yet | Run init |
 | `--noauth_local_webserver` rejected | Not accepted by 4.5.1 init | Do not use it; use the SSH tunnel |
 
-## Delete an event by ID
-Deletion is permanent, and `--noprompt` skips the confirmation. The search step is the only check, so run it first and read the result.
-1. Find the event and its ID. Use a title that is unique to the test event:
-   `gcalcli --calendar "<calendar-title>" search "LifeOS write test" --details id --tsv`
-   Expected: one tab-separated line per match. The ID is one of the fields. Copy only the ID.
-   The column order depends on the gcalcli version. Check it once on your machine and write it here.
-2. Confirm that the match is the one you want (title and date). If more than one line appears, stop and delete in the Google Calendar web app instead.
-3. Delete by ID, using the same `--calendar` as the search:
-   `gcalcli --calendar "<calendar-title>" delete --noprompt <EVENT_ID>`
-   Expected: no prompt, and no output on success.
-4. Verify it is gone:
-   `gcalcli --calendar "<calendar-title>" search "LifeOS write test"`
-   Expected: no matching events.
+## Search and delete events
+Replace <calendar-email> with your calendar email (the title shown by "gcalcli list"). Always run the search with the same arguments before any delete.
+1. Search by title:
+   `gcalcli --calendar "<calendar-email>" search "LifeOS write test"`
+2. Search by title and date range:
+   `gcalcli --calendar "<calendar-email>" search "LifeOS write test" 2026-10-16 2026-10-17`
+3. Delete by title (--iamaexpert skips the confirmation):
+   `gcalcli --calendar "<calendar-email>" delete --iamaexpert "LifeOS write test"`
+4. Delete by title and date range:
+   `gcalcli --calendar "<calendar-email>" delete --iamaexpert "LifeOS write test" 2026-10-16 2026-10-17`
+5. Verify: run step 2 again. Expected: no matching events.
 
-Never paste event IDs in the repo. Use `<EVENT_ID>`.
+Warnings:
+- delete --iamaexpert removes every match with no confirmation. A title can match more than one event, so use the date range.
+- For one specific event, find its ID with `search ... --details id --tsv` (check the column layout on your machine the first time), then delete it with `delete --noprompt <EVENT_ID>`. Confirm the command on your machine before relying on it.
+- Event IDs and calendar emails are not pasted in the repo. Use <EVENT_ID> and <calendar-email>.
 
 ## Never paste here
 The client secret, authorization codes in any URL, token files, your event titles, your calendar email address. Use `<calendar-title>` and `<client-id>` placeholders.

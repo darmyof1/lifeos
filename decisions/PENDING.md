@@ -1,22 +1,22 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Resolved since the last version: P-10 (APR-0030), P-11 (APR-0031).
+Resolved since the last version: P-12 (APR-0032), ADR-0003 acceptance (APR-0033).
 
-## P-08 — Haiku 5.5 API model ID (still open)
+## P-08 - Haiku 5.5 API model ID (still open)
 Needs: a probe result recorded in research/spikes/.
 
-## P-09 — Spikes not yet run
-SPK-01 to SPK-05 and SPK-07 are planned. SPK-05 is recorded as passed in conversation only. It needs a file entry before the router depends on it.
+## P-09 - Spikes not yet run
+Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file). Partial: SPK-05 (see file).
 
-## P-12 — What may be stored in Google Calendar
-Calendar events can reveal health, family, and money details. The privacy gate (APR-0007) says high-privacy data stays local.
+## P-13 - Who holds the Google Calendar access token
+The token was created on the VM during the calendar setup (guides/calendar-gcalcli.md). The design assumes it lives only on the VM and is never in the repo.
+Needs: your confirmation that this matches what you did.
+
+## P-14 - Triage latency budget
+SPK-06 measured llama3.1:8b at 3.68 tokens per second, with about 4.1 seconds to first token. A routing JSON of roughly 60 tokens would take about 20 seconds. The design assumed under one second.
 Options:
-  a) Titles only in Google Calendar; details stay local. Events with high privacy show as "busy".
-  b) Full details in Google Calendar, accepting that the provider holds them.
-  c) A private calendar that is not synced to Google, with a Google "busy" mirror only.
+  a) Accept about 20 seconds for triage for now.
+  b) Test smaller local models for triage in a new spike (SPK-08), then choose one. (recommended)
+  c) Triage with deterministic rules first; use the local model only when the rules cannot decide.
 Needs: a, b, or c.
-
-## P-13 — Who holds the Google Calendar access token
-Connecting Google Calendar needs a sign-in in your browser. This is a human-gated step, like Slack.
-Needs: confirm that you will do this step yourself, and that the token lives only on the VM (never in the repo).

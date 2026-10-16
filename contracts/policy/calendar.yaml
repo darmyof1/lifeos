@@ -1,0 +1,11 @@
+# contracts/policy/calendar.yaml
+# Status: draft. Approvals: APR-0030 (writer), APR-0031 (store), APR-0032 (content).
+schema_version: "1.0"
+status: draft
+writer: cos                          # APR-0030: only CoS writes calendar entries
+store: google_calendar               # APR-0031
+google_content:
+  mode: titles_only                  # APR-0032: change by a new APR entry
+  stored_fields: [title, start, end]
+  kept_local: [details, location, attendees, health notes, family notes]
+  high_privacy_title: "busy"         # APR-0032, option a
