@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-16.sh",
+  "generated_by": "fix-17.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1046,6 +1046,10 @@
     {
       "path": "research/spikes/SPK-07-gpg-restore-drill.md",
       "status": "planned"
+    },
+    {
+      "path": "research/spikes/SPK-09-haiku-model-probe.md",
+      "status": "draft"
     },
     {
       "path": "research/spikes/_TEMPLATE.md",

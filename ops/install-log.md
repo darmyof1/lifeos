@@ -50,3 +50,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Delete by event ID: rejected. The delete command takes search text, and --noprompt is not valid for delete ("unrecognized arguments: --noprompt"). The event IDs are Google's own IDs (gcalcli reads them from the Google API), but delete does not accept them. The guide now uses the full title.
 - Not yet confirmed on the VM: the --details id --tsv column layout. The add command prints nothing on success; success was confirmed by search (the Google Calendar web app check is still to be done).
 - APR-0035: P-15 approved (date order, counter per date, domain codes). APR-0037: meanings of the codes (CFA Family, CFO Finance, CSO Social). APR-0036: P-14 accepted for now (about 20 seconds triage). P-14 and P-15 closed.
+
+## 2026-10-16 - model probe and token path (fix-17)
+- SPK-09: claude-haiku-5-5 accepted by the API (HTTP 200) and by the CLI. Account identifiers removed. Exit codes of the CLI runs were not captured (zsh PIPESTATUS issue).
+- Calendar token path corrected: gcalcli 4.5.1 stores the OAuth token at ~/.local/share/gcalcli/oauth. The guide used ~/.gcalcli_oauth. A test host showed no file at the old path. Confirmation on the VM is pending (P-13).

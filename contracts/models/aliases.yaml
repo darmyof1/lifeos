@@ -30,7 +30,7 @@ aliases:
     options:                             # APR-0021: switch by changing 'active'
       - id: gemini-3.8-flash-medium
         provider: cli:agy
-      - id: claude-haiku-5-5             # ID not yet probed (P-08)
+      - id: claude-haiku-5-5             # ID probed 2026-10-16 (SPK-09). Switch is still APR-0021.
         provider: cli:claude
     active: gemini-3.8-flash-medium
     privacy_max: low

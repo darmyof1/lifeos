@@ -60,7 +60,7 @@ If step 5 shows `/usr/bin/gcalcli`, the old apt package is still installed: `sud
 | `invalid get_time_from_str value: '+7'` | That relative end date is not accepted | Use `today tomorrow` or explicit dates |
 | Browser cannot open the redirect | The listener runs on the VM, the browser on the Mac | SSH tunnel with the PORT from the URL (step 3 above) |
 | Init stops with Ctrl+C | Authorization not completed | Run init again; a new URL and port are issued |
-| `Cannot access ~/.gcalcli_oauth` | Not initialized yet | Run init |
+| `Cannot access ~/.local/share/gcalcli/oauth` | Not initialized yet | Run init |
 | `--noauth_local_webserver` rejected | Not accepted by 4.5.1 init | Do not use it; use the SSH tunnel |
 
 ## Naming every event (mandate APR-0034, details APR-0035)
@@ -105,9 +105,18 @@ Warnings:
 - Without --iamaexpert, delete asks "Delete? [N]o [y]es [q]uit" for each match.
 - Calendar emails and event IDs are not pasted in the repo. Use <calendar-email>.
 
+## Where the token lives (P-13)
+gcalcli 4.5.1 on Linux stores the OAuth token at ~/.local/share/gcalcli/oauth. The old path ~/.gcalcli_oauth is used only if it already exists.
+Check after init:
+   ls -l ~/.local/share/gcalcli/oauth
+   stat -c "%a %n" ~/.local/share/gcalcli/oauth
+The file must not be readable by others. If the mode is not 600, run: chmod 600 ~/.local/share/gcalcli/oauth
+The token must not be copied into this repo, a chat, or a second machine without a decision recorded in APPROVALS.md.
+
 ## Never paste here
 The client secret, authorization codes in any URL, token files, your event titles, your calendar email address. Use `<calendar-title>` and `<client-id>` placeholders.
 
 ## History
 - 2026-10-15: first working setup. Entry in ops/install-log.md.
+- 2026-10-16: token path corrected to ~/.local/share/gcalcli/oauth (P-13).
 - 2026-10-16: naming standard (APR-0034, APR-0035). Create, search, date-range search, agenda and delete by title tested (ops/install-log.md). Delete by ID was tested and rejected; an earlier note saying a test event was removed by ID was wrong and is removed.
