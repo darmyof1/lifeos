@@ -22,3 +22,7 @@ __pycache__/
 *.pyc
 .venv/
 .pytest_cache/
+
+# Stray test output (fix-10)
+test[0-9]*.txt
+execution.log

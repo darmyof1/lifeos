@@ -21,3 +21,9 @@ Host: CEO Mac (macOS, zsh).
 - `agy`: not run. Account usage limit. Deferred.
 - Both file writes left `test123.txt` in the repo folder. It is untracked. Delete it before the next commit.
 Evidence: research/spikes/SPK-05-cli-adapters.md
+
+## 2026-10-16 — CEO Mac — test corrections
+- test123.txt had been committed by fix-9 (the stray file was in the repo folder during `git add -A`). Removed in this fix. Blocked by the validator from now on.
+- Two timing methods were tested. The `PIPESTATUS` method gives an empty exit code in zsh. The `$?` method works. See guides/measure-a-cli-call.md.
+- SPK-05 corrected: Codex writes files by default, so the earlier conclusion was wrong for Codex.
+- Delete-by-ID steps added to guides/calendar-gcalcli.md.

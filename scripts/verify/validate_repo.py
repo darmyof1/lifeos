@@ -115,6 +115,16 @@ for p in files:
     if SECRET.search(read(p)):
         err(f"possible secret in {p}")
 
+# BLOCKING 11: only known files at the repo root; no stray test or log output anywhere
+ALLOWED_ROOT = {".gitignore", "CHANGELOG.md", "LICENSE", "MANIFEST.md", "Makefile", "PATHS.md",
+                "READING_MAP.md", "README.md", "pyproject.toml"}
+for p in files:
+    b = os.path.basename(p)
+    if "/" not in p and p not in ALLOWED_ROOT:
+        err(f"unexpected file at repo root: {p}")
+    if re.match(r"^test[0-9]*\.(txt|log)$", b) or b == "execution.log":
+        err(f"stray test output tracked: {p}")
+
 # WARNINGS (never block)
 n_draft = sum(1 for s in reg.values() if s == "draft")
 n_planned = sum(1 for s in reg.values() if s == "planned")

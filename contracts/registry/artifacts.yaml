@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-9.sh",
+  "generated_by": "fix-10.sh",
   "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -904,6 +904,10 @@
       "status": "planned"
     },
     {
+      "path": "execution.log",
+      "status": "draft"
+    },
+    {
       "path": "guides/README.md",
       "status": "draft"
     },
@@ -913,6 +917,10 @@
     },
     {
       "path": "guides/calendar-gcalcli.md",
+      "status": "draft"
+    },
+    {
+      "path": "guides/measure-a-cli-call.md",
       "status": "draft"
     },
     {
@@ -1441,10 +1449,6 @@
     },
     {
       "path": "templates/router/triage-system-prompt.md",
-      "status": "planned"
-    },
-    {
-      "path": "test123.txt",
       "status": "planned"
     },
     {
