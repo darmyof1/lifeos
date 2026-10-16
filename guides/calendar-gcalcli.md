@@ -63,6 +63,20 @@ If step 5 shows `/usr/bin/gcalcli`, the old apt package is still installed: `sud
 | `Cannot access ~/.gcalcli_oauth` | Not initialized yet | Run init |
 | `--noauth_local_webserver` rejected | Not accepted by 4.5.1 init | Do not use it; use the SSH tunnel |
 
+## Naming every event (mandate, APR-0034)
+Every event title follows this format:
+  <DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>
+Example: CHO - Doctor Appointment - 10202026-0001 (October 20, 2026, event 0001 of that date)
+- The domain code is the chief for the area (CHO, CFO, and so on). Non-domain events use COO or COS.
+- The number restarts each day and is assigned by the CoS. Pending confirmation in P-15.
+- Because the name carries the date and number, a search for the full name finds one event.
+
+Create an event with the name in the title. Replace the placeholders:
+   `gcalcli --calendar "<calendar-email>" add --title "CHO - <Title> - <MMDDYYYY>-<NNNN>" --when "<start>" --duration "<minutes>" --noprompt`
+
+Search and delete by the full name, so only that event matches:
+   `gcalcli --calendar "<calendar-email>" search "CHO - Doctor Appointment - 10202026-0001"`
+
 ## Search and delete events
 Replace <calendar-email> with your calendar email (the title shown by "gcalcli list"). Always run the search with the same arguments before any delete.
 1. Search by title:

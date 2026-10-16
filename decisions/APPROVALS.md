@@ -218,3 +218,14 @@ Status: approved
 Decided by: CEO
 Your answer: "I approve ADR-003 that you decided"
 Applies to: decisions/adr/ADR-0003-privacy-gate-in-code.md (status changed to accepted)
+
+## APR-0034 - Calendar event naming standard (mandate)
+Status: approved
+Decided by: CEO
+Your words: "every calendar event has a prefix name and id ... CHO - Doctor Appointment - 10202026-0001 ... this is a mandate"
+Format: <DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>
+Example: CHO - Doctor Appointment - 10202026-0001
+Who assigns: CoS, the only writer of calendar entries (APR-0030). No other agent creates an event name.
+Interpretation still to confirm: see P-15 (date order, ID scope, domain codes for non-domain events).
+Changeable: yes. A change is a new APR entry plus an edit to contracts/policy/calendar.yaml.
+Applies to: contracts/policy/calendar.yaml; guides/calendar-gcalcli.md

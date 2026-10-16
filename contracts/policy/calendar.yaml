@@ -1,5 +1,5 @@
 # contracts/policy/calendar.yaml
-# Status: draft. Approvals: APR-0030 (writer), APR-0031 (store), APR-0032 (content).
+# Status: draft. Approvals: APR-0030 (writer), APR-0031 (store), APR-0032 (content), APR-0034 (naming).
 schema_version: "1.0"
 status: draft
 writer: cos                          # APR-0030: only CoS writes calendar entries
@@ -9,3 +9,12 @@ google_content:
   stored_fields: [title, start, end]
   kept_local: [details, location, attendees, health notes, family notes]
   high_privacy_title: "busy"         # APR-0032, option a
+naming:                              # APR-0034 (interpretation pending P-15)
+  format: "<DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>"
+  example: "CHO - Doctor Appointment - 10202026-0001"
+  domain_codes: [CHO, CSP, CDO, CFO, CFA, CLO, CSO, CCO]
+  non_domain_codes: [COO, COS]
+  date_order: MMDDYYYY               # P-15 item 1
+  id_scope: per_date                 # P-15 item 2: restarts each day
+  id_digits: 4
+  assigned_by: cos

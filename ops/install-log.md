@@ -39,3 +39,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Test logs moved from the AI workbench to ~/lifeos-ops/logs (outside the repo). Create it once with mkdir -p.
 - Calendar guide: search and delete commands added, with <calendar-email> placeholder.
 - SPK-06 done: 3.68 tokens per second. Triage latency opened as P-14.
+
+## 2026-10-16 - naming mandate
+- APR-0034: calendar event names follow "<DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>". Interpretation open in P-15.
+- P-14 rewritten in plain language.

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-12.sh",
+  "generated_by": "fix-13.sh",
   "note": "Generated from git ls-files (tracked files only). No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
