@@ -125,6 +125,12 @@ for p in files:
     if re.match(r"^test[0-9]*\.(txt|log)$", b) or b == "execution.log":
         err(f"stray test output tracked: {p}")
 
+# BLOCKING 12: no typographic double quotes (U+201C, U+201D). They break shell and Python code copied from chat.
+CURLY_DQ = re.compile(rb"\xe2\x80\x9c|\xe2\x80\x9d")
+for p in files:
+    if CURLY_DQ.search(read(p)):
+        err(f"typographic double quote in {p}; use straight quotes")
+
 # WARNINGS (never block)
 n_draft = sum(1 for s in reg.values() if s == "draft")
 n_planned = sum(1 for s in reg.values() if s == "planned")

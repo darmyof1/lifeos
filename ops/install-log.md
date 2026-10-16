@@ -27,3 +27,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Two timing methods were tested. The `PIPESTATUS` method gives an empty exit code in zsh. The `$?` method works. See guides/measure-a-cli-call.md.
 - SPK-05 corrected: Codex writes files by default, so the earlier conclusion was wrong for Codex.
 - Delete-by-ID steps added to guides/calendar-gcalcli.md.
+
+## 2026-10-16 — repo — fix-11
+- The fix-10 that ran on the Mac was an older version. It did not include validator check 12 or guide rule 6. fix-11 adds them.
+- The registry generators (fix-4 to fix-10) listed files from the disk, so local git-ignored files such as execution.log appeared in the registry. The validator then failed on any clean clone. fix-11 generates the registry from git's tracked-file list. Use this method in all future scripts.
+- Local test output stays outside the repo or in ignored paths.

@@ -12,6 +12,7 @@ How to set up and repeat a tool on the VM or the Mac. Written so that a fresh in
 3. Every guide ends with a troubleshooting table built from problems that actually happened.
 4. Every guide records the exact tool version it was verified with. Versions change.
 5. A guide is updated when a step changes, and the change is dated in ops/install-log.md.
+6. Code blocks use straight quotes only (" and '). A curly quote breaks a command. Check 12 in the validator blocks them.
 
 ## Where things are logged
 | What | Where | In the repo? |

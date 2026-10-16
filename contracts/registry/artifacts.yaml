@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-10.sh",
-  "note": "Generated from the tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
+  "generated_by": "fix-11.sh",
+  "note": "Generated from git ls-files (tracked files only). No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
       "path": ".gitignore",
@@ -902,10 +902,6 @@
     {
       "path": "design/templates-and-learning.md",
       "status": "planned"
-    },
-    {
-      "path": "execution.log",
-      "status": "draft"
     },
     {
       "path": "guides/README.md",
