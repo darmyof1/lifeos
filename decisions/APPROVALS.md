@@ -331,3 +331,12 @@ Meaning: a chief's calendar add goes directly to the CoS for execution. The CoS 
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: decisions/APPROVALS.md APR-0030 (unchanged); design/routing-and-privacy.md (when written); P-20
+
+## APR-0045 - Slack exemption from the privacy rule until an in-house app exists
+Status: approved
+Decided by: CEO
+Your answer: "We are going to need an exemption for Slack until we develop our own in-house app. Slack is the communication channel, so it is OK to have private data there. The Slack channels are fully private, even though the service is cloud."
+Meaning: private data may be posted in private Slack channels until the in-house app exists. This covers posting to Slack only. It does not allow sending that data to a cloud model: the privacy gate still applies (APR-0007).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: contracts/policy/privacy.yaml (channels block); P-22

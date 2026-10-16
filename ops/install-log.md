@@ -67,3 +67,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-16 - P-19 approved (fix-22)
 - APR-0043: scenario catalogue approved. S-06 (5-minute retry, COO escalation at attempt 5) and S-07 (CIO Slack alert) changed by the CEO. P-19 closed.
+
+## 2026-10-16 - Slack exemption (fix-24)
+- APR-0045: private data may be posted in private Slack channels until the in-house app exists. Model calls still pass the gate. privacy.yaml header corrected (not yet enforced in code).

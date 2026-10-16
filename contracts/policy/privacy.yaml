@@ -1,5 +1,5 @@
 # contracts/policy/privacy.yaml
-# Status: draft, enforced in code (ADR-0003). Approvals: APR-0001, APR-0007.
+# Status: draft. Not yet enforced in code (ADR-0003: gate.py not written). Approvals: APR-0001, APR-0007, APR-0045.
 schema_version: "1.0"
 status: draft
 precedence: privacy_wins            # APR-0007: critical complexity never unlocks cloud for high privacy
@@ -15,3 +15,9 @@ gate:
 triage:
   runs_before_gate: true
   model_alias: triage               # APR-0001: local only
+channels:
+  slack:                            # APR-0045: exemption until the in-house app exists
+    data: private_allowed
+    condition: private channels only, as the CEO described them
+    model_calls: gate_applies       # APR-0007: the exemption does not reach cloud models
+    until: in_house_app_built

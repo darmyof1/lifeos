@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -38,6 +38,6 @@ Needs: yes or change.
 Proposal:
 - One channel per chief, for requests from that chief. The request is posted in that channel, and the COO confirms in the same channel.
 - The COO channel is private and holds only you and the COO.
-- Slack is a cloud service. Anything posted there follows the titles-only rule (APR-0032), and health notes are never posted. Each post is logged under P-21.
+- Slack is exempt from the titles-only rule while it is the channel, for private channels only (APR-0045, privacy.yaml channels block). Each post is logged under P-21.
 Open choice: one Slack app with a display name per message (simpler, the posts come from one app), or one Slack app per agent (each agent is a real separate identity). I believe Slack supports per-message display names, but confirm in Slack's documentation before building.
 Needs: choose the identity option, then yes or change.
