@@ -43,3 +43,10 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-16 - naming mandate
 - APR-0034: calendar event names follow "<DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>". Interpretation open in P-15.
 - P-14 rewritten in plain language.
+
+## 2026-10-16 - calendar command tests (fix-14)
+- Tested on the Oracle VM with gcalcli 4.5.1: create two events, search by full title, search with a date range, agenda, delete by title with --iamaexpert. Delete printed "Deleted!". Calendar email kept out of the repo.
+- End dates are excluded in search and agenda. 2026-10-18 is needed to include 2026-10-17.
+- Delete by event ID: rejected. The delete command takes search text, and --noprompt is not valid for delete ("unrecognized arguments: --noprompt"). The event IDs are Google's own IDs (gcalcli reads them from the Google API), but delete does not accept them. The guide now uses the full title.
+- Not yet confirmed on the VM: the --details id --tsv column layout. The add command prints nothing on success; success was confirmed by search (the Google Calendar web app check is still to be done).
+- APR-0035: P-15 approved (date order, counter per date, domain codes). APR-0037: meanings of the codes (CFA Family, CFO Finance, CSO Social). APR-0036: P-14 accepted for now (about 20 seconds triage). P-14 and P-15 closed.

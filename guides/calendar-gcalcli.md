@@ -1,7 +1,7 @@
 # Google Calendar from the command line (gcalcli)
 
 Status: working (read and write verified on 2026-10-15)
-Last verified: 2026-10-15 on Oracle VM, Ubuntu 24.04 arm64
+Last verified: 2026-10-16 on Oracle VM, Ubuntu 24.04 arm64 (commands below)
 Tool version: gcalcli 4.5.1, installed with pipx. Do NOT use the Ubuntu apt package (4.3.0): it has no `init` command.
 Owner: CEO
 
@@ -63,40 +63,51 @@ If step 5 shows `/usr/bin/gcalcli`, the old apt package is still installed: `sud
 | `Cannot access ~/.gcalcli_oauth` | Not initialized yet | Run init |
 | `--noauth_local_webserver` rejected | Not accepted by 4.5.1 init | Do not use it; use the SSH tunnel |
 
-## Naming every event (mandate, APR-0034)
-Every event title follows this format:
-  <DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>
+## Naming every event (mandate APR-0034, details APR-0035)
+Format: <DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>
 Example: CHO - Doctor Appointment - 10202026-0001 (October 20, 2026, event 0001 of that date)
-- The domain code is the chief for the area (CHO, CFO, and so on). Non-domain events use COO or COS.
-- The number restarts each day and is assigned by the CoS. Pending confirmation in P-15.
-- Because the name carries the date and number, a search for the full name finds one event.
+- DOMAIN: CHO (Health), CSP (Spirituality), CDO (Development), CFO (Finance), CFA (Family), CLO (Lifestyle), CSO (Social), CCO (Career). COO (Operations) or COS (Staff) for events that belong to no domain. APR-0037.
+- MMDDYYYY: the event date, month first.
+- NNNN: a four-digit counter that restarts at 0001 for each date. The CoS assigns it.
+- Only the CoS creates calendar events (APR-0030).
 
-Create an event with the name in the title. Replace the placeholders:
-   `gcalcli --calendar "<calendar-email>" add --title "CHO - <Title> - <MMDDYYYY>-<NNNN>" --when "<start>" --duration "<minutes>" --noprompt`
+## Create an event
+Replace the placeholders. <calendar-email> is the email of the calendar you use (shown by "gcalcli list").
+   gcalcli --calendar "<calendar-email>" add --title "CHO - Doctor Appointment - 10172026-0001" --when "tomorrow 07:00" --duration "30" --noprompt
+Expected: no output on success (the add command only shows a prompt when --noprompt is missing). Confirm with the search below, then check the event in the Google Calendar web app.
 
-Search and delete by the full name, so only that event matches:
-   `gcalcli --calendar "<calendar-email>" search "CHO - Doctor Appointment - 10202026-0001"`
+## Find an event
+Search by full title. Only events with that title match:
+   gcalcli --calendar "<calendar-email>" search "CHO - Doctor Appointment - 10172026-0001"
 
-## Search and delete events
-Replace <calendar-email> with your calendar email (the title shown by "gcalcli list"). Always run the search with the same arguments before any delete.
-1. Search by title:
-   `gcalcli --calendar "<calendar-email>" search "LifeOS write test"`
-2. Search by title and date range:
-   `gcalcli --calendar "<calendar-email>" search "LifeOS write test" 2026-10-16 2026-10-17`
-3. Delete by title (--iamaexpert skips the confirmation):
-   `gcalcli --calendar "<calendar-email>" delete --iamaexpert "LifeOS write test"`
-4. Delete by title and date range:
-   `gcalcli --calendar "<calendar-email>" delete --iamaexpert "LifeOS write test" 2026-10-16 2026-10-17`
-5. Verify: run step 2 again. Expected: no matching events.
+Search by title and date range. The end date is excluded, so to include October 17 end on October 18:
+   gcalcli --calendar "<calendar-email>" search "CHO - Doctor Appointment - 10172026-0001" 2026-10-16 2026-10-18
+
+Agenda for a date range (same end-date rule):
+   gcalcli --calendar "<calendar-email>" agenda 2026-10-16 2026-10-18
+
+Show the Google event ID. For reading only: delete cannot use it (see below).
+   gcalcli --calendar "<calendar-email>" search "CHO - Doctor Appointment - 10172026-0001" --details id --tsv
+The column layout of this output has not been checked on your machine.
+
+## Delete an event
+Delete by ID is not possible with gcalcli 4.5.1. The delete command takes search text, not an ID, and --noprompt is not an option for delete (checked in the gcalcli 4.5.1 source and by running it: "unrecognized arguments: --noprompt"). Delete by the full title instead. Names follow the mandate, so the title is unique.
+
+1. Search by the full title. Expected: one line.
+   gcalcli --calendar "<calendar-email>" search "CHO - Doctor Appointment - 10172026-0001"
+2. Delete:
+   gcalcli --calendar "<calendar-email>" delete --iamaexpert "CHO - Doctor Appointment - 10172026-0001"
+   Expected: the event line, then "Deleted!" (seen on 2026-10-16).
+3. Search again. Expected: no matching events.
 
 Warnings:
-- delete --iamaexpert removes every match with no confirmation. A title can match more than one event, so use the date range.
-- For one specific event, find its ID with `search ... --details id --tsv` (check the column layout on your machine the first time), then delete it with `delete --noprompt <EVENT_ID>`. Confirm the command on your machine before relying on it.
-- Event IDs and calendar emails are not pasted in the repo. Use <EVENT_ID> and <calendar-email>.
+- --iamaexpert deletes every event the text matches, with no prompt. Always search first. Use the full title. A short text such as "Doctor" matches many events.
+- Without --iamaexpert, delete asks "Delete? [N]o [y]es [q]uit" for each match.
+- Calendar emails and event IDs are not pasted in the repo. Use <calendar-email>.
 
 ## Never paste here
 The client secret, authorization codes in any URL, token files, your event titles, your calendar email address. Use `<calendar-title>` and `<client-id>` placeholders.
 
 ## History
 - 2026-10-15: first working setup. Entry in ops/install-log.md.
-- 2026-10-16: delete-by-ID steps added. Write test event removed by ID (see ops/install-log.md).
+- 2026-10-16: naming standard (APR-0034, APR-0035). Create, search, date-range search, agenda and delete by title tested (ops/install-log.md). Delete by ID was tested and rejected; an earlier note saying a test event was removed by ID was wrong and is removed.

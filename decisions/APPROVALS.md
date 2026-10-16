@@ -229,3 +229,37 @@ Who assigns: CoS, the only writer of calendar entries (APR-0030). No other agent
 Interpretation still to confirm: see P-15 (date order, ID scope, domain codes for non-domain events).
 Changeable: yes. A change is a new APR entry plus an edit to contracts/policy/calendar.yaml.
 Applies to: contracts/policy/calendar.yaml; guides/calendar-gcalcli.md
+
+## APR-0035 - Calendar naming details (P-15)
+Status: approved
+Decided by: CEO
+Your answer: "yes to your suggestions, so CSO and CFA for domain, approved" and "p-15 is a yes"
+Meaning:
+  1. Date order: MMDDYYYY (10202026 = October 20, 2026).
+  2. ID scope: the four-digit counter restarts at 0001 for each date.
+  3. Domain codes: CHO, CSP, CDO, CFO, CFA, CLO, CSO, CCO. Non-domain codes: COO and COS.
+     The meaning of each domain code is in APR-0037.
+Closes: P-15
+Changeable: yes. A change is a new APR entry plus an edit to contracts/policy/calendar.yaml.
+Applies to: contracts/policy/calendar.yaml; guides/calendar-gcalcli.md
+
+## APR-0037 - Meaning of the domain codes (corrects how APR-0035 was read)
+Status: approved
+Decided by: CEO
+Your words: "CFA is family domain, CFO is finance, csoc should not exists anywhere, CSO is social, I think i had it reverse when i answer before."
+Meaning:
+  CHO = Health, CSP = Spirituality, CDO = Development, CFO = Finance, CFA = Family,
+  CLO = Lifestyle, CSO = Social, CCO = Career.
+  COO = Operations and COS = Staff, for events that belong to no domain.
+  Social is CSO. Family is CFA.
+Changeable: yes. A change is a new APR entry plus an edit to contracts/policy/calendar.yaml.
+Applies to: contracts/policy/calendar.yaml; guides/calendar-gcalcli.md
+
+## APR-0036 - Triage latency accepted for now (P-14, option a)
+Status: approved
+Decided by: CEO
+Your answer: "for p-14 is a, let's accept the 20 seconds for now, as i dont have the machine available to test. so proceed as if this test is completed we will adjust later."
+Meaning: triage may take about 20 seconds on the VM (SPK-06: 3.68 tokens per second). SPK-08 (smaller models) is not run for now.
+Closes: P-14
+Changeable: yes, when the machine is available to test. A change is a new APR entry.
+Applies to: research/spikes/SPK-06-local-model-on-vm.md; contracts/models/aliases.yaml
