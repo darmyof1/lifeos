@@ -291,3 +291,13 @@ Meaning: the model ID claude-haiku-5-5 is confirmed as usable. Switching the act
 Closes: P-08
 Changeable: yes. A change is a new APR entry.
 Applies to: research/spikes/SPK-09-haiku-model-probe.md; contracts/models/aliases.yaml
+
+## APR-0041 - Calendar token location confirmed (P-13)
+Status: approved
+Decided by: CEO
+Your answer: "yes"
+Meaning: the Google Calendar OAuth token lives on the VM only, at ~/.local/share/gcalcli/oauth, owner ubuntu, mode 600. It is never in the repo or in chat. Copying it to another machine needs a new APR entry.
+Evidence: VM check on 2026-10-16. Mode was 664 and was changed to 600 (chmod), confirmed by stat.
+Closes: P-13
+Changeable: yes. A change is a new APR entry.
+Applies to: guides/calendar-gcalcli.md ("Where the token lives"); ops/install-log.md

@@ -58,3 +58,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-16 - token check on the VM (fix-18)
 - Token file found at ~/.local/share/gcalcli/oauth, owner ubuntu. Mode was 664, changed to 600 and confirmed with stat. P-13 awaits CEO yes.
 - P-08 approved (APR-0040).
+
+## 2026-10-16 - P-13 approved (fix-19)
+- APR-0041: calendar token location confirmed on the VM. P-13 closed.
