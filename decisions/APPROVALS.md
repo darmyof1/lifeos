@@ -138,14 +138,12 @@ Status: approved
 Decided by: CEO
 Your answer: "CEO: yes" to the proposal in P-02: ceo-soul, ceo-identity, 2026-vision, constitution, genesis-interview-answers, health-baseline. Everything else is generated.
 Applies to: bootstrap/genesis-primer.md, bootstrap/genesis-runbook.md (when written); APR-0005
-CEO: Approved
 
 ## APR-0023 — ADRs required before Genesis
 Status: approved
 Decided by: CEO
 Your answer: "CEO: yes" to the proposal in P-04: ADR-0003 (privacy), ADR-0004 (triage), ADR-0007 (CISO escalation), ADR-0016 (per-domain access). The rest follow after Genesis.
 Applies to: decisions/adr/
-CEO: Approved
 ## APR-0024 — Model IDs for Opus, GPT, and Gemini are correct
 Status: approved
 Decided by: CEO
