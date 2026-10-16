@@ -243,6 +243,15 @@ Closes: P-15
 Changeable: yes. A change is a new APR entry plus an edit to contracts/policy/calendar.yaml.
 Applies to: contracts/policy/calendar.yaml; guides/calendar-gcalcli.md
 
+## APR-0036 - Triage latency accepted for now (P-14, option a)
+Status: approved
+Decided by: CEO
+Your answer: "for p-14 is a, let's accept the 20 seconds for now, as i dont have the machine available to test. so proceed as if this test is completed we will adjust later."
+Meaning: triage may take about 20 seconds on the VM (SPK-06: 3.68 tokens per second). SPK-08 (smaller models) is not run for now.
+Closes: P-14
+Changeable: yes, when the machine is available to test. A change is a new APR entry.
+Applies to: research/spikes/SPK-06-local-model-on-vm.md; contracts/models/aliases.yaml
+
 ## APR-0037 - Meaning of the domain codes (corrects how APR-0035 was read)
 Status: approved
 Decided by: CEO
@@ -254,15 +263,6 @@ Meaning:
   Social is CSO. Family is CFA.
 Changeable: yes. A change is a new APR entry plus an edit to contracts/policy/calendar.yaml.
 Applies to: contracts/policy/calendar.yaml; guides/calendar-gcalcli.md
-
-## APR-0036 - Triage latency accepted for now (P-14, option a)
-Status: approved
-Decided by: CEO
-Your answer: "for p-14 is a, let's accept the 20 seconds for now, as i dont have the machine available to test. so proceed as if this test is completed we will adjust later."
-Meaning: triage may take about 20 seconds on the VM (SPK-06: 3.68 tokens per second). SPK-08 (smaller models) is not run for now.
-Closes: P-14
-Changeable: yes, when the machine is available to test. A change is a new APR entry.
-Applies to: research/spikes/SPK-06-local-model-on-vm.md; contracts/models/aliases.yaml
 
 ## APR-0038 - Agent roster approved (design/roster.md)
 Status: approved

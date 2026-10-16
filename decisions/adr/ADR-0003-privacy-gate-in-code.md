@@ -18,5 +18,7 @@ Privacy wins over complexity. A critical-complexity request with high privacy st
 - Gate after the cloud call: data has already left the machine.
 
 ## Consequences
+- Implementation status (2026-10-16): not written. src/lifeos/router/gate.py and tests/unit/test_gate.py are empty. The decision is accepted; the code is not.
+- No cloud adapter may be enabled until gate.py exists and its unit tests pass.
 - The gate is testable with unit tests (tests/unit/test_gate.py).
 - A wrong triage label can still send data incorrectly. Mitigation to confirm: when triage is unsure, treat the query as high privacy.

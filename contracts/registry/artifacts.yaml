@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-19.sh",
+  "generated_by": "fix-20.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -749,7 +749,7 @@
     },
     {
       "path": "decisions/adr/ADR-0002-dual-authority-model.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "decisions/adr/ADR-0003-privacy-gate-in-code.md",
@@ -797,11 +797,11 @@
     },
     {
       "path": "decisions/adr/ADR-0014-openclaw-initial-runtime.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "decisions/adr/ADR-0015-repo-runtime-seed-separation.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "decisions/adr/ADR-0016-per-domain-access-not-universal-symlinks.md",
@@ -898,6 +898,10 @@
     {
       "path": "design/runtime-layout.md",
       "status": "planned"
+    },
+    {
+      "path": "design/scenarios.md",
+      "status": "draft"
     },
     {
       "path": "design/security-and-network.md",
