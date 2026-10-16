@@ -322,3 +322,12 @@ Meaning: design/scenarios.md is approved.
 Closes: P-19
 Changeable: yes. A change is a new APR entry.
 Applies to: design/scenarios.md
+
+## APR-0044 - Calendar adds and deletes: routing (refines APR-0030)
+Status: approved
+Decided by: CEO
+Your answer: "CHO decides, goes straight to CoS to execute. No approval from me except for deletes. COO notifies me on each add."
+Meaning: a chief's calendar add goes directly to the CoS for execution. The CoS stays the only writer (APR-0030). The COO notifies the CEO when an add is written. Every delete needs the CEO's approval first.
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/APPROVALS.md APR-0030 (unchanged); design/routing-and-privacy.md (when written); P-20
