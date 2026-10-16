@@ -17,7 +17,7 @@ Pass criterion: a test or a check that can fail. A row without one is not finish
 | S-09 | Two events on the same date get the same counter. | The second create is refused, and the counter moves on. | No two events on one date share a number. | APR-0034, APR-0035 | Decided. Check not written. |
 | S-10 | A high-privacy event is created. | Google shows "busy" only. Details stay local. | Google holds title, start, end, and busy status only. | APR-0032 | Decided |
 | S-11 | The CISO raises a P1 security event. | It goes straight to the CEO, bypassing the COO. | The CEO receives it; the COO is not in the path. | APR-0008, ADR-0007 | Decided. Whether the COO is copied: not stated. |
-| S-12 | A COO plan is vetoed by the CSTO. | The plan stops until the CEO decides. | Nothing runs while the veto stands. | ADR-0002 (proposed, P-18) | Decision needed: P-18 |
+| S-12 | A COO plan is vetoed by the CSTO. | The plan stops until the CEO decides. | Nothing runs while the veto stands. | ADR-0002 (APR-0042) | Decided |
 | S-13 | A model's digest differs from the pinned digest. | That alias refuses to run. | Startup check fails for the mismatched alias. | APR-0027 | Decided. Check not written. |
 | S-14 | A roster entry has no agent folder. | The agent does not start while its folder is missing. | The start check is not written yet. | APR-0039 | Decision needed: how the owner is told |
 | S-15 | The VM is lost. | Rebuild from repo, seed, and archive. | A restore drill passes. | ops/recovery/host-loss.md (empty), APR-0010, SPK-07 (not run) | Decision needed: restore procedure |
@@ -29,4 +29,4 @@ Pass criterion: a test or a check that can fail. A row without one is not finish
 | S-21 | The owner opens the dashboard from the internet. | Access is allowed and protected. Method decided later. | Not applicable until designed. | P-17 | Pending P-17 |
 
 ## Decisions needed (for P-19)
-S-01 how the owner is told; S-03 the unsure-privacy rule; S-05 fallback; S-06 retry; S-07 notice; S-08 same-slot rule; S-12 tie-break (P-18); S-14 block or warn; S-15 restore procedure; S-16 Genesis stop rule; S-17 resume rule; S-19 what is urgent; S-20 alert channel.
+S-01 how the owner is told; S-03 the unsure-privacy rule; S-05 fallback; S-06 retry; S-07 notice; S-08 same-slot rule; S-14 block or warn; S-15 restore procedure; S-16 Genesis stop rule; S-17 resume rule; S-19 what is urgent; S-20 alert channel.

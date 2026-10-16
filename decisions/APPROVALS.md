@@ -301,3 +301,12 @@ Evidence: VM check on 2026-10-16. Mode was 664 and was changed to 600 (chmod), c
 Closes: P-13
 Changeable: yes. A change is a new APR entry.
 Applies to: guides/calendar-gcalcli.md ("Where the token lives"); ops/install-log.md
+
+## APR-0042 - ADR-0002 approved: dual authority (P-18)
+Status: approved
+Decided by: CEO
+Your answer: "Approved"
+Meaning: ADR-0002 is accepted as written, including the tie-break. Operational authority is the COO; constitutional authority is the CSTO; neither outranks the other. When the CSTO vetoes a COO plan, nothing runs until the CEO decides.
+Closes: P-18
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/adr/ADR-0002-dual-authority-model.md

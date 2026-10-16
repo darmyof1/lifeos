@@ -61,3 +61,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-16 - P-13 approved (fix-19)
 - APR-0041: calendar token location confirmed on the VM. P-13 closed.
+
+## 2026-10-16 - P-18 approved (fix-21)
+- APR-0042: ADR-0002 accepted, including the tie-break. P-19 (scenario catalogue) still open.

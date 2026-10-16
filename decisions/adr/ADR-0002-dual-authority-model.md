@@ -1,8 +1,8 @@
 # ADR-0002 - Dual authority: operational (COO) and constitutional (CSTO)
 
-Status: proposed (awaiting CEO approval, P-18)
+Status: accepted
 Date: 2026-10-16
-Approval basis: none yet. Source: MANIFEST / SOVEREIGN_LIFE_OS.md sections 2.2 and 3.2. The CEO must approve this text before it is accepted.
+Approval basis: APR-0042 (CEO approved the text, including the tie-break). Source: MANIFEST / SOVEREIGN_LIFE_OS.md sections 2.2 and 3.2.
 
 ## Context
 The system has two kinds of authority. Daily execution needs one owner for routing and coordination. The rules everything runs by need a separate owner. Without a clear split, a routing decision could change the rules, or a rule could block daily work with no one answerable for it.
@@ -15,7 +15,7 @@ The system has two kinds of authority. Daily execution needs one owner for routi
 - Exception: the CISO reports operationally to the COO but may escalate critical security events directly to the CEO (ADR-0007, APR-0008).
 - The CoS has decision authority for conflicts between departments (manifest section 2.2).
 
-## Tie-break (proposed, needs CEO approval)
+## Tie-break (approved, APR-0042)
 When the CSTO vetoes a COO plan, the plan stops and the CEO decides. Nothing runs until the CEO answers.
 
 ## Alternatives rejected
