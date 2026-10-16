@@ -64,3 +64,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-16 - P-18 approved (fix-21)
 - APR-0042: ADR-0002 accepted, including the tie-break. P-19 (scenario catalogue) still open.
+
+## 2026-10-16 - P-19 approved (fix-22)
+- APR-0043: scenario catalogue approved. S-06 (5-minute retry, COO escalation at attempt 5) and S-07 (CIO Slack alert) changed by the CEO. P-19 closed.

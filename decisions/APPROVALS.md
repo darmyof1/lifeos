@@ -310,3 +310,15 @@ Meaning: ADR-0002 is accepted as written, including the tie-break. Operational a
 Closes: P-18
 Changeable: yes. A change is a new APR entry.
 Applies to: decisions/adr/ADR-0002-dual-authority-model.md
+
+## APR-0043 - Scenario catalogue approved, with changes to S-06 and S-07 (P-19)
+Status: approved
+Decided by: CEO
+Your answer: "yes" to the proposed defaults, with changes to S-06 and S-07
+Meaning: design/scenarios.md is approved.
+- S-06 (calendar unreachable): the event is kept local and not written to Google. It is retried every 5 minutes until it completes. After 5 failed attempts the problem goes to the COO, who has the CEO check it. Retries continue after that until it completes.
+- S-07 (Google token revoked): this is an alert that must be fixed. The CIO reports it in its Slack channel.
+- The CIO's Slack channel is also the notice channel for S-01, S-14 and S-20. This was applied from the S-07 answer and is recorded here for CEO confirmation or change.
+Closes: P-19
+Changeable: yes. A change is a new APR entry.
+Applies to: design/scenarios.md
