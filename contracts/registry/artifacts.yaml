@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-13.sh",
-  "note": "Generated from git ls-files (tracked files only). No entry is approved here. Approvals live in decisions/APPROVALS.md.",
+  "generated_by": "fix-15.sh",
+  "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
       "path": ".gitignore",
@@ -613,7 +613,7 @@
     },
     {
       "path": "contracts/agents.yaml",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "contracts/channels.yaml",
@@ -829,7 +829,7 @@
     },
     {
       "path": "design/README.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "design/agent-lifecycle.md",
@@ -868,10 +868,6 @@
       "status": "planned"
     },
     {
-      "path": "design/generated/roster.md",
-      "status": "planned"
-    },
-    {
       "path": "design/genesis.md",
       "status": "planned"
     },
@@ -890,6 +886,10 @@
     {
       "path": "design/portability-and-migration.md",
       "status": "planned"
+    },
+    {
+      "path": "design/roster.md",
+      "status": "draft"
     },
     {
       "path": "design/routing-and-privacy.md",
@@ -1125,6 +1125,10 @@
     },
     {
       "path": "scripts/verify/install-hook.sh",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/verify/roster_to_agents.py",
       "status": "draft"
     },
     {

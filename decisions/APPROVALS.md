@@ -263,3 +263,12 @@ Meaning: triage may take about 20 seconds on the VM (SPK-06: 3.68 tokens per sec
 Closes: P-14
 Changeable: yes, when the machine is available to test. A change is a new APR entry.
 Applies to: research/spikes/SPK-06-local-model-on-vm.md; contracts/models/aliases.yaml
+
+## APR-0038 - Agent roster approved (design/roster.md)
+Status: approved
+Decided by: CEO
+Your answer: "i approved sovereign_life_os_roster.md yes."
+Meaning: the approved roster is design/roster.md, a hand-written source. Roster codes: CFA is Family, CSO is Social (APR-0037). CSOC does not exist.
+Applies to: design/roster.md; design/README.md; contracts/agents.yaml (generated from the roster)
+Note: how agents.yaml is produced is proposed in P-16, not yet approved.
+Changeable: yes. A change is a new APR entry plus an edit to design/roster.md.

@@ -1,7 +1,111 @@
-# Agent roster contract
-
-Status: planned
-Owner: CEO
-Blocked by: PENDING P-03 (calendar owner) and roster review
-
-This file is intentionally empty of content until the blocker is resolved.
+# GENERATED from design/roster.md by scripts/verify/roster_to_agents.py.
+# Do not edit by hand. Change the roster, then run the script.
+# Status: draft
+schema_version: "1.0"
+source: "design/roster.md"
+agents:
+  - code: "COO"
+    title: "Chief Operating Officer"
+    tier: "Executive"
+    department: "Operations"
+    function: "Primary user interface. Routes all daily requests, coordinates dept chiefs, produces status reports, owns the event bus."
+    spawns: []
+    folder: "agent-files/executive/coo"
+  - code: "CSTO"
+    title: "Chief Strategy Officer"
+    tier: "Executive"
+    department: "Strategy"
+    function: "Holds the system constitution (SOUL.md, IDENTITY.md). Audits all agents quarterly. Defines SOPs for every other chief. Provides strategic vision reviews."
+    spawns: []
+    folder: "agent-files/executive/csto"
+  - code: "CIO"
+    title: "Chief Information Officer"
+    tier: "Technical"
+    department: "Information Tech"
+    function: "Manages Ubuntu VM, Docker containers, Ollama models, AWS infrastructure, IoT devices (glasses, watch), and API cost lifecycle."
+    spawns: []
+    folder: "agent-files/executive/cio"
+  - code: "CISO"
+    title: "Chief Information Security Officer"
+    tier: "Technical"
+    department: "Information Security"
+    function: "Enforces data diode rules, audits all external API calls, manages KMS keys, reviews dark archive integrity, approves new skills before installation. Escalates critical events directly to CEO."
+    spawns: []
+    folder: "agent-files/executive/ciso"
+  - code: "CKO"
+    title: "Chief Knowledge Officer"
+    tier: "Technical"
+    department: "Knowledge"
+    function: "Owns the three-tier memory architecture. Runs the nightly Janitor, promotes logs from L1\u2192L2\u2192L3, maintains the dark archive pipeline, audits memory quality."
+    spawns: []
+    folder: "agent-files/executive/cko"
+  - code: "CMO"
+    title: "Chief Metric Officer"
+    tier: "Technical"
+    department: "Metrics"
+    function: "Monitors cross-domain data patterns. Produces the weekly life dashboard. Surfaces correlations no individual dept chief can see (e.g. sleep deficit \u2192 gym performance drop)."
+    spawns: []
+    folder: "agent-files/executive/cmo"
+  - code: "COS"
+    title: "Chief of Staff"
+    tier: "Technical"
+    department: "Staff"
+    function: "Resolves inter-department conflicts before they reach the COO. Filters and aggregates dept chief reports. Manages scheduling conflicts between competing domain priorities."
+    spawns: []
+    folder: "agent-files/executive/cos"
+  - code: "CHO"
+    title: "Chief Health Officer"
+    tier: "Department"
+    department: "Health"
+    function: "Manages gym programming, sleep tracking, nutrition, supplementation, mental health check-ins, biohacking protocols, and blood work analysis. Spawns: Gym Bot, Sleep Bot, Nutritionist, Lab Analyst."
+    spawns: ["Gym Bot", "Sleep Bot", "Nutritionist", "Lab Analyst"]
+    folder: "agent-files/department/cho"
+  - code: "CSP"
+    title: "Chief Spirituality Officer"
+    tier: "Department"
+    department: "Spirituality"
+    function: "Operates in ceremonial mode only \u2014 no task lists, no scores. Holds ritual calendar, delivers reflection prompts, manages journaling cadence, guards philosophical alignment. Spawns: Reflect Bot, Journal Bot."
+    spawns: ["Reflect Bot", "Journal Bot"]
+    folder: "agent-files/department/csp"
+  - code: "CDO"
+    title: "Chief Development Officer"
+    tier: "Department"
+    department: "Development"
+    function: "Tracks personal growth, habit formation, character development, psychological patterns, and self-improvement goals. Spawns: Habit Tracker, Growth Coach."
+    spawns: ["Habit Tracker", "Growth Coach"]
+    folder: "agent-files/department/cdo"
+  - code: "CFO"
+    title: "Chief Financial Officer"
+    tier: "Department"
+    department: "Finance"
+    function: "Manages budget quotas, expense tracking, investment portfolio, Alcanza automation, and financial goal alignment. Spawns: Trader Bot, Tax Bot, Budget Auditor."
+    spawns: ["Trader Bot", "Tax Bot", "Budget Auditor"]
+    folder: "agent-files/department/cfo"
+  - code: "CFA"
+    title: "Chief Family Officer"
+    tier: "Department"
+    department: "Family"
+    function: "Manages relationship health, household operations, family calendar, legacy planning, and long-cycle personal commitments. Spawns: Legacy Planner."
+    spawns: ["Legacy Planner"]
+    folder: "agent-files/department/cfa"
+  - code: "CLO"
+    title: "Chief Lifestyle Officer"
+    tier: "Department"
+    department: "Lifestyle"
+    function: "Manages travel, hobbies, home projects, entertainment tracking, vehicle maintenance, and quality-of-life logistics. Spawns: Travel Planner, Grocery Bot."
+    spawns: ["Travel Planner", "Grocery Bot"]
+    folder: "agent-files/department/clo"
+  - code: "CSO"
+    title: "Chief Social Officer"
+    tier: "Department"
+    department: "Social"
+    function: "Manages professional networking, community engagement, reputation, and relationship-building outside immediate family. Spawns: Network Bot."
+    spawns: ["Network Bot"]
+    folder: "agent-files/department/cso"
+  - code: "CCO"
+    title: "Chief Career Officer"
+    tier: "Department"
+    department: "Career"
+    function: "Manages career trajectory, CCNP/certification study plans, job market awareness, skills development, and professional positioning. Spawns: Study Coach, Interview Bot."
+    spawns: ["Study Coach", "Interview Bot"]
+    folder: "agent-files/department/cco"
