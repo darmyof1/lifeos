@@ -268,7 +268,17 @@ Applies to: research/spikes/SPK-06-local-model-on-vm.md; contracts/models/aliase
 Status: approved
 Decided by: CEO
 Your answer: "i approved sovereign_life_os_roster.md yes."
-Meaning: the approved roster is design/roster.md, a hand-written source. Roster codes: CFA is Family, CSO is Social (APR-0037). CSOC does not exist.
+Meaning: the approved roster is design/roster.md, a hand-written source. Roster codes: CFA is Family, CSO is Social (APR-0037).
 Applies to: design/roster.md; design/README.md; contracts/agents.yaml (generated from the roster)
-Note: how agents.yaml is produced is proposed in P-16, not yet approved.
+Note: how agents.yaml is produced is approved in APR-0039.
 Changeable: yes. A change is a new APR entry plus an edit to design/roster.md.
+
+## APR-0039 - agents.yaml is generated from the roster (P-16)
+Status: approved
+Decided by: CEO
+Your answer: "approve for p-16"
+Meaning: design/roster.md is the only hand-written roster. contracts/agents.yaml is generated from it by scripts/verify/roster_to_agents.py. Nobody edits agents.yaml by hand. The validator (BLOCKING 13) fails if agents.yaml does not match the roster.
+To add an agent: add its row to design/roster.md, run the script, add its folder under agent-files/, and record an APR entry.
+Closes: P-16
+Changeable: yes. A change is a new APR entry plus an edit to this rule.
+Applies to: design/roster.md; contracts/agents.yaml; scripts/verify/roster_to_agents.py; scripts/verify/validate_repo.py

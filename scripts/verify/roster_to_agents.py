@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Generates contracts/agents.yaml from design/roster.md.
+"""Generates contracts/agents.yaml from design/roster.md (APR-0038, APR-0039).
 
 Do not edit contracts/agents.yaml by hand. Change design/roster.md, then run this script.
-Exits non-zero if the roster is inconsistent (unknown code, title mismatch, duplicate code).
+  python3 scripts/verify/roster_to_agents.py          write contracts/agents.yaml
+  python3 scripts/verify/roster_to_agents.py --check  exit 1 if agents.yaml differs from the roster (used by the validator)
+Exits 1 if the roster is inconsistent (unknown code, title mismatch, duplicate code).
 Warns when an agent has no folder under agent-files/.
 """
 import json
@@ -40,7 +42,8 @@ def parse():
     return chiefs, abbr
 
 
-def main():
+def render():
+    """Return (yaml_text, warnings). Exits with an error message if the roster is inconsistent."""
     chiefs, abbr = parse()
     errors, warnings, seen = [], [], set()
     agents = []
@@ -96,8 +99,20 @@ def main():
             f"    spawns: {json.dumps(a['spawns'])}",
             f"    folder: {json.dumps(a['folder'])}",
         ]
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"agents written: {len(agents)} -> {OUT.relative_to(ROOT)}")
+    return "\n".join(lines) + "\n", warnings, len(agents)
+
+
+def main():
+    text, warnings, count = render()
+    if "--check" in sys.argv:
+        current = OUT.read_text(encoding="utf-8") if OUT.exists() else ""
+        if current != text:
+            print("DRIFT: contracts/agents.yaml differs from design/roster.md. Run scripts/verify/roster_to_agents.py.")
+            sys.exit(1)
+        print(f"agents.yaml matches design/roster.md ({count} agents)")
+        return
+    OUT.write_text(text, encoding="utf-8")
+    print(f"agents written: {count} -> {OUT.relative_to(ROOT)}")
     for w in warnings:
         print("WARN", w)
 

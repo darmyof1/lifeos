@@ -131,6 +131,14 @@ for p in files:
     if CURLY_DQ.search(read(p)):
         err(f"typographic double quote in {p}; use straight quotes")
 
+# BLOCKING 13: contracts/agents.yaml is exactly what design/roster.md generates (APR-0038, APR-0039)
+if not os.path.exists("design/roster.md") or not os.path.exists("scripts/verify/roster_to_agents.py"):
+    err("agent roster or its generator is missing (design/roster.md, scripts/verify/roster_to_agents.py)")
+else:
+    r = subprocess.run([sys.executable, "scripts/verify/roster_to_agents.py", "--check"], capture_output=True, text=True)
+    if r.returncode != 0:
+        err("contracts/agents.yaml does not match design/roster.md: " + (r.stdout + r.stderr).strip())
+
 # WARNINGS (never block)
 n_draft = sum(1 for s in reg.values() if s == "draft")
 n_planned = sum(1 for s in reg.values() if s == "planned")
