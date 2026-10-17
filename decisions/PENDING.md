@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -21,10 +21,3 @@ Proposal: you see every message that changes something in the real world, and ev
 - Routine reads, status checks and retries under the limit are not posted. They stay in the call log (P-21), which you can open at any time.
 Reason: a full feed would bury the messages that matter. The log keeps the detail for when you want it.
 Needs: yes or change.
-
-## P-24 - CISO sensitive-data leak check (detail needed)
-Approved in principle (APR-0047). Still open:
-1. What is scanned: LLM call log only, or also Slack posts and the calendar titles?
-2. How often: each call, or a scheduled sweep (for example, daily)?
-3. Who gets the report: proposed, the CEO directly, using the CISO's direct line already approved for P1 issues (APR-0008).
-Needs: answers to 1 to 3.

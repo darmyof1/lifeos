@@ -367,3 +367,15 @@ Meaning: one Slack app, with each message shown under the agent's display name. 
 Closes: P-22
 Changeable: yes. A change is a new APR entry.
 Applies to: contracts/policy/privacy.yaml (channels block); P-23
+
+## APR-0049 - CISO sensitive-data leak check: scope, schedule, recipient (P-24)
+Status: approved
+Decided by: CEO
+Your answer: "1. scan all. 2. schedule weekly. 3. yes, report to me directly."
+Meaning:
+- Scope: the CISO scans all sources: the LLM call log (P-21), Slack posts, and calendar entries.
+- Schedule: once a week.
+- Recipient: the CISO reports possible sensitive-data leaks directly to the CEO.
+Closes: P-24
+Changeable: yes. A change is a new APR entry.
+Applies to: design/security-and-network.md (when written); P-21 (APR-0047); APR-0008 (direct CISO line)

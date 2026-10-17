@@ -74,3 +74,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-16 - P-20, P-21, P-22 approved (fix-25)
 - APR-0046: instruction drafts from approved rules (CSTO). APR-0047: LLM call log approved, CISO leak check added. APR-0048: Slack model, one app and one channel per agent.
 - New pending: P-23 (agent-to-agent visibility), P-24 (leak check detail).
+
+## 2026-10-16 - P-24 approved (fix-26)
+- APR-0049: CISO leak check scans all sources weekly and reports directly to the CEO. P-24 closed.
