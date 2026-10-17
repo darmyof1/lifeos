@@ -379,3 +379,12 @@ Meaning:
 Closes: P-24
 Changeable: yes. A change is a new APR entry.
 Applies to: design/security-and-network.md (when written); P-21 (APR-0047); APR-0008 (direct CISO line)
+
+## APR-0050 - What the CEO sees of agent-to-agent communication (P-23)
+Status: approved
+Decided by: CEO
+Your answer: "p23 yes"
+Meaning: the CEO sees every cross-agent message that changes something real (calendar add, budget change, delete), posted in the sender's and the receiver's channel. Replies go back to the requester's channel. Every failure, escalation and retry limit goes to the COO channel. Routine reads, status checks and retries under the limit are not posted; they stay in the LLM call log (APR-0047), which the CEO can open at any time.
+Closes: P-23
+Changeable: yes. A change is a new APR entry.
+Applies to: APR-0044 (calendar announcements), APR-0048 (Slack channels), APR-0047 (call log)

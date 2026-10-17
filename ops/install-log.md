@@ -77,3 +77,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-16 - P-24 approved (fix-26)
 - APR-0049: CISO leak check scans all sources weekly and reports directly to the CEO. P-24 closed.
+
+## 2026-10-16 - P-23 approved (fix-27)
+- APR-0050: cross-agent visibility approved. Real-world changes and failures are posted to Slack; routine traffic stays in the call log. P-23 closed.
