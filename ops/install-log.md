@@ -80,3 +80,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-16 - P-23 approved (fix-27)
 - APR-0050: cross-agent visibility approved. Real-world changes and failures are posted to Slack; routine traffic stays in the call log. P-23 closed.
+
+## 2026-10-16 - CHO scenarios drafted (fix-28)
+- design/cho-scenarios.md: C-01 to C-06 (draft). P-25 pending with six questions.
