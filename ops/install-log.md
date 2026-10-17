@@ -83,3 +83,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-16 - CHO scenarios drafted (fix-28)
 - design/cho-scenarios.md: C-01 to C-06 (draft). P-25 pending with six questions.
+
+## 2026-10-16 - P-25 approved (fix-29)
+- APR-0051: CHO owns therapies (CSP proposes); therapy titles show the name; CIO owns alarms and needs an alarm skill; supplement timing free; meal plans local for now. P-25 closed.

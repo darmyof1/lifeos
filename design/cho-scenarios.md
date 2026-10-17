@@ -1,6 +1,6 @@
-# CHO scenarios: how requests move between agents (draft, P-25)
+# CHO scenarios: how requests move between agents (approved design, APR-0051)
 
-Status: draft. Nothing here is approved until P-25 is answered.
+Status: approved for design (APR-0051). Nothing is built yet.
 Purpose: show, step by step, who does what and when, for requests that touch health, sleep, gym, supplements, meals and the calendar.
 Basis: approved rules APR-0007 (privacy), APR-0008 (direct CISO line), APR-0009 (COO dispatches), APR-0030 (CoS only writes calendar), APR-0032 (titles only in Google), APR-0044 (calendar adds from a chief go straight to CoS; deletes need CEO), APR-0045 (Slack exemption for private channels), APR-0046 (CSTO drafts instructions), APR-0048 (one channel per agent), APR-0050 (CEO sees real changes and failures).
 
@@ -32,7 +32,7 @@ Steps:
 6. Now. The delete of the 1pm gym entry waits. CoS posts the request for CEO approval in the COO channel (APR-0044). Nothing is deleted until the CEO answers.
 7. Now. COO posts a notice to the CEO in the COO channel: the add is written; the delete waits for approval.
 8. Now. CHO updates the supplement schedule: magnesium moves to 9pm. CHO records this in its own health log. A reminder entry, if wanted, goes to CoS as a calendar add.
-9. Now. CIO is asked whether the watch or another device can change the alarm. Gap: no owner or device link is defined yet. CIO posts "alarm change not possible yet" in the CIO channel, and COO tells the CEO.
+9. Now. CIO owns alarm changes (APR-0051). It sets the alarm through a calendar-bot alarm, because that is the only alarm path configured today. Device alarms need the CIO's alarm skill, which does not exist yet. If the device alarm is wanted before then, CIO posts "device alarm not possible yet" in the CIO channel, and COO tells the CEO.
 10. Every 5 min, if a calendar write fails, the retry rule applies (S-06). After 5 failures the COO is told and the CEO checks.
 
 Pass criteria:
@@ -42,7 +42,7 @@ Pass criteria:
 - The alarm gap is reported, not silently skipped.
 
 Gaps:
-- Alarm: no owner, device or link is defined (the roster gives the CIO the watch and other devices, but no alarm rule).
+- Alarm: the CIO needs a skill to set device alarms. Until it exists, only calendar-bot alarms can be set (APR-0051).
 - Clash check: the rule for a clash is not written (S-08 is still in the catalogue as a design item).
 
 ---
@@ -55,7 +55,7 @@ Steps:
 2. Now. CHO writes one record to the health log. Only CHO writes to this log (a single writer, the same pattern as APR-0030 for the calendar). Gap: where the log lives and its format are not defined.
 3. Now. CHO posts "logged" in the CHO channel with the record it wrote. The CEO can correct it there.
 4. Weekly. CMO reads the health log and includes the therapy totals in the dashboard, under Health (see C-05).
-5. Not defined. Whether the CEO wants a reminder for a therapy. If yes, CHO sends a titles-only calendar add to CoS (APR-0044). The title is the therapy name, which is health information. Open question in P-25.
+5. If a reminder is wanted, CHO sends a titles-only calendar add to CoS (APR-0044). The title shows the therapy name (APR-0051).
 
 Pass criteria:
 - Each log entry appears once, with the time given.
@@ -64,7 +64,7 @@ Pass criteria:
 
 Gaps:
 - Health log location, format and retention: not defined (APR-0013 approves append-only logs, but the format is not written).
-- Owner of therapies: the roster gives CHO "mental health check-ins, biohacking protocols"; CSP holds journaling and rituals. Proposed: CHO. Confirm in P-25.
+- Owner: CHO owns the record. CSP proposes the practices that serve mental clarity (APR-0051).
 
 ---
 
@@ -74,7 +74,7 @@ Request, in the CHO channel: "Full diet plan for next week. Anxiety aware. For e
 Steps:
 1. Now. CHO asks the questions it needs before drafting: foods to avoid, foods that trigger anxiety, caffeine limits, meal times, and whether a shopping list is wanted. It asks once, in one message.
 2. Now. CHO spawns the Nutritionist (roster: CHO spawns Nutritionist; the template exists in agent-files/transient/nutritionist, still empty).
-3. Now. Nutritionist drafts the week: breakfast, lunch, dinner, snacks, with the CEO's examples included. It runs on the local model, because the plan contains health detail and the gate blocks cloud for high privacy (APR-0007).
+3. Now. Nutritionist drafts the week: breakfast, lunch, dinner, snacks, with the CEO's examples included. It runs on the local model, because the plan contains health detail and the gate blocks cloud for high privacy (APR-0007). Local model for now; changeable later (APR-0051).
 4. Now. CHO checks the draft against the stated limits and posts it in the CHO channel, with a note of which limit each item respects.
 5. The CEO replies with changes or "approved". Only then is the plan final.
 6. After approval. If a grocery list is wanted, CHO asks CLO's Grocery Bot to build it from the plan. The list is not sent to any cloud model.
@@ -87,7 +87,7 @@ Pass criteria:
 
 Gaps:
 - Nutrition data: no food database or nutrient source is defined. The plan relies on the local model's knowledge until one exists.
-- Clinical limits: CHO does not give medical advice. Any supplement dose change is shown to the CEO with a line that a doctor or pharmacist should confirm it (proposed in P-25).
+- Clinical limits: CHO does not give medical advice. Any supplement dose change is shown to the CEO with a line that a doctor or pharmacist should confirm it (APR-0051).
 - Local model quality: the local model is smaller than cloud models, so the draft may need more review rounds. Not measured yet.
 
 ---
@@ -99,7 +99,7 @@ Steps:
 1. Now. CHO updates the supplement schedule in its health log. Timing only; the dose is not changed.
 2. Now. CHO posts the change in the CHO channel.
 3. If a reminder entry exists, CHO sends the calendar change to CoS (an add of the new time; the delete of the old entry needs the CEO's yes, APR-0044).
-4. Dose change: CHO does not change a dose on its own. A dose change is shown to the CEO with a note that a doctor or pharmacist should confirm it first (proposed in P-25).
+4. Dose change: CHO does not change a dose on its own. A dose change is shown to the CEO with a note that a doctor or pharmacist should confirm it first (APR-0051).
 
 Pass criteria:
 - The schedule shows 9pm; the dose is unchanged; the change is in the CHO channel.
@@ -140,13 +140,12 @@ Pass criteria:
 
 ---
 
-## Open questions (P-25)
-1. Therapy log: where should entries be logged, in the CHO channel (as above) or by another route?
-2. Therapy owner: CHO (proposed) or CSP?
-3. Therapy reminders: should the calendar title show the therapy name, or "busy" (the high-privacy title in calendar.yaml)?
-4. Alarm: which device should the alarm change use (the watch, or another), and which chief owns it (proposed: CIO)?
-5. Supplements: confirm the rule that CHO changes timing freely, but a dose change always needs a doctor or pharmacist check.
-6. Meal plan: is it acceptable that the local model drafts it, given it may be less detailed than a cloud model?
+## Decided (APR-0051)
+1. Therapy owner: CHO. CSP proposes the practices.
+2. Therapy reminders: the title shows the therapy name.
+3. Alarms: CIO owns them; the CIO needs an alarm skill for device alarms.
+4. Supplements: timing changes are free; dose changes need a doctor or pharmacist check.
+5. Meal plans: local model for now.
 
 ## Not expanded yet
 Lab results and blood work (Lab Analyst); sleep scoring; gym programming. Add these as C-07 onwards after P-25 is answered.

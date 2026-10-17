@@ -388,3 +388,17 @@ Meaning: the CEO sees every cross-agent message that changes something real (cal
 Closes: P-23
 Changeable: yes. A change is a new APR entry.
 Applies to: APR-0044 (calendar announcements), APR-0048 (Slack channels), APR-0047 (call log)
+
+## APR-0051 - CHO communication scenarios: P-25 answers (therapy owner, alarms, supplements, meal model)
+Status: approved
+Decided by: CEO
+Your answer: "CSP proposes, CHO owns. 1: CHO. 2: CHO. 3: therapy name is ok. 4: CIO, he will need the skill to set up alarms; we only configure calendar bot alarms. 5: yes. 6: local model for now, we can change this later."
+Meaning:
+- Therapy owner: CSP proposes the practices that serve mental clarity. CHO owns them: the therapy log, the records, and any health-related safety.
+- Therapy calendar entries show the therapy name in the title (titles only, APR-0032).
+- Alarms: the CIO owns alarm changes. The CIO needs a skill that sets device alarms. Until that skill exists, the only alarms that can be set are calendar-bot alarms.
+- Supplements: CHO may change timing freely. A dose change needs a doctor or pharmacist check first (C-04).
+- Meal plans: the local model drafts them for now. This can be changed later by a new APR entry.
+Closes: P-25
+Changeable: yes. A change is a new APR entry.
+Applies to: design/cho-scenarios.md (C-01 to C-06); roster (CIO alarm role); P-25 closed
