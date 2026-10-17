@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-29.sh",
+  "generated_by": "fix-30.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -929,6 +929,10 @@
     },
     {
       "path": "guides/measure-a-cli-call.md",
+      "status": "draft"
+    },
+    {
+      "path": "guides/vm-spike-runbook.md",
       "status": "draft"
     },
     {

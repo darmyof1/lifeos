@@ -86,3 +86,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-16 - P-25 approved (fix-29)
 - APR-0051: CHO owns therapies (CSP proposes); therapy titles show the name; CIO owns alarms and needs an alarm skill; supplement timing free; meal plans local for now. P-25 closed.
+
+## 2026-10-17 - VM spike runbook added (fix-30)
+- guides/vm-spike-runbook.md: steps for SPK-07, SPK-01, SPK-02, SPK-03, SPK-04. No spike run yet.
