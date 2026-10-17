@@ -340,3 +340,30 @@ Meaning: private data may be posted in private Slack channels until the in-house
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: contracts/policy/privacy.yaml (channels block); P-22
+
+## APR-0046 - Agent instructions are written by the CSTO from approved rules (P-20)
+Status: approved
+Decided by: CEO
+Your answer: "P-20 yes"
+Meaning: Aurelius (CSTO) turns approved rules into one instruction draft per chief. Limits: it writes only from approved APR entries and adds no new rules; each rule cites its APR number; each draft is approved by the CEO before use; the CISO checks the tool permissions in each draft. A script generates the rules index from APPROVALS.md first.
+Closes: P-20
+Changeable: yes. A change is a new APR entry.
+Applies to: design/agent-lifecycle.md (when written); agent-files/ (drafts after approval)
+
+## APR-0047 - LLM call log approved, with a CISO leak check added (P-21)
+Status: approved
+Decided by: CEO
+Your answer: "P-21 yes, but also need to flag where the CISO looks for possible sensitive data leaks and reports"
+Meaning: the LLM call log design in P-21 is approved for building later (exact request and response per call, local and cloud, outside git). Added requirement: the CISO checks the log for possible sensitive-data leaks and reports them. What is scanned, how often, and who receives the report is set out in P-24.
+Closes: P-21 (design approved; build later)
+Changeable: yes. A change is a new APR entry.
+Applies to: design/observability-and-cost.md (when written); P-24
+
+## APR-0048 - Slack model: one app, display name per message, one channel per agent (P-22)
+Status: approved
+Decided by: CEO
+Your answer: "P-22 yes. Slack shows display name. Each agent will have its own Slack channel."
+Meaning: one Slack app, with each message shown under the agent's display name. Each agent has its own channel. The COO channel holds only the CEO and the COO. The privacy exemption in APR-0045 applies to these channels.
+Closes: P-22
+Changeable: yes. A change is a new APR entry.
+Applies to: contracts/policy/privacy.yaml (channels block); P-23

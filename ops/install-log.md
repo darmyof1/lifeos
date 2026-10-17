@@ -70,3 +70,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-16 - Slack exemption (fix-24)
 - APR-0045: private data may be posted in private Slack channels until the in-house app exists. Model calls still pass the gate. privacy.yaml header corrected (not yet enforced in code).
+
+## 2026-10-16 - P-20, P-21, P-22 approved (fix-25)
+- APR-0046: instruction drafts from approved rules (CSTO). APR-0047: LLM call log approved, CISO leak check added. APR-0048: Slack model, one app and one channel per agent.
+- New pending: P-23 (agent-to-agent visibility), P-24 (leak check detail).
