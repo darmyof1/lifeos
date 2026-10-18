@@ -95,3 +95,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-18 - SPK-07 done (fix-32)
 - Part A (passphrase) and Part B (public key on the VM, CEO restores) passed. Runbook Part B corrected (encryption subkey). Decision on archive encryption left to the CEO (APR-0010 / ADR-0012).
+
+## 2026-10-18 - SPK-01 done (fix-33)
+- Per-user outbound block works: test user blocked from the internet, loopback open, ordinary user unaffected. Limits: not tested on an OpenClaw process; rule not persistent.

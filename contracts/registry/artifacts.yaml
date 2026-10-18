@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-32.sh",
+  "generated_by": "fix-33.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1033,7 +1033,7 @@
     },
     {
       "path": "research/spikes/SPK-01-egress-interception.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "research/spikes/SPK-02-openclaw-state-dir.md",
