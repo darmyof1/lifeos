@@ -89,3 +89,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-17 - VM spike runbook added (fix-30)
 - guides/vm-spike-runbook.md: steps for SPK-07, SPK-01, SPK-02, SPK-03, SPK-04. No spike run yet.
+
+## 2026-10-18 - SPK-07 Part A run (fix-31)
+- Part A: passphrase cache found and cleared before decrypt. Wrong passphrase fails (Bad session key, exit 2). MATCH line pending rerun. Part B (asymmetric) added to the runbook, not run.

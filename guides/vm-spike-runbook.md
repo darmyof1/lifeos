@@ -20,27 +20,56 @@ Run them in this order. SPK-07 needs no OpenClaw, so it can run first.
 
 ## Step 1 - SPK-07: GPG restore drill (no OpenClaw needed)
 
-Question: can an encrypted archive be restored from its key and passphrase alone?
+Question: can an encrypted archive be restored from its key and passphrase alone, and can the VM encrypt without ever holding the restore secret?
 
-Pass criterion (written before running): the restored file's SHA-256 equals the original's, and a restore with the wrong passphrase fails. Both must hold.
+Pass criteria (written before running):
+- Part A: the restored file's SHA-256 matches the reference hash saved before the original was deleted. A wrong passphrase fails with a nonzero exit code and writes no output.
+- Part B: the VM encrypts with a public key with no prompt. The VM cannot decrypt. The CEO key restores the file with a matching SHA-256.
 
-Method:
+Rules: type passphrases only at the prompt. Never write a passphrase into a file or into chat.
+
+### Part A - symmetric (passphrase)
+
     mkdir -p ~/spk07 && cd ~/spk07
+    rm -f original.bin archive.gpg restored.bin wrong.bin
     head -c 5000000 /dev/urandom > original.bin
-    sha256sum original.bin | tee original.sha256
-    gpg --symmetric --cipher-algo AES256 --output archive.gpg original.bin
-    # enter a test passphrase when asked; write it down on paper, not in a file
+    sha256sum original.bin | cut -d' ' -f1 > original.sha256     # reference hash, saved BEFORE the original is deleted
+    gpg --symmetric --cipher-algo AES256 --output archive.gpg original.bin     # type the passphrase
     rm original.bin
-    gpg --decrypt --output restored.bin archive.gpg
-    # enter the same passphrase
-    sha256sum restored.bin | tee restored.sha256
-    diff original.sha256 restored.sha256 && echo MATCH
-    echo "exit=$?"
-    # wrong passphrase test: this must fail
-    gpg --decrypt --output wrong.bin archive.gpg; echo "exit=$?"
-    rm -f original.sha256 restored.sha256 wrong.bin
+    gpgconf --kill gpg-agent                                     # clears the cached passphrase, so the next command prompts
+    rm -f restored.bin
+    gpg --decrypt --output restored.bin archive.gpg; echo "exit=$?"     # type the correct passphrase
+    [ "$(cat original.sha256)" = "$(sha256sum restored.bin | cut -d' ' -f1)" ] && echo MATCH || echo NOMATCH
+    gpgconf --kill gpg-agent
+    rm -f wrong.bin
+    gpg --decrypt --output wrong.bin archive.gpg; echo "exit=$?"     # type a WRONG passphrase
+    ls
 
-Send back: MATCH or not, the two exit codes, and whether the wrong passphrase failed.
+Expected: MATCH. The wrong passphrase gives "Bad session key" with a nonzero exit code, and wrong.bin is not listed.
+
+### Part B - asymmetric (VM holds only the public key; CEO restores)
+
+    mkdir -p -m 700 ~/spk07/b && cd ~/spk07/b
+    export GNUPGHOME=$HOME/spk07/b/ceo && mkdir -p -m 700 "$GNUPGHOME"
+    gpg --quick-gen-key "spk07 ceo test" ed25519 default never     # type a passphrase for the CEO key
+    gpg --armor --export "spk07 ceo test" > ceo-public.asc
+    head -c 5000000 /dev/urandom > data.bin
+    sha256sum data.bin | cut -d' ' -f1 > data.sha256
+    export GNUPGHOME=$HOME/spk07/b/agent && mkdir -p -m 700 "$GNUPGHOME"
+    gpg --import ceo-public.asc
+    gpg --list-secret-keys; echo "(no secret keys should be listed above)"
+    gpg --batch --yes --trust-model always --encrypt --recipient "spk07 ceo test" --output archive-pub.gpg data.bin; echo "encrypt exit=$?"     # no prompt expected
+    rm data.bin
+    gpg --batch --decrypt --output should-fail.bin archive-pub.gpg; echo "agent decrypt exit=$?"   # expect nonzero
+    export GNUPGHOME=$HOME/spk07/b/ceo
+    rm -f restored-pub.bin
+    gpg --decrypt --output restored-pub.bin archive-pub.gpg; echo "ceo exit=$?"     # type the CEO passphrase
+    [ "$(cat data.sha256)" = "$(sha256sum restored-pub.bin | cut -d' ' -f1)" ] && echo MATCH || echo NOMATCH
+    export GNUPGHOME=$HOME/.gnupg
+
+Expected: encrypt exit 0 with no prompt; no secret keys listed for the agent; the agent's decrypt fails with a nonzero exit; the CEO restore prints MATCH.
+
+Send back: the exit codes and MATCH/NOMATCH lines for both parts. Never the passphrases.
 
 ---
 
