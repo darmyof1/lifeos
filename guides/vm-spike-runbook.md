@@ -52,22 +52,24 @@ Expected: MATCH. The wrong passphrase gives "Bad session key" with a nonzero exi
     mkdir -p -m 700 ~/spk07/b && cd ~/spk07/b
     export GNUPGHOME=$HOME/spk07/b/ceo && mkdir -p -m 700 "$GNUPGHOME"
     gpg --quick-gen-key "spk07 ceo test" ed25519 default never     # type a passphrase for the CEO key
+    FPR=$(gpg --list-keys --with-colons "spk07 ceo test" | awk -F: '/^fpr:/ {print $10; exit}')
+    gpg --quick-add-key "$FPR" cv25519 encr never                 # adds the encryption subkey; type the CEO passphrase
+    gpg --list-keys "spk07 ceo test"                              # must show a sub line with [E]
     gpg --armor --export "spk07 ceo test" > ceo-public.asc
     head -c 5000000 /dev/urandom > data.bin
     sha256sum data.bin | cut -d' ' -f1 > data.sha256
-    export GNUPGHOME=$HOME/spk07/b/agent && mkdir -p -m 700 "$GNUPGHOME"
-    gpg --import ceo-public.asc
-    gpg --list-secret-keys; echo "(no secret keys should be listed above)"
-    gpg --batch --yes --trust-model always --encrypt --recipient "spk07 ceo test" --output archive-pub.gpg data.bin; echo "encrypt exit=$?"     # no prompt expected
-    rm data.bin
-    gpg --batch --decrypt --output should-fail.bin archive-pub.gpg; echo "agent decrypt exit=$?"   # expect nonzero
-    export GNUPGHOME=$HOME/spk07/b/ceo
-    rm -f restored-pub.bin
-    gpg --decrypt --output restored-pub.bin archive-pub.gpg; echo "ceo exit=$?"     # type the CEO passphrase
-    [ "$(cat data.sha256)" = "$(sha256sum restored-pub.bin | cut -d' ' -f1)" ] && echo MATCH || echo NOMATCH
+    rm -rf ~/spk07/b/agent && export GNUPGHOME=$HOME/spk07/b/agent && mkdir -p -m 700 "$GNUPGHOME"
+    gpg --import ~/spk07/b/ceo-public.asc
+    gpg --list-secret-keys; echo "(none should be listed)"
+    gpg --batch --yes --trust-model always --encrypt --recipient "spk07 ceo test" --output ~/spk07/b/archive-pub.gpg ~/spk07/b/data.bin; echo "encrypt exit=$?"
+    rm ~/spk07/b/data.bin
+    gpg --batch --decrypt --output ~/spk07/b/should-fail.bin ~/spk07/b/archive-pub.gpg; echo "agent decrypt exit=$?"
+    export GNUPGHOME=$HOME/spk07/b/ceo && gpgconf --kill gpg-agent && rm -f ~/spk07/b/restored-pub.bin
+    gpg --decrypt --output ~/spk07/b/restored-pub.bin ~/spk07/b/archive-pub.gpg; echo "ceo exit=$?"     # type the CEO passphrase
+    [ "$(cat ~/spk07/b/data.sha256)" = "$(sha256sum ~/spk07/b/restored-pub.bin | cut -d' ' -f1)" ] && echo MATCH || echo NOMATCH
     export GNUPGHOME=$HOME/.gnupg
 
-Expected: encrypt exit 0 with no prompt; no secret keys listed for the agent; the agent's decrypt fails with a nonzero exit; the CEO restore prints MATCH.
+Expected: a sub line with [E] after the add; encrypt exit 0 with no prompt; the agent's decrypt exit 2 with "No secret key" (not "No such file"); CEO exit 0 after the passphrase prompt, then MATCH.
 
 Send back: the exit codes and MATCH/NOMATCH lines for both parts. Never the passphrases.
 

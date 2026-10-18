@@ -92,3 +92,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-18 - SPK-07 Part A run (fix-31)
 - Part A: passphrase cache found and cleared before decrypt. Wrong passphrase fails (Bad session key, exit 2). MATCH line pending rerun. Part B (asymmetric) added to the runbook, not run.
+
+## 2026-10-18 - SPK-07 done (fix-32)
+- Part A (passphrase) and Part B (public key on the VM, CEO restores) passed. Runbook Part B corrected (encryption subkey). Decision on archive encryption left to the CEO (APR-0010 / ADR-0012).

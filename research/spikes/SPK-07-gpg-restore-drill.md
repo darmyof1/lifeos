@@ -1,12 +1,12 @@
 # SPK-07-gpg-restore-drill - Can an archive be restored from its GPG key?
 
-Status: partial
+Status: done
 Decision unblocked: APR-0010 archive
 Owner: CEO
-Date run: 2026-10-18 (Part A, first and second runs). Part B pending.
+Date run: 2026-10-18
 
 ## Environment
-- Host: Oracle A1 class VM. OS and gpg version: to be recorded (run gpg --version).
+- Host: Oracle A1 class VM, Ubuntu. gpg version: to be recorded (run gpg --version).
 - Tools: gpg (symmetric and asymmetric), sha256sum.
 
 ## Question
@@ -17,21 +17,28 @@ Part A: restored SHA-256 equals the reference hash saved before the original was
 Part B: VM encrypts with a public key without a prompt; VM cannot decrypt; CEO key restores with matching SHA-256.
 
 ## Method
-Runbook guides/vm-spike-runbook.md, step 1. The first run had an invalid wrong-passphrase test: gpg-agent cached the passphrase, so the decrypt did not prompt and exited 0. The runbook now clears the cache with gpgconf --kill gpg-agent before each decrypt.
+Runbook guides/vm-spike-runbook.md, step 1 (corrected by fix-31 and fix-32). Earlier attempts recorded these faults, all fixed in the runbook:
+- Part A, first run: the gpg-agent passphrase cache made the wrong-passphrase test pass when it should fail. Fixed by gpgconf --kill gpg-agent before each decrypt.
+- Part A, hash check: the sha256 files named different files, so a whole-line diff failed. Fixed by comparing the hash value only.
+- Part B, first run: the key had no encryption subkey, so encrypt failed with "Unusable public key" and the later steps tested nothing. Fixed by adding the subkey with quick-add-key.
 
-## Result (Part A so far)
-- Reference SHA-256 of the random test file, recorded before deletion: 45c7eb60... (full value kept in the run log, not here)
-- Restore with the correct passphrase: exit 0. Restored file's SHA-256 printed as 45c7eb60... in both runs. The MATCH comparison is pending the rerun.
+## Result Part A
+- Reference SHA-256 of the random test file, recorded before deletion: 45c7eb60... (value in the run log, not repeated here)
+- Restore with the correct passphrase: exit 0. Restored hash equal to reference: MATCH.
 - Wrong passphrase after clearing the cache: "Bad session key", exit 2, no output file. PASS.
-- Part A status: pass pending MATCH line.
 
-## Result (Part B)
-Pending.
+## Result Part B
+- Encryption subkey added to the CEO key: [E] present.
+- Agent keyring: public key only; no secret keys listed.
+- Encrypt with the public key: exit 0, no prompt. PASS.
+- Agent decrypt: "No secret key", exit 2. PASS.
+- CEO restore with the CEO passphrase: exit 0, restored hash equal to reference: MATCH. PASS.
 
 ## Conclusion
-Pending Part A MATCH and Part B. Part B tests whether the VM can encrypt archives with a public key, so it never holds the restore secret. This is the design proposed for the archive (APR-0010 and ADR-0012 to confirm).
+Both parts pass. The VM can encrypt archives with a public key and cannot decrypt them; the CEO restores with the private key and passphrase. This supports public-key encryption for the archive. The choice is the CEO's: it should be recorded in APR-0010 or ADR-0012 when decided. The passphrases used in this drill were test-only and are not recorded here.
 
 ## Redaction log
 - Passphrases: never written to a file or to chat.
-- Reference hash: value of a random test file, not sensitive.
+- Reference hashes: values of random test files, not sensitive.
+- Key fingerprint: test key, not recorded here.
 - No hostnames, IPs or account names recorded.
