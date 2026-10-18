@@ -104,3 +104,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-18 - SPK-02 done (fix-35)
 - OPENCLAW_STATE_DIR and OPENCLAW_CONFIG_PATH move state for setup, status and the gateway. Logs go to /tmp. Gateway auth none at runtime; default model is cloud.
+
+## 2026-10-18 - SPK-03 partial (fix-36)
+- Two test agents with separate workspaces; sandbox mode off by default; Docker not installed (deferred to deploy).
+- Isolation-off canary not obtained: local model turns did not complete on this VM. Plain Ollama answers in seconds; OpenClaw turns with the tool catalog did not.
+- Added guides/local-model-setup.md.

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-35.sh",
+  "generated_by": "fix-36.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -928,6 +928,10 @@
       "status": "draft"
     },
     {
+      "path": "guides/local-model-setup.md",
+      "status": "draft"
+    },
+    {
       "path": "guides/measure-a-cli-call.md",
       "status": "draft"
     },
@@ -1037,6 +1041,10 @@
     },
     {
       "path": "research/spikes/SPK-02-openclaw-state-dir.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/spikes/SPK-03-agent-isolation.md",
       "status": "draft"
     },
     {
