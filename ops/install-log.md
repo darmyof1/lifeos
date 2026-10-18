@@ -101,3 +101,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-18 - SPK-02 partial (fix-34)
 - OPENCLAW_STATE_DIR and OPENCLAW_CONFIG_PATH move setup's state; the default state is unchanged. Gateway check open.
+
+## 2026-10-18 - SPK-02 done (fix-35)
+- OPENCLAW_STATE_DIR and OPENCLAW_CONFIG_PATH move state for setup, status and the gateway. Logs go to /tmp. Gateway auth none at runtime; default model is cloud.
