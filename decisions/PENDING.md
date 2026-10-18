@@ -6,7 +6,7 @@ Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042)
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
 Several need the OpenClaw runtime running on the VM. Run them when the system is up.
-Runbook: guides/vm-spike-runbook.md. Order: SPK-07, SPK-01, SPK-02, SPK-03, SPK-04. SPK-07 done (research/spikes/SPK-07-gpg-restore-drill.md). SPK-01 done for the mechanism; limits recorded in its file (research/spikes/SPK-01-egress-interception.md). Send back the results; the spike files are filled in after each run.
+Runbook: guides/vm-spike-runbook.md. Order: SPK-07, SPK-01, SPK-02, SPK-03, SPK-04. SPK-07 done (research/spikes/SPK-07-gpg-restore-drill.md). SPK-01 done for the mechanism; limits recorded in its file (research/spikes/SPK-01-egress-interception.md). SPK-02 partial: setup honours the override; gateway check open (research/spikes/SPK-02-openclaw-state-dir.md). Send back the results; the spike files are filled in after each run.
 
 ## P-17 - Dashboard or website for the owner (future)
 Owner: CMO (roster: "produces the weekly life dashboard"). Proposed, not yet approved: the CKO supplies the memory data behind it.

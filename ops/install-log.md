@@ -98,3 +98,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-18 - SPK-01 done (fix-33)
 - Per-user outbound block works: test user blocked from the internet, loopback open, ordinary user unaffected. Limits: not tested on an OpenClaw process; rule not persistent.
+
+## 2026-10-18 - SPK-02 partial (fix-34)
+- OPENCLAW_STATE_DIR and OPENCLAW_CONFIG_PATH move setup's state; the default state is unchanged. Gateway check open.

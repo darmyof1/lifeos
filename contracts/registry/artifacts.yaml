@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-33.sh",
+  "generated_by": "fix-34.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1037,7 +1037,7 @@
     },
     {
       "path": "research/spikes/SPK-02-openclaw-state-dir.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "research/spikes/SPK-03-workspace-isolation.md",
