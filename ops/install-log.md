@@ -109,3 +109,9 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Two test agents with separate workspaces; sandbox mode off by default; Docker not installed (deferred to deploy).
 - Isolation-off canary not obtained: local model turns did not complete on this VM. Plain Ollama answers in seconds; OpenClaw turns with the tool catalog did not.
 - Added guides/local-model-setup.md.
+
+## 2026-10-19 - SPK-04 Part A done (fix-37)
+- Two Slack apps (From a manifest), two accounts in one Gateway on port 19001, two agents bound to their accounts.
+- Each agent posted as its own identity (spk04-b APP, spk04-a APP). Runs: 14.7 s and 22.1 s with a hosted model.
+- Leakage check limited: the account argument of a send is not in the stored transcript. Part B not run.
+- Added guides/slack-multi-identity.md and research/spikes/SPK-04-slack-multi-identity.md.

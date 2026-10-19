@@ -5,6 +5,7 @@ How to set up and repeat a tool on the VM or the Mac. Written so that a fresh in
 | Guide | Status | Last verified |
 |---|---|---|
 | calendar-gcalcli.md | working (read and write) | 2026-10-15 |
+| slack-multi-identity.md | working (two identities; leakage check open) | 2026-10-19 |
 
 ## Rules for every guide
 1. Commands are copied from a real run, and each one shows its expected output.
