@@ -242,6 +242,13 @@ Use a new --session-id for every attempt. Do not pipe the run through tail, or n
 - Main agent: openai/gpt-6-luna. Utility model (titles, recaps, narration): set explicitly to openai/gpt-6-luna. Before this change the utility model was unset, so OpenClaw used the provider's built-in small model, gpt-5.6-luna. That is where the gpt-5.6-luna requests came from.
 - Check what is served: the gateway log line model-fetch ... model= shows the model on each response. After the change, the test turn showed model=gpt-6-luna and no gpt-5.6-luna.
 - Check what is billed: OpenAI usage dashboard, life-os project, 7-day range, Spend categories. Billing lags, so check again later. On 2026-10-19 this view showed gpt-6-luna cache writes ($0.006) and no gpt-5_6-luna rows.
+- Billing re-check 2026-10-20 (life-os chip set, 1-day view, Spend categories):
+    - gpt-6-luna: cache writes $0.02, cached input $0.014, input $0.004, output $0.002. Total about $0.04 for the day.
+    - gpt-5_6-luna: $0 on every line (input, output, cache writes, cached input, cache writes 12hr).
+    - text-embedding-3-small: $0.
+    - Personal October total moved from $1.17 (2026-10-19) to $1.21. The $0.04 increase matches the gpt-6-luna spend.
+    - Conclusion: the configured model (gpt-6-luna) is the one billed. The old model shows no spend since the switch. Billing is confirmed for the test.
+
 - Check the config: openclaw models status 2>&1 | grep -E 'Default|Utility'. Expected both lines show openai/gpt-6-luna.
 - Prices (official model pages, 2026-10-19, per 1M tokens, short context): gpt-6-luna $0.10 input, $0.01 cached input, $0.125 cache writes, $0.50 output. gpt-5.6-luna $0.20 input, $0.02 cached input, $0.25 cache writes, $1.20 output. gpt-6-luna is the cheaper model.
 - Reasoning tokens are counted in output_tokens and billed at the output price. In the direct test, 16 output tokens included 11 reasoning tokens.
@@ -272,7 +279,7 @@ Use a new --session-id for every attempt. Do not pipe the run through tail, or n
 1. Part B (local model posting) is paused. Restart it only after item 2 is answered.
 2. A thread turn on spk04-b was served by openai/gpt-6-luna, although agents.entries.spk04-b.model is ollama/llama3.1-32k:latest. An earlier channel session did use ollama. Find out why new sessions take the default model. Check the provider=... part of the model-fetch line in the log.
 3. /new is refused as control-command-unauthorized, even with commands.ownerAllowFrom set. Find the sender rule before relying on /new. Until then, start a new session with a thread.
-4. The billing re-check on gpt-6-luna is scheduled for 2026-10-20 at 14:00 local time.
+4. Done 2026-10-20 (Billing re-check 2026-10-20): gpt-6-luna is the only billed model in the test; gpt-5_6-luna shows $0.
 5. Two mentions reached the gateway at 00:48:36 and 00:48:54 but only one reply was logged. Not explained.
 6. Unchanged: gateway token as a plain value (SecretRef unconfirmed), kernel reboot planning.
 

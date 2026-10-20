@@ -130,3 +130,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - spk04-b binding verified by a mention. Event subscription and app_mentions:read added in the Slack app settings. Channel allowlist entry added.
 - /new still refused (control-command-unauthorized). commands.ownerAllowFrom tried, not effective.
 - A thread turn was served by openai/gpt-6-luna. Part B paused.
+
+## 2026-10-20 - SPK-04 billing re-check (fix-41)
+- gpt-6-luna is the only billed model in the test. gpt-5_6-luna shows $0. Billing confirmed.

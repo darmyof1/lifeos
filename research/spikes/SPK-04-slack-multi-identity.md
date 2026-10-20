@@ -78,3 +78,7 @@ Can one Gateway with two Slack accounts let agent spk04-b post as spk04-b and ag
 - /new refused as control-command-unauthorized. commands.ownerAllowFrom with the plain and the slack-prefixed user ID did not authorize it.
 - A thread turn was served by openai/gpt-6-luna, not by the per-agent ollama model. Not explained.
 - Part B paused. See the guide, section Open items after 2026-10-20.
+
+## Update 2026-10-20: billing re-check
+- Life-os chip set, 1-day view: gpt-6-luna about $0.04 (cache writes, cached input, input, output); gpt-5_6-luna $0 on every line.
+- Personal October total $1.17 to $1.21, matching the gpt-6-luna increase.
