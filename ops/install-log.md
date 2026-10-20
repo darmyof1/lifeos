@@ -115,3 +115,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Each agent posted as its own identity (spk04-b APP, spk04-a APP). Runs: 14.7 s and 22.1 s with a hosted model.
 - Leakage check limited: the account argument of a send is not in the stored transcript. Part B not run.
 - Added guides/slack-multi-identity.md and research/spikes/SPK-04-slack-multi-identity.md.
+
+## 2026-10-19 - SPK-04 cleanup verified (fix-38)
+- Top-level Slack tokens removed; gateway auth token saved; both accounts connect; spk04-b direct send posted as spk04-b APP.
+- Incident: a gateway stop run without the state variables stopped the default openclaw-gateway.service. Restarted with systemctl --user start. Variables now set per terminal (env.sh).
+- Incident: a second gateway run on the same state folder caused a stall and a Slack socket error. Stopped; the first gateway reconnected.

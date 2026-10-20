@@ -11,6 +11,11 @@ One OpenClaw Gateway, two Slack accounts, two agents. A message from agent spk04
 The agent turns use a hosted model (openai/gpt-6-luna in config). Local model turns did not complete on this VM. See guides/local-model-setup.md.
 
 ## Before you start (HUMAN)
+- Every terminal needs the state variables before any openclaw command. Create this file once:
+
+    printf 'export OPENCLAW_STATE_DIR=~/spk04/state OPENCLAW_CONFIG_PATH=~/spk04/state/openclaw.json\n' > ~/spk04/env.sh
+
+  Then run source ~/spk04/env.sh in each terminal. Without it, openclaw uses the default state folder (~/.openclaw) and the default gateway service. In the test, a gateway stop without the variables stopped the default service that the Mac tunnel uses.
 - Two Slack apps in the test workspace. Create each one From a manifest.
   - Do not use the AI agent template: it makes an AGENT identity, not APP.
   - Do not use Starter or Blank apps.
@@ -206,14 +211,27 @@ Use a new --session-id for every attempt. Do not pipe the run through tail, or n
 | Agent says DONE, nothing in the channel | wrong channel ID, or the bot is not in the channel | Check the ID; /invite @spk04-b in the channel |
 | "event loop degraded" in channels status --probe | VM CPU saturated during a turn | Expected on this VM; it slows turns. It is not a Slack fault |
 | Turn aborted with "caller_signal_aborted" | Ctrl-C, or the terminal was closed | Run again with a new --session-id |
+| "openclaw gateway stop" reports "Stopped systemd service: openclaw-gateway.service" | the command ran without the state variables, so it stopped the default service | source ~/spk04/env.sh first. Restart the default service with systemctl --user start openclaw-gateway.service (this is what the Mac tunnel uses) |
+| Gateway terminal shows "waiting for Gateway state ownership held by another OpenClaw process" | a second gateway run on the same state folder | Ctrl-C the second terminal. Only one gateway run per state folder |
+| "liveness warning: event_loop_utilization=1" and a Slack "SMWebsocketError" shortly after | the duplicate gateway competing for the same database | Stop the duplicate. Check channels status --probe; the socket reconnects on its own in the test |
+| Gateway log shows "agent model: ollama/..." after a start | the gateway ran on the default state folder, not spk04 | Check the terminal had the state variables; the spk04 start shows "agent model: openai/gpt-6-luna" |
+
 
 ## Never paste here
 - Slack tokens (xoxb-, xapp-, xoxp-), the OpenAI key, the gateway auth token, and any value from slack.env or openai.env.
 - Real workspace IDs and the VM address. Use <CHANNEL_ID> and the placeholder names.
 
+## Cleanup verified 2026-10-19
+- Top-level channels.slack botToken and appToken removed with openclaw config unset. The log shows "Removed channels.slack.botToken" and "Removed channels.slack.appToken".
+- Slack still starts and connects with accounts only. The 22:02 start printed "[slack] [default] starting provider", "[slack] [spk04-b] starting provider" and "slack socket mode connected" twice. No SECRETS_REF_IGNORED lines.
+- Gateway auth token saved: gateway.auth.mode token and gateway.auth.token set from ~/spk04/gateway-token (mode 600). The 22:02 start printed no "auth token was missing" line.
+- The token is a plain value in the test config. The docs read on 2026-10-19 did not confirm that gateway.auth.token accepts a SecretRef.
+- A direct send from spk04-b (openclaw message send --channel slack --account spk04-b -t channel:<CHANNEL_ID>) posted as spk04-b APP after the cleanup.
+- The cleanup script is not in the repo. Its steps are above.
+
 ## Open items (not verified)
-1. Remove the top-level botToken and appToken from channels.slack. Then confirm the SECRETS_REF warnings are gone. The accounts-only shape is not yet tested.
-2. Persist a gateway auth token (gateway.auth.mode and gateway.auth.token), so it does not change on each start. The value must come from a generated secret, never from chat.
+1. Done 2026-10-19: top-level botToken and appToken removed; accounts-only shape connects (see Cleanup verified).
+2. Done 2026-10-19: gateway auth token saved as a plain value (see Cleanup verified). Whether it can be a SecretRef is not confirmed in the docs.
 3. The leakage check: the account argument of a send is not readable from the stored transcript. Find a way to read it, or design a test that would fail on the wrong account.
 4. Part B: local model posting not tested. Local turns did not complete on this VM.
 5. The served model: config says openai/gpt-6-luna; the log showed gpt-5.6-luna. Confirm the real model and the cost on the OpenAI dashboard.

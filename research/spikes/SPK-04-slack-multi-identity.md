@@ -57,3 +57,10 @@ Can one Gateway with two Slack accounts let agent spk04-b post as spk04-b and ag
 
 ## Redaction log
 - Tokens, API keys, workspace channel ID, VM address and paths outside the test folder omitted. No secret values recorded.
+
+## Update 2026-10-19: cleanup verified
+- Top-level Slack tokens removed. Accounts-only config connects both Slack accounts.
+- Gateway auth token saved. No auth-token warning at the spk04 start.
+- Direct send from spk04-b posted as spk04-b APP.
+- Restart lessons: state variables per terminal; a gateway stop without them stopped the default service; a second gateway run on the same state caused a 40-second stall and a Slack socket error.
+- Still open: Part B (local model posting), the leakage check (account argument not in the stored transcript), the served model vs config (gpt-5.6-luna vs gpt-6-luna), and the cost.
