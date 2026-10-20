@@ -64,3 +64,9 @@ Can one Gateway with two Slack accounts let agent spk04-b post as spk04-b and ag
 - Direct send from spk04-b posted as spk04-b APP.
 - Restart lessons: state variables per terminal; a gateway stop without them stopped the default service; a second gateway run on the same state caused a 40-second stall and a Slack socket error.
 - Still open: Part B (local model posting), the leakage check (account argument not in the stored transcript), the served model vs config (gpt-5.6-luna vs gpt-6-luna), and the cost.
+
+## Update 2026-10-19: model verified
+- Utility model was unset; OpenClaw used the provider default gpt-5.6-luna for side calls. Set explicitly to openai/gpt-6-luna.
+- After the change, the test turn was served as gpt-6-luna (gateway log) and no gpt-5.6-luna request appeared.
+- Billing on the life-os project (7-day range): gpt-6-luna only. Re-check tomorrow.
+- Prices confirmed on OpenAI model pages: gpt-6-luna is the cheaper model.

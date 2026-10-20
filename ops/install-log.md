@@ -120,3 +120,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Top-level Slack tokens removed; gateway auth token saved; both accounts connect; spk04-b direct send posted as spk04-b APP.
 - Incident: a gateway stop run without the state variables stopped the default openclaw-gateway.service. Restarted with systemctl --user start. Variables now set per terminal (env.sh).
 - Incident: a second gateway run on the same state folder caused a stall and a Slack socket error. Stopped; the first gateway reconnected.
+
+## 2026-10-19 - SPK-04 model verified (fix-39)
+- Utility model set explicitly to openai/gpt-6-luna (it had been the provider default gpt-5.6-luna).
+- Old OpenAI keys revoked; one project key (life-os) remains in the spk04 env file.
+- Billing re-check pending for the next day.

@@ -135,6 +135,7 @@ Note: main also has a catch-all rule, slack accountId=*, from setup. A send on a
 7. Set the model and the tool profile (Gateway still stopped).
 
     openclaw models set openai/gpt-6-luna
+    openclaw config set agents.defaults.utilityModel openai/gpt-6-luna
     openclaw config set tools.profile messaging
     openclaw config get tools.profile
 
@@ -229,12 +230,21 @@ Use a new --session-id for every attempt. Do not pipe the run through tail, or n
 - A direct send from spk04-b (openclaw message send --channel slack --account spk04-b -t channel:<CHANNEL_ID>) posted as spk04-b APP after the cleanup.
 - The cleanup script is not in the repo. Its steps are above.
 
+## Model in use (verified 2026-10-19)
+- Main agent: openai/gpt-6-luna. Utility model (titles, recaps, narration): set explicitly to openai/gpt-6-luna. Before this change the utility model was unset, so OpenClaw used the provider's built-in small model, gpt-5.6-luna. That is where the gpt-5.6-luna requests came from.
+- Check what is served: the gateway log line model-fetch ... model= shows the model on each response. After the change, the test turn showed model=gpt-6-luna and no gpt-5.6-luna.
+- Check what is billed: OpenAI usage dashboard, life-os project, 7-day range, Spend categories. Billing lags, so check again later. On 2026-10-19 this view showed gpt-6-luna cache writes ($0.006) and no gpt-5_6-luna rows.
+- Check the config: openclaw models status 2>&1 | grep -E 'Default|Utility'. Expected both lines show openai/gpt-6-luna.
+- Prices (official model pages, 2026-10-19, per 1M tokens, short context): gpt-6-luna $0.10 input, $0.01 cached input, $0.125 cache writes, $0.50 output. gpt-5.6-luna $0.20 input, $0.02 cached input, $0.25 cache writes, $1.20 output. gpt-6-luna is the cheaper model.
+- Reasoning tokens are counted in output_tokens and billed at the output price. In the direct test, 16 output tokens included 11 reasoning tokens.
+- Keys: one project key (life-os) is in ~/spk04/openai.env. Older keys were revoked on 2026-10-19. The grep for the key prefix found no other file holding a full key.
+
 ## Open items (not verified)
 1. Done 2026-10-19: top-level botToken and appToken removed; accounts-only shape connects (see Cleanup verified).
 2. Done 2026-10-19: gateway auth token saved as a plain value (see Cleanup verified). Whether it can be a SecretRef is not confirmed in the docs.
 3. The leakage check: the account argument of a send is not readable from the stored transcript. Find a way to read it, or design a test that would fail on the wrong account.
 4. Part B: local model posting not tested. Local turns did not complete on this VM.
-5. The served model: config says openai/gpt-6-luna; the log showed gpt-5.6-luna. Confirm the real model and the cost on the OpenAI dashboard.
+5. Done 2026-10-19 for the test: config, served model and billing all show gpt-6-luna after the utility change (see Model in use). Re-check billing tomorrow.
 6. Kernel upgrade pending (6.17 running, 7.0 expected). A reboot restarts the default openclaw-gateway.service and stops the test Gateway. Plan it.
 7. SPK-02 and SPK-03 ran on OpenClaw 2026.10.4. This guide was verified on 2026.10.5.
 
