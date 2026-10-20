@@ -210,6 +210,14 @@ Use a new --session-id for every attempt. Do not pipe the run through tail, or n
 | "Gateway auth token was missing. Generated a runtime token" | no gateway token is saved; it changes on each start | Open item below |
 | Message shows the AGENT badge, not APP | app created with the AI agent template | Create the app again From a manifest |
 | Agent says DONE, nothing in the channel | wrong channel ID, or the bot is not in the channel | Check the ID; /invite @spk04-b in the channel |
+| No reply in Slack. Log shows "Inbound app_mention", then reason "control-command-unauthorized" | /new is an owner-only command and the sender is not in commands.ownerAllowFrom | Set commands.ownerAllowFrom. In the test, neither the plain user ID nor the slack-prefixed ID authorized /new. Still open |
+| Slack reply says "This OpenClaw bot can't reply here because this channel isn't in its OpenClaw channel allowlist" | the channel is not listed under the account (groupPolicy is allowlist) | Add channels.slack.accounts.spk04-b.channels.<CHANNEL_ID>.enabled true (see Config reference) |
+| Mention in Slack, no "Inbound app_mention" line in the log at all | the Slack app has no event subscription for app_mention | Event Subscriptions: enable, add app_mention under bot events, add scope app_mentions:read, Reinstall to Workspace (see the section above) |
+| Gateway terminal prints "Another gateway (pid N) already owns this state directory; refusing..." | a second gateway run on the same state folder | Do not run openclaw gateway stop. Ctrl-C the refused terminal. The running gateway is not affected |
+| config patch prints "Refusing to replace models.providers.ollama.models" | the patch would remove existing model entries | Only if the replacement is intended: add --replace-path models.providers.ollama.models, after a dry run |
+| Local model turn fails: "the input length exceeds the context length" and "Auto-compaction failed" | the plain llama3.1:8b model runs with Ollama's small default context; OpenClaw sends about 34 KB of prompt | Use llama3.1-32k:latest. ollama show must print num_ctx 32768 under Parameters |
+| Thread reply served by openai/gpt-6-luna although the agent is set to ollama | new sessions take the default model; not explained | Open item. Before any local test, check the model-fetch line in the log shows provider=ollama |
+| Log line "MaxListenersExceededWarning: Possible EventEmitter memory leak" at gateway start | a known warning in this build | Not an error. Record it and move on |
 | "event loop degraded" in channels status --probe | VM CPU saturated during a turn | Expected on this VM; it slows turns. It is not a Slack fault |
 | Turn aborted with "caller_signal_aborted" | Ctrl-C, or the terminal was closed | Run again with a new --session-id |
 | "openclaw gateway stop" reports "Stopped systemd service: openclaw-gateway.service" | the command ran without the state variables, so it stopped the default service | source ~/spk04/env.sh first. Restart the default service with systemctl --user start openclaw-gateway.service (this is what the Mac tunnel uses) |
@@ -238,6 +246,35 @@ Use a new --session-id for every attempt. Do not pipe the run through tail, or n
 - Prices (official model pages, 2026-10-19, per 1M tokens, short context): gpt-6-luna $0.10 input, $0.01 cached input, $0.125 cache writes, $0.50 output. gpt-5.6-luna $0.20 input, $0.02 cached input, $0.25 cache writes, $1.20 output. gpt-6-luna is the cheaper model.
 - Reasoning tokens are counted in output_tokens and billed at the output price. In the direct test, 16 output tokens included 11 reasoning tokens.
 - Keys: one project key (life-os) is in ~/spk04/openai.env. Older keys were revoked on 2026-10-19. The grep for the key prefix found no other file holding a full key.
+
+## Event subscription, channel allowlist and owner (verified 2026-10-20)
+- Slack must send mentions to the Gateway. The manifest in this guide does not include an event subscription or the app_mentions:read scope, so add them in the Slack app settings, for each app (spk04-a and spk04-b):
+    1. Go to api.slack.com/apps, open the app, then OAuth and Permissions. Under Bot Token Scopes, add app_mentions:read and keep the existing scopes.
+    2. In the left menu, open Event Subscriptions. Turn Enable Events on. Under Subscribe to bot events, add app_mention. Click Save Changes.
+    3. Click Reinstall to Workspace and approve.
+    4. Open OAuth and Permissions again and check the Bot User OAuth Token. In the test it did not change, so slack.env did not need an update. If it changes, update SLACK_BOT_TOKEN_B in slack.env with nano and do a full gateway restart.
+- The bot must be in the channel: /invite @spk04-b. Seeing the app in the mention list is not enough by itself.
+- Channel allowlist: groupPolicy is allowlist by default, so the channel must be listed under the account. Without it, Slack replies with "This OpenClaw bot can't reply here because this channel isn't in its OpenClaw channel allowlist." The key was found in the config schema (see Config reference). The test used the gateway stopped for the change, then a restart.
+- Binding check: a mention of @spk04-b opens a session keyed agent:spk04-b:slack:channel:<CHANNEL_ID>. That shows the specific accountId=spk04-b rule won over the main agent's catch-all rule (slack accountId=*). The reply came from the spk04-b app.
+- Replies in a thread get their own session key (...:thread:<timestamp>), so a thread starts a new session.
+- Owner-only commands: /new is refused with reason control-command-unauthorized. commands.ownerAllowFrom was set with the plain user ID and then with the slack-prefixed user ID. Neither authorized /new in the test. Not solved.
+
+## Config reference (verified 2026-10-20)
+- Per-agent model: agents.entries.<agentId>.model, value in the form provider/model, for example ollama/llama3.1-32k:latest. Check with: openclaw config get agents.entries.spk04-b.model
+- Local provider: models.providers.ollama with baseUrl http://127.0.0.1:11434 (no /v1, because /v1 uses a mode where tool calling is not reliable), api ollama, timeoutSeconds 300, and a models list. Source: docs.openclaw.ai/providers/ollama/configuration.md
+- Channel allowlist entry: channels.slack.accounts.<accountId>.channels.<CHANNEL_ID>.enabled, value true. Path from the schema under /properties/channels/properties/slack/properties/accounts/additionalProperties/properties/channels. Check with: openclaw config get channels.slack.accounts.spk04-b.channels
+- Owner list: commands.ownerAllowFrom, an array of IDs. Schema path /properties/commands/properties/ownerAllowFrom. Effect on /new not confirmed (see above).
+- Patches: always run openclaw config patch --file <file> --dry-run first. If the patch would replace a list, it refuses unless --replace-path <path> is given.
+- Hot reload: patches to commands and channel entries reload live. The log shows "config change detected; evaluating reload" and "restarting slack channel". A full stop and start was used for the channel allowlist entry and the model change.
+- Local models: ollama show <model> must list tools under Capabilities. llama3.1:8b, llama3.1-32k:latest and qwen3.5 list tools. llama3.1-32k:latest has num_ctx 32768. qwen25-32k:latest is the 1.5B model with a 32k context; it lists tools but looped in an earlier test.
+
+## Open items after 2026-10-20 (Part B paused)
+1. Part B (local model posting) is paused. Restart it only after item 2 is answered.
+2. A thread turn on spk04-b was served by openai/gpt-6-luna, although agents.entries.spk04-b.model is ollama/llama3.1-32k:latest. An earlier channel session did use ollama. Find out why new sessions take the default model. Check the provider=... part of the model-fetch line in the log.
+3. /new is refused as control-command-unauthorized, even with commands.ownerAllowFrom set. Find the sender rule before relying on /new. Until then, start a new session with a thread.
+4. The billing re-check on gpt-6-luna is scheduled for 2026-10-20 at 14:00 local time.
+5. Two mentions reached the gateway at 00:48:36 and 00:48:54 but only one reply was logged. Not explained.
+6. Unchanged: gateway token as a plain value (SecretRef unconfirmed), kernel reboot planning.
 
 ## Open items (not verified)
 1. Done 2026-10-19: top-level botToken and appToken removed; accounts-only shape connects (see Cleanup verified).

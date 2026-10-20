@@ -125,3 +125,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Utility model set explicitly to openai/gpt-6-luna (it had been the provider default gpt-5.6-luna).
 - Old OpenAI keys revoked; one project key (life-os) remains in the spk04 env file.
 - Billing re-check pending for the next day.
+
+## 2026-10-20 - SPK-04 binding, channel and owner checks (fix-40)
+- spk04-b binding verified by a mention. Event subscription and app_mentions:read added in the Slack app settings. Channel allowlist entry added.
+- /new still refused (control-command-unauthorized). commands.ownerAllowFrom tried, not effective.
+- A thread turn was served by openai/gpt-6-luna. Part B paused.

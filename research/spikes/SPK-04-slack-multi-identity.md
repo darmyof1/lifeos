@@ -70,3 +70,11 @@ Can one Gateway with two Slack accounts let agent spk04-b post as spk04-b and ag
 - After the change, the test turn was served as gpt-6-luna (gateway log) and no gpt-5.6-luna request appeared.
 - Billing on the life-os project (7-day range): gpt-6-luna only. Re-check tomorrow.
 - Prices confirmed on OpenAI model pages: gpt-6-luna is the cheaper model.
+
+## Update 2026-10-20: binding, channel allowlist, owner test; Part B paused
+- spk04-b binding verified by a mention: session key agent:spk04-b, reply from the spk04-b app.
+- Required in Slack: event subscription app_mention and scope app_mentions:read (the manifest did not include them).
+- Required in config: channels.slack.accounts.spk04-b.channels.<CHANNEL_ID>.enabled true.
+- /new refused as control-command-unauthorized. commands.ownerAllowFrom with the plain and the slack-prefixed user ID did not authorize it.
+- A thread turn was served by openai/gpt-6-luna, not by the per-agent ollama model. Not explained.
+- Part B paused. See the guide, section Open items after 2026-10-20.
