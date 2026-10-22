@@ -142,3 +142,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-22 - Loop 1 decisions recorded (fix-43)
 - APR-0052 to APR-0056 and ADR-0018: time-boxed cloud-only exception, Slack test, local calendar journal, instruction approval, cost limits.
 - PENDING P-26 to P-29 added. SPK-10 planned.
+
+## 2026-10-22 - Loop 1 baseline on the Oracle VM (fix-44)
+- State folder ~/loop1/state created; config written by patch (model gpt-6-luna, utility model, messaging profile). Validated; no secrets in the file.
+- Old key copy removed; a new key stored in ~/loop1/openai.env (names checked only).
+- Agent commands read from help text; not run. See guides/loop1-baseline.md.

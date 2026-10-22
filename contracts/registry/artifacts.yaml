@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-43.sh",
+  "generated_by": "fix-44.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -937,6 +937,10 @@
     },
     {
       "path": "guides/local-model-setup.md",
+      "status": "draft"
+    },
+    {
+      "path": "guides/loop1-baseline.md",
       "status": "draft"
     },
     {
