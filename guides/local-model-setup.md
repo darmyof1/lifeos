@@ -1,7 +1,7 @@
 # Local model setup for OpenClaw (test VM)
 
-Status: draft. Verified on the test VM on 2026-10-18 with OpenClaw 2026.10.4 and Ollama.
-Not yet verified: that a local model completes a full agent turn on this VM in a reasonable time. See research/spikes/SPK-03-agent-isolation.md.
+Status: working for text replies and for one verified tool call (see section 4). Last verified: 2026-10-21 on AWS EC2 g4dn.xlarge (Tesla T4) with OpenClaw 2026.10.5 and Ollama.
+Not yet verified: tool calls over many turns and long threads. See "What is not established" below.
 
 Purpose: register a local Ollama model in OpenClaw, and run the checks to do before blaming the agent.
 
@@ -60,12 +60,47 @@ Then:
 
 The --replace-path flag is needed when the model list already has entries. Without it the patch is refused.
 
-## 4. Narrow the tool list
-Every agent turn sends the tool catalog. In testing it was 55 tools by default. Add this to the patch:
+## 4. Tool calling: the settings, the direct test, and the Slack proof
 
-    tools: { profile: "coding" }
+Every agent turn sends the tool catalog. Two settings decide what the model sees:
+- tools.profile: messaging (text only, used for the Slack test) or coding (adds shell and file tools). Profiles in this build: minimal, coding, messaging, full.
+- tools.toolSearch.enabled: when true, the model sees a compact list of names and must call a search tool to reach the shell tool. The local model never made that call. When false, the full tool list is sent.
 
-The count went down to 41. Check the line "tool-search: cataloged N tools" in the run output. Profiles in this build: minimal, coding, messaging, full (from openclaw config schema). Not verified: that the read tool is included in "coding".
+Observed on 2026-10-21: the tool-search line reported 18 tools with the messaging profile, and 34 to 43 with the coding profile.
+
+For a tool test, save this as ~/spk04/tools-test.json (no secrets in it):
+
+    {
+      "tools": {
+        "profile": "coding",
+        "toolSearch": { "enabled": false }
+      }
+    }
+
+Dry run, then apply, then check:
+
+    source ~/spk04/env.sh
+    openclaw config patch --file ~/spk04/tools-test.json --dry-run
+    openclaw config patch --file ~/spk04/tools-test.json
+    openclaw config get tools
+
+The change reloads without a gateway restart. Afterwards, set the profile back to messaging with the same steps, using {"tools": {"profile": "messaging"}}. The coding profile lets the bot run commands on the machine, so keep test prompts harmless and never ask it to print files from ~/spk04.
+
+Direct test, outside OpenClaw. Expect a tool_calls entry that names exec. If it prints null, fix the model before testing in Slack:
+
+    curl -s http://127.0.0.1:11434/api/chat -d '{"model":"qwen35-32k:latest","stream":false,"think":false,"messages":[{"role":"user","content":"Run the shell command: echo -n TOOL-PROOF-7 | sha256sum"}],"tools":[{"type":"function","function":{"name":"exec","description":"Run a shell command and return its output","parameters":{"type":"object","properties":{"command":{"type":"string"}},"required":["command"]}}}]}' | python3 -c 'import json,sys; m=json.load(sys.stdin)["message"]; print("tool_calls:", json.dumps(m.get("tool_calls"))); print("content:", (m.get("content") or "")[:200])'
+
+Slack proof, with a value the model cannot guess. Compute the expected answer on the VM first:
+
+    echo -n TOOL-PROOF-9 | sha256sum | cut -c1-12
+
+That prints 69de5eddebdb. Post a top-level message in the channel:
+
+    @<bot name> run the shell command "echo -n TOOL-PROOF-9 | sha256sum" and reply with only the first 12 characters of the hash
+
+Expect 69de5eddebdb. On 2026-10-21 the bot replied 69de5e, which is the right value, but only 6 characters. The log line to check is a tool_execution_started milestone in the agent-turn-timing subsystem.
+
+Results on 2026-10-21 (AWS, qwen35-32k): the direct test returned an exec call, and the OpenClaw test ran the command once tool search was off. llama3.1-32k wrote its tool calls as text and never ran them.
 
 ## 5. Run one turn with the output saved
     openclaw agent --agent <id> --local --session-id <new-id> --timeout 900 --message "<message>" 2>&1 | tee ~/spkNN/run.txt
@@ -82,11 +117,16 @@ The count went down to 41. Check the line "tool-search: cataloged N tools" in th
 - "lane task error ... This operation was aborted": the command was stopped, by Ctrl-C or a closed terminal.
 - "agent database stale lease: owner-pid-dead" after a stopped run: not an error by itself. The integrity gate reported healthy.
 
+- "Reply repeats the request text, or copies an earlier wrong answer": the channel session holds the earlier turns. Top-level posts in a channel all share one channel session, so posting at the top level does not start a clean session. Replies inside a thread get their own session. To start clean, delete the channel session with the gateway running: openclaw sessions delete <key> --agent <id> --dry-run, then the same command without --dry-run.
+- "Reply is plain text and no command ran": check openclaw config get tools. With toolSearch on, the model may never reach the shell tool. Set it as in section 4, then repeat the direct test.
+
 ## What is not established
-- Whether a local model completes a full agent turn on the test VM in a reasonable time.
-- What supportsTools and the messaging profile do. Not in the docs pages read.
-- Any change in OpenClaw releases after 2026.10.4. Release notes were not read.
-- Docker is needed to turn sandbox isolation on. It is not installed and is deferred to the deploy.
+- Tool calling was verified once, with one command, and the reply was 6 characters instead of 12. Repeat it in a fresh session before relying on it.
+- The prompt size with the full tool list on a long thread is not measured. The 32k limit may be reached.
+- /new authorization is unresolved. See guides/slack-multi-identity.md.
+- Slack image downloads fail because the apps lack the files:read scope. The scope was not added. Adding it would bring images into the context.
+- Other local models for tool calls: not tested.
+- The agent:main:main session ran a tool at 00:55 on 2026-10-21. Its tool profile is not known, and the cause was not checked.
 
 ## References
 - https://docs.openclaw.ai/providers/ollama/configuration

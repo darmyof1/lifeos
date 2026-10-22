@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-41.sh",
+  "generated_by": "fix-42.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -937,6 +937,10 @@
     },
     {
       "path": "guides/measure-a-cli-call.md",
+      "status": "draft"
+    },
+    {
+      "path": "guides/openclaw-and-ollama-install.md",
       "status": "draft"
     },
     {

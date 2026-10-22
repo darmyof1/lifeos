@@ -82,3 +82,9 @@ Can one Gateway with two Slack accounts let agent spk04-b post as spk04-b and ag
 ## Update 2026-10-20: billing re-check
 - Life-os chip set, 1-day view: gpt-6-luna about $0.04 (cache writes, cached input, input, output); gpt-5_6-luna $0 on every line.
 - Personal October total $1.17 to $1.21, matching the gpt-6-luna increase.
+
+## Update 2026-10-21: close-out (fix-42)
+- Text replies from the local model worked through OpenClaw (qwen35-32k) on the AWS GPU host.
+- Tool calls: the local model could not make them while OpenClaw's tool search hid the shell tool. With tools.toolSearch off and profile coding, one command ran (sha256 of a fixed string, 6 of 12 characters returned). Profile set back to messaging.
+- Open: /new refused; image downloads need files:read; see the guides.
+- The AWS instance was terminated after the run.

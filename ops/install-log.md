@@ -133,3 +133,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-20 - SPK-04 billing re-check (fix-41)
 - gpt-6-luna is the only billed model in the test. gpt-5_6-luna shows $0. Billing confirmed.
+
+## 2026-10-21 - SPK-04 close-out on AWS (fix-42)
+- New guide: guides/openclaw-and-ollama-install.md.
+- guides/local-model-setup.md updated: tool calling settings and proof, troubleshooting rows, open items.
+- Instance terminated. Transfer copies on the Mac must be deleted by hand.
