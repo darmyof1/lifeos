@@ -138,3 +138,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - New guide: guides/openclaw-and-ollama-install.md.
 - guides/local-model-setup.md updated: tool calling settings and proof, troubleshooting rows, open items.
 - Instance terminated. Transfer copies on the Mac must be deleted by hand.
+
+## 2026-10-22 - Loop 1 decisions recorded (fix-43)
+- APR-0052 to APR-0056 and ADR-0018: time-boxed cloud-only exception, Slack test, local calendar journal, instruction approval, cost limits.
+- PENDING P-26 to P-29 added. SPK-10 planned.

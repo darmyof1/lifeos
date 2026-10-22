@@ -13,3 +13,19 @@ Owner: CMO (roster: "produces the weekly life dashboard"). Proposed, not yet app
 Decision made: the owner must be able to reach it from the internet. It will be heavily protected. How it is protected is decided later.
 Not now: no design until the agent loop is proven.
 Needs: nothing today. A design item is opened when the loop is proven.
+
+## P-26 - Slack files:read scope (deferred)
+Proposed: do not add files:read. Attachments would reach the cloud model with no privacy gate (ADR-0003). Revisit after the privacy gate exists.
+Needs: nothing in Loop 1.
+
+## P-27 - Slack: one app, one display name per agent (test before Loop 1)
+Test: research/spikes/SPK-10-slack-one-app-display-names.md. Pass: posts from the agents show their own name and icon from one app, in their own channels, and only the COO accepts the CEO's requests. Fail: one app per agent (APR-0053).
+Needs: the test result.
+
+## P-28 - Calendar journal and Google Calendar (Loop 2)
+Proposed: the CoS keeps a journal of every calendar entry it means to write, with a status (pending, written, failed) and an attempt count. A scheduled job (code, not the model) retries pending entries every 5 minutes (S-06). Before a retry it searches Google for the entry's unique name (APR-0034) so that a write which succeeded but looked failed is not repeated. After 5 failures the COO is told and the CEO checks. If the Google token is revoked (S-07), all writes pause and the CIO alerts in its channel. Google stays the calendar of record (APR-0031); the journal is the hold and the audit trail.
+Needs: CEO yes or no.
+
+## P-29 - /new refused (session reset)
+Time box: 2 hours on the pinned OpenClaw version, using the slash-command and session docs (session reset settings). Fallback until solved: one Slack thread per run, or openclaw sessions delete with the gateway running.
+Needs: the time-boxed result.

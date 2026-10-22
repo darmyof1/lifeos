@@ -402,3 +402,60 @@ Meaning:
 Closes: P-25
 Changeable: yes. A change is a new APR entry.
 Applies to: design/cho-scenarios.md (C-01 to C-06); roster (CIO alarm role); P-25 closed
+
+## APR-0052 - Loop 1 runs cloud-only on synthetic data (time-boxed exception)
+Status: approved
+Decided by: CEO
+Your answer: "1. yes" (to the Loop 1 exception record proposed on 2026-10-22)
+Meaning:
+- Scope: Loop 1 only. Four agents: COO, CHO, CoS, CFO.
+- Model: every agent uses openai/gpt-6-luna through OpenClaw's OpenAI provider, as both the default and the utility model.
+- Data: synthetic only. No file from lifeos-seed/ is copied, mounted or rendered onto the Loop 1 host. No real personal data is typed into Loop 1 Slack channels.
+- Suspended for Loop 1 only: APR-0018 and APR-0021 (cheap cloud model), APR-0051 (meal drafts on the local model), APR-0031 (Google Calendar, see APR-0054), APR-0047 and APR-0049 (CISO leak scan; the CEO checks by hand instead), and the router path of ADR-0003 and ADR-0004 (router, privacy gate and CLI adapters are not used).
+- Not changed: contracts/models/aliases.yaml. The triage alias stays local (APR-0001).
+- Expiry: when Loop 1 closes or on 2026-11-15, whichever comes first. After expiry the suspended entries apply again, unless a new APR entry changes them.
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/adr/ADR-0018-loop-1-cloud-only-exception.md; the Loop 1 OpenClaw config
+
+## APR-0053 - Loop 1 Slack: one app, each agent posts under its own name (must be proven)
+Status: approved
+Decided by: CEO
+Your answer: "you are recommending 1 app on slack and each agent post with their identity? we need to prove that can be achieved otherwise we will need different apps in slack."
+Meaning:
+- Loop 1 aims at APR-0048: one Slack app; each agent posts under its own display name and icon, in its own channel. Only the COO accepts requests from the CEO.
+- This is proven by a test before Loop 1 (SPK-10, P-27). OpenClaw's Slack docs say the chat:write.customize scope lets outgoing messages use the active agent's name and icon.
+- If the test fails, each Loop 1 agent gets its own Slack app (the shape SPK-04 proved), and APR-0048 is changed by a new APR entry.
+Changeable: yes. A change is a new APR entry.
+Applies to: research/spikes/SPK-10-slack-one-app-display-names.md; Slack app setup for Loop 1
+
+## APR-0054 - Loop 1 calendar is a local journal kept by the CoS
+Status: approved
+Decided by: CEO
+Your answer: "3. yes to your recommendation"
+Meaning:
+- Loop 1 makes no Google Calendar writes. The CoS keeps a calendar journal file in its own runtime workspace (never in the repo) and is its only writer (APR-0030).
+- Each entry is named per APR-0034 and APR-0035 and carries a status.
+- Google Calendar (APR-0031) is added in Loop 2. How the journal works with Google (retries, holds, duplicate checks) is open as P-28.
+Changeable: yes. A change is a new APR entry.
+Applies to: Loop 1 CoS instructions; tests/scenario/bad-sleep-reschedule.md
+
+## APR-0055 - Loop 1 agent instructions: drafted by the AI in the CSTO role, approved as one set
+Status: approved
+Decided by: CEO
+Your answer: "4. yes"
+Meaning:
+- For the four Loop 1 agents, the AI writes the instruction files in the CSTO role: only from approved APR entries, no new rules, and each rule cites its APR number (as APR-0046 requires).
+- The CEO approves the four sets once, together, before first use.
+- The tool check that APR-0046 gives to the CISO is done by the AI with the health check, because no CISO agent runs in Loop 1.
+Changeable: yes. A change is a new APR entry.
+Applies to: agent-files for COO, CHO, CoS and CFO (Loop 1 only)
+
+## APR-0056 - Loop 1 cost limits
+Status: approved
+Decided by: CEO
+Your answer: "5. yes"
+Meaning:
+- Each scenario run has a ceiling of 0.05 USD. A run that reaches it stops and is recorded as a failure.
+- Provider alert at 1 USD per day; monthly limit of 5 USD for the life-os project.
+Changeable: yes. A change is a new APR entry.
+Applies to: OpenAI project settings; the health check; tests/scenario/bad-sleep-reschedule.md

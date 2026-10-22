@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-42.sh",
+  "generated_by": "fix-43.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -812,6 +812,10 @@
       "status": "planned"
     },
     {
+      "path": "decisions/adr/ADR-0018-loop-1-cloud-only-exception.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/README.md",
       "status": "planned"
     },
@@ -1086,6 +1090,10 @@
     {
       "path": "research/spikes/SPK-09-haiku-model-probe.md",
       "status": "draft"
+    },
+    {
+      "path": "research/spikes/SPK-10-slack-one-app-display-names.md",
+      "status": "planned"
     },
     {
       "path": "research/spikes/_TEMPLATE.md",
