@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-44.sh",
+  "generated_by": "fix-46.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -828,6 +828,10 @@
       "status": "planned"
     },
     {
+      "path": "deploy/loop1/loop1-agent-files.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/render/README.md",
       "status": "planned"
     },
@@ -1525,7 +1529,7 @@
     },
     {
       "path": "tests/scenario/bad-sleep-reschedule.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "tests/scenario/privacy-override.md",

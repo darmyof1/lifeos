@@ -153,3 +153,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Agent-to-agent allow lists, sessions visibility (agent) and sub-agent limits set by patch.
 - File tools enabled for CoS, CHO and CFO with workspaceOnly. A handoff from CHO to CoS and a diet change from CHO to CFO both passed.
 - Details and results: guides/loop1-baseline.md, section 7.
+
+## 2026-10-22 - Bad-sleep scenario runs on the Oracle VM (fix-46)
+- Run 1 failed (no event ID rule), run 2 partial (journal edited in place), run 3 passed criteria 1 to 5.
+- CEO ruling on moves recorded as APR-0057; instruction set v1.1 and v1.2 recorded as APR-0058.
+- Approved instruction script copied to deploy/loop1/loop1-agent-files.sh. P-28 updated with the journal size and status points.

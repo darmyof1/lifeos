@@ -117,6 +117,9 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - Before any test, check one gateway process: pgrep -af "openclaw.*gateway" | grep -v pgrep | wc -l should print 1.
 - After a terminal disconnect, check for a gateway process with pgrep before using pkill.
 - Use a fresh --session-id for each test. An old session can keep earlier tool results.
+- Reset state to the seed before every scenario run: git -C ~/loop1/workspaces/<id> checkout -- state/. Copy the state to ~/loop1/evidence/<date>/ first.
+- Set a git identity in each workspace once: git -C <workspace> config user.name loop1, and the same for user.email. Without it a commit fails with "Author identity unknown".
+- An instruction change is appended to AGENTS.md and committed in the workspace, then the same change goes into deploy/loop1/loop1-agent-files.sh in the repo, so the repo and the VM match.
 
 ### 7.5 Results (2026-10-22)
 | Test | Expected | Result |
@@ -128,6 +131,9 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 | CoS reads its journal | returns the last line | Pass after alsoAllow |
 | CoS reads a file outside its workspace | refused | Pass |
 | CHO diet change, COO forwards to CFO | CFO adjusts the grocery budget | Pass (loop1-diet-001, 150 to 125 USD) |
+| Bad-sleep reschedule, run 1 (v1) | CHO sends the move to the CoS | Fail: no rule for creating an event ID |
+| Bad-sleep reschedule, run 2 (v1.1) | append-only journal, summary names every agent | Partial |
+| Bad-sleep reschedule, run 3 (v1.2) | all five criteria | Pass (tests/scenario/bad-sleep-reschedule.md) |
 | Restart recovery mid-flow | flow completes or fails cleanly | Not yet tested |
 
 ### 7.6 Not established
@@ -151,3 +157,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 
 ## History
 - 2026-10-22: written from the baseline run on the Oracle VM (fix-44).
+- 2026-10-22: section 7 rules and results extended with the bad-sleep scenario (fix-46).

@@ -24,6 +24,9 @@ Needs: the test result.
 
 ## P-28 - Calendar journal and Google Calendar (Loop 2)
 Proposed: the CoS keeps a journal of every calendar entry it means to write, with a status (pending, written, failed) and an attempt count. A scheduled job (code, not the model) retries pending entries every 5 minutes (S-06). Before a retry it searches Google for the entry's unique name (APR-0034) so that a write which succeeded but looked failed is not repeated. After 5 failures the COO is told and the CEO checks. If the Google token is revoked (S-07), all writes pause and the CIO alerts in its channel. Google stays the calendar of record (APR-0031); the journal is the hold and the audit trail.
+Loop 1 results (2026-10-22): the journal is append-only (APR-0058) and a move is two lines (APR-0057). The health check fails on any removed journal line (git diff --numstat shows deletions above 0).
+Added: keep the active journal small, because the CoS reads all of it on every check and cost grows with it. Keep future entries, the last 14 days and anything not yet pushed. Move older lines each month to state/archive/calendar-YYYY-MM.md. The workspace git keeps the full history.
+Added: for Loop 2 the status set grows to requested, written, pushed, failed (with attempt count and last error), conflict, moved and delete-pending-approval, plus the Google event ID once pushed. Pushes and retries run in code, not in the model (ADR-0008, ADR-0011).
 Needs: CEO yes or no.
 
 ## P-29 - /new refused (session reset)

@@ -459,3 +459,27 @@ Meaning:
 - Provider alert at 1 USD per day; monthly limit of 5 USD for the life-os project.
 Changeable: yes. A change is a new APR entry.
 Applies to: OpenAI project settings; the health check; tests/scenario/bad-sleep-reschedule.md
+
+## APR-0057 - A calendar move is not a delete (refines APR-0044)
+Status: approved
+Decided by: CEO
+Your answer: "for step 2. I approve your (a) Recommended"
+Meaning:
+- A move asked for by the CEO, or by the chief that owns the entry, is not a delete. It needs no CEO approval.
+- The old entry stays in the record and is marked moved. The new entry is written under its own name (APR-0034).
+- Removing an entry with no replacement is a delete and still needs the CEO's approval first (APR-0044).
+Changeable: yes. A change is a new APR entry.
+Applies to: CoS and CHO instructions; the calendar journal (APR-0054); Google Calendar writes in Loop 2
+
+## APR-0058 - Loop 1 instruction set v1.1 and v1.2 (amends the set approved under APR-0055)
+Status: approved
+Decided by: CEO
+Your answer: "i approved: Proposed fix (instruction set v1.1, needs your approval under APR-0055)." and "appproved step 3 also"
+Meaning:
+- v1.1, all four agents: whoever starts a change and was given no event ID creates one: <run ID>-<agent id>-<NN>, counting from 01 within the run. An event ID is never reused.
+- v1.2, all four agents: the move rule of APR-0057.
+- v1.2, CoS: a journal line is never edited or removed. A move appends the old entry again with status moved, then the new entry with status written. Both carry the run ID and event ID.
+- v1.2, COO: the summary to the CEO names every agent that changed something, taken from their replies (APR-0050).
+- The source of the set is deploy/loop1/loop1-agent-files.sh. The VM workspaces must match it.
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop1/loop1-agent-files.sh; Loop 1 agent workspaces
