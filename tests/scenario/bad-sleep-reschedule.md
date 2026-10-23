@@ -2,6 +2,7 @@
 
 Rules: APR-0052 (synthetic data), APR-0054 (journal), APR-0056 (cost), APR-0057 (move), APR-0058 (instructions v1.2), ADR-0018.
 Runs needed to close: three identical passing runs, plus one run with a gateway restart in the middle.
+Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retries passed). Still open: cost per run and the Slack view.
 
 ## Setup
 - Agents COO, CHO, CoS and CFO with instruction set v1.2 (deploy/loop1/loop1-agent-files.sh).
@@ -13,6 +14,11 @@ Runs needed to close: three identical passing runs, plus one run with a gateway 
       for a in cho cos cfo; do cp -r $W/$a/state $E/<run ID>-$a; git -C $W/$a checkout -- state/; done
 
 - Use a fresh session id for each run.
+- Between runs, cut the four main sessions to one line (synthetic data only; no backup is kept):
+
+      T=$(cat ~/loop1/gateway-token)
+      for a in coo cho cos cfo; do openclaw sessions compact "agent:$a:main" --agent $a --max-lines 1 --token "$T"; done
+
 
 ## Input (to the COO)
     openclaw agent --agent coo --session-id <run ID>-coo --timeout 300 -m "Loop 1 scenario run, run ID <run ID>. Alex Test slept 5 hours last night. Move the Wednesday workout on 2026-10-28 to Thursday 2026-10-29, 07:00 to 08:00. Route this to the CHO, which owns health. Wait for the result, then tell me in 3 lines what changed, who changed it, and the event IDs."
@@ -31,9 +37,7 @@ Runs needed to close: three identical passing runs, plus one run with a gateway 
 6. The run costs less than 0.05 USD (APR-0056). Not yet measured per run.
 
 ## Still to cover
-- Three identical passing runs in a row.
-- A run with a gateway restart in the middle.
-- Cost per run.
+- Cost per run (only a rough estimate so far: 0.15 USD for all tests on 2026-10-22, about 0.01 to 0.02 USD per scenario run).
 - What the CEO sees in Slack (after SPK-10).
 
 ## Run log
@@ -42,5 +46,9 @@ Runs needed to close: three identical passing runs, plus one run with a gateway 
 | loop1-scn-001 | 2026-10-22 | v1 | Fail | The CHO refused: no event ID was given and no rule said who creates one. Led to v1.1. |
 | loop1-scn-002 | 2026-10-22 | v1.1 | Partial | Move done. The CoS edited the 10-28 line in place, so the journal was not append-only. The COO summary named only the CHO. Led to APR-0057 and v1.2. |
 | loop1-scn-003 | 2026-10-22 | v1.2 | Pass (criteria 1 to 5) | numstat 2 0; event ID loop1-scn-003-cho-01; the summary named the CHO and the CoS. |
+| loop1-scn-004 | 2026-10-22 | v1.2 | Pass (criteria 1 to 5) | Summary listed the entry name as an event ID as well; the real event ID was given. |
+| loop1-scn-005 | 2026-10-22 | v1.2 | Pass (criteria 1 to 5) | Third pass in a row. |
+| loop1-scn-006 | 2026-10-22 | v1.2 | Pass (restart) | Ctrl-C during the run: the gateway drained for about 60 s and refused the CHO's sends; no change was written (numstat 0 0). Retry with the same run ID wrote one pair (2 0). |
+| loop1-scn-006 resend | 2026-10-22 | v1.2 | Pass (duplicate check) | Resending the finished run reported the earlier result; no -cho-02, numstat still 2 0. |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

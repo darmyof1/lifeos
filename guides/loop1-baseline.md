@@ -120,6 +120,11 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - Reset state to the seed before every scenario run: git -C ~/loop1/workspaces/<id> checkout -- state/. Copy the state to ~/loop1/evidence/<date>/ first.
 - Set a git identity in each workspace once: git -C <workspace> config user.name loop1, and the same for user.email. Without it a commit fails with "Author identity unknown".
 - An instruction change is appended to AGENTS.md and committed in the workspace, then the same change goes into deploy/loop1/loop1-agent-files.sh in the repo, so the repo and the VM match.
+- Ctrl-C drains work in flight before the gateway stops (budget 315 s; about 60 s on 2026-10-22). While it drains, cross-agent sends are refused. Nothing resumes after a restart; resend the same run ID. A resend is safe: the event ID stops a second write.
+- Main sessions (agent:<id>:main) cannot be deleted or archived. Cut one to its last line with: openclaw sessions compact "agent:<id>:main" --agent <id> --max-lines 1 --token "$(cat ~/loop1/gateway-token)". This is permanent and keeps no backup, so use it on synthetic data only.
+- session.reset is daily at 04:00 gateway local time (APR-0059). Check the VM time zone with timedatectl before setting atHour.
+- Commands that go through the gateway (sessions delete, compact, automations) need --token. Read it from ~/loop1/gateway-token; never print it.
+- The OpenAI project spend limit shows "Limit not enforced": it alerts but does not stop calls (P-31).
 
 ### 7.5 Results (2026-10-22)
 | Test | Expected | Result |
@@ -134,10 +139,15 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 | Bad-sleep reschedule, run 1 (v1) | CHO sends the move to the CoS | Fail: no rule for creating an event ID |
 | Bad-sleep reschedule, run 2 (v1.1) | append-only journal, summary names every agent | Partial |
 | Bad-sleep reschedule, run 3 (v1.2) | all five criteria | Pass (tests/scenario/bad-sleep-reschedule.md) |
-| Restart recovery mid-flow | flow completes or fails cleanly | Not yet tested |
+| Bad-sleep reschedule, runs 4 and 5 (v1.2) | same result as run 3 | Pass (three in a row) |
+| Restart mid-flow (run 6) | clean stop, safe retry | Pass: no change after the restart; the retry wrote one pair |
+| Resend of a finished run | no duplicate | Pass: earlier result reported; journal unchanged |
+| Compact main sessions | one line kept | Pass: all four compacted |
 
 ### 7.6 Not established
-- Restart recovery mid-flow.
+- Automatic resume after a restart. Not available: work in flight is drained or refused, and a retry must be sent again.
+- Whether the 04:00 daily reset fires on schedule (check the main session token counts the next day).
+- Why sessions show the runtime "OpenAI Codex" (P-30).
 - The messaging profile's full tool list. Session tools work in practice; the docs list is partial.
 - The main agent is excluded from agent-to-agent calls on purpose for Loop 1. Not tested either way.
 - Slack display names per agent (Spike 10).
@@ -150,7 +160,7 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 ## What is not established
 - Whether team create gives the four Loop 1 agents the right names and roles.
 - Whether set-identity names appear in Slack (Spike 10).
-- Restart recovery mid-flow (not tested). The gateway started and served agent turns on 2026-10-22; see section 7.
+- Automatic resume after a restart (not available; see section 7.4).
 
 ## Never paste here
 Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
@@ -158,3 +168,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 ## History
 - 2026-10-22: written from the baseline run on the Oracle VM (fix-44).
 - 2026-10-22: section 7 rules and results extended with the bad-sleep scenario (fix-46).
+- 2026-10-22: restart, duplicate and session results added; daily session reset (fix-47).

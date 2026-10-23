@@ -31,4 +31,15 @@ Needs: CEO yes or no.
 
 ## P-29 - /new refused (session reset)
 Time box: 2 hours on the pinned OpenClaw version, using the slash-command and session docs (session reset settings). Fallback until solved: one Slack thread per run, or openclaw sessions delete with the gateway running.
+Found 2026-10-22: OpenClaw has a config reset (session.reset, daily or idle). The CEO approved a daily reset at 04:00 AST (APR-0059). Main sessions cannot be deleted or archived; openclaw sessions compact <key> --max-lines 1 cuts one to its last line (no backup). /new in Slack is still refused; this fallback covers the CLI and cross-agent sessions.
 Needs: the time-boxed result.
+
+## P-30 - Runtime label "OpenAI Codex" on agent sessions
+Seen 2026-10-22: openclaw sessions lists the runtime as "OpenAI Codex (previous runtime: OpenClaw Default)". The model is still openai/gpt-6-luna and billing matches.
+Question: what changed the runtime (OpenClaw added a codex plugin entry on the first config write), and does it change tools, cost or behaviour?
+Needs: an investigation from the docs and the config, then a CEO yes or no on keeping it.
+
+## P-31 - Cost hard stop (APR-0056)
+Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.
+Proposed: the health check reads the day's spend and stops the gateway (kill switch) above the APR-0056 limits. Until then the CEO checks the usage page after each test session.
+Needs: CEO yes or no, and a check of whether OpenAI offers a daily alert.

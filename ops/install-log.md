@@ -158,3 +158,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Run 1 failed (no event ID rule), run 2 partial (journal edited in place), run 3 passed criteria 1 to 5.
 - CEO ruling on moves recorded as APR-0057; instruction set v1.1 and v1.2 recorded as APR-0058.
 - Approved instruction script copied to deploy/loop1/loop1-agent-files.sh. P-28 updated with the journal size and status points.
+
+## 2026-10-22 - Repeatability, restart and session tests on the Oracle VM (fix-47)
+- Bad-sleep runs 3 to 5 passed in a row. Run 6: restart mid-flow failed cleanly; the retry wrote once; a resend of the finished run wrote nothing.
+- Daily session reset at 04:00 AST set by patch (APR-0059). Main sessions compacted to one line.
+- Open: runtime label OpenAI Codex (P-30); the OpenAI spend limit is not enforced (P-31).

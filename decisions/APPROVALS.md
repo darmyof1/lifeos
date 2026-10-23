@@ -483,3 +483,15 @@ Meaning:
 - The source of the set is deploy/loop1/loop1-agent-files.sh. The VM workspaces must match it.
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop1/loop1-agent-files.sh; Loop 1 agent workspaces
+
+## APR-0059 - Agent sessions reset daily at 04:00 AST
+Status: approved
+Decided by: CEO
+Your answer: "yes to: agent’s session reset daily at 04:00 AST"
+Meaning:
+- OpenClaw config session.reset is mode daily, atHour 4. The hour is the gateway host's local time; the VM runs on AST (America/Santo_Domingo).
+- Each agent starts a fresh conversation every day at 04:00. Agent state lives in the state files, not in chat history, so nothing that matters is lost.
+- Reason: with no reset, cross-agent messages pile up in each agent's main session (the CoS main session reached 57k tokens on 2026-10-22). That raises the cost of every turn and lets old runs steer new ones.
+- Between scenario runs the main sessions are also cut to one line with openclaw sessions compact (synthetic data only; see guides/loop1-baseline.md section 7).
+Changeable: yes. A change is a new APR entry.
+Applies to: OpenClaw config (session.reset); Loop 1 scenario procedure
