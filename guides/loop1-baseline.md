@@ -80,6 +80,62 @@ Subcommands: list, add, bind, bindings, delete, set-identity, team, unbind.
 
 Not verified: the bind syntax, the team create options, and whether set-identity names reach Slack.
 
+## 7. Agents, tool policy and agent-to-agent (tested 2026-10-22)
+
+Tested on OpenClaw 2026.10.5 with the gateway running. Order for every change: read the tool-policy docs, read the schema, dry-run the patch, then run a live test.
+
+### 7.1 Add an agent and remove its first-run file
+    source ~/loop1/env.sh
+    openclaw agents add <id> --non-interactive --workspace ~/loop1/workspaces/<id> --model openai/gpt-6-luna --json
+    rm -f ~/loop1/workspaces/<id>/BOOTSTRAP.md
+
+Expect agentId and workspace in the output. BOOTSTRAP.md is a first-run identity interview; delete it so the agent does not start one. Add agents with the gateway stopped, because the add writes config.
+
+### 7.2 Change config only with a patch file
+Write the change as JSON, then:
+
+    openclaw config patch --file <file> --dry-run
+    openclaw config patch --file <file>
+    openclaw config validate
+
+Check the result with openclaw config get. Do not hand-edit openclaw.json.
+
+### 7.3 Keys that worked on 2026-10-22
+- tools.agentToAgent: enabled true, and allow lists the agent ids that may take part.
+- agents.entries.<id>.tools.agentToAgent.send: the ids this agent may message. A missing entry is refused with: "Agent-to-agent messaging denied by the requester agent tools.agentToAgent.send allowlist."
+- tools.sessions.visibility: agent. Sessions can only be targeted within the same agent, so one agent cannot read another agent's session. Explicit send destinations still work.
+- agents.defaults.subagents: maxSpawnDepth 1, maxChildrenPerAgent 2, runTimeoutSeconds 120.
+- agents.entries.<id>.tools.alsoAllow: ["read", "write", "edit"] for agents that keep state files, with agents.entries.<id>.tools.fs.workspaceOnly set to true.
+
+### 7.4 Rules learned the hard way
+- Docs first. The tool-policy page (docs.openclaw.ai/gateway/config-tools/tool-policy) lists the profile contents and tool groups. group:fs means read, write, edit and apply_patch. Then the schema, then the console. The docs lag the console, so the console wins when they disagree.
+- allow and alsoAllow cannot both be set in the same scope. allow replaces the profile baseline. alsoAllow adds to it. On the messaging profile, use alsoAllow.
+- The warning "tools policy: profile messaging ... Add alsoAllow" means file tools are missing. The agent then answers that it has no file tool.
+- The gateway log line "code-mode: cataloged N tools" is a quick check. 4 meant the allow list had cut the agent down. 23 was the working count after the fix.
+- Scratch files for file tools go under .openclaw/tmp/ inside the agent workspace. A path outside it fails with "Path escapes sandbox root".
+- A gateway restart loads config changes. Stop it with Ctrl-C before a patch and start it again after.
+- Before any test, check one gateway process: pgrep -af "openclaw.*gateway" | grep -v pgrep | wc -l should print 1.
+- After a terminal disconnect, check for a gateway process with pgrep before using pkill.
+- Use a fresh --session-id for each test. An old session can keep earlier tool results.
+
+### 7.5 Results (2026-10-22)
+| Test | Expected | Result |
+|---|---|---|
+| COO identity | names itself and lists its send targets | Pass |
+| CHO isolation | sees only its own session | Pass |
+| CFO sends to CHO (not on its list) | refused by the allowlist | Pass |
+| CHO sends calendar request to CoS | CoS writes a journal line and replies | Pass (loop1-test-002) |
+| CoS reads its journal | returns the last line | Pass after alsoAllow |
+| CoS reads a file outside its workspace | refused | Pass |
+| CHO diet change, COO forwards to CFO | CFO adjusts the grocery budget | Pass (loop1-diet-001, 150 to 125 USD) |
+| Restart recovery mid-flow | flow completes or fails cleanly | Not yet tested |
+
+### 7.6 Not established
+- Restart recovery mid-flow.
+- The messaging profile's full tool list. Session tools work in practice; the docs list is partial.
+- The main agent is excluded from agent-to-agent calls on purpose for Loop 1. Not tested either way.
+- Slack display names per agent (Spike 10).
+
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
 - Revoked key: a copy of an old key stays revoked. Create a new key in the life-os project.
@@ -88,7 +144,7 @@ Not verified: the bind syntax, the team create options, and whether set-identity
 ## What is not established
 - Whether team create gives the four Loop 1 agents the right names and roles.
 - Whether set-identity names appear in Slack (Spike 10).
-- Whether the gateway starts on this config. It has not been started.
+- Restart recovery mid-flow (not tested). The gateway started and served agent turns on 2026-10-22; see section 7.
 
 ## Never paste here
 Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.

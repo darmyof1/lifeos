@@ -147,3 +147,9 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - State folder ~/loop1/state created; config written by patch (model gpt-6-luna, utility model, messaging profile). Validated; no secrets in the file.
 - Old key copy removed; a new key stored in ~/loop1/openai.env (names checked only).
 - Agent commands read from help text; not run. See guides/loop1-baseline.md.
+
+## 2026-10-22 - Agent tests on the Oracle VM (fix-45)
+- Four agents added (COO, CHO, CoS, CFO) with the gateway stopped; first-run files removed.
+- Agent-to-agent allow lists, sessions visibility (agent) and sub-agent limits set by patch.
+- File tools enabled for CoS, CHO and CFO with workspaceOnly. A handoff from CHO to CoS and a diet change from CHO to CFO both passed.
+- Details and results: guides/loop1-baseline.md, section 7.
