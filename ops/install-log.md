@@ -169,3 +169,9 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Memory search and dreaming turned off (APR-0061); memory design opened as P-32.
 - Health check added (deploy/loop1/health-check.py). First VM run: offline and live, no FAIL.
 - Daily reset seen: the CoS main session got a new session ID at the first message after 04:00.
+
+## 2026-10-24 - Slack apps per agent and isolation tests on the Oracle VM (fix-49)
+- Spike 10: one app failed for handoff posts; one app per agent passed (APR-0062, changes APR-0048). P-27 closed.
+- Four Slack accounts, bindings, per-account channel allowlists and identities set by patch. Probe: four accounts connected.
+- SPK-03 on Loop 1: canary, shell and transcript checks refused as expected; Code Mode and sandbox not tested.
+- P-31 updated: OpenAI limit enforced. P-33 opened: do the other agents answer the CEO directly.

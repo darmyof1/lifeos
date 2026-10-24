@@ -151,7 +151,7 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - Which OpenClaw file adds the exit listeners behind the startup warning (stack trace not captured).
 - The messaging profile's full tool list. Session tools work in practice; the docs list is partial.
 - The main agent is excluded from agent-to-agent calls on purpose for Loop 1. Not tested either way.
-- Slack display names per agent (Spike 10).
+- Whether JavaScript Code Mode can reach files outside an agent's workspace or the network (SPK-03).
 
 ### 7.7 Runtime, memory and health check (2026-10-23)
 - Runtime pinned for openai/gpt-6-luna (APR-0060): agents.defaults.models["openai/gpt-6-luna"].agentRuntime.id = "openclaw". The patch needs a gateway restart. Check with openclaw sessions --agent cos --json: agentRuntime.id should read openclaw.
@@ -165,6 +165,18 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - First VM run, 2026-10-23: offline 38 PASS and 0 FAIL; live 40 PASS and 0 FAIL. The one WARN was the startup listener warning below, now reported as INFO.
 - MaxListenersExceededWarning ("11 exit listeners added to [process]") appears once per gateway start, right after the per-agent session-store maintenance (5 stores). It never came from a CLI run and never repeated inside one gateway process. The health check reports INFO while warnings do not outnumber gateway starts, and WARN if they do.
 
+### 7.8 Slack: one app per agent (2026-10-24, APR-0062)
+- Why: with one Slack app, only replies to a routed message carried the agent's name and icon. A post an agent made with its message tool after a handoff showed the app name. The Slack plugin sets the identity for replies only.
+- Shape: four apps (COO, CHO, CoS, CFO). Tokens in ~/loop1/slack.env, mode 600, names SLACK_BOT_TOKEN_<AGENT> and SLACK_APP_TOKEN_<AGENT>. Never print or paste them.
+- Each app needs: bot scopes app_mentions:read, chat:write, chat:write.customize, channels:history, channels:read, groups:history, groups:read (the last two for private channels); the app_mention bot event; socket mode with an app-level token (connections:write); an invite into its channel. After a scope or event change, reinstall the app.
+- Config (patch file, then dry run): channels.slack.accounts with four accounts: default (COO), cho, cos, cfo. Each has enabled, mode socket, botToken and appToken as env references {source env, provider default, id <NAME>}. Keep the name default for the first account; a config without it gave an unresolved-account error in SPK-04.
+- Each account needs its own channel in its allowlist: channels.slack.accounts.<id>.channels.<channel ID>.enabled true. Without it the bot answers: "This OpenClaw bot can't reply here because this channel isn't in its OpenClaw channel allowlist."
+- Bindings: one per channel (peer kind channel, id) to the agent, and one route per account (match channel slack, accountId) to the agent. openclaw agents bind --agent <id> --bind slack:<account> adds the route.
+- Identity: openclaw agents set-identity --agent <id> --name <name> --emoji ":name:". Slack needs the :name: form; a raw emoji did not show.
+- Start the gateway with slack.env and openai.env sourced. Check: openclaw channels status --probe shows four Slack lines ending in works.
+- What the CEO sees: replies show the agent's name and emoji. A post an agent makes with its message tool shows the app's name and the app's own Slack image, not the emoji. Set each app's image in Slack to match.
+- Results are in research/spikes/SPK-10-slack-one-app-display-names.md.
+
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
 - Revoked key: a copy of an old key stays revoked. Create a new key in the life-os project.
@@ -172,7 +184,7 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 
 ## What is not established
 - Whether team create gives the four Loop 1 agents the right names and roles.
-- Whether set-identity names appear in Slack (Spike 10).
+- Whether the CHO, CoS and CFO should answer the CEO directly in their channels (P-33).
 - Automatic resume after a restart (not available; see section 7.4).
 
 ## Never paste here
@@ -183,3 +195,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 - 2026-10-22: section 7 rules and results extended with the bad-sleep scenario (fix-46).
 - 2026-10-22: restart, duplicate and session results added; daily session reset (fix-47).
 - 2026-10-23: runtime pinned, memory off, health check added (fix-48).
+- 2026-10-24: Slack one app per agent (APR-0062), section 7.8 added (fix-49).

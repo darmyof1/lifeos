@@ -518,3 +518,16 @@ Meaning:
 - What memory LifeOS should have is open as P-32.
 Changeable: yes. A change is a new APR entry.
 Applies to: OpenClaw config on the Loop 1 VM; deploy/loop1/health-check.py
+
+## APR-0062 - Loop 1 Slack: one app per agent (changes APR-0048)
+Status: approved
+Decided by: CEO
+Your answer: "ok, (a) is approved, proceed"
+Meaning:
+- Each Loop 1 agent (COO, CHO, CoS, CFO) has its own Slack app, bot token and channel. This is the fallback written into APR-0053; it replaces the one-app part of APR-0048.
+- Why: with one app, only replies to a routed message showed the agent's name and icon. A post an agent made with its message tool after a handoff showed the app name (SPK-10, first run).
+- Each agent still has its own channel (APR-0048, unchanged).
+- The tokens stay in ~/loop1/slack.env on the VM and never in the repo.
+Closes: P-27
+Changeable: yes. A change is a new APR entry.
+Applies to: research/spikes/SPK-10-slack-one-app-display-names.md; guides/loop1-baseline.md section 7.8; Slack setup for Loop 1

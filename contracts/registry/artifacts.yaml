@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-48.sh",
+  "generated_by": "fix-49.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1077,7 +1077,7 @@
     },
     {
       "path": "research/spikes/SPK-03-workspace-isolation.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "research/spikes/SPK-04-slack-multi-identity.md",
@@ -1105,7 +1105,7 @@
     },
     {
       "path": "research/spikes/SPK-10-slack-one-app-display-names.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "research/spikes/_TEMPLATE.md",

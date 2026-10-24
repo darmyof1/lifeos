@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-30 (APR-0060).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -17,10 +17,6 @@ Needs: nothing today. A design item is opened when the loop is proven.
 ## P-26 - Slack files:read scope (deferred)
 Proposed: do not add files:read. Attachments would reach the cloud model with no privacy gate (ADR-0003). Revisit after the privacy gate exists.
 Needs: nothing in Loop 1.
-
-## P-27 - Slack: one app, one display name per agent (test before Loop 1)
-Test: research/spikes/SPK-10-slack-one-app-display-names.md. Pass: posts from the agents show their own name and icon from one app, in their own channels, and only the COO accepts the CEO's requests. Fail: one app per agent (APR-0053).
-Needs: the test result.
 
 ## P-28 - Calendar journal and Google Calendar (Loop 2)
 Proposed: the CoS keeps a journal of every calendar entry it means to write, with a status (pending, written, failed) and an attempt count. A scheduled job (code, not the model) retries pending entries every 5 minutes (S-06). Before a retry it searches Google for the entry's unique name (APR-0034) so that a write which succeeded but looked failed is not repeated. After 5 failures the COO is told and the CEO checks. If the Google token is revoked (S-07), all writes pause and the CIO alerts in its channel. Google stays the calendar of record (APR-0031); the journal is the hold and the audit trail.
@@ -39,7 +35,14 @@ Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit
 Proposed: the health check reads the day's spend and stops the gateway (kill switch) above the APR-0056 limits. Until then the CEO checks the usage page after each test session.
 Needs: CEO yes or no, and a check of whether OpenAI offers a daily alert.
 
+Update 2026-10-23: the CEO set the OpenAI project limit to enforced (5 USD per month). Calls stop with 429 project_spend_limit_exceeded when it is reached; enforcement is not instant. No daily alert option was confirmed. Still open: the kill switch in the health check and the 1 USD per day alert (APR-0056).
+
 ## P-32 - Memory design before Loop 2
 Open: the per-agent MEMORY.md files are empty templates and ADR-0011 (append-only history, projected state) is empty. OpenClaw's memory-core (memory search with embeddings, nightly dreaming) is off for Loop 1 (APR-0061).
 Questions: what each agent should remember beyond its state files; where memory lives; whether recall may use a cloud embedding model or must be local (ADR-0003); how memory stays append-only (ADR-0011).
 Needs: a design decision before Loop 2. Until then memory-core stays off.
+
+## P-33 - Do the CHO, CoS and CFO answer the CEO directly in their own channels?
+Seen 2026-10-24 (SPK-10): a mention of each agent in its own channel gets a reply from that agent. APR-0048 describes the COO channel as the CEO's door and gives every agent its own channel, but it does not say whether the CEO may ask the CHO, CoS or CFO directly.
+Options: (a) allowed, the CEO may talk to any agent in its channel; (b) only the COO takes the CEO's requests, and the other channels are for agent posts and viewing.
+Needs: CEO choice. Until then the Loop 1 channel allowlists allow the CEO's mentions in all four channels.
