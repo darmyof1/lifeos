@@ -175,3 +175,9 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Four Slack accounts, bindings, per-account channel allowlists and identities set by patch. Probe: four accounts connected.
 - SPK-03 on Loop 1: canary, shell and transcript checks refused as expected; Code Mode and sandbox not tested.
 - P-31 updated: OpenAI limit enforced. P-33 opened: do the other agents answer the CEO directly.
+
+## 2026-10-24 - First Slack-driven scenario run and instruction set v1.3 (fix-50)
+- loop1-scn-007 from the COO channel: journal correct, Slack view not (premature answer, late report, duplicates). Cost about 0.047 USD.
+- APR-0063: any agent may be addressed, the COO is the normal door (P-33 closed). APR-0064: instruction set v1.3.
+- deploy/loop1/loop1-v13-upgrade.sh added; not yet applied on the VM.
+- P-29 and P-32 updated.

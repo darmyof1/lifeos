@@ -531,3 +531,28 @@ Meaning:
 Closes: P-27
 Changeable: yes. A change is a new APR entry.
 Applies to: research/spikes/SPK-10-slack-one-app-display-names.md; guides/loop1-baseline.md section 7.8; Slack setup for Loop 1
+
+## APR-0063 - Any agent can be addressed; the COO is the normal door (closes P-33)
+Status: approved
+Decided by: CEO
+Your answer: "I was expecting that I can order any agent at any time. but mostly i will only talk to coo and he will handle the rest of the communication."
+Meaning:
+- The CEO may message any agent in its own channel at any time (option a of P-33). Normally the CEO talks to the COO, who routes to the chiefs and relays the result.
+- The Loop 1 channel allowlists keep the CEO's mentions allowed in all four agent channels.
+- APR-0048 is otherwise unchanged: each agent has its own channel and the COO channel holds only the CEO and the COO.
+- How much context the COO builds up when it routes everything is a design question, kept open in P-32.
+Closes: P-33
+Changeable: yes. A change is a new APR entry.
+Applies to: Slack channel allowlists; P-32
+
+## APR-0064 - Loop 1 instruction set v1.3 (Slack-driven runs)
+Status: approved
+Decided by: CEO
+Your answer: "v1.3 approved"
+Meaning:
+- COO: after sessions_send, wait with timeoutSeconds 240 and treat the reply as the result; do not ask other agents to confirm and do not read their sessions. Answer the CEO once, as the final answer, and never post with the message tool in the channel it answers in. A reply that arrives after the answer gets one line starting "Late reply:". Every FAILURE message goes into the answer to the CEO.
+- CHO, CoS and CFO: after a real change, or after sending a request that asks for one, post one line in their own Slack channel with the message tool (who did what, event ID), once per event ID. Failures go to the COO as a sessions_send message starting FAILURE, not posted by the agent. (APR-0050)
+- Why: loop1-scn-007 (first run from Slack) gave a premature "blocked" answer, a late report that woke the COO twice, two duplicate summaries and two incomplete-turn errors, and nothing in the CHO and CoS channels.
+- The lines are appended by deploy/loop1/loop1-v13-upgrade.sh. The channel IDs are read from ~/loop1/slack-channels.env on the VM and are not stored in the repo.
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop1/loop1-v13-upgrade.sh; the four AGENTS.md files on the VM; tests/scenario/bad-sleep-reschedule.md

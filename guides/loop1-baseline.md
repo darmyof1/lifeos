@@ -177,6 +177,14 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - What the CEO sees: replies show the agent's name and emoji. A post an agent makes with its message tool shows the app's name and the app's own Slack image, not the emoji. Set each app's image in Slack to match.
 - Results are in research/spikes/SPK-10-slack-one-app-display-names.md.
 
+### 7.9 Slack-driven runs: waiting, late replies, own-channel posts (2026-10-24)
+- A scenario run from the COO channel (loop1-scn-007) wrote the right journal lines and passed criteria 1 to 4. In Slack it was not clean: the COO answered "blocked" when its wait ended, the CHO's report arrived late, and the late report woke the COO twice. Each wake-up posted a summary with the message tool and then ended with no final text ("reasoning-only" retries, then "Agent couldn't generate a response").
+- Docs (concepts/session-tool): with sessions_send, a positive timeoutSeconds waits for the reply and returns it inline. The wait limits the sender only, and a late reply is not discarded: it reaches the requester later as an inter-session input. timeoutSeconds 0 returns without waiting.
+- Replies carry the agent's name and emoji. Message-tool posts show the app's name and the app's own Slack image. Set each Slack app's image to match its emoji.
+- The log line "[slack] delivered reply" appears only for replies, not for message-tool posts.
+- Cost: loop1-scn-007 cost about 0.047 USD (80 requests, about 1.5 million tokens, mostly cached), the sum of the item changes on the OpenAI usage page. The cache read dropped from about 29,000 tokens to 0 when the message tool was added and an earlier message's envelope changed; cache writes were the largest item. The COO's prompt on that turn was about 35,000 tokens.
+- The fix is instruction set v1.3 (APR-0064): wait 240 s and treat the reply as the result, one final answer, a one-line own-channel post by the CHO, CoS and CFO, failures through the COO. Apply with deploy/loop1/loop1-v13-upgrade.sh (gateway stopped). It reads the channel IDs from ~/loop1/slack-channels.env.
+
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
 - Revoked key: a copy of an old key stays revoked. Create a new key in the life-os project.
@@ -196,3 +204,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 - 2026-10-22: restart, duplicate and session results added; daily session reset (fix-47).
 - 2026-10-23: runtime pinned, memory off, health check added (fix-48).
 - 2026-10-24: Slack one app per agent (APR-0062), section 7.8 added (fix-49).
+- 2026-10-24: section 7.9 and instruction set v1.3 approved (fix-50).

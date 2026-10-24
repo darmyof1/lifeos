@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-49.sh",
+  "generated_by": "fix-50.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -833,6 +833,10 @@
     },
     {
       "path": "deploy/loop1/loop1-agent-files.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop1/loop1-v13-upgrade.sh",
       "status": "draft"
     },
     {

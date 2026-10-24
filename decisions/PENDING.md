@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -29,6 +29,7 @@ Needs: CEO yes or no.
 Time box: 2 hours on the pinned OpenClaw version, using the slash-command and session docs (session reset settings). Fallback until solved: one Slack thread per run, or openclaw sessions delete with the gateway running.
 Found 2026-10-22: OpenClaw has a config reset (session.reset, daily or idle). The CEO approved a daily reset at 04:00 AST (APR-0059). Main sessions cannot be deleted or archived; openclaw sessions compact <key> --max-lines 1 cuts one to its last line (no backup). /new in Slack is still refused; this fallback covers the CLI and cross-agent sessions.
 Needs: the time-boxed result.
+Seen 2026-10-24: "@COO /new" typed in the COO channel gave one inbound log line, no agent run, no reply and no refusal. Docs (tools/slash-commands): when commands.allowFrom is set it is the only authorization source for commands; without it the channel allowlists and pairing decide; Slack native commands are off by default. Next: read the schema description for commands.allowFrom, then a dry-run patch with the CEO's Slack user ID.
 
 ## P-31 - Cost hard stop (APR-0056)
 Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.
@@ -41,8 +42,4 @@ Update 2026-10-23: the CEO set the OpenAI project limit to enforced (5 USD per m
 Open: the per-agent MEMORY.md files are empty templates and ADR-0011 (append-only history, projected state) is empty. OpenClaw's memory-core (memory search with embeddings, nightly dreaming) is off for Loop 1 (APR-0061).
 Questions: what each agent should remember beyond its state files; where memory lives; whether recall may use a cloud embedding model or must be local (ADR-0003); how memory stays append-only (ADR-0011).
 Needs: a design decision before Loop 2. Until then memory-core stays off.
-
-## P-33 - Do the CHO, CoS and CFO answer the CEO directly in their own channels?
-Seen 2026-10-24 (SPK-10): a mention of each agent in its own channel gets a reply from that agent. APR-0048 describes the COO channel as the CEO's door and gives every agent its own channel, but it does not say whether the CEO may ask the CHO, CoS or CFO directly.
-Options: (a) allowed, the CEO may talk to any agent in its channel; (b) only the COO takes the CEO's requests, and the other channels are for agent posts and viewing.
-Needs: CEO choice. Until then the Loop 1 channel allowlists allow the CEO's mentions in all four channels.
+Added 2026-10-24 (APR-0063): the CEO will mostly talk to the COO, who routes to the chiefs, and may address any agent at any time. Open: how much context the COO builds up when it routes everything, and what it must ask the chiefs for instead of keeping. First data: the COO's prompt on a Slack turn was about 35,000 tokens (window 272,000). Per-agent token counts per scenario run are still to measure.

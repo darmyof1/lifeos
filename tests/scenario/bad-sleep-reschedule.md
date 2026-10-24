@@ -2,7 +2,7 @@
 
 Rules: APR-0052 (synthetic data), APR-0054 (journal), APR-0056 (cost), APR-0057 (move), APR-0058 (instructions v1.2), ADR-0018.
 Runs needed to close: three identical passing runs, plus one run with a gateway restart in the middle.
-Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retries passed). Still open: cost per run and the Slack view.
+Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retries passed). First Slack run (loop1-scn-007, 2026-10-24) was partial; instruction set v1.3 (APR-0064) is the fix. Still open: a clean Slack run, its cost and the Slack view.
 
 ## Setup
 - Agents COO, CHO, CoS and CFO with instruction set v1.2 (deploy/loop1/loop1-agent-files.sh).
@@ -34,11 +34,11 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
 3. The CoS journal keeps the 10-28 seed line and appends two lines: 10-28 moved and 10-29 written, both with the run ID and event ID (APR-0054, APR-0057).
 4. The numstat check prints 2 0: two lines added, none removed.
 5. The COO summary names the CHO and the CoS and gives the event ID (APR-0050).
-6. The run costs less than 0.05 USD (APR-0056). Not yet measured per run.
+6. The run costs less than 0.05 USD (APR-0056). First measure: about 0.047 USD for the Slack run loop1-scn-007 (usage page item changes, 2026-10-24).
 
 ## Still to cover
-- Cost per run (only a rough estimate so far: 0.15 USD for all tests on 2026-10-22, about 0.01 to 0.02 USD per scenario run).
-- What the CEO sees in Slack (after SPK-10).
+- Cost per run: about 0.047 USD for loop1-scn-007 (Slack, with retries). A clean Slack run under v1.3 is still to measure.
+- What the CEO sees in Slack: loop1-scn-007 showed posts in the COO channel only; the CHO and CoS channels stayed empty (APR-0050 gap, fixed by v1.3 once tested).
 
 ## Run log
 | Run | Date | Instructions | Result | Notes |
@@ -50,5 +50,6 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
 | loop1-scn-005 | 2026-10-22 | v1.2 | Pass (criteria 1 to 5) | Third pass in a row. |
 | loop1-scn-006 | 2026-10-22 | v1.2 | Pass (restart) | Ctrl-C during the run: the gateway drained for about 60 s and refused the CHO's sends; no change was written (numstat 0 0). Retry with the same run ID wrote one pair (2 0). |
 | loop1-scn-006 resend | 2026-10-22 | v1.2 | Pass (duplicate check) | Resending the finished run reported the earlier result; no -cho-02, numstat still 2 0. |
+| loop1-scn-007 | 2026-10-24 | v1.2 (Slack) | Partial | Run from the COO channel. Criteria 1 to 4 pass (numstat 2 0, event ID loop1-scn-007-cho-01). The COO's first reply said blocked after its wait ended; the CHO's late report woke the COO twice; two duplicate summaries by message tool and two incomplete-turn errors. The CHO and CoS channels showed no post. Cost about 0.047 USD, 80 requests. Led to v1.3 (APR-0064). |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).
