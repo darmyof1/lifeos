@@ -181,3 +181,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - APR-0063: any agent may be addressed, the COO is the normal door (P-33 closed). APR-0064: instruction set v1.3.
 - deploy/loop1/loop1-v13-upgrade.sh added; not yet applied on the VM.
 - P-29 and P-32 updated.
+
+## 2026-10-24 - v1.3 upgrade commit bug and run 008 (fix-51)
+- The first loop1-v13-upgrade.sh committed the dirty state/ files with git add -A; the seed reset then restored the run-007 state. Run 008 was invalid.
+- Script corrected (commits AGENTS.md only); the VM workspaces are repaired by hand (steps in guides/loop1-baseline.md section 7.9).

@@ -14,6 +14,8 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
       for a in cho cos cfo; do cp -r $W/$a/state $E/<run ID>-$a; git -C $W/$a checkout -- state/; done
 
 - Use a fresh session id for each run.
+- The reset above restores the last commit, so each workspace's HEAD must hold the seed state. Never run git add -A in a workspace while state/ is dirty (the first v1.3 upgrade did; repaired 2026-10-24).
+- A run from Slack also needs a fresh COO channel session: an old one remembers earlier runs.
 - Between runs, cut the four main sessions to one line (synthetic data only; no backup is kept):
 
       T=$(cat ~/loop1/gateway-token)
@@ -51,5 +53,6 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
 | loop1-scn-006 | 2026-10-22 | v1.2 | Pass (restart) | Ctrl-C during the run: the gateway drained for about 60 s and refused the CHO's sends; no change was written (numstat 0 0). Retry with the same run ID wrote one pair (2 0). |
 | loop1-scn-006 resend | 2026-10-22 | v1.2 | Pass (duplicate check) | Resending the finished run reported the earlier result; no -cho-02, numstat still 2 0. |
 | loop1-scn-007 | 2026-10-24 | v1.2 (Slack) | Partial | Run from the COO channel. Criteria 1 to 4 pass (numstat 2 0, event ID loop1-scn-007-cho-01). The COO's first reply said blocked after its wait ended; the CHO's late report woke the COO twice; two duplicate summaries by message tool and two incomplete-turn errors. The CHO and CoS channels showed no post. Cost about 0.047 USD, 80 requests. Led to v1.3 (APR-0064). |
+| loop1-scn-008 | 2026-10-24 | v1.3 (Slack) | Invalid | The state was not at the seed (the upgrade commit held the run-007 state), so the move was already done and no change was written. Seen: one COO reply with no "blocked" wait; a "Late reply:" line posted with the message tool and one incomplete-turn error, after the CHO sent a second report to the COO. No post in the CHO or CoS channel, as expected with no change. Cost about 0.009 USD (18 requests). Rerun after the repair. |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

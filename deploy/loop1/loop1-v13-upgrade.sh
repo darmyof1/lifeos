@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # loop1-v13-upgrade.sh - Loop 1 instruction set v1.3 (APR-0064). Run on the VM after loop1-agent-files.sh (v1.2).
-# Appends the v1.3 lines to each agent's AGENTS.md and commits them in the workspace git. Does not touch state/ files.
+# Appends the v1.3 lines to each agent's AGENTS.md and commits AGENTS.md only in the workspace git. Does not touch or commit state/ files.
+# (The first version used git add -A and committed the run-007 state; fixed 2026-10-24.)
 # Safe to run twice: an agent that already has the v1.3 lines is skipped.
 # Own-channel posts need each agent's Slack channel ID. The IDs are read from ~/loop1/slack-channels.env on the VM
 # (lines staff-cos=, operations-coo=, health-cho=, finance-cfo=) and are never stored in the repo.
@@ -24,8 +25,9 @@ add() {  # agent, then lines
   a=$1; shift
   if grep -q 'instruction set v1.3' "$W/$a/AGENTS.md"; then echo "$a: already v1.3, skipped"; return; fi
   printf '%s\n' "$@" >> "$W/$a/AGENTS.md"
-  git -C "$W/$a" add -A
-  git -C "$W/$a" -c user.name=loop1 -c user.email=loop1@localhost commit -q -m "Loop 1 instructions v1.3 (APR-0064)" || true
+  # Commit AGENTS.md only. Never git add -A here: state/ may hold uncommitted run data, and HEAD must stay the seed state.
+  git -C "$W/$a" add AGENTS.md
+  git -C "$W/$a" -c user.name=loop1 -c user.email=loop1@localhost commit -q -m "Loop 1 instructions v1.3 (APR-0064)" -- AGENTS.md || true
   echo "$a: v1.3 added"
 }
 

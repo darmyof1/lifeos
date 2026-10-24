@@ -184,6 +184,8 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - The log line "[slack] delivered reply" appears only for replies, not for message-tool posts.
 - Cost: loop1-scn-007 cost about 0.047 USD (80 requests, about 1.5 million tokens, mostly cached), the sum of the item changes on the OpenAI usage page. The cache read dropped from about 29,000 tokens to 0 when the message tool was added and an earlier message's envelope changed; cache writes were the largest item. The COO's prompt on that turn was about 35,000 tokens.
 - The fix is instruction set v1.3 (APR-0064): wait 240 s and treat the reply as the result, one final answer, a one-line own-channel post by the CHO, CoS and CFO, failures through the COO. Apply with deploy/loop1/loop1-v13-upgrade.sh (gateway stopped). It reads the channel IDs from ~/loop1/slack-channels.env.
+- First v1.3 upgrade, 2026-10-24: the script committed with git add -A while state/ held the run-007 journal and plan lines, so HEAD held that state and the reset (git checkout -- state/) restored it instead of the seed. Run loop1-scn-008 then found the move already done and changed nothing. The script now commits AGENTS.md only. Repair on the VM: in each workspace with state (cho, cos, cfo) git reset --soft HEAD~1, git reset -- state/, git checkout -- state/, then commit again.
+- Rule: in a workspace, never run git add -A while state/ is dirty. HEAD must hold the seed state, because the scenario reset restores HEAD.
 
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
@@ -205,3 +207,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 - 2026-10-23: runtime pinned, memory off, health check added (fix-48).
 - 2026-10-24: Slack one app per agent (APR-0062), section 7.8 added (fix-49).
 - 2026-10-24: section 7.9 and instruction set v1.3 approved (fix-50).
+- 2026-10-24: v1.3 upgrade commit bug and run 008 recorded (fix-51).
