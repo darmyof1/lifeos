@@ -2,7 +2,7 @@
 
 Rules: APR-0052 (synthetic data), APR-0054 (journal), APR-0056 (cost), APR-0057 (move), APR-0058 (instructions v1.2), ADR-0018.
 Runs needed to close: three identical passing runs, plus one run with a gateway restart in the middle.
-Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retries passed). First Slack run (loop1-scn-007, 2026-10-24) was partial; instruction set v1.3 (APR-0064) is the fix. Still open: a clean Slack run, its cost and the Slack view.
+Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retries passed). First Slack run (loop1-scn-007, 2026-10-24) was partial; instruction set v1.3 (APR-0064) is the fix. Run 009 passed in Slack; run 010 was partial (stale "pending"); instruction set v1.4 (APR-0065) is the fix. Still open: a clean run under v1.4 (loop1-scn-011).
 
 ## Setup
 - Agents COO, CHO, CoS and CFO with instruction set v1.2 (deploy/loop1/loop1-agent-files.sh).
@@ -36,11 +36,11 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
 3. The CoS journal keeps the 10-28 seed line and appends two lines: 10-28 moved and 10-29 written, both with the run ID and event ID (APR-0054, APR-0057).
 4. The numstat check prints 2 0: two lines added, none removed.
 5. The COO summary names the CHO and the CoS and gives the event ID (APR-0050).
-6. The run costs less than 0.05 USD (APR-0056). First measure: about 0.047 USD for the Slack run loop1-scn-007 (usage page item changes, 2026-10-24).
+6. The run costs less than 0.05 USD (APR-0056). First measure: about 0.047 USD for the Slack run loop1-scn-007 (usage page item changes, 2026-10-24). Run 010: at most about 0.020 USD (includes the health check turns after it).
 
 ## Still to cover
-- Cost per run: about 0.047 USD for loop1-scn-007 (Slack, with retries). A clean Slack run under v1.3 is still to measure.
-- What the CEO sees in Slack: loop1-scn-007 showed posts in the COO channel only; the CHO and CoS channels stayed empty (APR-0050 gap, fixed by v1.3 once tested).
+- Cost per run: 0.047 USD for loop1-scn-007 (Slack, with retries); at most 0.020 USD for loop1-scn-010. A clean run (loop1-scn-011, v1.4) is still to measure.
+- What the CEO sees in Slack: runs 009 and 010 showed one line each in the CHO and CoS channels (APR-0050 works). Run 010's COO reply was wrong ("pending"); v1.4 is the fix, to be tested.
 
 ## Run log
 | Run | Date | Instructions | Result | Notes |
@@ -54,5 +54,7 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
 | loop1-scn-006 resend | 2026-10-22 | v1.2 | Pass (duplicate check) | Resending the finished run reported the earlier result; no -cho-02, numstat still 2 0. |
 | loop1-scn-007 | 2026-10-24 | v1.2 (Slack) | Partial | Run from the COO channel. Criteria 1 to 4 pass (numstat 2 0, event ID loop1-scn-007-cho-01). The COO's first reply said blocked after its wait ended; the CHO's late report woke the COO twice; two duplicate summaries by message tool and two incomplete-turn errors. The CHO and CoS channels showed no post. Cost about 0.047 USD, 80 requests. Led to v1.3 (APR-0064). |
 | loop1-scn-008 | 2026-10-24 | v1.3 (Slack) | Invalid | The state was not at the seed (the upgrade commit held the run-007 state), so the move was already done and no change was written. Seen: one COO reply with no "blocked" wait; a "Late reply:" line posted with the message tool and one incomplete-turn error, after the CHO sent a second report to the COO. No post in the CHO or CoS channel, as expected with no change. Cost about 0.009 USD (18 requests). Rerun after the repair. |
+| loop1-scn-009 | 2026-10-24 | v1.3 (Slack) | Pass (criteria 1 to 5) | From the COO channel after the state repair. numstat 2 0; event ID loop1-scn-009-cho-01. One COO reply naming the CHO and CoS; one line each in the CHO and CoS channels; no late reply, no error. Cost not measured. |
+| loop1-scn-010 | 2026-10-24 | v1.3 (Slack) | Partial | Journal correct (numstat 2 0, loop1-scn-010-cho-01). The CHO reported "pending" while the CoS had already written; the COO told the CEO "pending" and named only the CHO; a stale "Late reply" followed. The CoS confirmation to the CHO failed twice (SESSION_WORK_START_CHANGED). Own-channel lines were posted. Cost at most 0.020 USD. Led to v1.4 (APR-0065). |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

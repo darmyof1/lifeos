@@ -185,3 +185,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-24 - v1.3 upgrade commit bug and run 008 (fix-51)
 - The first loop1-v13-upgrade.sh committed the dirty state/ files with git add -A; the seed reset then restored the run-007 state. Run 008 was invalid.
 - Script corrected (commits AGENTS.md only); the VM workspaces are repaired by hand (steps in guides/loop1-baseline.md section 7.9).
+
+## 2026-10-24 - /new solved, runs 009 and 010, instruction set v1.4 (fix-52)
+- /new in Slack works once each channel has a users list (CEO Slack ID); P-29 closed by that finding.
+- loop1-scn-009 passed in Slack. loop1-scn-010 was partial (stale pending report); cost at most 0.020 USD.
+- APR-0065: instruction set v1.4; deploy/loop1/loop1-v14-upgrade.sh added, not yet applied on the VM.

@@ -187,6 +187,18 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - First v1.3 upgrade, 2026-10-24: the script committed with git add -A while state/ held the run-007 journal and plan lines, so HEAD held that state and the reset (git checkout -- state/) restored it instead of the seed. Run loop1-scn-008 then found the move already done and changed nothing. The script now commits AGENTS.md only. Repair on the VM: in each workspace with state (cho, cos, cfo) git reset --soft HEAD~1, git reset -- state/, git checkout -- state/, then commit again.
 - Rule: in a workspace, never run git add -A while state/ is dirty. HEAD must hold the seed state, because the scenario reset restores HEAD.
 
+### 7.10 Slack control commands: /new needs a channel users list (2026-10-24)
+- "@COO /new" in a channel was refused for most of a day: one inbound log line, no reply, and a control-command-unauthorized entry in the gateway log file. It works once the channel has an explicit users list: channels.slack.accounts.<id>.channels.<CHANNEL ID>.users set to the CEO's Slack user ID. The patch hot-reloaded, and Slack answered "New session started."
+- From the Slack plugin code: for a message in a channel, the command decision uses the channel's users list and the account's allowFrom. With neither, the channel is open, and open does not authorize control commands. commands.allowFrom is read only for button actions. It was tried in four ID forms and removed.
+- Side effect: only the listed user can trigger an agent in that channel. All four Loop 1 channels have the list.
+- Use "@<agent> /new" to start each Slack run with a fresh session for that channel.
+- A terminal without ~/loop1/env.sh reads the default folder: one patch landed in ~/.openclaw/openclaw.json and sessions delete said Unknown agent id. The stray key was removed with openclaw config unset.
+
+### 7.11 Instruction set v1.4: wait for the result, answer once (APR-0065)
+- Run loop1-scn-010 (Slack): the CHO reported "pending" while the CoS had already written the move, and the CoS's confirmation to the CHO failed twice with SESSION_WORK_START_CHANGED (likely because the CHO's run was still active; not confirmed). The COO then told the CEO "pending".
+- v1.4: the CHO waits (timeoutSeconds 120) for the CoS reply; the CHO, CoS and CFO answer a request with their reply and send no separate message back. Apply with deploy/loop1/loop1-v14-upgrade.sh (gateway stopped; AGENTS.md only; skips agents already on v1.4).
+- Cost of run 010: at most 0.020 USD. The usage page lags, and the figure includes the health check turns after the run.
+
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
 - Revoked key: a copy of an old key stays revoked. Create a new key in the life-os project.
@@ -208,3 +220,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 - 2026-10-24: Slack one app per agent (APR-0062), section 7.8 added (fix-49).
 - 2026-10-24: section 7.9 and instruction set v1.3 approved (fix-50).
 - 2026-10-24: v1.3 upgrade commit bug and run 008 recorded (fix-51).
+- 2026-10-24: /new solved (7.10), instruction set v1.4 approved (7.11) (fix-52).

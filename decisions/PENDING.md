@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -24,12 +24,6 @@ Loop 1 results (2026-10-22): the journal is append-only (APR-0058) and a move is
 Added: keep the active journal small, because the CoS reads all of it on every check and cost grows with it. Keep future entries, the last 14 days and anything not yet pushed. Move older lines each month to state/archive/calendar-YYYY-MM.md. The workspace git keeps the full history.
 Added: for Loop 2 the status set grows to requested, written, pushed, failed (with attempt count and last error), conflict, moved and delete-pending-approval, plus the Google event ID once pushed. Pushes and retries run in code, not in the model (ADR-0008, ADR-0011).
 Needs: CEO yes or no.
-
-## P-29 - /new refused (session reset)
-Time box: 2 hours on the pinned OpenClaw version, using the slash-command and session docs (session reset settings). Fallback until solved: one Slack thread per run, or openclaw sessions delete with the gateway running.
-Found 2026-10-22: OpenClaw has a config reset (session.reset, daily or idle). The CEO approved a daily reset at 04:00 AST (APR-0059). Main sessions cannot be deleted or archived; openclaw sessions compact <key> --max-lines 1 cuts one to its last line (no backup). /new in Slack is still refused; this fallback covers the CLI and cross-agent sessions.
-Needs: the time-boxed result.
-Seen 2026-10-24: "@COO /new" typed in the COO channel gave one inbound log line, no agent run, no reply and no refusal. Docs (tools/slash-commands): when commands.allowFrom is set it is the only authorization source for commands; without it the channel allowlists and pairing decide; Slack native commands are off by default. Next: read the schema description for commands.allowFrom, then a dry-run patch with the CEO's Slack user ID.
 
 ## P-31 - Cost hard stop (APR-0056)
 Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.

@@ -556,3 +556,16 @@ Meaning:
 - The lines are appended by deploy/loop1/loop1-v13-upgrade.sh. The channel IDs are read from ~/loop1/slack-channels.env on the VM and are not stored in the repo.
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop1/loop1-v13-upgrade.sh; the four AGENTS.md files on the VM; tests/scenario/bad-sleep-reschedule.md
+
+## APR-0065 - Loop 1 instruction set v1.4 (wait for the result; answer once)
+Status: approved
+Decided by: CEO
+Your answer: "v1.4 approved."
+Meaning:
+- CHO: when it asks another agent for a change, it waits (timeoutSeconds 120) and treats the reply as the result. It reports done only from that reply. If the wait ends with no reply, it reports "no reply from <agent>" and sends the COO a FAILURE message.
+- CHO, CoS and CFO: when another agent's message asks them to do something, their answer to that message is their report. They do not also send a separate sessions_send message about it to that agent or to the COO. Failures still go to the COO as FAILURE messages (v1.3).
+- This changes one rule of instruction set v1 (wording of APR-0044 and APR-0050): the CoS no longer sends the COO a second message after a calendar add. The requester's report carries the result to the COO, and the CEO still sees the CoS's own-channel line (APR-0050).
+- Why: loop1-scn-010 (Slack run). The CHO reported "pending" while the CoS had already written the move, the COO told the CEO "pending" and named only the CHO, and the CoS's confirmation to the CHO failed twice (SESSION_WORK_START_CHANGED).
+- The lines are appended by deploy/loop1/loop1-v14-upgrade.sh (AGENTS.md only; skips agents already on v1.4).
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop1/loop1-v14-upgrade.sh; the CHO, CoS and CFO AGENTS.md files on the VM; tests/scenario/bad-sleep-reschedule.md
