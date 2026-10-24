@@ -495,3 +495,26 @@ Meaning:
 - Between scenario runs the main sessions are also cut to one line with openclaw sessions compact (synthetic data only; see guides/loop1-baseline.md section 7).
 Changeable: yes. A change is a new APR entry.
 Applies to: OpenClaw config (session.reset); Loop 1 scenario procedure
+
+## APR-0060 - Loop 1 model runtime pinned to OpenClaw (closes P-30)
+Status: approved
+Decided by: CEO
+Your answer: "1. yes, wonder if that's going to be a problem for our life-os system"
+Meaning:
+- For openai/gpt-6-luna the runtime is set to openclaw: agents.defaults.models["openai/gpt-6-luna"].agentRuntime.id = "openclaw".
+- Without it, OpenClaw chose the codex harness on its own ("implicit") partway through the 2026-10-22 tests. Same model and billing, but a harness that can change under a test breaks repeatability.
+- No conflict with the life-os design: the "codex" in contracts/models/aliases.yaml is the Codex CLI adapter (SPK-05, bypassed in Loop 1 by ADR-0018), not this runtime.
+Changeable: yes. A change is a new APR entry.
+Applies to: OpenClaw config on the Loop 1 VM; deploy/loop1/health-check.py
+
+## APR-0061 - Memory search and dreaming off for Loop 1
+Status: approved
+Decided by: CEO
+Your answer: "2. yes"
+Meaning:
+- memory.search.enabled is false and plugins.entries.memory-core.config.dreaming.enabled is false.
+- Memory search sends agent text to OpenAI for embeddings (115 requests on 2026-10-23), a cloud path outside the privacy gate (ADR-0003). Dreaming is a nightly model sweep that rewrites agent memory, which conflicts with append-only history (ADR-0011).
+- Loop 1 agents keep their state in state files, so neither feature is needed.
+- What memory LifeOS should have is open as P-32.
+Changeable: yes. A change is a new APR entry.
+Applies to: OpenClaw config on the Loop 1 VM; deploy/loop1/health-check.py

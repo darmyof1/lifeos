@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-30 (APR-0060).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -34,12 +34,12 @@ Time box: 2 hours on the pinned OpenClaw version, using the slash-command and se
 Found 2026-10-22: OpenClaw has a config reset (session.reset, daily or idle). The CEO approved a daily reset at 04:00 AST (APR-0059). Main sessions cannot be deleted or archived; openclaw sessions compact <key> --max-lines 1 cuts one to its last line (no backup). /new in Slack is still refused; this fallback covers the CLI and cross-agent sessions.
 Needs: the time-boxed result.
 
-## P-30 - Runtime label "OpenAI Codex" on agent sessions
-Seen 2026-10-22: openclaw sessions lists the runtime as "OpenAI Codex (previous runtime: OpenClaw Default)". The model is still openai/gpt-6-luna and billing matches.
-Question: what changed the runtime (OpenClaw added a codex plugin entry on the first config write), and does it change tools, cost or behaviour?
-Needs: an investigation from the docs and the config, then a CEO yes or no on keeping it.
-
 ## P-31 - Cost hard stop (APR-0056)
 Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.
 Proposed: the health check reads the day's spend and stops the gateway (kill switch) above the APR-0056 limits. Until then the CEO checks the usage page after each test session.
 Needs: CEO yes or no, and a check of whether OpenAI offers a daily alert.
+
+## P-32 - Memory design before Loop 2
+Open: the per-agent MEMORY.md files are empty templates and ADR-0011 (append-only history, projected state) is empty. OpenClaw's memory-core (memory search with embeddings, nightly dreaming) is off for Loop 1 (APR-0061).
+Questions: what each agent should remember beyond its state files; where memory lives; whether recall may use a cloud embedding model or must be local (ADR-0003); how memory stays append-only (ADR-0011).
+Needs: a design decision before Loop 2. Until then memory-core stays off.

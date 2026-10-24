@@ -163,3 +163,9 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Bad-sleep runs 3 to 5 passed in a row. Run 6: restart mid-flow failed cleanly; the retry wrote once; a resend of the finished run wrote nothing.
 - Daily session reset at 04:00 AST set by patch (APR-0059). Main sessions compacted to one line.
 - Open: runtime label OpenAI Codex (P-30); the OpenAI spend limit is not enforced (P-31).
+
+## 2026-10-23 - Runtime pin, memory off and health check on the Oracle VM (fix-48)
+- Runtime for openai/gpt-6-luna pinned to openclaw (APR-0060); P-30 closed.
+- Memory search and dreaming turned off (APR-0061); memory design opened as P-32.
+- Health check added (deploy/loop1/health-check.py). First VM run: offline and live, no FAIL.
+- Daily reset seen: the CoS main session got a new session ID at the first message after 04:00.

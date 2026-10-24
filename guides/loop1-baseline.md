@@ -143,14 +143,27 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 | Restart mid-flow (run 6) | clean stop, safe retry | Pass: no change after the restart; the retry wrote one pair |
 | Resend of a finished run | no duplicate | Pass: earlier result reported; journal unchanged |
 | Compact main sessions | one line kept | Pass: all four compacted |
+| Health check, offline and live | no FAIL | Pass (2026-10-23) |
 
 ### 7.6 Not established
 - Automatic resume after a restart. Not available: work in flight is drained or refused, and a retry must be sent again.
-- Whether the 04:00 daily reset fires on schedule (check the main session token counts the next day).
-- Why sessions show the runtime "OpenAI Codex" (P-30).
+- The exact moment of the 04:00 reset. On 2026-10-23 the CoS main session got a new session ID at the first message after 04:00; the reset is applied when the next message arrives, so a switch at 04:00 itself was not observed.
+- Which OpenClaw file adds the exit listeners behind the startup warning (stack trace not captured).
 - The messaging profile's full tool list. Session tools work in practice; the docs list is partial.
 - The main agent is excluded from agent-to-agent calls on purpose for Loop 1. Not tested either way.
 - Slack display names per agent (Spike 10).
+
+### 7.7 Runtime, memory and health check (2026-10-23)
+- Runtime pinned for openai/gpt-6-luna (APR-0060): agents.defaults.models["openai/gpt-6-luna"].agentRuntime.id = "openclaw". The patch needs a gateway restart. Check with openclaw sessions --agent cos --json: agentRuntime.id should read openclaw.
+- Memory search and dreaming off (APR-0061): memory.search.enabled false and plugins.entries.memory-core.config.dreaming.enabled false. With the defaults, memory sync sent embeddings to OpenAI and dreaming runs a nightly sweep at 03:00. Heartbeats are a separate thing and were already off (cron.enabled false).
+- Health check: deploy/loop1/health-check.py, copied to ~/loop1/ on the VM:
+
+      python3 ~/loop1/health-check.py          (offline: no model calls)
+      python3 ~/loop1/health-check.py --live   (adds one CoS turn and one refused CFO-to-CHO send)
+
+  It prints PASS, WARN, FAIL or INFO per check, names the incident each check would have caught, and exits 1 on any FAIL. It never reads the key or the gateway token. Run it before tests, and after a scenario run but before the state reset, because the reset removes what the append-only check reads.
+- First VM run, 2026-10-23: offline 38 PASS and 0 FAIL; live 40 PASS and 0 FAIL. The one WARN was the startup listener warning below, now reported as INFO.
+- MaxListenersExceededWarning ("11 exit listeners added to [process]") appears once per gateway start, right after the per-agent session-store maintenance (5 stores). It never came from a CLI run and never repeated inside one gateway process. The health check reports INFO while warnings do not outnumber gateway starts, and WARN if they do.
 
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
@@ -169,3 +182,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 - 2026-10-22: written from the baseline run on the Oracle VM (fix-44).
 - 2026-10-22: section 7 rules and results extended with the bad-sleep scenario (fix-46).
 - 2026-10-22: restart, duplicate and session results added; daily session reset (fix-47).
+- 2026-10-23: runtime pinned, memory off, health check added (fix-48).
