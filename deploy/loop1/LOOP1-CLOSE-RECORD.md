@@ -2,7 +2,7 @@
 
 Date: 2026-10-25
 Scenario: closed (APR-0069).
-Loop 1: awaiting the CEO's sign-off. Signing off closes Loop 1 and ends the cloud-only exception (APR-0052, ADR-0018); after that the suspended entries apply again unless a new APR entry changes them. The exception expires on 2026-11-15 in any case.
+Loop 1: closed by the CEO on 2026-10-25 (APR-0071). The cloud-only exception (APR-0052, ADR-0018) has ended; the suspended entries apply again unless a new APR entry changes them. The Loop 1 gateway stays stopped.
 Based on: the VM agent's draft (2026-10-25), corrected against the repo, the gateway logs and the run evidence.
 
 ## 1. What Loop 1 set out to prove
@@ -61,4 +61,4 @@ Four agents (COO, CHO, CoS, CFO) on openai/gpt-6-luna through OpenClaw can hand 
 - Keep the VM handoff archives (loop1-claude-handoff.tar.gz) out of the repo: their logs contain Slack IDs.
 
 ## 10. Sign-off
-Loop 1 closed by the CEO: not yet.
+Loop 1 closed by the CEO: yes, 2026-10-25 (APR-0071, "close loop 1").

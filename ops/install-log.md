@@ -227,3 +227,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - APR-0069: scenario bad-sleep-reschedule closed after Claude's log review (run 019 clean under v1.6); cost deferred.
 - APR-0070: SPK-03 deferred by the CEO.
 - deploy/loop1/LOOP1-CLOSE-RECORD.md added. Loop 1 is not closed yet: that needs the CEO's sign-off and ends the APR-0052 exception.
+
+## 2026-10-25 - Loop 1 closed (fix-62)
+- APR-0071: the CEO closed Loop 1. APR-0052 and ADR-0018 expire; the suspended entries apply again.
+- The Loop 1 gateway stays stopped unless a new APR entry allows it. Close record signed off.

@@ -629,3 +629,16 @@ Meaning:
 - SPK-03 stays partial. Loop 1 checks passed (file canary, shell refusal, transcript refusal with a cloud model). JavaScript Code Mode and the Docker sandbox were not tested and are not scheduled.
 Changeable: yes. A change is a new APR entry.
 Applies to: research/spikes/SPK-03-workspace-isolation.md
+
+## APR-0071 - Loop 1 closed; the cloud-only exception ends
+Status: approved
+Decided by: CEO
+Your answer: "close loop 1"
+Meaning:
+- Loop 1 is closed on 2026-10-25. The close record is deploy/loop1/LOOP1-CLOSE-RECORD.md.
+- APR-0052 and ADR-0018 expire now. The entries APR-0052 suspended apply again (APR-0018, APR-0021, APR-0051, APR-0031, APR-0047, APR-0049, and the router path of ADR-0003 and ADR-0004), unless a new APR entry changes them.
+- The Loop 1 agents ran on openai/gpt-6-luna only under that exception, so the Loop 1 gateway stays stopped. Running the agents again needs a new APR entry.
+- Open items move to Loop 2: P-26, P-28, P-31, P-32, P-37. P-36 (04:00 reset check) stays pending.
+Closes: Loop 1. Ends: APR-0052, ADR-0018.
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/adr/ADR-0018-loop-1-cloud-only-exception.md; deploy/loop1/LOOP1-CLOSE-RECORD.md; deploy/loop1/STATE.md; the Loop 1 gateway on the VM

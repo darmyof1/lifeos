@@ -1,4 +1,6 @@
-# Loop 1 state and handoff (as of 2026-10-25, 02:00 AST)
+# Loop 1 state and handoff (as of 2026-10-25, 02:10 AST)
+
+Loop 1 is closed (APR-0071). The cloud-only exception (APR-0052, ADR-0018) has ended. Do not start the Loop 1 gateway or run the agents unless a new APR entry allows it.
 
 Written for a Claude Code session running on the Loop 1 VM, picking up from the planning chat. Read this first, then the files it points to. Nothing here is a decision; decisions live in decisions/APPROVALS.md, open questions in decisions/PENDING.md.
 
@@ -96,9 +98,9 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 
 ## Still to do before Loop 1 closes
 1. P-35 is closed (APR-0068). P-37 (COO SQLite warning) is for Loop 2.
-2. Scenario closed (APR-0069). The Loop 1 close record is deploy/loop1/LOOP1-CLOSE-RECORD.md and waits for the CEO's sign-off. Closing Loop 1 ends the APR-0052 / ADR-0018 exception.
+2. Scenario closed (APR-0069). Loop 1 closed (APR-0071); the gateway stays stopped.
 3. Daily reset check: P-36, pending. The CEO asked not to raise it for now.
 4. SPK-03: deferred by the CEO (APR-0070). Code Mode and the Docker sandbox were not tested.
 5. Health check: updated on the VM by the VM agent (it reported 41 PASS). The repo copy, deploy/loop1/health-check.py, is not updated yet; bring the VM patch in through a fix script.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.
-7. Loop 1 close record: drafted in deploy/loop1/LOOP1-CLOSE-RECORD.md. It needs the CEO's sign-off.
+7. Loop 1 close record: deploy/loop1/LOOP1-CLOSE-RECORD.md, signed off (APR-0071).

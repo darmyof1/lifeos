@@ -1,5 +1,5 @@
 # ADR-0018 - Loop 1 runs cloud-only on synthetic data (time-boxed exception)
-Status: accepted
+Status: expired (Loop 1 closed 2026-10-25, APR-0071)
 Date: 2026-10-22
 Approval basis: APR-0052, APR-0053, APR-0054, APR-0055, APR-0056.
 
