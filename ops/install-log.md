@@ -204,3 +204,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Run 014: not a valid move test. Its run ID was reused after an attempt that got partway; the CHO answered from its own memory. Rule: never reuse a run ID.
 - Run 015 (v1.5): pass on content, no late reply, no FAILURE note, journal numstat 2 0. Cost deferred by the CEO.
 - P-35 updated: the CoS logged a session-start error on its reply to the CHO; content still delivered.
+
+## 2026-10-24 - Handoff rewritten after runs 014 and 015 (fix-56)
+- deploy/loop1/STATE.md rewritten: v1.5 applied on the VM, runs 014 and 015 recorded, rule against reusing run IDs, and how findings from the VM come back to the repo (paste the report; fix script; no push from the VM).
