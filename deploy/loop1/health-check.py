@@ -177,7 +177,51 @@ for a in ["cos", "cho", "cfo"]:
     rec("PASS" if n == 0 else "FAIL", "state append-only: " + a, str(n) + " line(s) removed from state/ since last commit",
         "journal edited in place (APR-0058)")
 
-# 6. Log scan for known error strings
+# 6. Slack multi-account and channel configuration
+slack_accounts = cfg("channels.slack.accounts") or {}
+expected_slack = ["default", "cho", "cos", "cfo"]
+acc_ok = True
+users_ok = True
+acc_details = []
+user_details = []
+
+for s_acc in expected_slack:
+    ac = slack_accounts.get(s_acc) if isinstance(slack_accounts, dict) else None
+    if not isinstance(ac, dict) or not ac.get("enabled") or ac.get("mode") != "socket":
+        acc_ok = False
+        acc_details.append(s_acc + " not enabled/socket")
+    channels = (ac.get("channels") or {}) if isinstance(ac, dict) else {}
+    if not channels:
+        users_ok = False
+        user_details.append(s_acc + " has no channels")
+    else:
+        for ch_id, ch_cfg in channels.items():
+            u_list = ch_cfg.get("users") if isinstance(ch_cfg, dict) else None
+            if not isinstance(u_list, list) or len(u_list) == 0 or not ch_cfg.get("enabled"):
+                users_ok = False
+                user_details.append(s_acc + " missing users")
+
+rec("PASS" if acc_ok else "FAIL", "slack accounts configured (4 accounts)",
+    "ok (default, cho, cos, cfo)" if acc_ok else "; ".join(acc_details),
+    "slack app configuration incomplete or not socket mode")
+rec("PASS" if users_ok else "FAIL", "slack channel users allowlists",
+    "ok (explicit users list in all channels)" if users_ok else "; ".join(user_details),
+    "control commands unauthorized (/new refused)")
+
+if len(procs) == 1:
+    st_raw = js(["openclaw", "channels", "status", "--json"]) or {}
+    s_accs = st_raw.get("channelAccounts", {}).get("slack", []) if isinstance(st_raw, dict) else []
+    conn_map = {a.get("accountId"): (a.get("running") and a.get("connected")) for a in s_accs if isinstance(a, dict)}
+    all_conn = all(conn_map.get(k) for k in expected_slack)
+    rec("PASS" if all_conn else "FAIL", "slack accounts connected (4 accounts)",
+        "4 connected" if all_conn else f"connected: {[k for k, v in conn_map.items() if v]}",
+        "slack socket mode connection lost")
+elif not procs:
+    rec("WARN", "slack accounts connected (4 accounts)", "gateway stopped (fine offline; --live needs it running)")
+else:
+    rec("WARN", "slack accounts connected (4 accounts)", str(len(procs)) + " gateways running")
+
+# 7. Log scan for known error strings
 today = datetime.date.today().isoformat()
 logpath = os.path.join(os.environ.get("LOOP1_LOG_DIR", "/tmp/openclaw"), "openclaw-" + today + ".log")
 if os.path.exists(logpath):
@@ -188,13 +232,28 @@ if os.path.exists(logpath):
         ("gateway cron.list requires credentials", "FAIL", "gateway calls without a token"),
         ("tools policy: profile", "WARN", "file tools missing alsoAllow (2026-10-22 incident)"),
         ("memory] sync failed", "WARN", "memory sync failing (should be off)"),
-        ("control-command-unauthorized", "WARN", "/new refused (P-29, open)"),
         ("Path escapes sandbox root", "WARN", "expected only in the outside-path test"),
         ("Agent-to-agent messaging denied", "WARN", "expected only in the refused-send test"),
     ]
     for needle, status, why in patterns:
         hits = sum(1 for l in tail if needle in l)
         rec("PASS" if hits == 0 else status, "log: " + needle, str(hits) + " line(s) in the last 4000", why)
+
+    # /new control-command-unauthorized: ignore refusals logged before 2026-10-24 19:19 (pre-fix)
+    cutoff = "2026-10-24T19:19:00"
+    unauth_hits = 0
+    for l in tail:
+        if "control-command-unauthorized" in l:
+            try:
+                e = json.loads(l)
+                if e.get("time", "") >= cutoff:
+                    unauth_hits += 1
+            except Exception:
+                if cutoff in l or l > cutoff:
+                    unauth_hits += 1
+    rec("PASS" if unauth_hits == 0 else "WARN", "log: control-command-unauthorized",
+        str(unauth_hits) + " line(s) in window (post-19:19)", "/new refused (control command unauthorized)")
+
     # Known OpenClaw startup warning (2026-10-23): one per gateway start, from per-agent session-store maintenance.
     # INFO while it stays at one per start; WARN if it repeats, which could mean listeners growing at runtime.
     starts = sum(1 for l in tail if "startup phase: ready" in l)
@@ -209,12 +268,12 @@ if os.path.exists(logpath):
 else:
     rec("WARN", "log file for today", "no " + logpath + " yet", "no gateway has run today")
 
-# 7. Disk and spend
+# 8. Disk and spend
 total, used, free = shutil.disk_usage(HOME)
 free_pct = free * 100.0 / total
 rec("PASS" if free_pct >= 15 else ("WARN" if free_pct >= 5 else "FAIL"), "disk free space",
     "{:.0f}% free".format(free_pct), "disk full stops writes")
-rec("INFO", "OpenAI spend", "not automated: check the usage page for the life-os key (the limit is alert-only, P-31)")
+rec("INFO", "OpenAI spend", "not automated: check usage page for life-os key ($5/mo enforced, APR-0056)")
 
 # 8. Live round trips (only with --live)
 if "--live" in sys.argv:

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-62.sh",
+  "generated_by": "fix-63.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1086,6 +1086,62 @@
     {
       "path": "research/references.md",
       "status": "planned"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/P-26-slack-files-read.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/P-28-calendar-sync.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/P-31-cost-hard-stop.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/P-32-memory.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/P-37-findings.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/README.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/SANDBOX-DECISIONS.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/SUMMARY.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/TASK.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/TASK2.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/WORKLOG.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/health-check-comparison.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/loop2-order.md",
+      "status": "draft"
+    },
+    {
+      "path": "research/sandbox/2026-10-25-agy/stale-text-findings.md",
+      "status": "draft"
     },
     {
       "path": "research/spikes/SPK-01-egress-interception.md",

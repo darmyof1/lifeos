@@ -642,3 +642,15 @@ Meaning:
 Closes: Loop 1. Ends: APR-0052, ADR-0018.
 Changeable: yes. A change is a new APR entry.
 Applies to: decisions/adr/ADR-0018-loop-1-cloud-only-exception.md; deploy/loop1/LOOP1-CLOSE-RECORD.md; deploy/loop1/STATE.md; the Loop 1 gateway on the VM
+
+## APR-0072 - Calendar journal: 14-day active window, monthly archive (P-28, SD-004)
+Status: approved
+Decided by: CEO
+Your answer: "yes" (to SD-004, 2026-10-25)
+Meaning:
+- The active calendar journal holds future entries, the last 14 days and anything not yet pushed to Google.
+- Older lines move once a month to state/archive/calendar-YYYY-MM.md. The workspace git keeps the full history; nothing is deleted.
+- The move runs in code, not in the model (ADR-0008, ADR-0011). The journal stays append-only (APR-0054, APR-0057).
+- The rest of P-28 (status set, push job) is still open.
+Changeable: yes. A change is a new APR entry.
+Applies to: P-28; the CoS calendar journal in Loop 2; research/sandbox/2026-10-25-agy/P-28-calendar-sync.md

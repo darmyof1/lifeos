@@ -16,14 +16,17 @@ Needs: nothing today. A design item is opened when the loop is proven.
 
 ## P-26 - Slack files:read scope (deferred)
 Proposed: do not add files:read. Attachments would reach the cloud model with no privacy gate (ADR-0003). Revisit after the privacy gate exists.
-Needs: nothing in Loop 1.
+CEO 2026-10-25: defer (SD-008). Revisit after the privacy gate exists.
+Needs: nothing until the privacy gate exists.
 
 ## P-28 - Calendar journal and Google Calendar (Loop 2)
 Proposed: the CoS keeps a journal of every calendar entry it means to write, with a status (pending, written, failed) and an attempt count. A scheduled job (code, not the model) retries pending entries every 5 minutes (S-06). Before a retry it searches Google for the entry's unique name (APR-0034) so that a write which succeeded but looked failed is not repeated. After 5 failures the COO is told and the CEO checks. If the Google token is revoked (S-07), all writes pause and the CIO alerts in its channel. Google stays the calendar of record (APR-0031); the journal is the hold and the audit trail.
 Loop 1 results (2026-10-22): the journal is append-only (APR-0058) and a move is two lines (APR-0057). The health check fails on any removed journal line (git diff --numstat shows deletions above 0).
 Added: keep the active journal small, because the CoS reads all of it on every check and cost grows with it. Keep future entries, the last 14 days and anything not yet pushed. Move older lines each month to state/archive/calendar-YYYY-MM.md. The workspace git keeps the full history.
 Added: for Loop 2 the status set grows to requested, written, pushed, failed (with attempt count and last error), conflict, moved and delete-pending-approval, plus the Google event ID once pushed. Pushes and retries run in code, not in the model (ADR-0008, ADR-0011).
-Needs: CEO yes or no.
+Decided: the 14-day active window and monthly archive (APR-0072).
+Calendar driver: gcalcli is the working tool (guides/calendar-gcalcli.md, APR-0041). A move to the Google Calendar REST API is proposed in SD-003 and not decided.
+Needs: CEO yes or no on the Loop 2 status set and the push job; the driver choice.
 
 ## P-31 - Cost hard stop (APR-0056)
 Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.
@@ -31,12 +34,14 @@ Proposed: the health check reads the day's spend and stops the gateway (kill swi
 Needs: CEO yes or no, and a check of whether OpenAI offers a daily alert.
 
 Update 2026-10-23: the CEO set the OpenAI project limit to enforced (5 USD per month). Calls stop with 429 project_spend_limit_exceeded when it is reached; enforcement is not instant. No daily alert option was confirmed. Still open: the kill switch in the health check and the 1 USD per day alert (APR-0056).
+CEO 2026-10-25: the kill switch can wait ("ignore for now", SD-002). The enforced 5 USD monthly project limit stays the only hard stop. Sandbox draft: research/sandbox/2026-10-25-agy/P-31-cost-hard-stop.md. It treats 1 USD per day as a kill; APR-0056 says an alert at 1 USD per day.
 
 ## P-32 - Memory design before Loop 2
 Open: the per-agent MEMORY.md files are empty templates and ADR-0011 (append-only history, projected state) is empty. OpenClaw's memory-core (memory search with embeddings, nightly dreaming) is off for Loop 1 (APR-0061).
 Questions: what each agent should remember beyond its state files; where memory lives; whether recall may use a cloud embedding model or must be local (ADR-0003); how memory stays append-only (ADR-0011).
 Needs: a design decision before Loop 2. Until then memory-core stays off.
 Added 2026-10-24 (APR-0063): the CEO will mostly talk to the COO, who routes to the chiefs, and may address any agent at any time. Open: how much context the COO builds up when it routes everything, and what it must ask the chiefs for instead of keeping. First data: the COO's prompt on a Slack turn was about 35,000 tokens (window 272,000). Per-agent token counts per scenario run are still to measure.
+Sandbox drafts 2026-10-25: research/sandbox/2026-10-25-agy/P-32-memory.md. CEO: SD-005 (local embeddings) later, after the local model work; SD-006 (check state files before answering) needs a token estimate; SD-007 (short COO handoffs) needs explaining.
 
 ## P-36 - 04:00 daily reset check (pending, not to be raised for now)
 Status: pending. The CEO asked on 2026-10-25 not to bring this up for a while.
@@ -46,4 +51,6 @@ Method: section 7.7 of guides/loop1-baseline.md.
 ## P-37 - COO SQLite maintenance warning at scenario start (Loop 2)
 Seen 2026-10-25 in runs 018 (01:31:10) and 019 (01:42:52): about 2 seconds after the scenario post, the gateway logs 'SQLite session write failed' on the COO database (operation session.maintenance.plan, error 'SQLite automatic maintenance activity changed before age consumption'), right after 'slow agent database reservation' (about 1.1 to 1.2 s, outcome ok). Also seen 2026-10-24 at 19:56 and 21:59.
 No visible effect on any run.
-Needs: in Loop 2, find out whether this is OpenClaw's own maintenance retrying normally, or database contention worth fixing.
+Code reading (sandbox, 2026-10-25, OpenClaw 2026.10.5 dist): a maintenance plan rejected by a concurrent write is retried; after 3 rejections (MAX_MAINTENANCE_REJECTIONS) OpenClaw logs 'SQLite automatic session maintenance paused after repeated input changes'. That line appears 0 times in the gateway logs for 2026-10-24 and 2026-10-25, so the limit was never reached. Details: research/sandbox/2026-10-25-agy/P-37-findings.md.
+CEO 2026-10-25: keep P-37 open until it is checked on a real Loop 2 run.
+Needs: on the first Loop 2 runs, grep the gateway log for 'maintenance paused' and 'SQLite session write failed'.

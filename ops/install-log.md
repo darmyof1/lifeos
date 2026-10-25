@@ -231,3 +231,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-25 - Loop 1 closed (fix-62)
 - APR-0071: the CEO closed Loop 1. APR-0052 and ADR-0018 expire; the suspended entries apply again.
 - The Loop 1 gateway stays stopped unless a new APR entry allows it. Close record signed off.
+
+## 2026-10-25 - Sandbox drafts imported; CEO answers recorded (fix-63)
+- research/sandbox/2026-10-25-agy/: overnight drafts by a sandboxed VM agent (research input, not decisions).
+- deploy/loop1/health-check.py: VM version with Slack account, channel users list and connection checks.
+- APR-0072: calendar journal 14-day active window and monthly archive. P-26 deferred. P-31 kill switch can wait. P-37 kept open.
