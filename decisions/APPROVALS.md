@@ -582,3 +582,16 @@ Meaning:
 Closes: P-34
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop1/loop1-v15-upgrade.sh; the COO AGENTS.md file on the VM; tests/scenario/bad-sleep-reschedule.md
+
+## APR-0067 - Loop 1 instruction set v1.6: the CoS reports an acknowledgement error as delivered, not as FAILURE (P-35 stays open)
+Status: approved
+Decided by: CEO
+Your answer: "Keep P-35 open and change the CoS's wording."
+Meaning:
+- When the CoS sends a message to a waiting agent and the acknowledgement fails (a session-start error or SESSION_WORK_START_CHANGED), it does not report FAILURE to the COO. It reports "delivered; acknowledgement error (P-35)" and says whether the receiving agent has replied with the content.
+- The CoS does not resend in that case, to avoid duplicates. FAILURE is for a message that was not sent, or where the receiving agent says it did not get the content.
+- This changes the wording only. It does not fix the cause. P-35 stays open.
+- Applied by deploy/loop1/loop1-v16-upgrade.sh (CoS AGENTS.md only).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop1/loop1-v16-upgrade.sh; the CoS AGENTS.md file on the VM.

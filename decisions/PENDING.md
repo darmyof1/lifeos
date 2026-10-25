@@ -43,4 +43,7 @@ Seen 2026-10-24 in runs 010, 012 and 013: when the CoS replies to a CHO that is 
 Question: treat it as benign (no FAILURE when the content was delivered), or find the cause first.
 Run 014 (v1.5, not a valid move test): the CHO answered from its own memory of run 013; no journal change.
 Run 015 (v1.5, pass on content): the CoS logged a session-start error on its reply to the CHO (gateway log, 2026-10-24 22:08:00); the CHO handled the content anyway, and the COO's answer showed no FAILURE. SESSION_WORK_START_CHANGED count stayed at 2.
-Needs: a CEO choice: treat the session-start error as benign when the content was delivered, or find its cause first.
+Log check (2026-10-25): the words SESSION_WORK_START_CHANGED and 'session-start error' appear only in the agents' own replies, not as gateway error lines. The earlier grep counted those replies, so a count of 2 does not show that no gateway error happened. Nearest gateway lines: 'SQLite session write failed ... Activity recap lifecycle or utility model changed' (2026-10-24 21:54:43, during a gateway stop) and 'SQLite automatic maintenance activity changed before age consumption' (19:56 and 21:59). Not yet tied to a run.
+Runs 010 and 012: the CoS sent the COO a FAILURE note. Runs 015 and 016: no FAILURE note.
+Decided (APR-0067): the CoS reports these as 'delivered; acknowledgement error', not FAILURE (instruction set v1.6). The cause is still open.
+Needs: capture the raw gateway lines around the next acknowledgement error, and compare them with the two SQLite messages above.

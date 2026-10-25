@@ -207,3 +207,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-24 - Handoff rewritten after runs 014 and 015 (fix-56)
 - deploy/loop1/STATE.md rewritten: v1.5 applied on the VM, runs 014 and 015 recorded, rule against reusing run IDs, and how findings from the VM come back to the repo (paste the report; fix script; no push from the VM).
+
+## 2026-10-25 - P-35 kept open; CoS wording changed (fix-57)
+- APR-0067: CEO said keep P-35 open and change the CoS's wording. v1.6 script added (deploy/loop1/loop1-v16-upgrade.sh), not yet run on the VM.
+- P-35: the session-start wording appears only in agent replies; nearest gateway lines are SQLite session messages. Cause still open.
