@@ -1,4 +1,4 @@
-# Loop 1 state and handoff (as of 2026-10-24, 22:25 AST)
+# Loop 1 state and handoff (as of 2026-10-25, 02:00 AST)
 
 Written for a Claude Code session running on the Loop 1 VM, picking up from the planning chat. Read this first, then the files it points to. Nothing here is a decision; decisions live in decisions/APPROVALS.md, open questions in decisions/PENDING.md.
 
@@ -15,7 +15,7 @@ Written for a Claude Code session running on the Loop 1 VM, picking up from the 
 
 ## Read in this order
 1. guides/loop1-baseline.md, section 7 (7.1 to 7.12): how the VM, agents, config and Slack are set up, with every lesson learned.
-2. tests/scenario/bad-sleep-reschedule.md: the scenario, its pass criteria and the run log (runs 001 to 015).
+2. tests/scenario/bad-sleep-reschedule.md: the scenario, its pass criteria and the run log (runs 001 to 019).
 3. decisions/APPROVALS.md from APR-0052 on, and decisions/PENDING.md.
 4. decisions/adr/ADR-0018: Loop 1 is a cloud-only exception on synthetic data. It expires at Loop 1 close or on 2026-11-15 (APR-0052).
 
@@ -35,7 +35,7 @@ Written for a Claude Code session running on the Loop 1 VM, picking up from the 
 
 ## Current setup (verified 2026-10-24)
 - OpenClaw 2026.10.5, model openai/gpt-6-luna, runtime pinned to openclaw (APR-0060), memory search and dreaming off (APR-0061), cron off, daily session reset at 04:00 (APR-0059).
-- Agents COO, CHO, CoS, CFO in ~/loop1/workspaces/<id>. Instruction set v1.5 is applied on the VM (APR-0066; the COO's AGENTS.md has the v1.5 line).
+- Agents COO, CHO, CoS, CFO in ~/loop1/workspaces/<id>. Instruction sets v1.5 (APR-0066, COO) and v1.6 (APR-0067, CoS) are applied on the VM.
 - Slack: one app per agent (APR-0062), socket mode, four accounts (default = COO, cho, cos, cfo). Each account has its own channel in its allowlist, with a users list holding only the CEO's Slack ID. That list also lets "@<agent> /new" work (section 7.10). P-29 is closed.
 - The CEO may address any agent in its channel; normally he talks to the COO (APR-0063).
 - Health check: python3 ~/loop1/health-check.py [--live]. Last run 39 PASS, 0 FAIL, 1 WARN (old /new refusals in the log window). Some of its text is stale (P-31); see "Still to do".
@@ -81,18 +81,23 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 | 013 | Slack, v1.4 | Content pass after a COO resend; FAILURE note shown to the CEO |
 | 014 | Slack, v1.5 | Not a valid move test: run ID reused; the CHO answered from its own memory; no journal change |
 | 015 | Slack, v1.5 | Pass on content: numstat 2 0, one COO reply, no late reply, no FAILURE note; cost not measured |
+| 016 | Slack, v1.5 | Pass on content (VM report) |
+| 017 | Slack, v1.6 | Pass on content; the CoS used the v1.6 wording |
+| 018 | Slack, v1.6 | Partial: the COO named only the CHO; the CoS ran twice (no duplicate write) |
+| 019 | Slack, v1.6 | Pass: one run each, COO named the CHO and the CoS, numstat 2 0; cost not measured |
 
 ## Known issues
 - Agent memory survives a git state reset and a one-line session compaction. A reused run ID can get an answer from memory instead of the reset state. Use a new run ID for every attempt.
-- First-contact miss: fixed by v1.5 (APR-0066) and seen working once (run 015). Watch it on further runs.
-- SESSION_WORK_START_CHANGED and session-start errors: the CoS's reply to a waiting CHO is delivered, but its acknowledgement errors (P-35). Seen in runs 010, 012, 013 and 015. The content arrived each time. The grep count stayed at 2 on run 015.
-- Run 015's COO answer said "Changed by CHO", though the CoS wrote the journal line. Minor; check the wording at the next review of v1.5.
+- First-contact miss: fixed by v1.5 (APR-0066); not seen in runs 015 to 019. In run 018 the CoS ran twice (first run took no action); cause not found.
+- SESSION_WORK_START_CHANGED: a retryable timing race in OpenClaw's session ingress; no message lost (APR-0068, P-35 closed). The CoS reports it as "delivered; acknowledgement error" (v1.6). Reopen if a session-start-conflict-retry-limit line appears.
+- COO SQLite maintenance warning about 2 seconds after each scenario post (runs 018, 019); no visible effect (P-37, Loop 2).
+- The COO's answer sometimes names only the CHO (runs 015 and 018), though the CoS wrote the journal line. Run 019 named both. No rule change yet.
 - Usage page lag: readings taken within about 20 minutes of a run may miss the charge. Cost is deferred for now.
 
 ## Still to do before Loop 1 closes
-1. P-35: CEO decision. Treat the session-start error as benign when the content was delivered, or find its cause first. Until then, keep logging it.
-2. Decide with the CEO whether run 015 alone is enough to close the scenario, or whether another clean run under v1.5 is needed.
-3. Daily reset check: after 04:00 on 2026-10-25, confirm the main sessions got a new session ID at their first message (method in section 7.7).
+1. P-35 is closed (APR-0068). P-37 (COO SQLite warning) is for Loop 2.
+2. Scenario closure: the CEO approved closing it (to the VM agent, 2026-10-25), pending Claude's log review. Run 019 is a clean pass under v1.6. Record the closure as an APR entry.
+3. Daily reset check: P-36, pending. The CEO asked not to raise it for now.
 4. SPK-03: CEO decision to close as partial with JavaScript Code Mode and the Docker sandbox deferred, or to test Code Mode first (research/spikes/SPK-03-workspace-isolation.md).
 5. Health check update: add Slack checks (four accounts connected, each channel's users list), drop the stale P-29 and P-31 wording, and ignore /new refusals logged before 2026-10-24 19:19.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.

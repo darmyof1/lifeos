@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -38,18 +38,12 @@ Questions: what each agent should remember beyond its state files; where memory 
 Needs: a design decision before Loop 2. Until then memory-core stays off.
 Added 2026-10-24 (APR-0063): the CEO will mostly talk to the COO, who routes to the chiefs, and may address any agent at any time. Open: how much context the COO builds up when it routes everything, and what it must ask the chiefs for instead of keeping. First data: the COO's prompt on a Slack turn was about 35,000 tokens (window 272,000). Per-agent token counts per scenario run are still to measure.
 
-## P-35 - SESSION_WORK_START_CHANGED on agent replies
-Seen 2026-10-24 in runs 010, 012 and 013: when the CoS replies to a CHO that is waiting for it, the reply is delivered ("sent before error") and the CHO gets the result, but the acknowledgement fails with SESSION_WORK_START_CHANGED. The CoS then reports a FAILURE to the COO.
-Question: treat it as benign (no FAILURE when the content was delivered), or find the cause first.
-Run 014 (v1.5, not a valid move test): the CHO answered from its own memory of run 013; no journal change.
-Run 015 (v1.5, pass on content): the CoS logged a session-start error on its reply to the CHO (gateway log, 2026-10-24 22:08:00); the CHO handled the content anyway, and the COO's answer showed no FAILURE. SESSION_WORK_START_CHANGED count stayed at 2.
-Log check (2026-10-25): the words SESSION_WORK_START_CHANGED and 'session-start error' appear only in the agents' own replies, not as gateway error lines. The earlier grep counted those replies, so a count of 2 does not show that no gateway error happened. Nearest gateway lines: 'SQLite session write failed ... Activity recap lifecycle or utility model changed' (2026-10-24 21:54:43, during a gateway stop) and 'SQLite automatic maintenance activity changed before age consumption' (19:56 and 21:59). Not yet tied to a run.
-Runs 010 and 012: the CoS sent the COO a FAILURE note. Runs 015 and 016: no FAILURE note.
-Decided (APR-0067): the CoS reports these as 'delivered; acknowledgement error', not FAILURE (instruction set v1.6). The cause is still open.
-Run 017 (v1.6, 2026-10-25 01:18-01:20): the CoS reported 'logged as delivered, but its acknowledgement failed (P-35); CHO has not replied with the content'. The CHO replied with the content about a minute later, so this looks like a timing race, not a lost message. The COO's reply had no FAILURE note. The gateway log has no error line for the acknowledgement; the nearest is 'slow agent database reservation' at 01:18:55 (1056 ms, outcome ok). The v1.6 wording works. The cause is still open.
-Needs: one more run with a wider log capture (acknowledg, slow, SQLite, error, fail, deliver), then a CEO decision on P-35.
-
 ## P-36 - 04:00 daily reset check (pending, not to be raised for now)
 Status: pending. The CEO asked on 2026-10-25 not to bring this up for a while.
 Needs: after the first inbound message past 04:00 AST, record the session IDs of the five main sessions and compare them with the list captured at 00:54 on 2026-10-25.
 Method: section 7.7 of guides/loop1-baseline.md.
+
+## P-37 - COO SQLite maintenance warning at scenario start (Loop 2)
+Seen 2026-10-25 in runs 018 (01:31:10) and 019 (01:42:52): about 2 seconds after the scenario post, the gateway logs 'SQLite session write failed' on the COO database (operation session.maintenance.plan, error 'SQLite automatic maintenance activity changed before age consumption'), right after 'slow agent database reservation' (about 1.1 to 1.2 s, outcome ok). Also seen 2026-10-24 at 19:56 and 21:59.
+No visible effect on any run.
+Needs: in Loop 2, find out whether this is OpenClaw's own maintenance retrying normally, or database contention worth fixing.

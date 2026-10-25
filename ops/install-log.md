@@ -216,3 +216,9 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Run 016 (VM report): pass on content under v1.5. Run 017: pass on content under v1.6; the CoS used the new wording; no raw gateway error line for the acknowledgement.
 - P-35 stays open; one more run with a wider capture is planned.
 - P-36 (04:00 reset check) is pending and not raised for now, as the CEO asked.
+
+## 2026-10-25 - P-35 closed; runs 018 and 019 recorded (fix-60)
+- APR-0068: P-35 closed. SESSION_WORK_START_CHANGED is a retryable race in OpenClaw's session ingress; no dropped message in the logs; v1.6 wording stays.
+- Run 018: partial (COO named only the CHO; CoS ran twice, no duplicate write). Run 019: pass.
+- P-37 opened: COO SQLite maintenance warning at scenario start (Loop 2).
+- deploy/loop1/STATE.md updated for runs 016 to 019, v1.6, P-35 closed, P-36 pending.

@@ -595,3 +595,16 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop1/loop1-v16-upgrade.sh; the CoS AGENTS.md file on the VM.
+
+## APR-0068 - P-35 closed: SESSION_WORK_START_CHANGED is a retryable timing race
+Status: approved
+Decided by: CEO
+Your answer: "close p-35 and proceed"
+Meaning:
+- The error comes from OpenClaw's session ingress (dist/work-start-error and dist/ingress-drain): a message that reaches a session while that session is starting work fails with "Session ... changed while starting work. Retry." and is retried. It is dropped only at the retry limit, logged as session-start-conflict-retry-limit.
+- The gateway logs for 2026-10-24 and 2026-10-25 have no such drop. In every run from 010 to 019, the CHO received the CoS's content.
+- The CoS sees the first failed attempt and reports it. Instruction set v1.6 (APR-0067) already reports it as "delivered; acknowledgement error", not FAILURE. No further change.
+- Reopen if a session-start-conflict-retry-limit line appears, or if an agent does not receive a reply's content.
+Closes: P-35
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/PENDING.md; the CoS AGENTS.md (v1.6, unchanged).
