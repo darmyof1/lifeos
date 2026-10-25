@@ -569,3 +569,16 @@ Meaning:
 - The lines are appended by deploy/loop1/loop1-v14-upgrade.sh (AGENTS.md only; skips agents already on v1.4).
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop1/loop1-v14-upgrade.sh; the CHO, CoS and CFO AGENTS.md files on the VM; tests/scenario/bad-sleep-reschedule.md
+
+## APR-0066 - Loop 1 instruction set v1.5: the COO carries the whole task in its handoff (closes P-34)
+Status: approved
+Decided by: CEO
+Your answer: "v1.5 is approved"
+Meaning:
+- The COO puts the whole task in the sessions_send body in plain words (what to do, the dates and times, the run ID). It never tells an agent to find the task in its own history or queue.
+- If an agent replies that it cannot find the task details, the COO resends once with the full details inline and treats that reply as the result. It reports the retry to the CEO only if the resend also fails.
+- Why: in loop1-scn-011 and loop1-scn-013 the CHO found no task details on the COO's first routed message (011 wrote nothing; 013 needed a resend and showed the CEO a FAILURE note).
+- The line is appended by deploy/loop1/loop1-v15-upgrade.sh (COO AGENTS.md only). Its text cites P-34, the proposal this entry closes.
+Closes: P-34
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop1/loop1-v15-upgrade.sh; the COO AGENTS.md file on the VM; tests/scenario/bad-sleep-reschedule.md

@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -37,12 +37,6 @@ Open: the per-agent MEMORY.md files are empty templates and ADR-0011 (append-onl
 Questions: what each agent should remember beyond its state files; where memory lives; whether recall may use a cloud embedding model or must be local (ADR-0003); how memory stays append-only (ADR-0011).
 Needs: a design decision before Loop 2. Until then memory-core stays off.
 Added 2026-10-24 (APR-0063): the CEO will mostly talk to the COO, who routes to the chiefs, and may address any agent at any time. Open: how much context the COO builds up when it routes everything, and what it must ask the chiefs for instead of keeping. First data: the COO's prompt on a Slack turn was about 35,000 tokens (window 272,000). Per-agent token counts per scenario run are still to measure.
-
-## P-34 - Instruction set v1.5: the COO carries the whole task in its handoff (proposed)
-Seen 2026-10-24: on its first routed message the CHO twice found no task details (loop1-scn-011: nothing written; loop1-scn-013: the COO resent and the move went through, but the CEO saw a FAILURE note).
-Proposed rule for the COO only: put the whole task in the sessions_send body in plain words (what to do, dates and times, run ID); never tell an agent to find the task in its history or queue; if an agent cannot find the details, resend once inline and treat that reply as the result; report the retry to the CEO only if the resend also fails.
-Script ready: deploy/loop1/loop1-v15-upgrade.sh (COO AGENTS.md only; not applied).
-Needs: CEO yes or no. On yes, it becomes the next APR entry, in the CEO's own words.
 
 ## P-35 - SESSION_WORK_START_CHANGED on agent replies
 Seen 2026-10-24 in runs 010, 012 and 013: when the CoS replies to a CHO that is waiting for it, the reply is delivered ("sent before error") and the CHO gets the result, but the acknowledgement fails with SESSION_WORK_START_CHANGED. The CoS then reports a FAILURE to the COO.

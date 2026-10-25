@@ -195,3 +195,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - v1.4 applied on the VM. Run 011 failed, run 012 (CLI) passed on content, run 013 passed on content after a resend.
 - P-34 (v1.5, COO handoff rule) and P-35 (SESSION_WORK_START_CHANGED) opened. deploy/loop1/loop1-v15-upgrade.sh added, not applied.
 - deploy/loop1/STATE.md added: the handoff for a Claude Code session on the VM.
+
+## 2026-10-24 - v1.5 approved (fix-54)
+- APR-0066: instruction set v1.5 approved; P-34 closed. Not yet applied on the VM when this was written.
+- deploy/loop1/STATE.md: v1.5 status and a repo-access note (read-only clone on the VM; the Mac writes).
