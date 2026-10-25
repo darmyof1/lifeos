@@ -211,3 +211,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-25 - P-35 kept open; CoS wording changed (fix-57)
 - APR-0067: CEO said keep P-35 open and change the CoS's wording. v1.6 script added (deploy/loop1/loop1-v16-upgrade.sh), not yet run on the VM.
 - P-35: the session-start wording appears only in agent replies; nearest gateway lines are SQLite session messages. Cause still open.
+
+## 2026-10-25 - Runs 016 and 017 recorded; P-35 log finding; P-36 pending (fix-59)
+- Run 016 (VM report): pass on content under v1.5. Run 017: pass on content under v1.6; the CoS used the new wording; no raw gateway error line for the acknowledgement.
+- P-35 stays open; one more run with a wider capture is planned.
+- P-36 (04:00 reset check) is pending and not raised for now, as the CEO asked.

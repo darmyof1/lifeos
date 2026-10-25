@@ -46,4 +46,10 @@ Run 015 (v1.5, pass on content): the CoS logged a session-start error on its rep
 Log check (2026-10-25): the words SESSION_WORK_START_CHANGED and 'session-start error' appear only in the agents' own replies, not as gateway error lines. The earlier grep counted those replies, so a count of 2 does not show that no gateway error happened. Nearest gateway lines: 'SQLite session write failed ... Activity recap lifecycle or utility model changed' (2026-10-24 21:54:43, during a gateway stop) and 'SQLite automatic maintenance activity changed before age consumption' (19:56 and 21:59). Not yet tied to a run.
 Runs 010 and 012: the CoS sent the COO a FAILURE note. Runs 015 and 016: no FAILURE note.
 Decided (APR-0067): the CoS reports these as 'delivered; acknowledgement error', not FAILURE (instruction set v1.6). The cause is still open.
-Needs: capture the raw gateway lines around the next acknowledgement error, and compare them with the two SQLite messages above.
+Run 017 (v1.6, 2026-10-25 01:18-01:20): the CoS reported 'logged as delivered, but its acknowledgement failed (P-35); CHO has not replied with the content'. The CHO replied with the content about a minute later, so this looks like a timing race, not a lost message. The COO's reply had no FAILURE note. The gateway log has no error line for the acknowledgement; the nearest is 'slow agent database reservation' at 01:18:55 (1056 ms, outcome ok). The v1.6 wording works. The cause is still open.
+Needs: one more run with a wider log capture (acknowledg, slow, SQLite, error, fail, deliver), then a CEO decision on P-35.
+
+## P-36 - 04:00 daily reset check (pending, not to be raised for now)
+Status: pending. The CEO asked on 2026-10-25 not to bring this up for a while.
+Needs: after the first inbound message past 04:00 AST, record the session IDs of the five main sessions and compare them with the list captured at 00:54 on 2026-10-25.
+Method: section 7.7 of guides/loop1-baseline.md.
