@@ -222,3 +222,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Run 018: partial (COO named only the CHO; CoS ran twice, no duplicate write). Run 019: pass.
 - P-37 opened: COO SQLite maintenance warning at scenario start (Loop 2).
 - deploy/loop1/STATE.md updated for runs 016 to 019, v1.6, P-35 closed, P-36 pending.
+
+## 2026-10-25 - Scenario closed; SPK-03 deferred; Loop 1 close record drafted (fix-61)
+- APR-0069: scenario bad-sleep-reschedule closed after Claude's log review (run 019 clean under v1.6); cost deferred.
+- APR-0070: SPK-03 deferred by the CEO.
+- deploy/loop1/LOOP1-CLOSE-RECORD.md added. Loop 1 is not closed yet: that needs the CEO's sign-off and ends the APR-0052 exception.

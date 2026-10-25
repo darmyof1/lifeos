@@ -96,9 +96,9 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 
 ## Still to do before Loop 1 closes
 1. P-35 is closed (APR-0068). P-37 (COO SQLite warning) is for Loop 2.
-2. Scenario closure: the CEO approved closing it (to the VM agent, 2026-10-25), pending Claude's log review. Run 019 is a clean pass under v1.6. Record the closure as an APR entry.
+2. Scenario closed (APR-0069). The Loop 1 close record is deploy/loop1/LOOP1-CLOSE-RECORD.md and waits for the CEO's sign-off. Closing Loop 1 ends the APR-0052 / ADR-0018 exception.
 3. Daily reset check: P-36, pending. The CEO asked not to raise it for now.
-4. SPK-03: CEO decision to close as partial with JavaScript Code Mode and the Docker sandbox deferred, or to test Code Mode first (research/spikes/SPK-03-workspace-isolation.md).
-5. Health check update: add Slack checks (four accounts connected, each channel's users list), drop the stale P-29 and P-31 wording, and ignore /new refusals logged before 2026-10-24 19:19.
+4. SPK-03: deferred by the CEO (APR-0070). Code Mode and the Docker sandbox were not tested.
+5. Health check: updated on the VM by the VM agent (it reported 41 PASS). The repo copy, deploy/loop1/health-check.py, is not updated yet; bring the VM patch in through a fix script.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.
-7. Write the Loop 1 close record: what passed, what was deferred and why (cost, from 2026-10-24), the cost per run where known, and the open items for Loop 2 (P-26, P-28, P-31, P-32).
+7. Loop 1 close record: drafted in deploy/loop1/LOOP1-CLOSE-RECORD.md. It needs the CEO's sign-off.

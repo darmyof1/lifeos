@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-60.sh",
+  "generated_by": "fix-61.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -826,6 +826,10 @@
     {
       "path": "deploy/expected-runtime-tree.yaml",
       "status": "planned"
+    },
+    {
+      "path": "deploy/loop1/LOOP1-CLOSE-RECORD.md",
+      "status": "draft"
     },
     {
       "path": "deploy/loop1/STATE.md",

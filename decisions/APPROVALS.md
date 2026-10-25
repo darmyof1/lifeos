@@ -608,3 +608,24 @@ Meaning:
 Closes: P-35
 Changeable: yes. A change is a new APR entry.
 Applies to: decisions/PENDING.md; the CoS AGENTS.md (v1.6, unchanged).
+
+## APR-0069 - Scenario bad-sleep-reschedule closed for Loop 1
+Status: approved
+Decided by: CEO
+Your answer: "Proposal A: is approved let's close it. Claude will review the logs to have the final decision" (to the VM agent, 2026-10-25), then "proceed" after Claude's log review.
+Meaning:
+- The scenario is closed on pass criteria 1 to 5. Clean Slack pass: loop1-scn-019 under instruction set v1.6 (one run per agent; the COO named the CHO and the CoS; numstat 2 0; no late reply, no FAILURE note). CLI passes: runs 003 to 006.
+- Criterion 6 (under 0.05 USD per run) was not measured from 2026-10-24 on; deferred by the CEO. Measured earlier: about 0.047 USD (run 007), at most about 0.020 USD (run 010).
+- Claude's log review covered runs 015 to 019 against the CoS journal diff, the CHO health plan, the three Slack channels and the gateway log.
+- This closes the scenario, not Loop 1. Closing Loop 1 ends the APR-0052 exception and needs its own CEO sign-off.
+Changeable: yes. A change is a new APR entry.
+Applies to: tests/scenario/bad-sleep-reschedule.md; deploy/loop1/LOOP1-CLOSE-RECORD.md
+
+## APR-0070 - SPK-03 deferred
+Status: approved
+Decided by: CEO
+Your answer: "proposal C: lets defer I dont not expect to do any docker isolation for a while." (to the VM agent, 2026-10-25)
+Meaning:
+- SPK-03 stays partial. Loop 1 checks passed (file canary, shell refusal, transcript refusal with a cloud model). JavaScript Code Mode and the Docker sandbox were not tested and are not scheduled.
+Changeable: yes. A change is a new APR entry.
+Applies to: research/spikes/SPK-03-workspace-isolation.md
