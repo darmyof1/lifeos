@@ -41,4 +41,6 @@ Added 2026-10-24 (APR-0063): the CEO will mostly talk to the COO, who routes to 
 ## P-35 - SESSION_WORK_START_CHANGED on agent replies
 Seen 2026-10-24 in runs 010, 012 and 013: when the CoS replies to a CHO that is waiting for it, the reply is delivered ("sent before error") and the CHO gets the result, but the acknowledgement fails with SESSION_WORK_START_CHANGED. The CoS then reports a FAILURE to the COO.
 Question: treat it as benign (no FAILURE when the content was delivered), or find the cause first.
-Needs: more runs under v1.5, then a CEO choice.
+Run 014 (v1.5, not a valid move test): the CHO answered from its own memory of run 013; no journal change.
+Run 015 (v1.5, pass on content): the CoS logged a session-start error on its reply to the CHO (gateway log, 2026-10-24 22:08:00); the CHO handled the content anyway, and the COO's answer showed no FAILURE. SESSION_WORK_START_CHANGED count stayed at 2.
+Needs: a CEO choice: treat the session-start error as benign when the content was delivered, or find its cause first.

@@ -199,3 +199,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-24 - v1.5 approved (fix-54)
 - APR-0066: instruction set v1.5 approved; P-34 closed. Not yet applied on the VM when this was written.
 - deploy/loop1/STATE.md: v1.5 status and a repo-access note (read-only clone on the VM; the Mac writes).
+
+## 2026-10-24 - Runs 014 and 015 recorded (fix-55)
+- Run 014: not a valid move test. Its run ID was reused after an attempt that got partway; the CHO answered from its own memory. Rule: never reuse a run ID.
+- Run 015 (v1.5): pass on content, no late reply, no FAILURE note, journal numstat 2 0. Cost deferred by the CEO.
+- P-35 updated: the CoS logged a session-start error on its reply to the CHO; content still delivered.
