@@ -35,6 +35,7 @@ Needs: CEO yes or no, and a check of whether OpenAI offers a daily alert.
 
 Update 2026-10-23: the CEO set the OpenAI project limit to enforced (5 USD per month). Calls stop with 429 project_spend_limit_exceeded when it is reached; enforcement is not instant. No daily alert option was confirmed. Still open: the kill switch in the health check and the 1 USD per day alert (APR-0056).
 CEO 2026-10-25: the kill switch can wait ("ignore for now", SD-002). The enforced 5 USD monthly project limit stays the only hard stop. Sandbox draft: research/sandbox/2026-10-25-agy/P-31-cost-hard-stop.md. It treats 1 USD per day as a kill; APR-0056 says an alert at 1 USD per day.
+CEO 2026-10-25: cost limits for Loop 2 deferred (APR-0073). APR-0056 was for Loop 1.
 
 ## P-32 - Memory design before Loop 2
 Open: the per-agent MEMORY.md files are empty templates and ADR-0011 (append-only history, projected state) is empty. OpenClaw's memory-core (memory search with embeddings, nightly dreaming) is off for Loop 1 (APR-0061).

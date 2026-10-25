@@ -654,3 +654,18 @@ Meaning:
 - The rest of P-28 (status set, push job) is still open.
 Changeable: yes. A change is a new APR entry.
 Applies to: P-28; the CoS calendar journal in Loop 2; research/sandbox/2026-10-25-agy/P-28-calendar-sync.md
+
+## APR-0073 - Loop 2 runs cloud-only on synthetic data (time-boxed exception)
+Status: approved
+Decided by: CEO
+Your answer: "cloud only, the local model will be byoass for a future implementation due to technicly issues slowing down the progress. so perform with synthetic data-only on your own"; end date 2026-12-31: "Approved"; who runs it: "i will execute your guidilines and intrcutions from ubunut user, le't's leave the sandbiox for other tasks"; calendar: "it does not matter use google."; cost: "let's dont worry about cost ight no, defere for later." (2026-10-25)
+Meaning:
+- Loop 2 agents run on openai/gpt-6-luna through OpenClaw, cloud-only. Local model work is deferred.
+- Data: synthetic only, under the same data rules as APR-0052. No real personal data in the agents' state or in Loop 2 Slack posts.
+- The entries APR-0052 suspended are suspended again for Loop 2 (APR-0018, APR-0021, APR-0051, APR-0047, APR-0049, and the router path of ADR-0003 and ADR-0004), except APR-0031: Loop 2 writes to Google Calendar (P-28).
+- Synthetic events may be written to the CEO's Google Calendar. Every delete still needs the CEO's approval (APR-0044).
+- The CEO starts the gateway and runs the tests from the main VM account, following Claude's instructions. The sandbox account and its agent do not run the gateway and have no keys.
+- Cost limits for Loop 2 are deferred (P-31). APR-0056 was for Loop 1. The OpenAI project limit stays as set in the OpenAI project settings.
+- Expiry: when Loop 2 closes or on 2026-12-31, whichever comes first.
+Changeable: yes. A change is a new APR entry.
+Applies to: the Loop 2 OpenClaw setup on the VM; deploy/loop1/STATE.md; P-28; P-31

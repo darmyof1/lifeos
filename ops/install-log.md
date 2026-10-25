@@ -236,3 +236,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - research/sandbox/2026-10-25-agy/: overnight drafts by a sandboxed VM agent (research input, not decisions).
 - deploy/loop1/health-check.py: VM version with Slack account, channel users list and connection checks.
 - APR-0072: calendar journal 14-day active window and monthly archive. P-26 deferred. P-31 kill switch can wait. P-37 kept open.
+
+## 2026-10-25 - Loop 2 approved (fix-64)
+- APR-0073: Loop 2 runs cloud-only on synthetic data until Loop 2 closes or 2026-12-31. The CEO runs the gateway from the main account.
+- Synthetic events may go to the CEO's Google Calendar; deletes need his approval (APR-0044). Loop 2 cost limits deferred (P-31).
