@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-52.sh",
+  "generated_by": "fix-53.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -828,6 +828,10 @@
       "status": "planned"
     },
     {
+      "path": "deploy/loop1/STATE.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop1/health-check.py",
       "status": "draft"
     },
@@ -841,6 +845,10 @@
     },
     {
       "path": "deploy/loop1/loop1-v14-upgrade.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop1/loop1-v15-upgrade.sh",
       "status": "draft"
     },
     {

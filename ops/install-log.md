@@ -190,3 +190,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - /new in Slack works once each channel has a users list (CEO Slack ID); P-29 closed by that finding.
 - loop1-scn-009 passed in Slack. loop1-scn-010 was partial (stale pending report); cost at most 0.020 USD.
 - APR-0065: instruction set v1.4; deploy/loop1/loop1-v14-upgrade.sh added, not yet applied on the VM.
+
+## 2026-10-24 - Runs 011 to 013, v1.5 proposed, VM handoff (fix-53)
+- v1.4 applied on the VM. Run 011 failed, run 012 (CLI) passed on content, run 013 passed on content after a resend.
+- P-34 (v1.5, COO handoff rule) and P-35 (SESSION_WORK_START_CHANGED) opened. deploy/loop1/loop1-v15-upgrade.sh added, not applied.
+- deploy/loop1/STATE.md added: the handoff for a Claude Code session on the VM.

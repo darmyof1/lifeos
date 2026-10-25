@@ -199,6 +199,13 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - v1.4: the CHO waits (timeoutSeconds 120) for the CoS reply; the CHO, CoS and CFO answer a request with their reply and send no separate message back. Apply with deploy/loop1/loop1-v14-upgrade.sh (gateway stopped; AGENTS.md only; skips agents already on v1.4).
 - Cost of run 010: at most 0.020 USD. The usage page lags, and the figure includes the health check turns after the run.
 
+### 7.12 Runs 011 to 013 and the handoff (2026-10-24)
+- Run 011 (Slack, v1.4) failed: on the COO's first routed message the CHO found no task details and wrote nothing.
+- Run 012 sent the move straight to the CHO from the CLI. The CHO waited for the CoS, got the result and reported done once: v1.4 works. The CoS's reply to the waiting CHO was delivered but its acknowledgement failed (SESSION_WORK_START_CHANGED, P-35).
+- Run 013 (Slack, v1.4) passed on content after the COO resent the task, but the COO's answer to the CEO carried a FAILURE note about the first attempt.
+- Proposed fix: instruction set v1.5 (P-34), one COO rule to carry the whole task inline and resend once. Script: deploy/loop1/loop1-v15-upgrade.sh, not applied until the CEO says yes.
+- Handoff for a Claude Code session on the VM: deploy/loop1/STATE.md.
+
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
 - Revoked key: a copy of an old key stays revoked. Create a new key in the life-os project.
@@ -221,3 +228,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 - 2026-10-24: section 7.9 and instruction set v1.3 approved (fix-50).
 - 2026-10-24: v1.3 upgrade commit bug and run 008 recorded (fix-51).
 - 2026-10-24: /new solved (7.10), instruction set v1.4 approved (7.11) (fix-52).
+- 2026-10-24: runs 011 to 013, v1.5 proposed, VM handoff added (7.12) (fix-53).
