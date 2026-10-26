@@ -311,3 +311,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - P-39 option A decided; v1.8 script built (fix-79)
 - CEO: "lets go with A as recommended." (APR-0081). Added deploy/loop1/loop1-v18-upgrade.sh (CHO only, AGENTS.md only, gateway stopped) and tests/unit/test_loop1_v18_upgrade.py (7 tests). Not applied on the VM yet.
 - Scenario criterion 2 reworded (sleep fact with its own event ID; the move is in the journal).
+
+## 2026-10-26 - v1.8 applied and verified; P-39 closed (fix-80)
+- v1.8 applied on the VM at 17:17 AST with deploy/loop1/loop1-v18-upgrade.sh (CHO AGENTS.md only; commit d26a5e8 in the CHO workspace).
+- Runs loop2-scn-007 and loop2-scn-008 passed in a row (cron live on the test calendar, paused for each reset and resumed after the checker). CEO: "yes close p39" (APR-0082).

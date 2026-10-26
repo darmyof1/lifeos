@@ -37,7 +37,7 @@ Written for a Claude Code session running on the Loop 1 VM, picking up from the 
 
 ## Current setup (verified 2026-10-24)
 - OpenClaw 2026.10.5, model openai/gpt-6-luna, runtime pinned to openclaw (APR-0060), memory search and dreaming off (APR-0061), OpenClaw cron off, daily session reset at 04:00 (APR-0059). A plain cron line under ubuntu runs the calendar push job every 5 minutes against a Google test calendar (APR-0078, since 2026-10-26); pause it around scenario resets.
-- Agents COO, CHO, CoS, CFO in ~/loop1/workspaces/<id>. Instruction sets v1.5 (APR-0066, COO) and v1.6 (APR-0067, CoS) are applied on the VM. Instruction set v1.7 (APR-0075, CHO and CoS) was applied on the VM at 01:43 AST on 2026-10-26 with deploy/loop1/loop1-v17-upgrade.sh and verified in runs loop2-scn-003 and -004 (APR-0076).
+- Agents COO, CHO, CoS, CFO in ~/loop1/workspaces/<id>. Instruction sets v1.5 (APR-0066, COO) and v1.6 (APR-0067, CoS) are applied on the VM. Instruction set v1.7 (APR-0075, CHO and CoS) was applied on the VM at 01:43 AST on 2026-10-26 with deploy/loop1/loop1-v17-upgrade.sh and verified in runs loop2-scn-003 and -004 (APR-0076). Instruction set v1.8 (APR-0081, CHO only) was applied on the VM at 17:17 AST on 2026-10-26 with deploy/loop1/loop1-v18-upgrade.sh and verified in runs loop2-scn-007 and -008 (APR-0082).
 - Slack: one app per agent (APR-0062), socket mode, four accounts (default = COO, cho, cos, cfo). Each account has its own channel in its allowlist, with a users list holding only the CEO's Slack ID. That list also lets "@<agent> /new" work (section 7.10). P-29 is closed.
 - The CEO may address any agent in its channel; normally he talks to the COO (APR-0063).
 - Health check: python3 ~/loop1/health-check.py [--live]. Last run 39 PASS, 0 FAIL, 1 WARN (old /new refusals in the log window). Some of its text is stale (P-31); see "Still to do".
@@ -101,6 +101,8 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 | loop2-scn-004 | Slack, v1.7 (Loop 2) | Pass: same as 003, no P-37 line |
 | loop2-scn-005 | Slack, v1.7 (Loop 2, cron live) | Partial: calendar path passed, and the job moved the Google event in place; the CHO did not write health-plan.md (P-39) |
 | loop2-scn-006 | Slack, v1.7 (Loop 2, cron live) | Partial: calendar path passed again (the job moved the Google event in place); the CHO logged the sleep line but not the move line in health-plan.md (P-39 repeats) |
+| loop2-scn-007 | Slack, v1.8 (Loop 2, cron live) | Pass: checker all passed, numstat 5 0 then 6 0, health plan has the sleep line and the move line, the job moved the Google event |
+| loop2-scn-008 | Slack, v1.8 (Loop 2, cron live) | Pass: same as 007 (second in a row); P-39 closed (APR-0082) |
 
 ## Known issues
 - Agent memory survives a git state reset and a one-line session compaction. A reused run ID can get an answer from memory instead of the reset state. Use a new run ID for every attempt.
@@ -118,4 +120,4 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 5. Health check: updated on the VM by the VM agent (it reported 41 PASS). The repo copy, deploy/loop1/health-check.py, is not updated yet; bring the VM patch in through a fix script.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.
 7. Loop 1 close record: deploy/loop1/LOOP1-CLOSE-RECORD.md, signed off (APR-0071).
-8. P-38 is closed (APR-0076) and P-28 is closed (APR-0080): the calendar push job is built, tested on the VM and running by cron every 5 minutes against the Google test calendar (guides/calendar-sync-job.md; pause it around scenario resets). Still open: P-39 (option A decided, APR-0081; the v1.8 script is built, not yet applied on the VM; two passing runs are needed), P-40 (what must be decided before real data), P-31, P-32, P-37 (kept open by the CEO).
+8. P-38 is closed (APR-0076) and P-28 is closed (APR-0080): the calendar push job is built, tested on the VM and running by cron every 5 minutes against the Google test calendar (guides/calendar-sync-job.md; pause it around scenario resets). P-39 is closed (APR-0082): v1.8 was verified by runs 007 and 008. Still open: P-40 (what must be decided before real data), P-31, P-32, P-37 (kept open by the CEO).

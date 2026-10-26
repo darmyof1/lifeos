@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068), P-38 (APR-0076), P-28 (APR-0080).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068), P-38 (APR-0076), P-28 (APR-0080), P-39 (APR-0082).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -48,21 +48,6 @@ CEO 2026-10-25: keep P-37 open until it is checked on a real Loop 2 run.
 Needs: on the first Loop 2 runs, grep the gateway log for 'maintenance paused' and 'SQLite session write failed'.
 Checked 2026-10-26: runs loop2-scn-001 and loop2-scn-002, on the gateway process that was ready at 23:46 AST on 2026-10-25: 0 occurrences of 'SQLite session write failed' and 0 of 'maintenance paused' in the gateway logs of 2026-10-25 and 2026-10-26 (the log rotates by local date, so a run that crosses midnight needs both files). Proposed: keep P-37 open for two or three more runs, as the CEO asked.
 Seen 2026-10-26 01:55:50 AST: one 'SQLite session write failed' on the COO (operation session.maintenance.plan, pid 3403610, the gateway started after the v1.7 upgrade), at the post of run loop2-scn-003. Not in loop2-scn-004; 'maintenance paused' 0. No visible effect. Loop 2 tally: 1 occurrence in 4 runs (001, 002, 004: none).
-
-## P-39 - What the CHO writes in the health plan (root cause found)
-Seen in runs loop2-scn-005 (nothing logged) and loop2-scn-006 (sleep line only). Run 004 logged a sleep line and a move line. Run 003 was not checked.
-Evidence (trajectory exports of the CHO, 2026-10-26; exec code is hidden in exports, but the read and edit tool calls and the messages are visible):
-- Run 006: the CHO read state/health-plan.md first (20:33:02 UTC), wrote the sleep line (cho-01) at 20:33:11, called the CoS (cho-02) at 20:33:15, posted its two Slack lines at 20:33:41 and did not touch the plan again. Its final summary says the sleep was recorded in health-plan.md and that the CoS recorded the move in the calendar journal.
-- The message the CHO received from the COO differs by run. Run 005: "Please handle the health request to move the Wednesday workout... make the requested change and reply with what changed and the event ID(s)" (the sleep fact is background). Run 006: "handle the sleep report and workout move... Reply with what changed and all event IDs".
-Causes found: (1) the COO paraphrases the CEO's request and the paraphrase decides whether the CHO treats the sleep report as a job; (2) the setup note in the CHO's AGENTS.md ("keep the current plan in state/health-plan.md. Append a line for each change with the run ID and event ID") does not say what a change is: run 006 read it as a plan change (the sleep line) and treated the calendar move as already recorded in the journal, run 004 logged both.
-Ruled out: the CHO not knowing the file, a failed write, a wrong path.
-No APR requires this log. It is a setup note, and criterion 2 of the scenario cited APR-0058 for it by mistake (corrected in tests/scenario/bad-sleep-reschedule.md). The calendar path was correct in all of these runs; the journal holds the authoritative record of every move.
-Options (none decided):
-- A (Claude's recommendation): the health plan holds health facts and plan changes; calendar moves stay in the journal. Criterion 2 becomes "the sleep fact is logged with its own event ID". One CHO rule (instruction set v1.8): "- Health facts (instruction set v1.8): when a message reports a health fact (sleep, weight, a symptom), append a line to state/health-plan.md with the run ID and its own event ID, even if the message also asks for something else."
-- B: every event the CHO handles is logged, moves included. A v1.8 rule defines "change" as every event ID; the log then duplicates the journal.
-- C: drop criterion 2 and close P-39. The log is Loop 1 test scaffolding and the journal plus the push job already prove the calendar path.
-Decided (APR-0081, CEO 2026-10-26): option A. The upgrade script deploy/loop1/loop1-v18-upgrade.sh adds the v1.8 rule to the CHO.
-Needs: the script applied on the VM, then two scenario runs in a row that pass (sleep line with its own event ID in the health plan, checker passing, no deletions in the numstat). Then the CEO closes P-39 with a new APR entry.
 
 ## P-40 - Calendar: what must be decided before real data
 Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-0073); none of this is needed for that.

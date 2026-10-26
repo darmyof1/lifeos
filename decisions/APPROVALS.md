@@ -810,3 +810,17 @@ Meaning:
 Closes: none (P-39 stays open until the two runs)
 Changeable: yes. A change is a new APR entry.
 Applies to: the CHO instructions (v1.8); deploy/loop1/loop1-v18-upgrade.sh; tests/scenario/bad-sleep-reschedule.md; decisions/PENDING.md (P-39)
+
+## APR-0082 - P-39 closed: instruction set v1.8 verified by two passing runs
+Status: approved
+Decided by: CEO
+Your answer: "yes close p39" (2026-10-26)
+Evidence (2026-10-26, VM, Slack, calendar cron live on the Google test calendar, fake data):
+- v1.8 (APR-0081) was applied on the VM at 17:17 AST (commit d26a5e8 in the CHO workspace, AGENTS.md only).
+- loop2-scn-007 and loop2-scn-008, in a row, each passed: the CHO wrote the sleep fact (cho-01) in state/health-plan.md with its own event ID, and the move (cho-02) as well; the checker passed all checks (one CHO call to the CoS, followup, ok; no CoS send; no SESSION_WORK_START_CHANGED); the COO reply named the CHO and the CoS with both event IDs; numstat 5 0 then 6 0 (no deletions); the job moved the Google event in place.
+Meaning:
+- P-39 is closed. The CHO rule of APR-0081 stays as applied.
+- The scenario passes with criterion 2 as reworded in APR-0081.
+Closes: P-39
+Changeable: yes. A change is a new APR entry.
+Applies to: the CHO instructions (v1.8); tests/scenario/bad-sleep-reschedule.md; decisions/PENDING.md
