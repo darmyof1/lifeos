@@ -4,7 +4,8 @@ How to set up and repeat a tool on the VM or the Mac. Written so that a fresh in
 
 | Guide | Status | Last verified |
 |---|---|---|
-| calendar-gcalcli.md | working (read and write) | 2026-10-15 |
+| calendar-gcalcli.md | working (read and write; login renewed 2026-10-25) | 2026-10-25 |
+| calendar-rest-api.md | partial (REST calls verified; repo scripts not yet run on the VM) | 2026-10-25 |
 | slack-multi-identity.md | working (two identities; leakage check open) | 2026-10-19 |
 
 ## Rules for every guide

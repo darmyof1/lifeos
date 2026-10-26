@@ -240,3 +240,9 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-25 - Loop 2 approved (fix-64)
 - APR-0073: Loop 2 runs cloud-only on synthetic data until Loop 2 closes or 2026-12-31. The CEO runs the gateway from the main account.
 - Synthetic events may go to the CEO's Google Calendar; deletes need his approval (APR-0044). Loop 2 cost limits deferred (P-31).
+
+## 2026-10-25 - Calendar login renewed; REST scripts added (fix-65)
+- The gcalcli login expired (invalid_grant). The OAuth app was in Testing mode. The CEO published it (In production), made a new client secret and logged in again. gcalcli add, list, agenda and delete by title work again.
+- Test on the VM: gcalcli has no ID option for edit or delete. REST create, move, read and delete by event ID passed with an ad hoc script.
+- APR-0074: moves and deletes by event ID use REST scripts in scripts/gcal/. gcalcli and its guide stay. Added guides/calendar-rest-api.md and tests/unit/test_gcal_scripts.py (unit tests, no network).
+- To do on the VM: pull, run the unit tests, run the round-trip test from the repo scripts, record the google-api-python-client version.

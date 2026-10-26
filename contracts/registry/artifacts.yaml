@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-63.sh",
+  "generated_by": "fix-65.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -964,6 +964,10 @@
       "status": "draft"
     },
     {
+      "path": "guides/calendar-rest-api.md",
+      "status": "draft"
+    },
+    {
       "path": "guides/github-commands.md",
       "status": "draft"
     },
@@ -1198,6 +1202,38 @@
     {
       "path": "scripts/README.md",
       "status": "planned"
+    },
+    {
+      "path": "scripts/gcal/gcal_common.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_create.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_delete.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_find.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_get.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_list.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_move.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_roundtrip_test.py",
+      "status": "draft"
     },
     {
       "path": "scripts/genesis/post-genesis.sh",
@@ -1626,6 +1662,10 @@
     {
       "path": "tests/unit/test_gate.py",
       "status": "planned"
+    },
+    {
+      "path": "tests/unit/test_gcal_scripts.py",
+      "status": "draft"
     },
     {
       "path": "tests/unit/test_prefilter.py",

@@ -669,3 +669,20 @@ Meaning:
 - Expiry: when Loop 2 closes or on 2026-12-31, whichever comes first.
 Changeable: yes. A change is a new APR entry.
 Applies to: the Loop 2 OpenClaw setup on the VM; deploy/loop1/STATE.md; P-28; P-31
+
+## APR-0074 - Moves and deletes by event ID use the Google Calendar REST API; gcalcli stays
+Status: approved
+Decided by: CEO
+Your answer: "i accept your proposal. however don't remove gcalc and dont remove the guides we created for it. we should have a script in the repo for each scenario if we are goind to be using python for this." (2026-10-25)
+Evidence: test on the VM, 2026-10-25. gcalcli 4.5.1 has no ID option: delete and edit take search text, and edit is interactive. The Google Calendar REST API created, moved, read and deleted one test event by its Google event ID.
+Meaning:
+- Moves and deletes by Google event ID go through the Google Calendar REST API, run by Python scripts in scripts/gcal/. Reads stay on gcalcli.
+- gcalcli stays installed and documented (guides/calendar-gcalcli.md, APR-0041). It is not removed. It remains the fallback and the tool for reads and for actions by title.
+- Every calendar scenario has its own script in the repo: list, find by title, get by ID, create, move, delete, and a round-trip test. No ad hoc scripts on the VM for these.
+- The scripts use the existing gcalcli login (same file, same rules as APR-0041). No new credential.
+- Rules the scripts enforce: only title, start and end go to Google (APR-0032); every title follows the mandate (APR-0034, APR-0035, APR-0037); only mandated, single events are moved or deleted, so personal events are never touched; every delete needs the CEO's approval first (APR-0044) and a matching title; no duplicate titles; every write script has --dry-run.
+- Create: the repo also has a REST create script, because it returns the Google event ID that the journal records. Which tool the sync runner uses for create is decided when the runner is built (P-28).
+- Not covered here: the sync runner itself, and how a high-privacy event shows as busy (APR-0032) alongside the mandated title. Both stay in P-28.
+Closes: none (P-28 stays open)
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/gcal/; tests/unit/test_gcal_scripts.py; guides/calendar-rest-api.md; guides/calendar-gcalcli.md; decisions/PENDING.md (P-28)

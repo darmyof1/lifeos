@@ -1,7 +1,7 @@
 # Google Calendar from the command line (gcalcli)
 
 Status: working (read and write verified on 2026-10-15)
-Last verified: 2026-10-16 on Oracle VM, Ubuntu 24.04 arm64 (commands below)
+Last verified: 2026-10-25 on Oracle VM, Ubuntu 24.04 arm64 (login renewed; add, list, agenda and delete by title re-run)
 Tool version: gcalcli 4.5.1, installed with pipx. Do NOT use the Ubuntu apt package (4.3.0): it has no `init` command.
 Owner: CEO
 
@@ -12,7 +12,7 @@ Lets the CoS read and write your Google Calendar from the VM (APR-0030, APR-0031
 1. A Google account whose calendar you use.
 2. A Google Cloud project (name it `gcalcli`).
 3. Enable the Google Calendar API for that project.
-4. Configure the OAuth consent screen: user type External, your own email as developer contact, and your own email added as a test user.
+4. Configure the OAuth consent screen: user type External, your own email as developer contact, and your own email added as a test user. Then complete the Branding page and publish the app (Audience, Publish app). While the app is in Testing, Google expires the login after 7 days; ours stopped on 2026-10-25, nine days after setup.
 5. Create an OAuth client of type **Desktop app**. Google shows a Client ID and a Client Secret.
 6. Store the Client ID and Client Secret in your password manager. Never in the repo, never in a chat.
 7. If a secret was ever pasted in a chat or committed, reset it in Google Cloud (Clients → your client → reset secret) before using it.
@@ -62,6 +62,7 @@ If step 5 shows `/usr/bin/gcalcli`, the old apt package is still installed: `sud
 | Init stops with Ctrl+C | Authorization not completed | Run init again; a new URL and port are issued |
 | `Cannot access ~/.local/share/gcalcli/oauth` | Not initialized yet | Run init |
 | `--noauth_local_webserver` rejected | Not accepted by 4.5.1 init | Do not use it; use the SSH tunnel |
+| `invalid_grant: Token has been expired or revoked` | The login expired or was revoked. Likely cause on 2026-10-25: the OAuth app was in Testing mode, where logins expire after 7 days | Publish the app (Audience, Publish app), delete `~/.local/share/gcalcli/oauth`, run `gcalcli --client-id=<client-id> init` again |
 
 ## Naming every event (mandate APR-0034, details APR-0035)
 Format: <DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>
@@ -88,9 +89,11 @@ Agenda for a date range (same end-date rule):
 
 Show the Google event ID. For reading only: delete cannot use it (see below).
    gcalcli --calendar "<calendar-email>" search "CHO - Doctor Appointment - 10172026-0001" --details id --tsv
-The column layout of this output has not been checked on your machine.
+Checked 2026-10-25 on the VM with `agenda --tsv --details id`: the columns are id, start_date, start_time, end_date, end_time, title. An all-day event has an ID ending in _YYYYMMDD.
 
 ## Delete an event
+To delete or move by event ID, use the REST scripts instead (guides/calendar-rest-api.md, APR-0074). gcalcli has no ID option: `edit` also takes search text and is interactive (checked 2026-10-25).
+
 Delete by ID is not possible with gcalcli 4.5.1. The delete command takes search text, not an ID, and --noprompt is not an option for delete (checked in the gcalcli 4.5.1 source and by running it: "unrecognized arguments: --noprompt"). Delete by the full title instead. Names follow the mandate, so the title is unique.
 
 1. Search by the full title. Expected: one line.
@@ -120,3 +123,4 @@ The client secret, authorization codes in any URL, token files, your event title
 - 2026-10-15: first working setup. Entry in ops/install-log.md.
 - 2026-10-16: token path corrected to ~/.local/share/gcalcli/oauth (P-13).
 - 2026-10-16: naming standard (APR-0034, APR-0035). Create, search, date-range search, agenda and delete by title tested (ops/install-log.md). Delete by ID was tested and rejected; an earlier note saying a test event was removed by ID was wrong and is removed.
+- 2026-10-25: login expired (invalid_grant). The OAuth app was in Testing mode; it was published, a new client secret was made and the login renewed. Add, list, agenda and delete by title re-run. REST scripts for moves and deletes by ID: guides/calendar-rest-api.md (APR-0074). See ops/install-log.md.

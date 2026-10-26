@@ -25,8 +25,9 @@ Loop 1 results (2026-10-22): the journal is append-only (APR-0058) and a move is
 Added: keep the active journal small, because the CoS reads all of it on every check and cost grows with it. Keep future entries, the last 14 days and anything not yet pushed. Move older lines each month to state/archive/calendar-YYYY-MM.md. The workspace git keeps the full history.
 Added: for Loop 2 the status set grows to requested, written, pushed, failed (with attempt count and last error), conflict, moved and delete-pending-approval, plus the Google event ID once pushed. Pushes and retries run in code, not in the model (ADR-0008, ADR-0011).
 Decided: the 14-day active window and monthly archive (APR-0072).
-Calendar driver: gcalcli is the working tool (guides/calendar-gcalcli.md, APR-0041). A move to the Google Calendar REST API is proposed in SD-003 and not decided.
-Needs: CEO yes or no on the Loop 2 status set and the push job; the driver choice.
+Calendar driver: decided (APR-0074). Reads stay on gcalcli (guides/calendar-gcalcli.md, APR-0041). Moves and deletes by event ID use the Google Calendar REST API through scripts/gcal/ (guides/calendar-rest-api.md). Test 2026-10-25 on the VM: gcalcli has no ID option for edit or delete; REST create, move, read and delete by ID passed.
+Not covered yet: the push job itself, and how a high-privacy event shows as busy (APR-0032) with the mandated title.
+Needs: CEO yes or no on the Loop 2 status set and the push job.
 
 ## P-31 - Cost hard stop (APR-0056)
 Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.
