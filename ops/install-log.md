@@ -304,3 +304,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - Scenario run loop2-scn-006 with the calendar cron (fix-77)
 - Same procedure as run 005 (cron paused, leftover event deleted with the CEO's approval, state reset, sessions compacted, seeds pushed by hand; post; checks; job by hand; cron resumed only after the checker passed). Checker passed; the job moved the Google event in place. numstat 5 0, then 6 0.
 - P-39 repeats in part: the CHO logged the sleep line but not the move line in health-plan.md. A CHO rule (v1.8) is proposed in P-39 and waits for the CEO.
+
+## 2026-10-26 - P-39 root cause found (fix-78)
+- Read-only look at the CHO trajectory exports of runs 005 and 006 on the VM: the CHO read the health plan, wrote the sleep line in run 006 and treated the move as recorded by the CoS in the journal; the COO's message to the CHO differed between the runs (sleep as background in 005, as a task in 006). P-39 rewritten with the causes and three options (A, B, C); nothing changed in the agents.
