@@ -297,3 +297,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - Scenario run loop2-scn-005 with the calendar cron (fix-75)
 - Cron paused, leftover test event deleted, state reset, sessions compacted, seed lines pushed by hand; run loop2-scn-005 posted in Slack; checker passed; job run by hand after the run (moved the Google event in place); cron resumed.
 - The CHO did not write state/health-plan.md in this run (P-39 opened). Scenario criterion 4 now allows the lines the job appends.
+
+## 2026-10-26 - P-28 closed (fix-76)
+- CEO: "close p28" (APR-0080). The calendar push job, cron wrapper, tests and guide stay as built. The leftovers for real data are in P-40.

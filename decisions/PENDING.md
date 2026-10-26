@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068), P-38 (APR-0076).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068), P-38 (APR-0076), P-28 (APR-0080).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -18,18 +18,6 @@ Needs: nothing today. A design item is opened when the loop is proven.
 Proposed: do not add files:read. Attachments would reach the cloud model with no privacy gate (ADR-0003). Revisit after the privacy gate exists.
 CEO 2026-10-25: defer (SD-008). Revisit after the privacy gate exists.
 Needs: nothing until the privacy gate exists.
-
-## P-28 - Calendar journal and Google Calendar (Loop 2)
-Proposed: the CoS keeps a journal of every calendar entry it means to write, with a status (pending, written, failed) and an attempt count. A scheduled job (code, not the model) retries pending entries every 5 minutes (S-06). Before a retry it searches Google for the entry's unique name (APR-0034) so that a write which succeeded but looked failed is not repeated. After 5 failures the COO is told and the CEO checks. If the Google token is revoked (S-07), all writes pause and the CIO alerts in its channel. Google stays the calendar of record (APR-0031); the journal is the hold and the audit trail.
-Loop 1 results (2026-10-22): the journal is append-only (APR-0058) and a move is two lines (APR-0057). The health check fails on any removed journal line (git diff --numstat shows deletions above 0).
-Added: keep the active journal small, because the CoS reads all of it on every check and cost grows with it. Keep future entries, the last 14 days and anything not yet pushed. Move older lines each month to state/archive/calendar-YYYY-MM.md. The workspace git keeps the full history.
-Added: for Loop 2 the status set grows to requested, written, pushed, failed (with attempt count and last error), conflict, moved and delete-pending-approval, plus the Google event ID once pushed. Pushes and retries run in code, not in the model (ADR-0008, ADR-0011).
-Decided: the 14-day active window and monthly archive (APR-0072).
-Calendar driver: decided (APR-0074). Reads stay on gcalcli (guides/calendar-gcalcli.md, APR-0041). Moves and deletes by event ID use the Google Calendar REST API through scripts/gcal/ (guides/calendar-rest-api.md). Test 2026-10-25 on the VM: gcalcli has no ID option for edit or delete; REST create, move, read and delete by ID passed.
-Decided (APR-0077, CEO 2026-10-26): the status set and the push job design above. The sandbox draft research/sandbox/2026-10-25-agy/P-28-calendar-sync.md is not approved as a whole.
-Answered (APR-0078, CEO 2026-10-26): (1) the job posts alerts in the COO channel; (2) the delete status is "deleted"; (3) high-privacy busy is deferred until before real data; (4) plain cron under ubuntu every 5 minutes.
-Built (fix-70): scripts/gcal/gcal_sync.py (push job, creates with gcal_common), scripts/gcal/gcal_sync_cron.sh, tests/unit/test_gcal_sync.py, guides/calendar-sync-job.md. Journal line format for the new statuses: guides/calendar-sync-job.md.
-VM test 2026-10-26 passed (guides/calendar-sync-job.md): create, rerun, move, conflict, delete gate, alert, wrapper dry run, on a test calendar. Cron installed 2026-10-26 on the test calendar (CEO: "cron on the test calendar"). Still open: moving it to the real calendar needs the CEO's go and a one-line change in ~/loop1/gcal-sync/env; no other test is open for the push itself. Item 1 (five failed attempts) and item 2 (revoked login) passed on the VM 2026-10-26. High-privacy busy (point 3) was brought forward (APR-0079): built in fix-73 and passed on the VM with fake data on 2026-10-26 (busy block, no mandated title in Google, move, delete gate). The CoS does not write the privacy mark yet; that and the privacy gate must be decided before real data. Item 3 passed on 2026-10-26 (run loop2-scn-005): after the seeds were pushed, the CoS's move was pushed as a move of the same Google event (10-28 to 10-29). P-28 can close when the CEO says so; the privacy mark and gate, the switch to the real calendar and the monthly archive job would move to new items. The monthly archive job (APR-0072) is not built.
 
 ## P-31 - Cost hard stop (APR-0056)
 Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.
@@ -66,3 +54,11 @@ Seen 2026-10-26 15:57 AST (run loop2-scn-005, v1.7): the CHO moved the workout t
 Instruction today: "Setup note: keep the current plan in state/health-plan.md. Append a line for each change with the run ID and event ID." It is a soft note, not a numbered rule.
 The trajectory export hides exec code, so the CHO's tool calls cannot be read; the export shows 4 exec calls, 1 message and 1 sessions_send, and no mention of health-plan.
 Needs: one more run (loop2-scn-006) to see whether it repeats. If it does, a rule in the CHO instructions (v1.8) needs the CEO's yes recorded as a new APR entry. Nothing is changed without that.
+
+## P-40 - Calendar: what must be decided before real data
+Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-0073); none of this is needed for that.
+1. Privacy mark: the push job shows an entry as busy in Google only when its journal line carries privacy=high (APR-0079). The CoS does not write that mark. Who decides that an entry is high privacy (the privacy gate, ADR-0003) and how the mark reaches the CoS needs the CEO's yes, and an agent instruction change (new APR entry).
+2. Real calendar: the cron pushes to the Google test calendar. Moving it to the real calendar is a one-line change in ~/loop1/gcal-sync/env on the VM, after the CEO's go.
+3. Monthly archive job (APR-0072): not built.
+4. Look at the busy block in the Google Calendar app (not checked yet).
+Needs: the CEO's decisions on 1 and 2 before any real data enters Loop 2.

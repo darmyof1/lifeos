@@ -776,3 +776,22 @@ Build choices made by Claude inside APR-0032 (a change is a new APR entry):
 Closes: none (P-28 stays open until the high-privacy test has run on the VM)
 Changeable: yes. A change is a new APR entry.
 Applies to: P-28; scripts/gcal/gcal_busy.py; scripts/gcal/gcal_sync.py; guides/calendar-sync-job.md; contracts/policy/calendar.yaml (high_privacy_title)
+
+## APR-0080 - P-28 closed: the calendar push job is built and tested
+Status: approved
+Decided by: CEO
+Your answer: "close p28" (2026-10-26)
+Evidence (2026-10-26, VM, Google test calendar, fake data; guides/calendar-sync-job.md has the commands and results):
+- Unit tests: 137 pass on the repo, 116 of them on the VM.
+- Push job by hand: dry run wrote nothing; create; second run with no change; move in place with a new title; conflict (same title at another time) left Google unchanged; delete gate refused without the delete-pending-approval line and without --allow-deletes, and ran with both (APR-0044).
+- Failures: five failed attempts counted, the fifth marked final, one alert, no sixth try. A revoked login (broken copy of the login file) paused all writes, sent one alert and nothing was written.
+- Alerts reached the COO channel once the gateway (terminal T1) was running. They need the gateway; otherwise they go to alerts.log only.
+- High-privacy events (APR-0079): created as busy with a hidden key, the mandated title never in Google, moved and deleted by the same path.
+- Cron (APR-0078): plain cron under ubuntu, every 5 minutes, installed 2026-10-26 13:31 AST on the test calendar. Scenario run loop2-scn-005 with the cron live: the CoS's move was pushed as a move of the same Google event.
+Meaning:
+- P-28 is closed. The job, the cron wrapper, the tests and the guide stay as built (APR-0077, APR-0078, APR-0079).
+- Not part of this closure, moved to a new item P-40: the CoS writing the privacy mark and the privacy gate, switching the cron from the test calendar to the real calendar, the monthly journal archive job (APR-0072), and a look at the busy block in the Google Calendar app. All of it is needed before real data.
+- Not part of this closure either: P-39 (the CHO did not write the health plan in run 005). It is a scenario finding, not a calendar one.
+Closes: P-28
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/gcal/gcal_sync.py; scripts/gcal/gcal_busy.py; scripts/gcal/gcal_sync_cron.sh; guides/calendar-sync-job.md; decisions/PENDING.md
