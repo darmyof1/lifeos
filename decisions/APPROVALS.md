@@ -824,3 +824,65 @@ Meaning:
 Closes: P-39
 Changeable: yes. A change is a new APR entry.
 Applies to: the CHO instructions (v1.8); tests/scenario/bad-sleep-reschedule.md; decisions/PENDING.md
+
+## APR-0083 - P-31 closed for Loop 2: cost kill and alert
+Status: approved
+Decided by: CEO
+Your answer: "It treats 5USD per day as a kill;  an alert at 1 USD per day. this is already done and verify so close it foor lop 2" (2026-10-26)
+Meaning:
+- Cost control for Loop 2: 5 USD per day is a kill, 1 USD per day is an alert. The CEO states this is done and verified; the repo holds no run record of it, so this entry rests on the CEO's statement.
+- The enforced 5 USD monthly project limit (CEO 2026-10-23) and the per-run ceiling of APR-0056 are not changed.
+- This replaces the earlier "can wait" (SD-002, 2026-10-25) and the deferral in APR-0073 for cost limits.
+- P-31 is closed for Loop 2. Anything for later loops is a new item.
+Closes: P-31
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/PENDING.md (P-31); OpenAI project settings
+
+## APR-0084 - P-37 closed for Loop 2: COO SQLite maintenance warning
+Status: approved
+Decided by: CEO
+Your answer: "yes on closing P-31, P-37 and P-32 (with the narrow version);" (2026-10-26)
+Evidence: on the gateway logs of the Loop 2 runs loop2-scn-001 to -008 (2026-10-25 and 2026-10-26): one 'SQLite session write failed' on the COO (2026-10-26 01:55:50 AST, at the post of run 003), none in the other seven runs, and 0 'maintenance paused' lines (OpenClaw's 3-rejection limit was never reached). No visible effect in any run.
+Meaning:
+- P-37 is closed for Loop 2. The earlier condition (keep it open until checked on real Loop 2 runs) is met.
+- Reopen if a 'maintenance paused' line appears in a gateway log, or if a run shows a visible effect of the warning.
+Closes: P-37
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/PENDING.md (P-37)
+
+## APR-0085 - P-32 closed for Loop 2: memory is the state files
+Status: approved
+Decided by: CEO
+Your answer: "yes on closing P-31, P-37 and P-32 (with the narrow version);" (2026-10-26)
+Meaning:
+- Memory search (memory-core) and dreaming stay off through Loop 2 (APR-0061 stands).
+- Agent memory for Loop 2 is the state files: the calendar journal, the health plan and the other state files. Loop 2 runs 001 to 008 worked on this basis.
+- ADR-0011 is written (append-only history, projected state) from what is built.
+- Not decided and moved to a new item P-41: local embeddings (SD-005), checking state files before answering (SD-006), short COO handoffs (SD-007), and how much context the COO builds up.
+Closes: P-32
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/adr/ADR-0011-append-only-history-projected-state.md; decisions/PENDING.md (P-32, P-41)
+
+## APR-0086 - Privacy mark: the chief marks it; health and finance default to high (P-40 item 1)
+Status: approved
+Decided by: CEO
+Your answer: "yes on "chief marks it, health and finance default to high"" (2026-10-26)
+Meaning:
+- The CoS does not decide privacy. When it writes a journal line it writes privacy=high in the detail column if (a) the requesting chief marks the entry high privacy, or (b) the requesting chief owns health or finance (the CHO or the CFO), which is high by default. The push job then shows the entry as busy in Google (APR-0079).
+- The CEO can ask for any entry to be private in a request; the CoS then writes the mark.
+- Lowering a default (showing a health or finance entry in full) is not allowed until the CEO decides it in a new entry.
+- This changes the CoS and the CHO/CFO instructions (instruction set v1.9). It is built as a script and tested on fake data before it is applied. Nothing changes on the VM with this entry.
+- Verification: a scenario run on fake health data in which the Google test calendar shows the entry as busy, the mandated title is not in Google, and the journal numstat has no deletions.
+Closes: none (P-40 stays open for the real calendar and the archive job)
+Changeable: yes. A change is a new APR entry.
+Applies to: the CoS, CHO and CFO instructions (v1.9); decisions/PENDING.md (P-40)
+
+## APR-0087 - Busy block seen in the Google Calendar app (P-40 item 4)
+Status: approved
+Decided by: CEO
+Your answer: "i checke earlier and the calendar showed busy, so we can close this aswell" (2026-10-26)
+Meaning:
+- The CEO looked at the test calendar in the Google Calendar app earlier and the high-privacy event showed as busy. P-40 item 4 is done.
+Closes: none (item of P-40)
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/PENDING.md (P-40)

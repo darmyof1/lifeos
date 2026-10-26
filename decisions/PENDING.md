@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068), P-38 (APR-0076), P-28 (APR-0080), P-39 (APR-0082).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068), P-38 (APR-0076), P-28 (APR-0080), P-39 (APR-0082), P-31 (APR-0083), P-37 (APR-0084), P-32 (APR-0085).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -19,40 +19,20 @@ Proposed: do not add files:read. Attachments would reach the cloud model with no
 CEO 2026-10-25: defer (SD-008). Revisit after the privacy gate exists.
 Needs: nothing until the privacy gate exists.
 
-## P-31 - Cost hard stop (APR-0056)
-Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.
-Proposed: the health check reads the day's spend and stops the gateway (kill switch) above the APR-0056 limits. Until then the CEO checks the usage page after each test session.
-Needs: CEO yes or no, and a check of whether OpenAI offers a daily alert.
-
-Update 2026-10-23: the CEO set the OpenAI project limit to enforced (5 USD per month). Calls stop with 429 project_spend_limit_exceeded when it is reached; enforcement is not instant. No daily alert option was confirmed. Still open: the kill switch in the health check and the 1 USD per day alert (APR-0056).
-CEO 2026-10-25: the kill switch can wait ("ignore for now", SD-002). The enforced 5 USD monthly project limit stays the only hard stop. Sandbox draft: research/sandbox/2026-10-25-agy/P-31-cost-hard-stop.md. It treats 1 USD per day as a kill; APR-0056 says an alert at 1 USD per day.
-CEO 2026-10-25: cost limits for Loop 2 deferred (APR-0073). APR-0056 was for Loop 1.
-
-## P-32 - Memory design before Loop 2
-Open: the per-agent MEMORY.md files are empty templates and ADR-0011 (append-only history, projected state) is empty. OpenClaw's memory-core (memory search with embeddings, nightly dreaming) is off for Loop 1 (APR-0061).
-Questions: what each agent should remember beyond its state files; where memory lives; whether recall may use a cloud embedding model or must be local (ADR-0003); how memory stays append-only (ADR-0011).
-Needs: a design decision before Loop 2. Until then memory-core stays off.
-Added 2026-10-24 (APR-0063): the CEO will mostly talk to the COO, who routes to the chiefs, and may address any agent at any time. Open: how much context the COO builds up when it routes everything, and what it must ask the chiefs for instead of keeping. First data: the COO's prompt on a Slack turn was about 35,000 tokens (window 272,000). Per-agent token counts per scenario run are still to measure.
-Sandbox drafts 2026-10-25: research/sandbox/2026-10-25-agy/P-32-memory.md. CEO: SD-005 (local embeddings) later, after the local model work; SD-006 (check state files before answering) needs a token estimate; SD-007 (short COO handoffs) needs explaining.
-
 ## P-36 - 04:00 daily reset check (pending, not to be raised for now)
 Status: pending. The CEO asked on 2026-10-25 not to bring this up for a while.
 Needs: after the first inbound message past 04:00 AST, record the session IDs of the five main sessions and compare them with the list captured at 00:54 on 2026-10-25.
 Method: section 7.7 of guides/loop1-baseline.md.
 
-## P-37 - COO SQLite maintenance warning at scenario start (Loop 2)
-Seen 2026-10-25 in runs 018 (01:31:10) and 019 (01:42:52): about 2 seconds after the scenario post, the gateway logs 'SQLite session write failed' on the COO database (operation session.maintenance.plan, error 'SQLite automatic maintenance activity changed before age consumption'), right after 'slow agent database reservation' (about 1.1 to 1.2 s, outcome ok). Also seen 2026-10-24 at 19:56 and 21:59.
-No visible effect on any run.
-Code reading (sandbox, 2026-10-25, OpenClaw 2026.10.5 dist): a maintenance plan rejected by a concurrent write is retried; after 3 rejections (MAX_MAINTENANCE_REJECTIONS) OpenClaw logs 'SQLite automatic session maintenance paused after repeated input changes'. That line appears 0 times in the gateway logs for 2026-10-24 and 2026-10-25, so the limit was never reached. Details: research/sandbox/2026-10-25-agy/P-37-findings.md.
-CEO 2026-10-25: keep P-37 open until it is checked on a real Loop 2 run.
-Needs: on the first Loop 2 runs, grep the gateway log for 'maintenance paused' and 'SQLite session write failed'.
-Checked 2026-10-26: runs loop2-scn-001 and loop2-scn-002, on the gateway process that was ready at 23:46 AST on 2026-10-25: 0 occurrences of 'SQLite session write failed' and 0 of 'maintenance paused' in the gateway logs of 2026-10-25 and 2026-10-26 (the log rotates by local date, so a run that crosses midnight needs both files). Proposed: keep P-37 open for two or three more runs, as the CEO asked.
-Seen 2026-10-26 01:55:50 AST: one 'SQLite session write failed' on the COO (operation session.maintenance.plan, pid 3403610, the gateway started after the v1.7 upgrade), at the post of run loop2-scn-003. Not in loop2-scn-004; 'maintenance paused' 0. No visible effect. Loop 2 tally: 1 occurrence in 4 runs (001, 002, 004: none).
-
 ## P-40 - Calendar: what must be decided before real data
 Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-0073); none of this is needed for that.
-1. Privacy mark: the push job shows an entry as busy in Google only when its journal line carries privacy=high (APR-0079). The CoS does not write that mark. Who decides that an entry is high privacy (the privacy gate, ADR-0003) and how the mark reaches the CoS needs the CEO's yes, and an agent instruction change (new APR entry).
-2. Real calendar: the cron pushes to the Google test calendar. Moving it to the real calendar is a one-line change in ~/loop1/gcal-sync/env on the VM, after the CEO's go.
-3. Monthly archive job (APR-0072): not built.
-4. Look at the busy block in the Google Calendar app (not checked yet).
-Needs: the CEO's decisions on 1 and 2 before any real data enters Loop 2.
+1. Privacy mark: decided (APR-0086): the chief marks it, health and finance default to high. Open: the v1.9 instruction script, applying it, and a scenario run on fake health data that shows busy in the test calendar.
+2. Real calendar: the cron pushes to the Google test calendar. Moving it to the real calendar is a one-line change in ~/loop1/gcal-sync/env on the VM, after item 1 passes: first a read-only look at the real calendar, then one fake event created and removed, then the change. Needs the CEO's go.
+3. Monthly archive job (APR-0072): not built. Build it when the journal reaches about 1,000 lines (it is under 100 now).
+4. Busy block in the Google Calendar app: done (APR-0087).
+Needs: items 1 and 2 before any real data enters Loop 2.
+
+## P-41 - Memory beyond the state files (deferred from P-32)
+Open when the COO prompt grows (it was about 35,000 tokens of 272,000 on a Slack turn) or a second real use appears. Not needed for Loop 2 (APR-0085).
+Questions: local embeddings after the local model work (SD-005, ADR-0003); checking state files before answering, which needs a token estimate (SD-006); short COO handoffs (SD-007); how much context the COO builds up when it routes everything and what it must ask the chiefs for instead of keeping. Per-agent token counts per scenario run are still to measure.
+Sandbox draft: research/sandbox/2026-10-25-agy/P-32-memory.md.

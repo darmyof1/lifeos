@@ -315,3 +315,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - v1.8 applied and verified; P-39 closed (fix-80)
 - v1.8 applied on the VM at 17:17 AST with deploy/loop1/loop1-v18-upgrade.sh (CHO AGENTS.md only; commit d26a5e8 in the CHO workspace).
 - Runs loop2-scn-007 and loop2-scn-008 passed in a row (cron live on the test calendar, paused for each reset and resumed after the checker). CEO: "yes close p39" (APR-0082).
+
+## 2026-10-26 - P-31, P-37, P-32 closed; privacy rule decided (fix-81)
+- CEO closed P-31 (APR-0083), P-37 (APR-0084) and P-32 with the narrow version (APR-0085); ADR-0011 written; new item P-41 holds the deferred memory questions.
+- CEO approved "the chief marks it, health and finance default to high" (APR-0086) and confirmed the busy block in the Google Calendar app (APR-0087). The v1.9 instruction script is not built yet.

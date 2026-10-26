@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-80.sh",
+  "generated_by": "fix-81.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -785,7 +785,7 @@
     },
     {
       "path": "decisions/adr/ADR-0011-append-only-history-projected-state.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "decisions/adr/ADR-0012-archive-local-then-object-lock.md",
