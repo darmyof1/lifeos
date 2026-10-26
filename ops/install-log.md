@@ -293,3 +293,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - P-28 high-privacy busy events tested on the VM (fix-74)
 - On the VM, T2, test calendar, fake data in ~/loop1/gcal-sync-hp: create as busy, no mandated title in Google, rerun with no change, move without a mark on the new line (privacy followed the move), delete gate with and without --allow-deletes. 116 unit tests OK on the VM. Both fake events were deleted by the test (CEO approval in the batch).
 - The scenario procedure now pushes the seed lines by hand after the state reset, and the test calendar is cleaned of leftover events before a run.
+
+## 2026-10-26 - Scenario run loop2-scn-005 with the calendar cron (fix-75)
+- Cron paused, leftover test event deleted, state reset, sessions compacted, seed lines pushed by hand; run loop2-scn-005 posted in Slack; checker passed; job run by hand after the run (moved the Google event in place); cron resumed.
+- The CHO did not write state/health-plan.md in this run (P-39 opened). Scenario criterion 4 now allows the lines the job appends.

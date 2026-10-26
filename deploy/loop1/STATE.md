@@ -67,11 +67,11 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 2. The CEO posts "@COO /new" in the COO channel, then the scenario text from the scenario file with the new run ID. The post must start with "@COO " (the agents answer only when the post starts with their name).
 3. After about 2 minutes:
 
-       git -C $W/cos diff --numstat state/calendar-journal.md      (expect 2 0)
+       git -C $W/cos diff --numstat state/calendar-journal.md      (expect no deletions: 2 0, or 5 0 when the seed lines were pushed by hand; 6 0 after the job has pushed the move)
        tail -n 2 $W/cho/state/health-plan.md
        grep -c "SESSION_WORK_START_CHANGED" /tmp/openclaw/openclaw-$(date +%F).log      (shows 0 even when the error happened: it is in the tool result, not in the log)
 
-4. Pass: one COO reply that says the move is done, names the CHO and the CoS and gives the event IDs; one line each in the CHO and CoS channels; no "Late reply", no FAILURE note; numstat 2 0.
+4. Pass: one COO reply that says the move is done, names the CHO and the CoS and gives the event IDs; one line each in the CHO and CoS channels; no "Late reply", no FAILURE note; no deletions in the numstat (criterion 4 in the scenario file); the health plan change log has the sleep note and the move (criterion 2).
 5. Cost is not measured for now (CEO decision, 2026-10-24).
 6. Before the next reset, export the CHO and CoS sessions and run scripts/verify/check_sessions_send.py (commands in tests/scenario/bad-sleep-reschedule.md, "Loop 2 checks under v1.7"). The checker finds the run by its run ID. Export names cannot be reused: a second export with the same name fails with EEXIST.
 7. Resume the calendar cron after the checker has passed:
@@ -99,6 +99,7 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 | loop2-scn-002 | Slack, v1.6 (Loop 2) | Pass on content, numstat 2 0. Four sessions_send calls to the CoS (the third had no details, so the CoS ran twice); three SESSION_WORK_START_CHANGED on CoS replies. The post lost its first letter ("oop 1 scenario run"); no effect |
 | loop2-scn-003 | Slack, v1.7 (Loop 2) | Pass: numstat 2 0, COO named the CHO and the CoS, one CHO call to the CoS (followup), no CoS send, no SESSION_WORK_START_CHANGED; one P-37 line at the post |
 | loop2-scn-004 | Slack, v1.7 (Loop 2) | Pass: same as 003, no P-37 line |
+| loop2-scn-005 | Slack, v1.7 (Loop 2, cron live) | Partial: calendar path passed, and the job moved the Google event in place; the CHO did not write health-plan.md (P-39) |
 
 ## Known issues
 - Agent memory survives a git state reset and a one-line session compaction. A reused run ID can get an answer from memory instead of the reset state. Use a new run ID for every attempt.
