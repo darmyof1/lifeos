@@ -280,3 +280,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - P-28 push job tested on the VM (fix-71)
 - On the VM as ubuntu, from ~/lifeos-ro at 17bb327, against a separate Google test calendar and a test journal in ~/loop1/gcal-sync-test: dry run, create, rerun with no change, move with a new title, conflict, delete gate (three cases), alert in the COO channel, and the cron wrapper by hand in dry-run mode. All as expected.
 - Created on the VM (not in the repo): ~/loop1/gcal-sync/env (mode 600, holds the calendar ID and the alert target), ~/loop1/gcal-sync/sync.log, ~/loop1/gcal-sync-test/. No cron line installed. The test event was deleted through the job's delete gate.
+
+## 2026-10-26 - P-28 push job cron installed (fix-72)
+- CEO: "cron on the test calendar". On the VM as ubuntu: one line added to the ubuntu crontab, "*/5 * * * * bash $HOME/lifeos-ro/scripts/gcal/gcal_sync_cron.sh", next to the existing stress-ng line. The settings file ~/loop1/gcal-sync/env points at the Google test calendar and the COO channel.
+- Dry run first against the real CoS journal: three entries to create, as expected. First cron run 13:35 AST: three events created; run 13:40: pushed 0.
+- Scenario runs now pause and resume this cron line (tests/scenario/bad-sleep-reschedule.md, deploy/loop1/STATE.md, guides/calendar-sync-job.md).

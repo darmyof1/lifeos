@@ -36,7 +36,7 @@ Written for a Claude Code session running on the Loop 1 VM, picking up from the 
 - Reuse a scenario run ID. Every attempt gets a new ID, even after a reset or a failed attempt (run 014).
 
 ## Current setup (verified 2026-10-24)
-- OpenClaw 2026.10.5, model openai/gpt-6-luna, runtime pinned to openclaw (APR-0060), memory search and dreaming off (APR-0061), cron off, daily session reset at 04:00 (APR-0059).
+- OpenClaw 2026.10.5, model openai/gpt-6-luna, runtime pinned to openclaw (APR-0060), memory search and dreaming off (APR-0061), OpenClaw cron off, daily session reset at 04:00 (APR-0059). A plain cron line under ubuntu runs the calendar push job every 5 minutes against a Google test calendar (APR-0078, since 2026-10-26); pause it around scenario resets.
 - Agents COO, CHO, CoS, CFO in ~/loop1/workspaces/<id>. Instruction sets v1.5 (APR-0066, COO) and v1.6 (APR-0067, CoS) are applied on the VM. Instruction set v1.7 (APR-0075, CHO and CoS) was applied on the VM at 01:43 AST on 2026-10-26 with deploy/loop1/loop1-v17-upgrade.sh and verified in runs loop2-scn-003 and -004 (APR-0076).
 - Slack: one app per agent (APR-0062), socket mode, four accounts (default = COO, cho, cos, cfo). Each account has its own channel in its allowlist, with a users list holding only the CEO's Slack ID. That list also lets "@<agent> /new" work (section 7.10). P-29 is closed.
 - The CEO may address any agent in its channel; normally he talks to the COO (APR-0063).
@@ -52,8 +52,10 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
     pgrep -af "openclaw.*gateway" | grep -v pgrep | wc -l      (expect 1)
 
 ## Scenario run from Slack (the current test)
-1. Save and reset the state, then compact the main sessions. Use a new run ID for every attempt:
+1. Pause the calendar cron, save and reset the state, then compact the main sessions. Use a new run ID for every attempt:
 
+       crontab -l | sed 's|^\*/5 .*gcal_sync_cron.sh|#&|' | crontab -
+       crontab -l | grep gcal_sync      (expect: the line starts with #)
        source ~/loop1/env.sh
        W=~/loop1/workspaces; E=~/loop1/evidence/$(date +%F); mkdir -p $E
        for a in cho cos cfo; do cp -r $W/$a/state $E/<run ID>-$a; git -C $W/$a checkout -- state/; done
@@ -71,6 +73,10 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 4. Pass: one COO reply that says the move is done, names the CHO and the CoS and gives the event IDs; one line each in the CHO and CoS channels; no "Late reply", no FAILURE note; numstat 2 0.
 5. Cost is not measured for now (CEO decision, 2026-10-24).
 6. Before the next reset, export the CHO and CoS sessions and run scripts/verify/check_sessions_send.py (commands in tests/scenario/bad-sleep-reschedule.md, "Loop 2 checks under v1.7"). The checker finds the run by its run ID. Export names cannot be reused: a second export with the same name fails with EEXIST.
+7. Resume the calendar cron after the checker has passed:
+
+       crontab -l | sed 's|^#\(\*/5 .*gcal_sync_cron.sh\)|\1|' | crontab -
+       crontab -l | grep gcal_sync      (expect: the line starts with */5)
 
 ## Where the runs stand
 | Run | Path | Result |
@@ -109,4 +115,4 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 5. Health check: updated on the VM by the VM agent (it reported 41 PASS). The repo copy, deploy/loop1/health-check.py, is not updated yet; bring the VM patch in through a fix script.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.
 7. Loop 1 close record: deploy/loop1/LOOP1-CLOSE-RECORD.md, signed off (APR-0071).
-8. P-38 is closed (APR-0076). P-28: the status set and push job design are approved (APR-0077), the four open points are answered (APR-0078), and the job is built (fix-70) and passed its test on the VM against a test calendar on 2026-10-26; the cron line is not installed yet (guides/calendar-sync-job.md). Still open: P-31, P-32, P-37 (kept open by the CEO).
+8. P-38 is closed (APR-0076). P-28: the status set and push job design are approved (APR-0077), the four open points are answered (APR-0078), and the job is built (fix-70) and passed its test on the VM against a test calendar on 2026-10-26; the cron line (every 5 minutes, test calendar) has been installed on the VM since 2026-10-26 and pushed the three seed and run entries on its first run (guides/calendar-sync-job.md). Scenario runs now pause and resume it. Still open: P-31, P-32, P-37 (kept open by the CEO).

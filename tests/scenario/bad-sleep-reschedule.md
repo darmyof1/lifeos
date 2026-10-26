@@ -16,6 +16,7 @@ Loop 2 (APR-0073): runs loop2-scn-001 and loop2-scn-002 (2026-10-25 and 26, Slac
       for a in cho cos cfo; do cp -r $W/$a/state $E/<run ID>-$a; git -C $W/$a checkout -- state/; done
 
 - Use a fresh session id for each run.
+- Pause the calendar cron before the reset and resume it after the checks and the export (section "Loop 2 calendar cron (APR-0078)" below). While it runs, it appends pushed lines to the CoS journal, so the numstat check would no longer read 2 0.
 - The reset above restores the last commit, so each workspace's HEAD must hold the seed state. Never run git add -A in a workspace while state/ is dirty (the first v1.3 upgrade did; repaired 2026-10-24).
 - A run from Slack also needs a fresh COO channel session: an old one remembers earlier runs.
 - Between runs, cut the four main sessions to one line (synthetic data only; no backup is kept):
@@ -55,6 +56,21 @@ After the run, and before the next reset, export the CHO and CoS sessions and re
     python3 scripts/verify/check_sessions_send.py ~/loop1/evidence/traj/.openclaw/trajectory-exports <run ID>
 
 Pass (APR-0075): the checker ends with "all checks passed": the CHO's first call to the CoS has mode followup, no watch and timeoutSeconds 120 and returns a reply; the CoS sends nothing to the CHO; no SESSION_WORK_START_CHANGED. A WARN for a second CHO call is allowed (v1.7 lets the CHO resend once). The usual criteria 1 to 5 still apply.
+
+## Loop 2 calendar cron (APR-0078)
+Since 2026-10-26 a plain cron job under ubuntu runs scripts/gcal/gcal_sync.py every 5 minutes against the Google test calendar (guides/calendar-sync-job.md). It reads the CoS journal and appends pushed lines to it. Every scenario run has two extra steps:
+
+Pause, before the state reset:
+
+    crontab -l | sed 's|^\*/5 .*gcal_sync_cron.sh|#&|' | crontab -
+    crontab -l | grep gcal_sync      (expect: the line starts with #)
+
+Resume, after the checker has passed and the export is done (the job then pushes the run's entries to the test calendar; read the last block of ~/loop1/gcal-sync/sync.log):
+
+    crontab -l | sed 's|^#\(\*/5 .*gcal_sync_cron.sh\)|\1|' | crontab -
+    crontab -l | grep gcal_sync      (expect: the line starts with */5)
+
+The next reset removes the pushed lines from the journal, so events from earlier runs stay in the test calendar. They are cleaned up only with scripts/gcal/gcal_delete.py and the CEO's approval (APR-0044). Never use --allow-deletes for this.
 
 ## Run log
 | Run | Date | Instructions | Result | Notes |

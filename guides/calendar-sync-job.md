@@ -1,6 +1,6 @@
 # Calendar push job - guide
 
-Status: working by hand (VM test 2026-10-26 passed; the cron line is not installed yet)
+Status: working (VM test 2026-10-26 passed; cron installed 2026-10-26, every 5 minutes, test calendar)
 Last verified: 2026-10-26 on Oracle VM, Ubuntu 24.04 arm64, against a separate test calendar
 Tool version: Python 3.12 from the gcalcli pipx environment (gcalcli 4.5.1, google-api-python-client 2.201.0); OpenClaw 2026.10.5 for the alert
 Owner: CEO
@@ -62,7 +62,21 @@ Expected: `alert: sent` and the message in the COO channel. Every alert is also 
 4. The wrapper appends to `~/loop1/gcal-sync/sync.log` and keeps it to about 1500 lines. The job pushes at most 20 entries per run.
 
 ## Scenario resets
-Resetting the journal (`git checkout -- state/`) while the job runs would leave events in Google that the journal no longer knows about. Before a Loop 2 scenario reset, comment out the cron line (or use the test calendar and a test journal), and clean up Google events only with the delete script and your approval.
+Resetting the journal (`git checkout -- state/`) while the job runs would leave events in Google that the journal no longer knows about, and the pushed lines would break the numstat check (2 0). Every scenario run therefore pauses the cron before the reset and resumes it after the checks and the export. The commands are in tests/scenario/bad-sleep-reschedule.md ("Loop 2 calendar cron (APR-0078)") and in deploy/loop1/STATE.md. Pause (the line must start with #):
+
+```
+crontab -l | sed 's|^\*/5 .*gcal_sync_cron.sh|#&|' | crontab -
+crontab -l | grep gcal_sync
+```
+
+Resume (the line must start with */5):
+
+```
+crontab -l | sed 's|^#\(\*/5 .*gcal_sync_cron.sh\)|\1|' | crontab -
+crontab -l | grep gcal_sync
+```
+
+Clean up leftover events in the test calendar only with the delete script and your approval (APR-0044).
 
 ## If the login is revoked
 The job writes `~/loop1/gcal-sync/PAUSED-login-revoked`, alerts once, and exits with 3 on every run after that. To resume: renew the login (guides/calendar-gcalcli.md, Troubleshooting), run `$PY scripts/gcal/gcal_list.py --from 2026-10-26 --to 2026-10-27` to confirm it works, then `rm ~/loop1/gcal-sync/PAUSED-login-revoked`.
@@ -89,3 +103,4 @@ Calendar IDs, channel IDs, tokens, personal event titles, personal email address
 ## History
 - 2026-10-26: job written and unit-tested (fix-70, APR-0078).
 - VM test 2026-10-26 (test calendar, test journal outside the CoS workspace): unit tests OK on the system Python and on the gcalcli Python (99 tests each); dry run wrote nothing; real run created one event and appended a pushed line; a second run did nothing; a moved line plus a written line with a new title moved the same Google event (old title returned 0 events); a second written line for the same title at another time gave a conflict and Google was unchanged; a deleted line without a delete-pending-approval line was skipped; with the pending line it was skipped without --allow-deletes and executed with it; the alert test posted in the COO channel; the cron wrapper ran by hand (dry run, exit 0) and wrote sync.log. Not yet tested on the VM: five failed attempts, a revoked login. Both are covered by unit tests. See ops/install-log.md.
+- Cron installed 2026-10-26 13:31 AST (every 5 minutes, test calendar, real CoS journal). First run 13:35: three events created, three pushed lines, three events in the test calendar. Run at 13:40: pushed 0, exit 0. Your other cron line (stress-ng) was kept. See ops/install-log.md.
