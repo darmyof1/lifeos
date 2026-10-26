@@ -252,3 +252,11 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - The scripts refused the new login file because gcalcli init left it open to others; fixed with chmod 600 (mode checked: 600, owner ubuntu).
 - scripts/gcal/gcal_list.py listed the two events of the day with their IDs. gcal_roundtrip_test.py created, moved, read by ID and deleted one test event (title counter 9001); gcal_find.py then found 0 matches and gcalcli agenda showed no test event.
 - guides/calendar-rest-api.md is now marked working. Not yet run alone on the VM: the create, move, get and delete scripts (run only inside the round trip).
+
+## 2026-10-26 - Loop 2 runs 001 and 002 read from the trajectory; instruction set v1.7 (fix-67)
+- Runs loop2-scn-001 and loop2-scn-002 recorded (scenario file, STATE.md). Both passed on content.
+- The trajectory exports showed why the CoS sometimes runs twice: the CHO's sessions_send set mode notify and watch true, which start no CoS turn. APR-0075: instruction set v1.7 (the CHO's exact call; the CoS replies by answering).
+- Added deploy/loop1/loop1-v17-upgrade.sh (run with --dry-run first), scripts/verify/check_sessions_send.py and unit tests for both. P-38 tracks the check in two runs.
+- P-37: 0 occurrences in the two runs; stays open.
+- STATE.md: the post must start with @COO; a gateway-log count cannot show SESSION_WORK_START_CHANGED.
+- To do on the VM: pull, stop the gateway, run the upgrade script with --dry-run and then for real, start the gateway, run the scenario twice and run the checker.

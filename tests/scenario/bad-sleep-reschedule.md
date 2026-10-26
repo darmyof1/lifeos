@@ -4,6 +4,8 @@ Rules: APR-0052 (synthetic data), APR-0054 (journal), APR-0056 (cost), APR-0057 
 Runs needed to close: three identical passing runs, plus one run with a gateway restart in the middle.
 Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retries passed). First Slack run (loop1-scn-007, 2026-10-24) was partial; instruction set v1.3 (APR-0064) is the fix. Run 009 passed in Slack; run 010 was partial (stale "pending"); instruction set v1.4 (APR-0065) is the fix. Under v1.4: run 011 failed (no task details on first contact), run 012 (CLI to the CHO) passed on content, run 013 passed on content after a COO resend but showed a FAILURE note. Proposed fix: v1.5 (P-34). Under v1.5 and v1.6: runs 015, 016, 017 and 019 passed on content (019 clean: one run per agent); run 018 partial. Closed for Loop 1 on 2026-10-25 (APR-0069); criterion 6 (cost) deferred by the CEO.
 
+Loop 2 (APR-0073): runs loop2-scn-001 and loop2-scn-002 (2026-10-25 and 26, Slack, v1.6) passed on content. The trajectory exports showed that the CHO's sessions_send arguments (notify, watch, resume) start no CoS turn, which explains the CoS running twice. Instruction set v1.7 (APR-0075) is the fix; P-38 tracks the check.
+
 ## Setup
 - Agents COO, CHO, CoS and CFO with instruction set v1.2 (deploy/loop1/loop1-agent-files.sh).
 - Gateway running once: pgrep -af "openclaw.*gateway" | grep -v pgrep | wc -l prints 1.
@@ -25,6 +27,8 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
 ## Input (to the COO)
     openclaw agent --agent coo --session-id <run ID>-coo --timeout 300 -m "Loop 1 scenario run, run ID <run ID>. Alex Test slept 5 hours last night. Move the Wednesday workout on 2026-10-28 to Thursday 2026-10-29, 07:00 to 08:00. Route this to the CHO, which owns health. Wait for the result, then tell me in 3 lines what changed, who changed it, and the event IDs."
 
+From Slack, the post must start with `@COO ` (the agents answer only when the post starts with their name), followed by the same text. Post `@COO /new` first.
+
 ## Checks (after 120 seconds)
     tail -n 4 ~/loop1/workspaces/cos/state/calendar-journal.md
     tail -n 2 ~/loop1/workspaces/cho/state/health-plan.md
@@ -41,6 +45,16 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
 ## Still to cover
 - Cost per run: 0.047 USD for loop1-scn-007 (Slack, with retries); at most 0.020 USD for loop1-scn-010. Runs 011 to 013 were not measured (the usage page lagged). Not measured from 2026-10-24 on: deferred by the CEO (APR-0069).
 - What the CEO sees in Slack: runs 009 and 010 showed one line each in the CHO and CoS channels (APR-0050 works). Run 010's COO reply was wrong ("pending"); v1.4 fixed that. Run 013's COO reply named the CHO and the CoS but carried a FAILURE note after a resend (P-34).
+
+## Loop 2 checks under v1.7 (APR-0075, P-38)
+After the run, and before the next reset, export the CHO and CoS sessions and read their sessions_send calls. One export holds the whole session, so cut off earlier runs with --since (a UTC time a few minutes before the post). Run the last command from the repo clone on the VM:
+
+    source ~/loop1/env.sh
+    openclaw sessions export-trajectory --session-key "agent:cho:main" --workspace ~/loop1/evidence/traj --output <run ID>-cho
+    openclaw sessions export-trajectory --session-key "agent:cos:main" --workspace ~/loop1/evidence/traj --output <run ID>-cos
+    python3 scripts/verify/check_sessions_send.py ~/loop1/evidence/traj/.openclaw/trajectory-exports <run ID> --since "$(date -u -d '20 minutes ago' +%FT%TZ)"
+
+Pass (APR-0075): the checker ends with "all checks passed": the CHO's first call to the CoS has mode followup, no watch and timeoutSeconds 120 and returns a reply; the CoS sends nothing to the CHO; no SESSION_WORK_START_CHANGED. A WARN for a second CHO call is allowed (v1.7 lets the CHO resend once). The usual criteria 1 to 5 still apply.
 
 ## Run log
 | Run | Date | Instructions | Result | Notes |
@@ -65,5 +79,7 @@ Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retr
 | loop1-scn-017 | 2026-10-25 | v1.6 (Slack) | Pass on content | numstat 2 0; COO reply names CHO and CoS with event ID loop1-scn-017-cho-01; CHO line in health-cho and CoS line in staff-cos; no FAILURE note. The CoS reported 'logged as delivered, but its acknowledgement failed (P-35)' before the CHO replied; the CHO replied with the content about a minute later. The gateway log has no error line for the acknowledgement. Cost not measured (deferred by the CEO). |
 | loop1-scn-018 | 2026-10-25 | v1.6 (Slack) | Partial | numstat 2 0; loop1-scn-018-cho-01 in health-plan; CHO and CoS channel lines posted; no FAILURE note. The COO's reply named only the CHO (the criterion asks for the CHO and the CoS). The CoS ran twice: its first run took no action, its second made the move. The CEO posted once, so the second run came from an agent message; cause not found. No duplicate write. Cost not measured. |
 | loop1-scn-019 | 2026-10-25 | v1.6 (Slack) | Pass | numstat 2 0; loop1-scn-019-cho-01 in health-plan; COO reply names the CHO and the CoS with event IDs; one line each in the CHO and CoS channels; one run each for the CHO and the CoS; no late reply, no FAILURE note. The CoS reported the P-35 acknowledgement error in v1.6 wording. The CHO treated the sleep report as context and did not log it (runs 015 and 016 logged it). Cost not measured (deferred by the CEO). |
+| loop2-scn-001 | 2026-10-25 | v1.6 (Slack, Loop 2) | Pass on content | First Loop 2 run; post started with @COO. numstat 2 0. CHO trajectory: five sessions_send calls to the CoS (notify with watch: forbidden; notify: queued, no CoS turn; resume twice: rejected; followup: worked). The CHO posted two lines in its channel. One SESSION_WORK_START_CHANGED on the CoS reply to the CHO (sentBeforeError true). P-37: not seen. Per-run cost from the trajectory, CHO only: about 0.01 USD. |
+| loop2-scn-002 | 2026-10-26 | v1.6 (Slack, Loop 2) | Pass on content | numstat 2 0. Four sessions_send calls to the CoS: forbidden, queued, a followup without details (the CoS replied it could not act), then a followup with the full details (worked). Three SESSION_WORK_START_CHANGED on CoS replies. The CEO's post lost its first letter ("oop 1 scenario run"); no effect. P-37: not seen. Per-run cost from the trajectory: CHO about 0.006 USD, each CoS run about 0.003 USD. The export loop2-scn-002-cho holds both runs (one session). |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

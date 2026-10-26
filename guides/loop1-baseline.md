@@ -206,6 +206,14 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - Proposed fix: instruction set v1.5 (P-34), one COO rule to carry the whole task inline and resend once. Script: deploy/loop1/loop1-v15-upgrade.sh, not applied until the CEO says yes.
 - Handoff for a Claude Code session on the VM: deploy/loop1/STATE.md.
 
+### 7.13 Loop 2: how the CHO and CoS hand off, and instruction set v1.7 (2026-10-26)
+- Runs loop2-scn-001 and loop2-scn-002 (Slack, v1.6) passed on content, but the trajectory exports show the path. The CHO's first sessions_send to the CoS set mode notify and watch true. watch was forbidden (it needs status visibility). notify only queues a message and starts no turn (runStarted false). mode resume is for paused native children and was rejected. Only mode followup started the CoS. In run 002 one followup carried no details and the CoS could not act on it.
+- The CoS's sessions_send back to the CHO always returned SESSION_WORK_START_CHANGED with sentBeforeError true (delivered, acknowledgement failed). The CHO's own wait already receives the CoS's answer, so the separate send is not needed.
+- The CHO runs in OpenClaw code mode: the model sees only exec and wait and reaches the other tools through a catalog. The export lists the sessions_send calls but replaces the exec code with ***, and the tool declaration is not in the export. The CHO's own reasoning said it did not know the tool's schema.
+- Lesson: when an agent has to guess a tool's arguments, state them in the instruction (the exact fields, and the ones never to set). Instruction set v1.7 (APR-0075) does that for the CHO's call to the CoS and tells the CoS to answer instead of sending.
+- Reading the evidence: openclaw sessions export-trajectory --session-key <key> --workspace <dir> --output <name> writes a bundle under <dir>/.openclaw/trajectory-exports/<name>. scripts/verify/check_sessions_send.py reads its events.jsonl and prints the sessions_send calls with PASS or FAIL. The gateway log does not hold SESSION_WORK_START_CHANGED; the tool result does.
+- OpenClaw docs (v2026.10.5): concepts/session-tool.md (modes of sessions_send), gateway/config-agents/entries-and-multi-agent.md (tools.agentToAgent.send is a list of target agents; an empty list denies cross-agent sends).
+
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
 - Revoked key: a copy of an old key stays revoked. Create a new key in the life-os project.
@@ -229,3 +237,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 - 2026-10-24: v1.3 upgrade commit bug and run 008 recorded (fix-51).
 - 2026-10-24: /new solved (7.10), instruction set v1.4 approved (7.11) (fix-52).
 - 2026-10-24: runs 011 to 013, v1.5 proposed, VM handoff added (7.12) (fix-53).
+- 2026-10-26: section 7.13, instruction set v1.7 approved (APR-0075) (fix-67).

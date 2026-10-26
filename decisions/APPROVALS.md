@@ -686,3 +686,21 @@ Meaning:
 Closes: none (P-28 stays open)
 Changeable: yes. A change is a new APR entry.
 Applies to: scripts/gcal/; tests/unit/test_gcal_scripts.py; guides/calendar-rest-api.md; guides/calendar-gcalcli.md; decisions/PENDING.md (P-28)
+
+## APR-0075 - Instruction set v1.7: the CHO's exact sessions_send call to the CoS; the CoS replies by answering
+Status: approved
+Decided by: CEO
+Your answer: "1.7 approved" (2026-10-26)
+Evidence: trajectory exports of the CHO and CoS sessions after runs loop2-scn-001 and loop2-scn-002 (2026-10-25 and 26), read on the VM and compared with the OpenClaw 2026.10.5 docs (concepts/session-tool.md, tools/subagents/tool-reference.md).
+- In both runs the CHO's first sessions_send to the CoS set mode notify and watch true. watch was refused (forbidden: it needs status visibility, which the CHO does not have on the CoS session). notify only queues a message for the target's next turn and starts nothing (runStarted false). The CHO then tried mode resume, which is for paused native children, and was rejected. Only mode followup started a CoS turn (run 001 at 03:59:31 UTC, run 002 at 04:08:46 UTC). In run 002 one followup carried no task details, so the CoS could not act on it. This is the likely cause of the CoS running twice in run 018 too (not confirmed; run 018 was not exported).
+- The CHO had not read the tool's declaration before calling it: describeCount stayed 0 until after the first errors, and its own reasoning said the schema was unknown. Our instructions never mentioned mode or watch.
+- Every CoS sessions_send back to the CHO (1 in run 001, 3 in run 002) returned SESSION_WORK_START_CHANGED with sentBeforeError true: the message was delivered and only the acknowledgement failed. The CHO's followup calls already return the CoS's answer in the same result, with no error. The string appears in the tool result only, not in the gateway log, so a log count cannot show it (P-35 stays closed, APR-0068).
+Meaning:
+- CHO rule, appended to cho/AGENTS.md: "Handoff call (APR-0075, instruction set v1.7): to ask the CoS for a calendar change, call sessions_send with exactly these fields: sessionKey agent:cos:main, message (the whole task: what to do, dates and times, run ID, event ID), mode followup, timeoutSeconds 120. Never set watch. Never use mode notify or resume. Do not look up the tool's API files or list sessions first. The returned reply is the result. If a call fails or returns queued, resend the same message once with the same fields."
+- CoS rule, appended to cos/AGENTS.md: "Reply by answering (APR-0075, instruction set v1.7): when the CHO's message asks for a calendar change, your answer to that message is the report to the CHO, with the run ID, the event ID and the two journal lines. Never call sessions_send to the CHO. If a send returns sentBeforeError true, it was delivered: do not send again."
+- Apply with deploy/loop1/loop1-v17-upgrade.sh (gateway stopped; AGENTS.md of cho and cos only; run it with --dry-run first). No config change.
+- Check: two Loop 2 scenario runs (P-38), read with scripts/verify/check_sessions_send.py.
+- If the CoS still sends to the CHO after v1.7, the next step is a config rule (agents.entries.cos.tools.agentToAgent.send limited to coo). That needs its own APR entry; it is not decided here.
+Closes: none (P-38 tracks the check)
+Changeable: yes. A change is a new APR entry.
+Applies to: the CHO and CoS instructions (v1.7); deploy/loop1/loop1-v17-upgrade.sh; scripts/verify/check_sessions_send.py; tests/scenario/bad-sleep-reschedule.md; deploy/loop1/STATE.md; P-38

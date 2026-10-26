@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-65.sh",
+  "generated_by": "fix-67.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -860,6 +860,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop1/loop1-v17-upgrade.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/render/README.md",
       "status": "planned"
     },
@@ -1300,6 +1304,10 @@
       "status": "planned"
     },
     {
+      "path": "scripts/verify/check_sessions_send.py",
+      "status": "draft"
+    },
+    {
       "path": "scripts/verify/install-hook.sh",
       "status": "draft"
     },
@@ -1656,6 +1664,10 @@
       "status": "planned"
     },
     {
+      "path": "tests/unit/test_check_sessions_send.py",
+      "status": "draft"
+    },
+    {
       "path": "tests/unit/test_envelope.py",
       "status": "planned"
     },
@@ -1665,6 +1677,10 @@
     },
     {
       "path": "tests/unit/test_gcal_scripts.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_loop1_v17_upgrade.py",
       "status": "draft"
     },
     {

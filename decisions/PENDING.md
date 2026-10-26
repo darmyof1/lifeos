@@ -56,3 +56,11 @@ No visible effect on any run.
 Code reading (sandbox, 2026-10-25, OpenClaw 2026.10.5 dist): a maintenance plan rejected by a concurrent write is retried; after 3 rejections (MAX_MAINTENANCE_REJECTIONS) OpenClaw logs 'SQLite automatic session maintenance paused after repeated input changes'. That line appears 0 times in the gateway logs for 2026-10-24 and 2026-10-25, so the limit was never reached. Details: research/sandbox/2026-10-25-agy/P-37-findings.md.
 CEO 2026-10-25: keep P-37 open until it is checked on a real Loop 2 run.
 Needs: on the first Loop 2 runs, grep the gateway log for 'maintenance paused' and 'SQLite session write failed'.
+Checked 2026-10-26: runs loop2-scn-001 and loop2-scn-002, on the gateway process that was ready at 23:46 AST on 2026-10-25: 0 occurrences of 'SQLite session write failed' and 0 of 'maintenance paused' in the gateway logs of 2026-10-25 and 2026-10-26 (the log rotates by local date, so a run that crosses midnight needs both files). Proposed: keep P-37 open for two or three more runs, as the CEO asked.
+
+## P-38 - Check instruction set v1.7 in two Loop 2 runs (APR-0075)
+Status: open. v1.7 is approved (APR-0075); it applies with deploy/loop1/loop1-v17-upgrade.sh.
+Pass, in two Loop 2 scenario runs with a new run ID each: scripts/verify/check_sessions_send.py ends with "all checks passed" (the CHO's first call to the CoS has mode followup, no watch, timeoutSeconds 120 and returns a reply; the CoS sends nothing to the CHO; no SESSION_WORK_START_CHANGED), plus the usual criteria (numstat 2 0; the COO reply names the CHO and the CoS with event IDs; one line each in the CHO and CoS channels; no late reply; no FAILURE note).
+If the CoS still sends to the CHO: propose the config rule named in APR-0075 as a new APR entry.
+Needs: the CEO applies v1.7 on the VM and runs the scenario twice.
+
