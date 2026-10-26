@@ -899,3 +899,20 @@ Meaning:
 Closes: none (P-40 stays open for the real calendar and the archive job)
 Changeable: yes. A change is a new APR entry.
 Applies to: scripts/gcal/gcal_busy.py; scripts/gcal/gcal_sync.py; scripts/gcal/gcal_delete.py; deploy/loop1/loop1-v19-upgrade.sh; the CHO, CoS and CFO instructions (v1.9); tests/scenario/bad-sleep-reschedule.md; guides/calendar-sync-job.md
+
+## APR-0089 - Instruction set v1.9.1: the CoS never edits the journal header (Claude Code handover)
+Status: approved
+Decided by: CEO
+Your answer: "i will install claudei the terminal, prepare a prompt to handover this loop to him, i will give me him ful autority based on your prompt then i will tell you what he did and found" (2026-10-26). The prompt allowed a smallest-change fix of an agent instruction on the condition that its text and reason are recorded here. Then: "here you go" (the report).
+Evidence (2026-10-26, VM, Slack, fake data, test calendar; report in ops/handover-2026-10-26-claude-code-report.md):
+- Run loop2-scn-009 (first under v1.9): everything passed except the journal numstat (6 1, then 7 1). Cause found by Claude Code in the CoS trajectory: the CoS edited the journal header line, adding "| detail" to "requested by", because the v1.9 rule describes an 8-column line and the header has 7. The seed lines and the job were not involved.
+- Fix, applied on the VM by Claude Code with the gateway stopped: one rule appended to the CoS AGENTS.md (commit 78b71ff, "Loop 1 instructions v1.9.1 (journal append only)"):
+  - Journal append only (instruction set v1.9.1): the header line "name | start | end | status | run ID | event ID | requested by" stays exactly as it is. The detail column is not added to it. Never edit, replace or delete an existing journal line, including the header. Only add new lines at the end of the file, and put privacy=high in the detail column of those new lines.
+- Run loop2-scn-010 is void (a prep error: the CHO session compaction failed right after a gateway restart, so the CHO remembered run 009 and did not call the CoS; not an instruction fault).
+- Runs loop2-scn-011 and loop2-scn-012, in a row, passed all criteria: numstat 5 0 then 6 0, checker all passed, both CoS lines carry privacy=high, header untouched, sleep line with its own event ID, COO summary names the CHO and the CoS with both event IDs, Google shows one busy event on 10-29 07:00 and no Workout title for 10-28 or 10-29. 0 'maintenance paused'; no 'SQLite session write failed' from the current gateway process.
+Meaning:
+- The v1.9.1 rule stays as applied. The verification asked in APR-0086 (a scenario run that shows busy in the test calendar) is met by runs 011 and 012. P-40 item 1 is done.
+- Since this handover the gateway runs from Claude Code's shell in the background (log ~/loop1/gateway.log), not from terminal T1. The CEO decides when T1 owns it again (see deploy/loop1/STATE.md).
+Closes: none (P-40 stays open for the real calendar and the archive job)
+Changeable: yes. A change is a new APR entry.
+Applies to: the CoS instructions (v1.9.1); deploy/loop1/loop1-v191-upgrade.sh; tests/scenario/bad-sleep-reschedule.md; decisions/PENDING.md (P-40); deploy/loop1/STATE.md

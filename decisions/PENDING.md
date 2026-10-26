@@ -26,11 +26,11 @@ Method: section 7.7 of guides/loop1-baseline.md.
 
 ## P-40 - Calendar: what must be decided before real data
 Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-0073); none of this is needed for that.
-1. Privacy mark: decided (APR-0086): the chief marks it, health and finance default to high. Built (APR-0088): deploy/loop1/loop1-v19-upgrade.sh and the job change that turns a normal event into a busy one. Open: apply v1.9 on the VM, test the job change on the VM, and a scenario run that shows busy in the test calendar.
+1. Privacy mark: done. Decided (APR-0086), built (APR-0088), applied on the VM (v1.9, then v1.9.1 after run 009, APR-0089) and verified by runs 011 and 012 (busy in the test calendar).
 2. Real calendar: the cron pushes to the Google test calendar. Moving it to the real calendar is a one-line change in ~/loop1/gcal-sync/env on the VM, after item 1 passes: first a read-only look at the real calendar, then one fake event created and removed, then the change. Needs the CEO's go.
 3. Monthly archive job (APR-0072): not built. Build it when the journal reaches about 1,000 lines (it is under 100 now).
 4. Busy block in the Google Calendar app: done (APR-0087).
-Needs: items 1 and 2 before any real data enters Loop 2.
+Needs: item 2 (the CEO's go for the real calendar) before any real data enters Loop 2.
 
 ## P-41 - Memory beyond the state files (deferred from P-32)
 Open when the COO prompt grows (it was about 35,000 tokens of 272,000 on a Slack turn) or a second real use appears. Not needed for Loop 2 (APR-0085).

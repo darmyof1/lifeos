@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-82.sh",
+  "generated_by": "fix-83.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -872,6 +872,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop1/loop1-v191-upgrade.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/render/README.md",
       "status": "planned"
     },
@@ -1022,6 +1026,10 @@
     {
       "path": "ops/cost-and-budget.md",
       "status": "planned"
+    },
+    {
+      "path": "ops/handover-2026-10-26-claude-code-report.md",
+      "status": "draft"
     },
     {
       "path": "ops/incident/graceful-shutdown.md",
@@ -1717,6 +1725,10 @@
     },
     {
       "path": "tests/unit/test_loop1_v18_upgrade.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_loop1_v191_upgrade.py",
       "status": "draft"
     },
     {

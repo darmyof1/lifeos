@@ -323,3 +323,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - v1.9 script and privacy job change built (fix-82)
 - deploy/loop1/loop1-v19-upgrade.sh (CHO, CoS, CFO; AGENTS.md only) and tests/unit/test_loop1_v19_upgrade.py (8 tests). Not applied on the VM.
 - gcal_busy.make_busy and its use in gcal_sync.py (a normal event becomes busy when its entry is marked high); gcal_delete.py --busy-key. Unit-tested; to be tested on the VM. APR-0088.
+
+## 2026-10-26 - v1.9 applied; v1.9.1 after run 009 (Claude Code handover, fix-83)
+- v1.9 applied on the VM at 18:47 AST. Run 009: the CoS edited the journal header (numstat 6 1). Claude Code (CEO handover) found the cause in the CoS trajectory and applied v1.9.1 (CoS AGENTS.md, commit 78b71ff). Runs 011 and 012 passed; 010 is void (prep error).
+- Added deploy/loop1/loop1-v191-upgrade.sh, tests/unit/test_loop1_v191_upgrade.py (7 tests) and ops/handover-2026-10-26-claude-code-report.md. APR-0089. The gateway now runs from Claude Code's shell, not T1.
