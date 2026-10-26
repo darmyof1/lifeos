@@ -289,3 +289,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - P-28 failure paths tested; high-privacy busy built (fix-73)
 - On the VM, test calendar, throwaway folders ~/loop1/gcal-sync-fail and ~/loop1/gcal-sync-revoke: five failed attempts counted correctly; a revoked login (broken copy of the login file) paused all writes with one alert. The alert reached the COO channel once the gateway (T1) was running. Cleanup of one stray test event with the CEO's approval.
 - APR-0079: high-privacy events show as busy, built now and tested with fake data. Added scripts/gcal/gcal_busy.py and 14 tests; scripts/gcal/gcal_sync_cron.sh now loads ~/loop1/env.sh first.
+
+## 2026-10-26 - P-28 high-privacy busy events tested on the VM (fix-74)
+- On the VM, T2, test calendar, fake data in ~/loop1/gcal-sync-hp: create as busy, no mandated title in Google, rerun with no change, move without a mark on the new line (privacy followed the move), delete gate with and without --allow-deletes. 116 unit tests OK on the VM. Both fake events were deleted by the test (CEO approval in the batch).
+- The scenario procedure now pushes the seed lines by hand after the state reset, and the test calendar is cleaned of leftover events before a run.

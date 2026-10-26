@@ -60,6 +60,8 @@ Pass (APR-0075): the checker ends with "all checks passed": the CHO's first call
 ## Loop 2 calendar cron (APR-0078)
 Since 2026-10-26 a plain cron job under ubuntu runs scripts/gcal/gcal_sync.py every 5 minutes against the Google test calendar (guides/calendar-sync-job.md). It reads the CoS journal and appends pushed lines to it. Every scenario run has two extra steps:
 
+Before a run, delete the leftover events of earlier runs from the test calendar (scripts/gcal/gcal_delete.py with the CEO's approval, APR-0044), or the new move would find its target already there. After the state reset, push the seed lines by hand (bash ~/lifeos-ro/scripts/gcal/gcal_sync_cron.sh), so the run's move is a real move in Google and not a create.
+
 Pause, before the state reset:
 
     crontab -l | sed 's|^\*/5 .*gcal_sync_cron.sh|#&|' | crontab -
