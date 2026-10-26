@@ -1,7 +1,7 @@
 # Calendar push job - guide
 
-Status: partial (built and unit-tested in the repo, APR-0078; not yet run on the VM)
-Last verified: not yet run on a host
+Status: working by hand (VM test 2026-10-26 passed; the cron line is not installed yet)
+Last verified: 2026-10-26 on Oracle VM, Ubuntu 24.04 arm64, against a separate test calendar
 Tool version: Python 3.12 from the gcalcli pipx environment (gcalcli 4.5.1, google-api-python-client 2.201.0); OpenClaw 2026.10.5 for the alert
 Owner: CEO
 
@@ -87,4 +87,5 @@ The job writes `~/loop1/gcal-sync/PAUSED-login-revoked`, alerts once, and exits 
 Calendar IDs, channel IDs, tokens, personal event titles, personal email addresses.
 
 ## History
-- 2026-10-26: job written and unit-tested (fix-70, APR-0078). Not yet run on the VM.
+- 2026-10-26: job written and unit-tested (fix-70, APR-0078).
+- VM test 2026-10-26 (test calendar, test journal outside the CoS workspace): unit tests OK on the system Python and on the gcalcli Python (99 tests each); dry run wrote nothing; real run created one event and appended a pushed line; a second run did nothing; a moved line plus a written line with a new title moved the same Google event (old title returned 0 events); a second written line for the same title at another time gave a conflict and Google was unchanged; a deleted line without a delete-pending-approval line was skipped; with the pending line it was skipped without --allow-deletes and executed with it; the alert test posted in the COO channel; the cron wrapper ran by hand (dry run, exit 0) and wrote sync.log. Not yet tested on the VM: five failed attempts, a revoked login. Both are covered by unit tests. See ops/install-log.md.

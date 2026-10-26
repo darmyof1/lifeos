@@ -276,3 +276,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - APR-0078: alerts in the COO channel, delete status "deleted", high-privacy busy deferred until before real data, plain cron under ubuntu every 5 minutes.
 - Added scripts/gcal/gcal_sync.py, scripts/gcal/gcal_sync_cron.sh, tests/unit/test_gcal_sync.py, tests/unit/test_gcal_sync_cron.py and guides/calendar-sync-job.md. Unit tests only; nothing was run on the VM and no cron line was added.
 - P-28 stays open until the job has run on the VM.
+
+## 2026-10-26 - P-28 push job tested on the VM (fix-71)
+- On the VM as ubuntu, from ~/lifeos-ro at 17bb327, against a separate Google test calendar and a test journal in ~/loop1/gcal-sync-test: dry run, create, rerun with no change, move with a new title, conflict, delete gate (three cases), alert in the COO channel, and the cron wrapper by hand in dry-run mode. All as expected.
+- Created on the VM (not in the repo): ~/loop1/gcal-sync/env (mode 600, holds the calendar ID and the alert target), ~/loop1/gcal-sync/sync.log, ~/loop1/gcal-sync-test/. No cron line installed. The test event was deleted through the job's delete gate.

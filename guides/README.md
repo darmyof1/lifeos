@@ -6,7 +6,7 @@ How to set up and repeat a tool on the VM or the Mac. Written so that a fresh in
 |---|---|---|
 | calendar-gcalcli.md | working (read and write; login renewed 2026-10-25) | 2026-10-25 |
 | calendar-rest-api.md | working (round trip passed from the repo on the VM) | 2026-10-25 |
-| calendar-sync-job.md | partial (built and unit-tested; not yet run on the VM) | not yet run |
+| calendar-sync-job.md | working by hand (VM test passed; cron not installed) | 2026-10-26 |
 | slack-multi-identity.md | working (two identities; leakage check open) | 2026-10-19 |
 
 ## Rules for every guide
