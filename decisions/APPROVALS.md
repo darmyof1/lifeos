@@ -741,3 +741,21 @@ Not decided here (stays in P-28):
 Closes: none (P-28 stays open until the job is built and tested)
 Changeable: yes. A change is a new APR entry.
 Applies to: P-28; the CoS calendar journal in Loop 2; scripts/gcal/ (the future push job); decisions/PENDING.md
+
+## APR-0078 - P-28: answers to the four open points, and the push job built
+Status: approved
+Decided by: CEO
+Your answer: asked with four choices on 2026-10-26; you picked "COO channel (Recommended)", "deleted (Recommended)", "Later, before real data (Recommended)" and "Plain cron under ubuntu (Recommended)".
+Meaning:
+- Alert target (point 1): the push job posts its alerts in the COO channel while the CIO does not exist. The channel ID is kept outside the repo (an environment setting on the VM). Every alert is also written to alerts.log in the job's state folder.
+- Status of an approved delete (point 2): the status is "deleted". It joins the Loop 2 status set from APR-0077. The job runs a delete only after a delete-pending-approval line for the same event ID (APR-0044).
+- High-privacy busy (point 3): deferred. It is decided before real data comes in, not now (APR-0073: Loop 2 runs on synthetic data).
+- What starts the job (point 4): plain cron under ubuntu on the VM, every 5 minutes. The OpenClaw cron stays off. The CEO adds the cron line himself after a manual dry run and an alert test.
+Build choices made by Claude, inside these answers (a change is a new APR entry):
+- The job creates events with scripts/gcal/gcal_common.py (create_event, move_event, delete_event), so every rule of APR-0074 applies.
+- Journal lines the job writes: same 7 columns plus a detail column, requested by "sync": pushed (google=<id>), failed (attempt=N; error=...), conflict (reason=...). A conflict is not retried.
+- Deletes only run when the job is started with --allow-deletes. The default is off. The CEO turns it on later.
+- A revoked login writes a pause file, sends one alert and stops all writes until the CEO logs in again and removes the file (S-07).
+Closes: none (P-28 stays open until the job has run on the VM)
+Changeable: yes. A change is a new APR entry.
+Applies to: P-28; scripts/gcal/gcal_sync.py; scripts/gcal/gcal_sync_cron.sh; guides/calendar-sync-job.md; the CoS calendar journal in Loop 2

@@ -271,3 +271,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - P-28 status set and push job approved (fix-69)
 - APR-0077: the Loop 2 calendar status set (requested, written, pushed, failed, conflict, moved, delete-pending-approval) and the code push job (5-minute retry, search by unique name first, COO told after 5 failures, writes pause if the token is revoked) approved as proposed. The sandbox draft is not approved as a whole.
 - P-28 stays open: the job is not built, and six points are listed in PENDING (alert target without a CIO, status of an approved delete, high-privacy busy title, what starts the job, create tool, journal line format).
+
+## 2026-10-26 - P-28 push job built (fix-70)
+- APR-0078: alerts in the COO channel, delete status "deleted", high-privacy busy deferred until before real data, plain cron under ubuntu every 5 minutes.
+- Added scripts/gcal/gcal_sync.py, scripts/gcal/gcal_sync_cron.sh, tests/unit/test_gcal_sync.py, tests/unit/test_gcal_sync_cron.py and guides/calendar-sync-job.md. Unit tests only; nothing was run on the VM and no cron line was added.
+- P-28 stays open until the job has run on the VM.

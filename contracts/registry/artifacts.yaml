@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-69.sh",
+  "generated_by": "fix-70.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -972,6 +972,10 @@
       "status": "draft"
     },
     {
+      "path": "guides/calendar-sync-job.md",
+      "status": "draft"
+    },
+    {
       "path": "guides/github-commands.md",
       "status": "draft"
     },
@@ -1237,6 +1241,14 @@
     },
     {
       "path": "scripts/gcal/gcal_roundtrip_test.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_sync.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/gcal/gcal_sync_cron.sh",
       "status": "draft"
     },
     {
@@ -1677,6 +1689,14 @@
     },
     {
       "path": "tests/unit/test_gcal_scripts.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_gcal_sync.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_gcal_sync_cron.py",
       "status": "draft"
     },
     {
