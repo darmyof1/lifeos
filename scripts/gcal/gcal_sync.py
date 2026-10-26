@@ -219,19 +219,21 @@ def push_busy_entry(service, calendar, e, hint, entries, tz, dry_run):
         if same_times(found[0], start, end):
             return "already in Google (busy)", found[0]["id"]
         raise Conflict("a busy event with this key exists in Google at another time")
-    if hint is not None:
-        old = last_pushed(entries, hint.name, e.lineno)
-        if old is not None:
-            old_id = detail_value(old.detail, "google")
-            try:
-                event = gc.get_event(service, calendar, old_id)
-            except gc.CalendarError:
-                event = None
-            if event is not None:
-                if not gb.is_busy_event(event):
-                    raise Conflict("the old event is not a busy event; a change of privacy is not supported")
+    # The earlier Google event of this entry: through a move the old name, otherwise the same name marked high later.
+    old = last_pushed(entries, hint.name if hint is not None else e.name, e.lineno)
+    if old is not None:
+        old_id = detail_value(old.detail, "google")
+        try:
+            event = gc.get_event(service, calendar, old_id)
+        except gc.CalendarError:
+            event = None
+        if event is not None:
+            if gb.is_busy_event(event):
                 r = gb.move_busy(service, calendar, old_id, key, start_text, minutes, tz, dry_run)
                 return "moved (busy)", r["id"]
+            # Raising privacy: the normal event becomes a busy event (APR-0086). A personal event is refused (conflict).
+            r = gb.make_busy(service, calendar, old_id, key, start_text, minutes, tz, dry_run)
+            return "made busy", r["id"]
     r = gb.create_busy(service, calendar, key, start.date(), start_text, minutes, tz, dry_run)
     return "created (busy)", r["id"]
 

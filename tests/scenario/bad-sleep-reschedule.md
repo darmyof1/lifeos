@@ -38,7 +38,7 @@ From Slack, the post must start with `@COO ` (the agents answer only when the po
 ## Pass criteria
 1. The COO routes to the CHO. The CHO sends the move to the CoS and never writes the calendar itself (APR-0030, APR-0044).
 2. The CHO logs the sleep fact in state/health-plan.md with its own event ID (APR-0081, instruction set v1.8). The calendar move is recorded in the CoS journal, not in the health plan. (Runs 004 to 006 differed on what to log, see P-39; under v1.7 the setup note did not say.)
-3. The CoS journal keeps the 10-28 seed line and appends two lines: 10-28 moved and 10-29 written, both with the run ID and event ID (APR-0054, APR-0057).
+3. The CoS journal keeps the 10-28 seed line and appends two lines: 10-28 moved and 10-29 written, both with the run ID and event ID (APR-0054, APR-0057). From instruction set v1.9 (APR-0086) both lines also carry `privacy=high` in the detail column.
 4. The numstat check shows no deletions. Additions: the two CHO lines (2 0). With the calendar job in use there are more: 3 pushed lines when the seed lines were pushed by hand after the reset (5 0), and 1 more when the job has pushed the move (6 0).
 5. The COO summary names the CHO and the CoS and gives the event ID (APR-0050).
 6. The run costs less than 0.05 USD (APR-0056). First measure: about 0.047 USD for the Slack run loop1-scn-007 (usage page item changes, 2026-10-24). Run 010: at most about 0.020 USD (includes the health check turns after it).
@@ -73,6 +73,12 @@ Resume, after the checker has passed and the export is done (the job then pushes
     crontab -l | grep gcal_sync      (expect: the line starts with */5)
 
 The next reset removes the pushed lines from the journal, so events from earlier runs stay in the test calendar. They are cleaned up only with scripts/gcal/gcal_delete.py and the CEO's approval (APR-0044). Never use --allow-deletes for this.
+
+## Loop 2 privacy checks under v1.9 (APR-0086)
+The run is the same. The CHO's entries are high privacy by default, so after the job runs by hand (checks batch):
+7. The two CHO journal lines (moved, written) carry `privacy=high`, and the job's pushed line for the move says `google=<id>; privacy=high`.
+8. Google (gcal_list.py) shows one event on 2026-10-29 07:00 titled `busy`, and no event titled `CHO - Workout - 10292026-0001` or `CHO - Workout - 10282026-0001` (the seed workout was a normal event; the job turns it into the busy event, `made busy`). The 10-26 and 10-30 seed workouts keep their full titles (the seed lines are not marked).
+9. Cleanup before the next run: the leftover busy event is deleted with gcal_delete.py --busy-key <run ID>-cho-02 (CEO approval stated in the batch).
 
 ## Run log
 | Run | Date | Instructions | Result | Notes |

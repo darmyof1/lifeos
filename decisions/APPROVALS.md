@@ -886,3 +886,16 @@ Meaning:
 Closes: none (item of P-40)
 Changeable: yes. A change is a new APR entry.
 Applies to: decisions/PENDING.md (P-40)
+
+## APR-0088 - Instruction set v1.9 and the job change for privacy (carries out APR-0086)
+Status: approved
+Decided by: CEO
+Your answer: "yes on 'chief marks it, health and finance default to high'" (APR-0086, 2026-10-26); this entry records what was built from it
+Meaning:
+- Built, not yet applied on the VM: deploy/loop1/loop1-v19-upgrade.sh (CHO, CoS and CFO; AGENTS.md only; gateway stopped). Rules: the CHO and the CFO say privacy=high in every message to the CoS; the CoS writes privacy=high in the journal detail column for an entry the chief marked, for every CHO or CFO entry, or when the CEO asked, on the moved line and the new line; it never writes a lower privacy for an entry that was high.
+- Needed by the rule, so built with it: the push job turns a normal Google event into a busy event when the entry is marked high later or a move carries the mark (`made busy`). Before this a move of a normal event into a high-privacy entry was a conflict. Busy to normal is still not supported.
+- Added with it: gcal_delete.py --busy-key, so a leftover busy event can be deleted with the CEO's approval.
+- Verification: the scenario run in tests/scenario/bad-sleep-reschedule.md ("Loop 2 privacy checks under v1.9"). If a run fails, nothing else changes.
+Closes: none (P-40 stays open for the real calendar and the archive job)
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/gcal/gcal_busy.py; scripts/gcal/gcal_sync.py; scripts/gcal/gcal_delete.py; deploy/loop1/loop1-v19-upgrade.sh; the CHO, CoS and CFO instructions (v1.9); tests/scenario/bad-sleep-reschedule.md; guides/calendar-sync-job.md

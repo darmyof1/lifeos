@@ -442,13 +442,56 @@ class HighPrivacyTests(Base):
         self.go()
         self.assertEqual([c[0] for c in self.svc.writes()], ["insert"])
 
-    def test_old_event_that_is_not_busy_is_a_conflict(self):
+    def test_a_normal_event_becomes_busy_when_a_move_raises_privacy(self):
+        # APR-0086: the seed workout is a normal event; the CHO's move is high privacy; Google must end with a busy event
+        self.svc.add("p1", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00", description="secret plan", location="home")
+        self.write(
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=p1"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02", detail=self.HP),
+            jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02", detail=self.HP))
+        before = self.text()
+        code, counts, _ = self.go()
+        self.assertEqual((counts["conflict"], counts["pushed"]), (0, 1))
+        ev = self.svc.store["p1"]
+        self.assertEqual(ev["summary"], "busy")
+        self.assertEqual(ev["transparency"], "opaque")
+        self.assertEqual(ev["extendedProperties"], {"private": {"lifeos_event": "r2-cho-02"}})
+        self.assertTrue(ev["start"]["dateTime"].startswith("2026-10-29T07:00"), ev["start"])
+        self.assertEqual((ev["description"], ev["location"]), ("", ""))
+        self.assertEqual([c[0] for c in self.svc.writes()], ["patch"])
+        self.assertNotIn("Workout", repr(ev))
+        (line,) = self.new_lines(before)
+        self.assertTrue(line.endswith("| sync | google=p1; privacy=high"), line)
+
+    def test_a_normal_event_becomes_busy_when_the_same_name_is_marked_high_later(self):
+        self.svc.add("p1", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.write(
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=p1"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", run="r2", event="r2-cho-03", detail=self.HP))
+        self.assertEqual(self.go()[1]["conflict"], 0)
+        self.assertEqual(self.svc.store["p1"]["summary"], "busy")
+        self.assertEqual([c[0] for c in self.svc.writes()], ["patch"])  # no second event, no duplicate with the mandated title
+        self.assertEqual(len([e for e in self.svc.store.values() if "Workout" in e.get("summary", "")]), 0)
+
+    def test_dry_run_of_raising_privacy_changes_nothing(self):
         self.svc.add("p1", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
         self.write(
             jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=p1"),
-            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02", detail=self.HP),
             jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02", detail=self.HP))
-        self.assertEqual(self.go()[1]["conflict"], 1)
+        before = self.text()
+        self.go(dry_run=True)
+        self.assertEqual((self.text(), self.svc.writes()), (before, []))
+        self.assertEqual(self.svc.store["p1"]["summary"], N1)
+
+    def test_make_busy_refuses_other_events(self):
+        import gcal_busy
+        self.svc.add("p3", "Dentist", "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.add_busy("b1", "k")
+        for eid in ("p3", "b1", "series1", "gym1"):  # a personal event, a busy event, a recurring one, an all-day one
+            with self.assertRaises(gc.CalendarError):
+                gcal_busy.make_busy(self.svc, CAL, eid, "k2", "2026-10-28T09:00", 60, TZ)
         self.assertEqual(self.svc.writes(), [])
 
     def test_privacy_follows_a_move_even_if_the_new_line_has_no_marker(self):

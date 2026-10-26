@@ -319,3 +319,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - P-31, P-37, P-32 closed; privacy rule decided (fix-81)
 - CEO closed P-31 (APR-0083), P-37 (APR-0084) and P-32 with the narrow version (APR-0085); ADR-0011 written; new item P-41 holds the deferred memory questions.
 - CEO approved "the chief marks it, health and finance default to high" (APR-0086) and confirmed the busy block in the Google Calendar app (APR-0087). The v1.9 instruction script is not built yet.
+
+## 2026-10-26 - v1.9 script and privacy job change built (fix-82)
+- deploy/loop1/loop1-v19-upgrade.sh (CHO, CoS, CFO; AGENTS.md only) and tests/unit/test_loop1_v19_upgrade.py (8 tests). Not applied on the VM.
+- gcal_busy.make_busy and its use in gcal_sync.py (a normal event becomes busy when its entry is marked high); gcal_delete.py --busy-key. Unit-tested; to be tested on the VM. APR-0088.

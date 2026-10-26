@@ -58,6 +58,26 @@ def create_busy(service, calendar, key, day, start_text, minutes, tz=gc.DEFAULT_
     return {"action": "created", "id": created["id"], "body": body}
 
 
+def make_busy(service, calendar, event_id, key, start_text, minutes, tz=gc.DEFAULT_TZ, dry_run=False):
+    """Raise the privacy of a normal LifeOS event to busy (APR-0086).
+
+    The title becomes busy, the description and the place are cleared, the time shows as busy and the hidden key is set.
+    Only a mandated, single, timed event is changed. The other direction (busy to normal) is not supported (APR-0086).
+    """
+    event = gc.get_event(service, calendar, event_id)
+    if is_busy_event(event):
+        raise gc.CalendarError("that event is already a busy event")
+    gc.require_lifeos_single_event(event)
+    start = gc.parse_local(start_text, tz)
+    body = busy_body(key, start, gc.check_minutes(minutes), tz)
+    body["description"] = ""
+    body["location"] = ""
+    if dry_run:
+        return {"action": "dry-run make busy", "id": event_id, "body": body}
+    done = service.events().patch(calendarId=calendar, eventId=event_id, body=body).execute()
+    return {"action": "made busy", "id": done.get("id", event_id), "body": body}
+
+
 def move_busy(service, calendar, event_id, new_key, start_text, minutes, tz=gc.DEFAULT_TZ, dry_run=False):
     event = gc.get_event(service, calendar, event_id)
     require_busy_event(event)

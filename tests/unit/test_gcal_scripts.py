@@ -472,6 +472,23 @@ class CommandLineTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertTrue(out.startswith("deleted\tdoc1\t"))
 
+    def test_delete_command_for_a_busy_event(self):
+        svc = FakeService()
+        svc.add("b1", "busy", "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00",
+                extendedProperties={"private": {"lifeos_event": "k1"}})
+        base = ["--calendar", CAL, "--id", "b1", "--busy-key", "k1"]
+        code, out, err = run_main(gcal_delete, base, svc)
+        self.assertEqual(code, 1)
+        self.assertIn("APR-0044", err)
+        code, out, err = run_main(gcal_delete, ["--calendar", CAL, "--id", "b1", "--busy-key", "other", "--ceo-approved",
+                                                "--approval-note", "Slack"], svc)
+        self.assertEqual(code, 1)
+        self.assertIn("b1", svc.store)
+        code, out, err = run_main(gcal_delete, base + ["--ceo-approved", "--approval-note", "Slack"], svc)
+        self.assertEqual(code, 0)
+        self.assertTrue(out.startswith("deleted\tb1\tbusy"), out)
+        self.assertNotIn("b1", svc.store)
+
     def test_missing_calendar_is_an_error(self):
         with mock.patch.dict(os.environ, {}, clear=False):
             os.environ.pop("GCAL_CALENDAR", None)
