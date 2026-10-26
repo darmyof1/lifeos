@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-83.sh",
+  "generated_by": "fix-84.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -873,6 +873,10 @@
     },
     {
       "path": "deploy/loop1/loop1-v191-upgrade.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop2/LOOP2-CLOSE-RECORD.md",
       "status": "draft"
     },
     {

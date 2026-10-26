@@ -119,7 +119,7 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 ## Still to do before Loop 1 closes
 1. P-35 is closed (APR-0068). P-37 (COO SQLite warning) is for Loop 2.
 2. Scenario closed (APR-0069). Loop 1 closed (APR-0071). Loop 2 allowed under APR-0073.
-3. Daily reset check: P-36, pending. The CEO asked not to raise it for now.
+3. Daily reset check: P-36 is in progress (APR-0090): Claude Code reads past nights and builds a 05:00 AST Slack report. Gateway keep-alive and the real-calendar test are in the same handover. The Loop 2 close record is a draft: deploy/loop2/LOOP2-CLOSE-RECORD.md.
 4. SPK-03: deferred by the CEO (APR-0070). Code Mode and the Docker sandbox were not tested.
 5. Health check: updated on the VM by the VM agent (it reported 41 PASS). The repo copy, deploy/loop1/health-check.py, is not updated yet; bring the VM patch in through a fix script.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.

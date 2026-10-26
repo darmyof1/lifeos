@@ -327,3 +327,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - v1.9 applied; v1.9.1 after run 009 (Claude Code handover, fix-83)
 - v1.9 applied on the VM at 18:47 AST. Run 009: the CoS edited the journal header (numstat 6 1). Claude Code (CEO handover) found the cause in the CoS trajectory and applied v1.9.1 (CoS AGENTS.md, commit 78b71ff). Runs 011 and 012 passed; 010 is void (prep error).
 - Added deploy/loop1/loop1-v191-upgrade.sh, tests/unit/test_loop1_v191_upgrade.py (7 tests) and ops/handover-2026-10-26-claude-code-report.md. APR-0089. The gateway now runs from Claude Code's shell, not T1.
+
+## 2026-10-26 - Loop 2 next steps decided; close record drafted (fix-84)
+- APR-0090: P-36 becomes a 05:00 AST Slack report (history of past nights first); the gateway must keep running without a terminal; a real-calendar test is authorized (test events only, cron stays on the test calendar); the archive job is deferred.
+- deploy/loop2/LOOP2-CLOSE-RECORD.md drafted (not signed). Handover prompt 2 given to Claude Code on the VM.

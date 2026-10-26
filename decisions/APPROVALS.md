@@ -916,3 +916,18 @@ Meaning:
 Closes: none (P-40 stays open for the real calendar and the archive job)
 Changeable: yes. A change is a new APR entry.
 Applies to: the CoS instructions (v1.9.1); deploy/loop1/loop1-v191-upgrade.sh; tests/scenario/bad-sleep-reschedule.md; decisions/PENDING.md (P-40); deploy/loop1/STATE.md
+
+## APR-0090 - Next steps for Loop 2: 04:00 reset report, gateway keep-alive, real-calendar test, Loop 2 close record
+Status: approved
+Decided by: CEO
+Your answer (2026-10-26, evening): "if part 1 need a red on the logs in the morning, why woundnlt'd we be able to see the resets fro other nights?? or if it reset we should be able to create a script that runs say at 5:00 to read it and maybe post it to slack for me to see it. have claude code do that on the prompt, also you should tell claude that the gateway need to keep running and i might close the laptop to sleep losing terminal and he should still be running it i the vm." / "2. ok let him do the test on the real calendar" (his primary Google calendar; the address is not written in the repo) / "3. do it" / "4. defer"
+Meaning:
+- P-36 (04:00 reset check): first look at the evidence of past nights (gateway logs, session stores) to see the resets. Then a read-only script runs at 05:00 AST by cron on the VM and posts a short report to Slack (the COO channel) and to a log file. The reset is lazy (applied at the first message after 04:00), so "no message yet, reset pending" is a normal result. The "not to be raised" request of 2026-10-25 is lifted.
+- The gateway must keep running on the VM without a terminal. Claude Code runs and keeps it (detached; one process); the CEO may close his laptop.
+- P-40 item 2: Claude Code does a test on the CEO's primary Google calendar with the existing job and test events only (create, move, make busy, delete by key), reads no personal event titles, and leaves the cron on the test calendar. Moving the cron to the real calendar is NOT approved by this entry; it stays a separate decision.
+- P-40 item 3 (monthly journal archive job, APR-0072): deferred.
+- Loop 2 close record drafted at deploy/loop2/LOOP2-CLOSE-RECORD.md. It is a draft; Loop 2 closes only on the CEO's sign-off in a new APR entry.
+- The agents' instructions are not changed by this entry.
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/PENDING.md (P-36, P-40); deploy/loop2/LOOP2-CLOSE-RECORD.md; deploy/loop1/STATE.md; the gateway and cron on the VM

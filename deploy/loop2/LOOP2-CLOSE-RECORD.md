@@ -1,0 +1,57 @@
+# Loop 2 close record (DRAFT, not signed)
+
+Date drafted: 2026-10-26
+Status: draft for the CEO. Loop 2 is NOT closed. It closes only when the CEO signs section 9 with a new APR entry in his words.
+Scope of Loop 2: APR-0073 (cloud-only on openai/gpt-6-luna, synthetic data only, Google Calendar writes allowed, expiry when Loop 2 closes or on 2026-12-31).
+Based on: decisions/APPROVALS.md (APR-0073 to APR-0090), tests/scenario/bad-sleep-reschedule.md (run log), deploy/loop1/STATE.md, guides/calendar-sync-job.md.
+
+## 1. What Loop 2 set out to prove
+The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack, and the CoS journal is pushed to Google Calendar by code (not by a model), append-only, with high-privacy entries shown as busy, on synthetic data.
+
+## 2. What passed
+- Slack hand-off, scenario bad-sleep-reschedule: runs loop2-scn-001 to -012 (010 void). Clean passes: 003, 004 (v1.7), 007, 008 (v1.8), 011, 012 (v1.9.1). Each pass: one CHO call to the CoS (followup, ok), no CoS send to the CHO, the COO names the CHO and the CoS with both event IDs, one line in the CoS channel and two in the CHO channel, numstat 5 0 then 6 0 (no deletions), checker all passed.
+- Calendar push job (P-28, APR-0077 to APR-0080): scripts/gcal/gcal_sync.py, run every 5 minutes by plain cron on the Google test calendar. Proven on the VM: create, move in place, conflict, delete gate (needs APR-0044 approval), five failed attempts and one alert, revoked login pause, alerts to the COO channel (need the gateway). The agents write the journal; the job moves the Google event.
+- High privacy (APR-0079, APR-0086, APR-0088): an entry marked privacy=high is a Google event titled busy with a hidden key; the mandated title never reaches Google; a normal event becomes busy when the entry is marked high; delete by key with approval. The CHO and CFO mark their entries high; the CoS writes the mark. Verified in runs 011 and 012.
+- Health plan: the CHO logs a reported health fact with its own event ID (v1.8, APR-0081, APR-0082).
+
+## 3. Instruction sets in Loop 2
+| Set | Approval | What it fixed |
+|---|---|---|
+| v1.7 | APR-0075 | CHO sends to the CoS with exactly one sessions_send call (followup, timeoutSeconds 120, no watch); the CoS answers instead of sending back (P-38, APR-0076) |
+| v1.8 | APR-0081 | The CHO logs a health fact with its own event ID (P-39, APR-0082) |
+| v1.9 | APR-0086 | Privacy mark: the chief marks it, CHO and CFO entries are high by default |
+| v1.9.1 | APR-0089 | The CoS never edits the journal header or an existing line (found in run 009) |
+
+## 4. Problems found and how they ended
+- Sessions_send arguments (notify, watch, resume) start no CoS turn: fixed by v1.7 (P-38).
+- The sleep fact was logged inconsistently: cause was the COO's wording and an ambiguous setup note; fixed by v1.8 (P-39).
+- Run 009: the CoS added a column to the journal header; fixed by v1.9.1. Run 010 was void (CHO compaction failed after a gateway restart; read every compact output).
+- P-37 (COO SQLite maintenance warning): one occurrence in runs 001 to 012, no effect, closed (APR-0084).
+- Cost control: 5 USD per day kill and 1 USD per day alert, stated done and verified by the CEO (APR-0083); the enforced 5 USD monthly project limit stays.
+- Memory: state files are the agents' memory; memory search and dreaming stay off; ADR-0011 written (APR-0085).
+
+## 5. Open before Loop 2 can close
+| Item | State |
+|---|---|
+| P-36, 04:00 daily reset check | In progress: history of past nights, then a 05:00 AST Slack report built by Claude Code (APR-0090) |
+| Gateway kept running without a terminal | In progress (APR-0090): the CEO's laptop may sleep; the gateway must stay up on the VM |
+| P-40 item 2, real calendar | A test on the CEO's primary calendar is authorized (APR-0090), test events only, nothing stays. Moving the cron to the real calendar is a separate CEO decision. |
+| Claude Code handover 2 outputs | Reset report script, gateway supervisor and the real-calendar test report: to be brought into the repo through fix scripts |
+
+## 6. Deferred, with reasons
+| Item | Decision | Reason |
+|---|---|---|
+| P-40 item 3, monthly journal archive job (APR-0072) | Deferred by the CEO (APR-0090) | The journal is under 100 lines; build it near 1,000 |
+| P-41, memory beyond the state files | Deferred (APR-0085) | Not needed for Loop 2 |
+| P-26, Slack files:read | Deferred | Needs privacy infrastructure that is not built |
+| P-09 spikes, P-17 dashboard | Not started | Not part of the Loop 2 scenario |
+
+## 7. Cost
+- Per-run ceiling 0.05 USD (APR-0056, Loop 1). Per-run cost was not measured in Loop 2 (APR-0073 deferred it); the daily kill and alert are in place (APR-0083).
+
+## 8. Not yet in the repo
+- The VM's gateway supervisor, the 05:00 reset report script and its cron line (Claude Code, handover 2).
+- The unrelated stress-ng cron line on the VM is the CEO's and stays.
+
+## 9. Sign-off
+Loop 2 closed by the CEO: NOT YET. To close, the CEO says so in his words and the assistant records a new APR entry that also ends APR-0073 and lists any remaining deferred items.
