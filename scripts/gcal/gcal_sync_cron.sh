@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Cron wrapper for scripts/gcal/gcal_sync.py (P-28, APR-0078). Plain cron under ubuntu, every 5 minutes.
 # It runs the push job with the gcalcli Python, writes one timestamped block per run to sync.log, and trims the log.
+# It loads ~/loop1/env.sh first. Alerts reach Slack only while the gateway is running; otherwise they are written to alerts.log only.
 # Settings come from the file ~/loop1/gcal-sync/env (you create it, mode 600, never committed):
 #   GCAL_CALENDAR=<calendar id>            LIFEOS_ALERT_TARGET=channel:<COO channel ID>
 #   LIFEOS_ALERT_ACCOUNT=<slack account>   (optional, default: default)
@@ -10,6 +11,13 @@
 set -u
 STATE="${LIFEOS_SYNC_STATE:-$HOME/loop1/gcal-sync}"
 mkdir -p "$STATE"
+# The alert goes through the OpenClaw gateway (terminal T1), so the OpenClaw environment is needed, as in every other shell.
+if [ -f "$HOME/loop1/env.sh" ]; then
+  set -a
+  # shellcheck disable=SC1091
+  . "$HOME/loop1/env.sh"
+  set +a
+fi
 if [ -f "$STATE/env" ]; then
   set -a
   # shellcheck disable=SC1091

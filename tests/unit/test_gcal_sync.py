@@ -347,6 +347,172 @@ class DeleteTests(Base):
         self.assertIn("already gone", self.new_lines(before)[0])
 
 
+class HighPrivacyTests(Base):
+    """High-privacy entries show in Google as busy, with a hidden key and never the mandated title (APR-0032, APR-0079)."""
+    HP = "privacy=high"
+
+    def busy_events(self):
+        return [e for e in self.svc.store.values() if e.get("summary") == "busy"]
+
+    def add_busy(self, eid, key, start="2026-10-28T07:00:00-04:00", end="2026-10-28T08:00:00-04:00"):
+        self.svc.add(eid, "busy", start, end, extendedProperties={"private": {"lifeos_event": key}})
+
+    def test_created_as_busy_with_a_hidden_key_and_no_name(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP))
+        before = self.text()
+        code, counts, _ = self.go()
+        self.assertEqual((code, counts["pushed"]), (0, 1))
+        (call,) = [c for c in self.svc.calls if c[0] == "insert"]
+        body = call[1]["body"]
+        self.assertEqual(body["summary"], "busy")
+        self.assertEqual(body["transparency"], "opaque")
+        self.assertEqual(body["extendedProperties"], {"private": {"lifeos_event": "r1-cho-01"}})
+        self.assertEqual(sorted(body), ["end", "extendedProperties", "start", "summary", "transparency"])
+        self.assertNotIn("Workout", repr(self.svc.calls))  # the mandated title never goes to Google
+        (line,) = self.new_lines(before)
+        self.assertTrue(line.endswith("| sync | google=new1; privacy=high"), line)
+
+    def test_second_run_does_nothing(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP))
+        self.go()
+        text, writes = self.text(), len(self.svc.writes())
+        self.go()
+        self.assertEqual(self.text(), text)
+        self.assertEqual(len(self.svc.writes()), writes)
+
+    def test_marker_is_remembered_from_the_pushed_line(self):
+        # the CoS writes the marker once; later lines of the same name (a job line, a CoS line without it) still count
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP),
+                   jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=b1; privacy=high"),
+                   jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "failed", by="sync", detail="attempt=1; error=x"))
+        self.assertTrue(gs.is_high_privacy(gs.parse_journal(self.text()), N1))
+        self.assertFalse(gs.is_high_privacy(gs.parse_journal(self.text()), N2))
+
+    def test_crash_recovery_finds_the_busy_event_by_key(self):
+        self.add_busy("b1", "r1-cho-01")
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP))
+        before = self.text()
+        self.go()
+        self.assertEqual(self.svc.writes(), [])
+        self.assertIn("google=b1", self.new_lines(before)[0])
+
+    def test_same_key_at_another_time_or_twice_is_a_conflict(self):
+        self.add_busy("b1", "r1-cho-01", "2026-10-28T09:00:00-04:00", "2026-10-28T10:00:00-04:00")
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP))
+        self.assertEqual(self.go()[1]["conflict"], 1)
+        self.assertEqual(self.svc.writes(), [])
+        self.svc.store.clear()
+        self.add_busy("b1", "r1-cho-01")
+        self.add_busy("b2", "r1-cho-01")
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP))
+        self.assertEqual(self.go()[1]["conflict"], 1)
+        self.assertEqual(self.svc.writes(), [])
+
+    def test_other_busy_events_are_not_taken(self):
+        self.add_busy("b9", "someone-else")
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP))
+        self.go()
+        self.assertEqual([c[0] for c in self.svc.writes()], ["insert"])
+
+    def test_move_pair_moves_the_busy_event_and_updates_the_key(self):
+        self.add_busy("b1", "r1-cho-01")
+        self.write(
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=b1; privacy=high"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02"),
+            jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02", detail=self.HP))
+        before = self.text()
+        code, counts, _ = self.go()
+        self.assertEqual(code, 0, counts)
+        self.assertEqual([c[0] for c in self.svc.writes()], ["patch"])
+        ev = self.svc.store["b1"]
+        self.assertEqual(ev["summary"], "busy")
+        self.assertEqual(ev["start"]["dateTime"], "2026-10-29T07:00:00-04:00")
+        self.assertEqual(ev["extendedProperties"]["private"]["lifeos_event"], "r2-cho-02")
+        self.assertNotIn("Workout", repr(self.svc.calls))
+        self.assertIn("google=b1; privacy=high", self.new_lines(before)[0])
+        self.go()  # a second run finds it by the new key and does nothing
+        self.assertEqual(len(self.svc.writes()), 1)
+
+    def test_move_pair_with_the_old_event_gone_creates(self):
+        self.write(
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=gone; privacy=high"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02"),
+            jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02", detail=self.HP))
+        self.go()
+        self.assertEqual([c[0] for c in self.svc.writes()], ["insert"])
+
+    def test_old_event_that_is_not_busy_is_a_conflict(self):
+        self.svc.add("p1", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.write(
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=p1"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02"),
+            jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02", detail=self.HP))
+        self.assertEqual(self.go()[1]["conflict"], 1)
+        self.assertEqual(self.svc.writes(), [])
+
+    def test_privacy_follows_a_move_even_if_the_new_line_has_no_marker(self):
+        # a forgotten marker must never put a mandated title into Google; the old event here is a personal one: conflict
+        self.svc.add("p2", "Dentist", "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.write(
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=p2; privacy=high"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02"),
+            jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02"))
+        self.assertEqual(self.go()[1]["conflict"], 1)
+        self.assertEqual(self.svc.writes(), [])
+        self.assertEqual(self.svc.store["p2"]["summary"], "Dentist")
+
+    def test_privacy_follows_a_move_into_a_new_busy_event(self):
+        self.write(
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=gone; privacy=high"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02"),
+            jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02"))
+        self.go()
+        self.assertEqual([self.svc.store[k]["summary"] for k in self.svc.store if k.startswith("new")], ["busy"])
+        self.assertNotIn("Workout", repr(self.svc.calls))
+
+    def test_dry_run_changes_nothing(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail=self.HP))
+        before = self.text()
+        self.go(dry_run=True)
+        self.assertEqual((self.text(), self.svc.writes()), (before, []))
+
+    def test_delete_gate_for_a_busy_event(self):
+        self.add_busy("b1", "r1-cho-01")
+        lines = [jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=b1; privacy=high", event="r1-cho-01"),
+                 jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "deleted", run="r3", event="r3-cho-01")]
+        self.write(*lines)
+        self.go(allow_deletes=True)  # no pending line: refused
+        self.assertIn("b1", self.svc.store)
+        self.write(lines[0], jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "delete-pending-approval", run="r3", event="r3-cho-01"), lines[1])
+        self.go()  # flag off: refused
+        self.assertIn("b1", self.svc.store)
+        before = self.text()
+        _, counts, _ = self.go(allow_deletes=True)
+        self.assertEqual(counts["deleted"], 1)
+        self.assertNotIn("b1", self.svc.store)
+        self.assertIn("deleted", self.new_lines(before)[0])
+
+    def test_delete_refuses_a_busy_event_with_another_key(self):
+        self.add_busy("b1", "someone-else")
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=b1; privacy=high", event="r1-cho-01"),
+                   jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "delete-pending-approval", run="r3", event="r3-cho-01"),
+                   jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "deleted", run="r3", event="r3-cho-01"))
+        self.go(allow_deletes=True)
+        self.assertIn("b1", self.svc.store)
+
+    def test_busy_helpers_refuse_other_events(self):
+        import gcal_busy
+        self.svc.add("p3", "Dentist", "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.svc.add("p4", "busy", "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")  # a plain busy event without our key
+        for eid in ("p3", "p4"):
+            with self.assertRaises(gc.CalendarError):
+                gcal_busy.move_busy(self.svc, CAL, eid, "k", "2026-10-28T09:00", 60, TZ)
+            with self.assertRaises(gc.CalendarError):
+                gcal_busy.delete_busy(self.svc, CAL, eid, "k", True, "x")
+        self.assertEqual(self.svc.writes(), [])
+
+
 class AlertAndMainTests(Base):
     def test_alert_logs_and_posts_with_openclaw(self):
         calls = []

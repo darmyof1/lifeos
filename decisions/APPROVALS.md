@@ -759,3 +759,20 @@ Build choices made by Claude, inside these answers (a change is a new APR entry)
 Closes: none (P-28 stays open until the job has run on the VM)
 Changeable: yes. A change is a new APR entry.
 Applies to: P-28; scripts/gcal/gcal_sync.py; scripts/gcal/gcal_sync_cron.sh; guides/calendar-sync-job.md; the CoS calendar journal in Loop 2
+
+## APR-0079 - P-28: high-privacy events show as busy, built and tested now with fake data
+Status: approved
+Decided by: CEO
+Your answer: "yes, item 1 and 2 is a go, but also include the high-privacy test with fake data to see it shown as busy in the test calendar, we dont need real data again for testing." (2026-10-26)
+Meaning:
+- Point 3 of P-28, deferred by APR-0078, is brought forward: it is built and tested now, on the test calendar, with fake data. The outcome is the one APR-0032 already decided: a high-privacy event appears in Google as "busy".
+- Items 1 and 2 (five failed attempts, revoked login) are tested on the VM with throwaway state folders and a broken copy of the login file. Results: guides/calendar-sync-job.md.
+Build choices made by Claude inside APR-0032 (a change is a new APR entry):
+- A journal line is high privacy when its detail column holds privacy=high. The mark is remembered through the job's pushed line, and it follows a move: if the old name was high privacy, the new name is too, even if the new line has no mark.
+- Google gets the title "busy", the start, the end, and the setting that shows the time as busy. The mandated title never goes to Google for these events.
+- One extra field is stored in Google for these events: a hidden key that holds the journal's event ID (for example r1-cho-01). It holds no personal data. It is how the job finds the event again, because the title no longer identifies it. This is one field beyond title, start and end (APR-0032). You can say no to it.
+- Moves and deletes of these events go by the Google event ID written in the journal's pushed line, and only touch an event that is titled busy and carries the hidden key. A delete still needs the delete-pending-approval line and --allow-deletes (APR-0044).
+- The CoS does not write privacy=high today. Making it write the mark is an agent instruction change and needs a new yes from you. Until then nothing in Loop 2 is marked, and Loop 2 stays on synthetic data (APR-0073). Who decides that an entry is high privacy (the privacy gate, ADR-0003) and how that reaches the CoS must be decided before real data.
+Closes: none (P-28 stays open until the high-privacy test has run on the VM)
+Changeable: yes. A change is a new APR entry.
+Applies to: P-28; scripts/gcal/gcal_busy.py; scripts/gcal/gcal_sync.py; guides/calendar-sync-job.md; contracts/policy/calendar.yaml (high_privacy_title)

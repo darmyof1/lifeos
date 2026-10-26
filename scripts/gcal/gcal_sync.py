@@ -40,6 +40,7 @@ except ImportError:  # not on Linux or macOS; the lock is skipped
     fcntl = None
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import gcal_busy as gb  # noqa: E402
 import gcal_common as gc  # noqa: E402
 
 MAX_ATTEMPTS = 5
@@ -131,6 +132,40 @@ def delete_was_requested(entries, e):
     return any(x.lineno < e.lineno and x.status == "delete-pending-approval" and x.event == e.event for x in entries)
 
 
+def detail_value(detail, field):
+    """Value of  field=value  in a detail column such as  google=abc; privacy=high ."""
+    for part in (detail or "").split(";"):
+        k, _, v = part.strip().partition("=")
+        if k == field:
+            return v.strip()
+    return ""
+
+
+def is_high_privacy(entries, name):
+    """A high-privacy entry shows in Google as busy (APR-0032). The CoS marks it with privacy=high in the detail column."""
+    return any(x.name == name and detail_value(x.detail, "privacy") == "high" for x in entries)
+
+
+def high_for_entry(entries, e):
+    """High privacy for this entry: marked on its name, or inherited through a move from a high-privacy old name,
+    so a forgotten marker on the new line can never put a mandated title into Google."""
+    if is_high_privacy(entries, e.name):
+        return True
+    hint = moved_hint(entries, e)
+    return hint is not None and is_high_privacy(entries, hint.name)
+
+
+def last_pushed(entries, name, before=None):
+    """The latest pushed line of this name that has a Google event ID."""
+    found = None
+    for x in entries:
+        if before is not None and x.lineno >= before:
+            break
+        if x.name == name and x.status == "pushed" and detail_value(x.detail, "google"):
+            found = x
+    return found
+
+
 # ---------------------------------------------------------------- the push of one entry
 
 class Conflict(Exception):
@@ -170,8 +205,41 @@ def same_times(event, start, end):
         return False
 
 
-def push_entry(service, calendar, e, hint, tz, dry_run):
+def push_busy_entry(service, calendar, e, hint, entries, tz, dry_run):
+    """A high-privacy entry: Google gets the title busy and a hidden key, never the mandated title (APR-0079)."""
+    start, end, minutes = entry_times(e, tz)
+    start_text = start.replace(tzinfo=None).isoformat(timespec="minutes")
+    key = e.event
+    if not key:
+        raise Conflict("a high-privacy entry needs an event ID")
+    found = gb.find_busy(service, calendar, key, start.date(), tz)
+    if len(found) > 1:
+        raise Conflict("more than one busy event in Google has this key")
+    if len(found) == 1:
+        if same_times(found[0], start, end):
+            return "already in Google (busy)", found[0]["id"]
+        raise Conflict("a busy event with this key exists in Google at another time")
+    if hint is not None:
+        old = last_pushed(entries, hint.name, e.lineno)
+        if old is not None:
+            old_id = detail_value(old.detail, "google")
+            try:
+                event = gc.get_event(service, calendar, old_id)
+            except gc.CalendarError:
+                event = None
+            if event is not None:
+                if not gb.is_busy_event(event):
+                    raise Conflict("the old event is not a busy event; a change of privacy is not supported")
+                r = gb.move_busy(service, calendar, old_id, key, start_text, minutes, tz, dry_run)
+                return "moved (busy)", r["id"]
+    r = gb.create_busy(service, calendar, key, start.date(), start_text, minutes, tz, dry_run)
+    return "created (busy)", r["id"]
+
+
+def push_entry(service, calendar, e, hint, tz, dry_run, entries=()):
     """Make Google match this entry. Returns (action, google_id). Raises Conflict or any Google error."""
+    if high_for_entry(entries, e):
+        return push_busy_entry(service, calendar, e, hint, entries, tz, dry_run)
     start, end, minutes = entry_times(e, tz)
     start_text = start.replace(tzinfo=None).isoformat(timespec="minutes")
     found = gc.find_events(service, calendar, e.name, tz)
@@ -197,13 +265,25 @@ def push_entry(service, calendar, e, hint, tz, dry_run):
     return "created", r["id"]
 
 
-def delete_entry(service, calendar, e, tz, dry_run):
+def delete_entry(service, calendar, e, tz, dry_run, entries=()):
+    note = "journal: deleted after delete-pending-approval, run " + e.run
+    if is_high_privacy(entries, e.name):
+        pushed = last_pushed(entries, e.name, e.lineno)
+        if pushed is None:
+            raise Conflict("no pushed line with a Google event ID for this high-privacy entry")
+        try:
+            r = gb.delete_busy(service, calendar, detail_value(pushed.detail, "google"), pushed.event,
+                               approved=True, approval_note=note, dry_run=dry_run)
+        except gc.CalendarError as exc:
+            if str(exc) == "no event with that ID":
+                return "already gone", ""
+            raise
+        return "deleted (busy)", r["id"]
     found = gc.find_events(service, calendar, e.name, tz)
     if len(found) > 1:
         raise Conflict("more than one event in Google has this exact title")
     if not found:
         return "already gone", ""
-    note = "journal: deleted after delete-pending-approval, run " + e.run
     r = gc.delete_event(service, calendar, found[0]["id"], e.name, approved=True, approval_note=note, dry_run=dry_run)
     return "deleted", r["id"]
 
@@ -317,12 +397,12 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
         done += 1
         try:
             if e.status == "deleted":
-                action, gid = delete_entry(service, calendar, e, tz, dry_run)
+                action, gid = delete_entry(service, calendar, e, tz, dry_run, entries)
                 detail = ("google=%s; deleted" % gid) if gid else "already gone"
                 counts["deleted"] += 1
             else:
-                action, gid = push_entry(service, calendar, e, moved_hint(entries, e), tz, dry_run)
-                detail = "google=" + gid
+                action, gid = push_entry(service, calendar, e, moved_hint(entries, e), tz, dry_run, entries)
+                detail = "google=" + gid + ("; privacy=high" if high_for_entry(entries, e) else "")
                 counts["pushed"] += 1
             out("%s %s: %s %s" % ("would" if dry_run else "done ", e.name, action, gid))
             if not dry_run:

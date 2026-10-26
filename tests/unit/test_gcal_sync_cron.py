@@ -46,6 +46,19 @@ class Cron(unittest.TestCase):
         self.assertIn("--state-dir " + self.state, log)
         self.assertIn("cal=cal-from-env", log)
 
+    def test_loads_the_openclaw_environment_first(self):
+        self.stub(0)
+        with open(self.py, "w") as fh:
+            fh.write('#!/bin/sh\necho "oc=$OPENCLAW_TEST_VAR"\nexit 0\n')
+        with open(os.path.join(self.home, "loop1", "env.sh"), "w") as fh:
+            fh.write("OPENCLAW_TEST_VAR=from-env-sh\n")
+        self.assertEqual(self.run_cron().returncode, 0)
+        self.assertIn("oc=from-env-sh", self.log())
+
+    def test_works_without_env_sh(self):
+        self.stub(0)
+        self.assertEqual(self.run_cron().returncode, 0)
+
     def test_extra_args_and_second_run_appends(self):
         self.stub(0)
         self.run_cron(LIFEOS_SYNC_ARGS="--dry-run")

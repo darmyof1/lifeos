@@ -16,6 +16,7 @@ The CoS writes every calendar entry it means to make into its journal (`~/loop1/
 - `requested`, `pushed`, `conflict`, `moved`, `delete-pending-approval`: nothing to do.
 - Before it creates anything it searches Google for the exact title (APR-0034). If the title is already there at the same time, it just records `pushed`. If it is there at another time, or twice, it appends `conflict` and touches nothing.
 - If Google says the login was revoked (invalid_grant or HTTP 401), it writes the pause file, sends one alert, and does nothing more until you log in again and remove the file (S-07, APR-0043).
+- A journal line marked `privacy=high` in its detail column becomes an event titled `busy` in Google, with a hidden key, never the mandated title (APR-0032, APR-0079). See "High-privacy events" below.
 - It never edits or removes a journal line (APR-0054, APR-0058). The health check still fails on any removed line.
 - It never touches personal events. Only title, start and end go to Google (APR-0032).
 
@@ -61,6 +62,21 @@ Expected: `alert: sent` and the message in the COO channel. Every alert is also 
 3. Add the cron line with `crontab -e` (every 5 minutes, plain cron under ubuntu, APR-0078): `*/5 * * * * bash $HOME/lifeos-ro/scripts/gcal/gcal_sync_cron.sh`
 4. The wrapper appends to `~/loop1/gcal-sync/sync.log` and keeps it to about 1500 lines. The job pushes at most 20 entries per run.
 
+## Alerts need the gateway
+`openclaw message send` goes through the gateway, which runs in terminal T1 (`source ~/loop1/env.sh; set -a; source ~/loop1/slack.env; source ~/loop1/openai.env; set +a; openclaw gateway run`). Every other shell, and the cron wrapper, loads `~/loop1/env.sh` first. If the gateway is not running, the alert fails with `Channel is unavailable: slack` and is written to `alerts.log` only (seen 2026-10-26 14:12, when T1 was down). The job itself does not depend on the gateway.
+
+## High-privacy events (busy)
+APR-0032: a high-privacy event shows in Google as busy. A journal line with `privacy=high` in its detail column (8th column) is pushed as an event titled `busy` with the time shown as busy and one hidden field that holds the journal's event ID. The mandated title never goes to Google for it. The job finds the event again by the hidden key, never by title. The mark is remembered from the job's `pushed` line and follows a move, so a forgotten mark on the new line cannot put a mandated title into Google. The CoS does not write this mark yet (APR-0079).
+
+Test with fake data on the test calendar (T2, gateway not needed). Make a test journal with one high-privacy and one normal fake entry:
+
+```
+mkdir -p ~/loop1/gcal-sync-hp
+printf 'name | start | end | status | run ID | event ID | requested by\nCHO - Secret test - 10282026-9201 | 2026-10-28 11:00 | 2026-10-28 12:00 | written | hp1 | hp1-01 | test | privacy=high\nCHO - Normal test - 10282026-9202 | 2026-10-28 13:00 | 2026-10-28 14:00 | written | hp1 | hp1-02 | test\n' > ~/loop1/gcal-sync-hp/journal.md
+```
+
+Then: dry run, real run, a second run, a look at Google, a move, and the delete gate. Expected: the high-privacy entry is created as `busy` (`created (busy)`), the normal one with its full title; `gcal_find.py --title "CHO - Secret test - 10282026-9201"` finds nothing; `gcal_list.py` shows `busy` at 11:00 to 12:00; Google Calendar shows a busy block; a second run does nothing; a `moved` line plus a `written` line without the mark moves the busy event and keeps it busy.
+
 ## Scenario resets
 Resetting the journal (`git checkout -- state/`) while the job runs would leave events in Google that the journal no longer knows about, and the pushed lines would break the numstat check (2 0). Every scenario run therefore pauses the cron before the reset and resumes it after the checks and the export. The commands are in tests/scenario/bad-sleep-reschedule.md ("Loop 2 calendar cron (APR-0078)") and in deploy/loop1/STATE.md. Pause (the line must start with #):
 
@@ -104,3 +120,5 @@ Calendar IDs, channel IDs, tokens, personal event titles, personal email address
 - 2026-10-26: job written and unit-tested (fix-70, APR-0078).
 - VM test 2026-10-26 (test calendar, test journal outside the CoS workspace): unit tests OK on the system Python and on the gcalcli Python (99 tests each); dry run wrote nothing; real run created one event and appended a pushed line; a second run did nothing; a moved line plus a written line with a new title moved the same Google event (old title returned 0 events); a second written line for the same title at another time gave a conflict and Google was unchanged; a deleted line without a delete-pending-approval line was skipped; with the pending line it was skipped without --allow-deletes and executed with it; the alert test posted in the COO channel; the cron wrapper ran by hand (dry run, exit 0) and wrote sync.log. Not yet tested on the VM: five failed attempts, a revoked login. Both are covered by unit tests. See ops/install-log.md.
 - Cron installed 2026-10-26 13:31 AST (every 5 minutes, test calendar, real CoS journal). First run 13:35: three events created, three pushed lines, three events in the test calendar. Run at 13:40: pushed 0, exit 0. Your other cron line (stress-ng) was kept. See ops/install-log.md.
+- VM test 2026-10-26 14:12 to 15:11 AST (T2 and T1): five failed attempts (calendar ID that does not exist): attempts 1 to 5 appended, the fifth marked final, no sixth try; the alert did not reach Slack because the gateway (T1) was not running ("Channel is unavailable: slack"). After T1 was started: alert sent to the COO channel. Revoked login (a copy of the login file with a broken refresh token, the real login untouched): Google answered invalid_grant, exit 3, pause file written, one alert in the COO channel, the second run did nothing and sent no alert, nothing was written to the journal. A first attempt at this test failed because the copy was not broken and the job created one event in the test calendar; it was deleted with the CEO's approval.
+- 2026-10-26: high-privacy busy events and the env.sh load in the cron wrapper added (fix-73, APR-0079). Unit-tested; to be tested on the VM.

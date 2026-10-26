@@ -285,3 +285,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - CEO: "cron on the test calendar". On the VM as ubuntu: one line added to the ubuntu crontab, "*/5 * * * * bash $HOME/lifeos-ro/scripts/gcal/gcal_sync_cron.sh", next to the existing stress-ng line. The settings file ~/loop1/gcal-sync/env points at the Google test calendar and the COO channel.
 - Dry run first against the real CoS journal: three entries to create, as expected. First cron run 13:35 AST: three events created; run 13:40: pushed 0.
 - Scenario runs now pause and resume this cron line (tests/scenario/bad-sleep-reschedule.md, deploy/loop1/STATE.md, guides/calendar-sync-job.md).
+
+## 2026-10-26 - P-28 failure paths tested; high-privacy busy built (fix-73)
+- On the VM, test calendar, throwaway folders ~/loop1/gcal-sync-fail and ~/loop1/gcal-sync-revoke: five failed attempts counted correctly; a revoked login (broken copy of the login file) paused all writes with one alert. The alert reached the COO channel once the gateway (T1) was running. Cleanup of one stray test event with the CEO's approval.
+- APR-0079: high-privacy events show as busy, built now and tested with fake data. Added scripts/gcal/gcal_busy.py and 14 tests; scripts/gcal/gcal_sync_cron.sh now loads ~/loop1/env.sh first.
