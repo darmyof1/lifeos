@@ -71,7 +71,7 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
        tail -n 2 $W/cho/state/health-plan.md
        grep -c "SESSION_WORK_START_CHANGED" /tmp/openclaw/openclaw-$(date +%F).log      (shows 0 even when the error happened: it is in the tool result, not in the log)
 
-4. Pass: one COO reply that says the move is done, names the CHO and the CoS and gives the event IDs; one line each in the CHO and CoS channels; no "Late reply", no FAILURE note; no deletions in the numstat (criterion 4 in the scenario file); the health plan change log has the sleep note and the move (criterion 2).
+4. Pass: one COO reply that says the move is done, names the CHO and the CoS and gives the event IDs; one line each in the CHO and CoS channels; no "Late reply", no FAILURE note; no deletions in the numstat (criterion 4 in the scenario file); the health plan change log has the sleep fact with its own event ID (criterion 2; the move is in the journal).
 5. Cost is not measured for now (CEO decision, 2026-10-24).
 6. Before the next reset, export the CHO and CoS sessions and run scripts/verify/check_sessions_send.py (commands in tests/scenario/bad-sleep-reschedule.md, "Loop 2 checks under v1.7"). The checker finds the run by its run ID. Export names cannot be reused: a second export with the same name fails with EEXIST.
 7. Resume the calendar cron after the checker has passed:
@@ -118,4 +118,4 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 5. Health check: updated on the VM by the VM agent (it reported 41 PASS). The repo copy, deploy/loop1/health-check.py, is not updated yet; bring the VM patch in through a fix script.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.
 7. Loop 1 close record: deploy/loop1/LOOP1-CLOSE-RECORD.md, signed off (APR-0071).
-8. P-38 is closed (APR-0076) and P-28 is closed (APR-0080): the calendar push job is built, tested on the VM and running by cron every 5 minutes against the Google test calendar (guides/calendar-sync-job.md; pause it around scenario resets). Still open: P-39 (the CHO did not write the health plan in run 005), P-40 (what must be decided before real data), P-31, P-32, P-37 (kept open by the CEO).
+8. P-38 is closed (APR-0076) and P-28 is closed (APR-0080): the calendar push job is built, tested on the VM and running by cron every 5 minutes against the Google test calendar (guides/calendar-sync-job.md; pause it around scenario resets). Still open: P-39 (option A decided, APR-0081; the v1.8 script is built, not yet applied on the VM; two passing runs are needed), P-40 (what must be decided before real data), P-31, P-32, P-37 (kept open by the CEO).

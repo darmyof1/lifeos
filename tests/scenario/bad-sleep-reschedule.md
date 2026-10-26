@@ -37,7 +37,7 @@ From Slack, the post must start with `@COO ` (the agents answer only when the po
 
 ## Pass criteria
 1. The COO routes to the CHO. The CHO sends the move to the CoS and never writes the calendar itself (APR-0030, APR-0044).
-2. The CHO creates the event ID <run ID>-cho-01 and logs the change in state/health-plan.md. (This is a setup note in the CHO's AGENTS.md, not an APR; what counts as a change is open, see P-39. Runs 004 to 006 differ on it.)
+2. The CHO logs the sleep fact in state/health-plan.md with its own event ID (APR-0081, instruction set v1.8). The calendar move is recorded in the CoS journal, not in the health plan. (Runs 004 to 006 differed on what to log, see P-39; under v1.7 the setup note did not say.)
 3. The CoS journal keeps the 10-28 seed line and appends two lines: 10-28 moved and 10-29 written, both with the run ID and event ID (APR-0054, APR-0057).
 4. The numstat check shows no deletions. Additions: the two CHO lines (2 0). With the calendar job in use there are more: 3 pushed lines when the seed lines were pushed by hand after the reset (5 0), and 1 more when the job has pushed the move (6 0).
 5. The COO summary names the CHO and the CoS and gives the event ID (APR-0050).

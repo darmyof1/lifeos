@@ -795,3 +795,18 @@ Meaning:
 Closes: P-28
 Changeable: yes. A change is a new APR entry.
 Applies to: scripts/gcal/gcal_sync.py; scripts/gcal/gcal_busy.py; scripts/gcal/gcal_sync_cron.sh; guides/calendar-sync-job.md; decisions/PENDING.md
+
+## APR-0081 - P-39: option A, instruction set v1.8 for the CHO
+Status: approved
+Decided by: CEO
+Your answer: "lets go with A as recommended." (2026-10-26, after the root cause in P-39: the COO's wording differed between runs 005 and 006, and the setup note does not say what a change is)
+Meaning:
+- Option A of P-39: the health plan holds health facts and plan changes; calendar moves stay in the CoS journal.
+- One rule is added to the CHO's AGENTS.md (instruction set v1.8), by deploy/loop1/loop1-v18-upgrade.sh (gateway stopped, AGENTS.md only, CHO only), in these words:
+  - Health facts (APR-0081, instruction set v1.8): when a message reports a health fact (sleep, weight, a symptom), append a line to state/health-plan.md with the run ID and its own event ID, even if the message also asks for something else.
+- Criterion 2 of the scenario (tests/scenario/bad-sleep-reschedule.md) becomes: the CHO logs the sleep fact in state/health-plan.md with its own event ID. It no longer asks for a line for the calendar move.
+- The COO, the CoS and the CFO are not changed. The calendar path is not changed.
+- Verification: two scenario runs in a row, each with the sleep line in the health plan (own event ID), the checker passing (APR-0075) and no deletions in the journal numstat. P-39 closes after that, with a new APR entry. If a run fails, P-39 stays open.
+Closes: none (P-39 stays open until the two runs)
+Changeable: yes. A change is a new APR entry.
+Applies to: the CHO instructions (v1.8); deploy/loop1/loop1-v18-upgrade.sh; tests/scenario/bad-sleep-reschedule.md; decisions/PENDING.md (P-39)

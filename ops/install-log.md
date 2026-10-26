@@ -307,3 +307,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-26 - P-39 root cause found (fix-78)
 - Read-only look at the CHO trajectory exports of runs 005 and 006 on the VM: the CHO read the health plan, wrote the sleep line in run 006 and treated the move as recorded by the CoS in the journal; the COO's message to the CHO differed between the runs (sleep as background in 005, as a task in 006). P-39 rewritten with the causes and three options (A, B, C); nothing changed in the agents.
+
+## 2026-10-26 - P-39 option A decided; v1.8 script built (fix-79)
+- CEO: "lets go with A as recommended." (APR-0081). Added deploy/loop1/loop1-v18-upgrade.sh (CHO only, AGENTS.md only, gateway stopped) and tests/unit/test_loop1_v18_upgrade.py (7 tests). Not applied on the VM yet.
+- Scenario criterion 2 reworded (sleep fact with its own event ID; the move is in the journal).

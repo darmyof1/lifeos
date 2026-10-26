@@ -61,7 +61,8 @@ Options (none decided):
 - A (Claude's recommendation): the health plan holds health facts and plan changes; calendar moves stay in the journal. Criterion 2 becomes "the sleep fact is logged with its own event ID". One CHO rule (instruction set v1.8): "- Health facts (instruction set v1.8): when a message reports a health fact (sleep, weight, a symptom), append a line to state/health-plan.md with the run ID and its own event ID, even if the message also asks for something else."
 - B: every event the CHO handles is logged, moves included. A v1.8 rule defines "change" as every event ID; the log then duplicates the journal.
 - C: drop criterion 2 and close P-39. The log is Loop 1 test scaffolding and the journal plus the push job already prove the calendar path.
-Needs: the CEO's choice of A, B or C. A or B changes agent behaviour: it needs the CEO's yes recorded as a new APR entry, and an upgrade script like v1.7. Nothing is changed without that.
+Decided (APR-0081, CEO 2026-10-26): option A. The upgrade script deploy/loop1/loop1-v18-upgrade.sh adds the v1.8 rule to the CHO.
+Needs: the script applied on the VM, then two scenario runs in a row that pass (sleep line with its own event ID in the health plan, checker passing, no deletions in the numstat). Then the CEO closes P-39 with a new APR entry.
 
 ## P-40 - Calendar: what must be decided before real data
 Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-0073); none of this is needed for that.
