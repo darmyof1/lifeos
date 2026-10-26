@@ -1,8 +1,8 @@
 # Google Calendar REST scripts - guide
 
-Status: partial (the REST calls were verified on 2026-10-25 with an ad hoc script: read, create, move, read by ID, delete by ID. The repo scripts below pass their unit tests but have not been run on the VM yet.)
-Last verified: 2026-10-25 on Oracle VM, Ubuntu 24.04 arm64 (ad hoc script); repo scripts: not yet
-Tool version: Python 3.12 from the gcalcli pipx environment (the Google libraries come with gcalcli 4.5.1). The google-api-python-client version is to be recorded at the first run of the repo scripts (command in Verify).
+Status: working (run from the repo on the VM on 2026-10-25: unit tests, list, find and the round trip, which creates, moves, reads and deletes one event by ID. The create, move, get and delete scripts have been run on the VM only inside the round trip; each is unit-tested.)
+Last verified: 2026-10-25 on Oracle VM, Ubuntu 24.04 arm64
+Tool version: Python 3.12 from the gcalcli pipx environment (the Google libraries come with gcalcli 4.5.1). google-api-python-client 2.201.0 (recorded 2026-10-25 with the command in Verify).
 Owner: CEO
 
 ## What this is for
@@ -83,10 +83,11 @@ Test events use counters from 9001 up (for example `COS - REST API test - 102620
 | `UnicodeDecodeError: 'utf-8' codec can't decode byte 0x80` when reading the login file | The login file is a Python pickle, not JSON (seen 2026-10-25) | Use the repo scripts, which read it correctly. Never load it as JSON |
 | `invalid_grant: Token has been expired or revoked` | The login expired or was revoked. Likely cause on 2026-10-25: the OAuth app was in Testing mode, where logins expire after 7 days | Publish the app (Audience, Publish app), delete `~/.local/share/gcalcli/oauth`, run `gcalcli --client-id=<client-id> init` again (guides/calendar-gcalcli.md) |
 | `error: the Google libraries are missing` | The system Python was used | Run with `~/.local/share/pipx/venvs/gcalcli/bin/python` |
-| `error: the login file is readable by others` | File mode is not 600 | `chmod 600 ~/.local/share/gcalcli/oauth` |
+| `error: the login file is readable by others` | `gcalcli init` left the new login file open to others (seen 2026-10-25 after the third login) | `chmod 600 ~/.local/share/gcalcli/oauth`, then `stat -c "%a %U %n" ~/.local/share/gcalcli/oauth` must show `600 ubuntu` |
 
 ## Never paste here
 Calendar email addresses, event IDs from your real calendar, personal event titles, tokens, client secrets, authorization codes.
 
 ## History
 - 2026-10-25: REST read, create, move, read by ID and delete by ID verified with an ad hoc script after the gcalcli login was renewed (ops/install-log.md). APR-0074 decides: moves and deletes by ID use REST; gcalcli stays. Repo scripts added in fix-65.
+- 2026-10-25: repo scripts run on the VM: 59 unit tests OK, list (2 events with IDs), find (0 matches after cleanup) and the round trip (create, move, read by ID, delete by ID) passed, with nothing left on the calendar. See ops/install-log.md.

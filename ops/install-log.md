@@ -246,3 +246,9 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Test on the VM: gcalcli has no ID option for edit or delete. REST create, move, read and delete by event ID passed with an ad hoc script.
 - APR-0074: moves and deletes by event ID use REST scripts in scripts/gcal/. gcalcli and its guide stay. Added guides/calendar-rest-api.md and tests/unit/test_gcal_scripts.py (unit tests, no network).
 - To do on the VM: pull, run the unit tests, run the round-trip test from the repo scripts, record the google-api-python-client version.
+
+## 2026-10-25 - Calendar REST scripts run on the VM (fix-66)
+- Pulled the repo on the VM. Unit tests: 59 OK with the gcalcli Python. google-api-python-client 2.201.0.
+- The scripts refused the new login file because gcalcli init left it open to others; fixed with chmod 600 (mode checked: 600, owner ubuntu).
+- scripts/gcal/gcal_list.py listed the two events of the day with their IDs. gcal_roundtrip_test.py created, moved, read by ID and deleted one test event (title counter 9001); gcal_find.py then found 0 matches and gcalcli agenda showed no test event.
+- guides/calendar-rest-api.md is now marked working. Not yet run alone on the VM: the create, move, get and delete scripts (run only inside the round trip).
