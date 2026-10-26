@@ -1,4 +1,4 @@
-# Loop 1 state and handoff (as of 2026-10-26, 01:45 AST)
+# Loop 1 state and handoff (as of 2026-10-26, 02:20 AST)
 
 Loop 1 is closed (APR-0071). Loop 2 runs cloud-only on synthetic data under APR-0073, until Loop 2 closes or 2026-12-31. The CEO starts the gateway from the main account; the sandbox account and its agent do not.
 
@@ -37,7 +37,7 @@ Written for a Claude Code session running on the Loop 1 VM, picking up from the 
 
 ## Current setup (verified 2026-10-24)
 - OpenClaw 2026.10.5, model openai/gpt-6-luna, runtime pinned to openclaw (APR-0060), memory search and dreaming off (APR-0061), cron off, daily session reset at 04:00 (APR-0059).
-- Agents COO, CHO, CoS, CFO in ~/loop1/workspaces/<id>. Instruction sets v1.5 (APR-0066, COO) and v1.6 (APR-0067, CoS) are applied on the VM. Instruction set v1.7 (APR-0075, CHO and CoS) is approved (2026-10-26); it applies only after the CEO runs deploy/loop1/loop1-v17-upgrade.sh with the gateway stopped, and a later fix script records it as applied (P-38).
+- Agents COO, CHO, CoS, CFO in ~/loop1/workspaces/<id>. Instruction sets v1.5 (APR-0066, COO) and v1.6 (APR-0067, CoS) are applied on the VM. Instruction set v1.7 (APR-0075, CHO and CoS) was applied on the VM at 01:43 AST on 2026-10-26 with deploy/loop1/loop1-v17-upgrade.sh and verified in runs loop2-scn-003 and -004 (APR-0076).
 - Slack: one app per agent (APR-0062), socket mode, four accounts (default = COO, cho, cos, cfo). Each account has its own channel in its allowlist, with a users list holding only the CEO's Slack ID. That list also lets "@<agent> /new" work (section 7.10). P-29 is closed.
 - The CEO may address any agent in its channel; normally he talks to the COO (APR-0063).
 - Health check: python3 ~/loop1/health-check.py [--live]. Last run 39 PASS, 0 FAIL, 1 WARN (old /new refusals in the log window). Some of its text is stale (P-31); see "Still to do".
@@ -70,7 +70,7 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 
 4. Pass: one COO reply that says the move is done, names the CHO and the CoS and gives the event IDs; one line each in the CHO and CoS channels; no "Late reply", no FAILURE note; numstat 2 0.
 5. Cost is not measured for now (CEO decision, 2026-10-24).
-6. Before the next reset, export the CHO and CoS sessions and run scripts/verify/check_sessions_send.py (commands in tests/scenario/bad-sleep-reschedule.md, "Loop 2 checks under v1.7").
+6. Before the next reset, export the CHO and CoS sessions and run scripts/verify/check_sessions_send.py (commands in tests/scenario/bad-sleep-reschedule.md, "Loop 2 checks under v1.7"). The checker finds the run by its run ID. Export names cannot be reused: a second export with the same name fails with EEXIST.
 
 ## Where the runs stand
 | Run | Path | Result |
@@ -90,10 +90,12 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 | 019 | Slack, v1.6 | Pass: one run each, COO named the CHO and the CoS, numstat 2 0; cost not measured |
 | loop2-scn-001 | Slack, v1.6 (Loop 2) | Pass on content, numstat 2 0. The CHO made five sessions_send calls to the CoS (notify with watch, notify, resume twice, then followup); the CHO posted two lines in its channel; one SESSION_WORK_START_CHANGED on the CoS reply |
 | loop2-scn-002 | Slack, v1.6 (Loop 2) | Pass on content, numstat 2 0. Four sessions_send calls to the CoS (the third had no details, so the CoS ran twice); three SESSION_WORK_START_CHANGED on CoS replies. The post lost its first letter ("oop 1 scenario run"); no effect |
+| loop2-scn-003 | Slack, v1.7 (Loop 2) | Pass: numstat 2 0, COO named the CHO and the CoS, one CHO call to the CoS (followup), no CoS send, no SESSION_WORK_START_CHANGED; one P-37 line at the post |
+| loop2-scn-004 | Slack, v1.7 (Loop 2) | Pass: same as 003, no P-37 line |
 
 ## Known issues
 - Agent memory survives a git state reset and a one-line session compaction. A reused run ID can get an answer from memory instead of the reset state. Use a new run ID for every attempt.
-- First-contact miss: fixed by v1.5 (APR-0066); not seen in runs 015 to 019. In run 018 the CoS ran twice (first run took no action); cause not found at the time. Loop 2 runs 001 and 002 show the likely cause: the CHO's sessions_send arguments (notify, watch, resume) start no CoS turn. Fixed by v1.7 (APR-0075), to be checked in P-38.
+- First-contact miss: fixed by v1.5 (APR-0066); not seen in runs 015 to 019. In run 018 the CoS ran twice (first run took no action); cause not found at the time. Loop 2 runs 001 and 002 show the likely cause: the CHO's sessions_send arguments (notify, watch, resume) start no CoS turn. Fixed by v1.7 (APR-0075): runs 003 and 004 had one CHO call each and no CoS send (APR-0076, P-38 closed).
 - SESSION_WORK_START_CHANGED: a retryable timing race in OpenClaw's session ingress; no message lost (APR-0068, P-35 closed). The CoS reports it as "delivered; acknowledgement error" (v1.6). Reopen if a session-start-conflict-retry-limit line appears. The error is in the sessions_send tool result, not in the gateway log, so a log count shows 0 even when it happened (Loop 2: 1 in run 001 and 3 in run 002, all on the CoS reply to the waiting CHO, all with sentBeforeError true). Read it with scripts/verify/check_sessions_send.py.
 - COO SQLite maintenance warning about 2 seconds after each scenario post (runs 018, 019); no visible effect (P-37, Loop 2).
 - The COO's answer sometimes names only the CHO (runs 015 and 018), though the CoS wrote the journal line. Run 019 named both. No rule change yet.
@@ -107,4 +109,4 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 5. Health check: updated on the VM by the VM agent (it reported 41 PASS). The repo copy, deploy/loop1/health-check.py, is not updated yet; bring the VM patch in through a fix script.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.
 7. Loop 1 close record: deploy/loop1/LOOP1-CLOSE-RECORD.md, signed off (APR-0071).
-8. P-38: apply v1.7 on the VM and run the scenario twice (APR-0075).
+8. P-38 is closed (APR-0076). Still open: P-28 (Loop 2 status set and push job: CEO yes or no), P-31, P-32, P-37 (kept open by the CEO).

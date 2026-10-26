@@ -213,6 +213,7 @@ Check the result with openclaw config get. Do not hand-edit openclaw.json.
 - Lesson: when an agent has to guess a tool's arguments, state them in the instruction (the exact fields, and the ones never to set). Instruction set v1.7 (APR-0075) does that for the CHO's call to the CoS and tells the CoS to answer instead of sending.
 - Reading the evidence: openclaw sessions export-trajectory --session-key <key> --workspace <dir> --output <name> writes a bundle under <dir>/.openclaw/trajectory-exports/<name>. scripts/verify/check_sessions_send.py reads its events.jsonl and prints the sessions_send calls with PASS or FAIL. The gateway log does not hold SESSION_WORK_START_CHANGED; the tool result does.
 - OpenClaw docs (v2026.10.5): concepts/session-tool.md (modes of sessions_send), gateway/config-agents/entries-and-multi-agent.md (tools.agentToAgent.send is a list of target agents; an empty list denies cross-agent sends).
+- Result (2026-10-26): v1.7 applied on the VM; runs loop2-scn-003 and -004 each had one CHO sessions_send (followup, reply ok), no CoS send to the CHO and no SESSION_WORK_START_CHANGED (APR-0076, P-38 closed).
 
 ## Troubleshooting
 - "Config file not found" from config validate: no patch has been applied. Apply the baseline (step 4).
@@ -238,3 +239,4 @@ Key values, tokens, Slack IDs, VM addresses, or the contents of any env file.
 - 2026-10-24: /new solved (7.10), instruction set v1.4 approved (7.11) (fix-52).
 - 2026-10-24: runs 011 to 013, v1.5 proposed, VM handoff added (7.12) (fix-53).
 - 2026-10-26: section 7.13, instruction set v1.7 approved (APR-0075) (fix-67).
+- 2026-10-26: v1.7 verified in runs 003 and 004 (APR-0076), checker finds the run by run ID (fix-68).

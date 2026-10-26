@@ -9,12 +9,15 @@ Read-only. Exit code 1 if any check FAILs.
 Usage:
   python3 scripts/verify/check_sessions_send.py EXPORTS_DIR RUN_ID [--since ISO_UTC]
   EXPORTS_DIR  the folder that holds <RUN_ID>-cho and <RUN_ID>-cos (…/.openclaw/trajectory-exports)
-  --since      only count events at or after this UTC time, for example 2026-10-26T04:07:00Z.
-               One export holds the whole session, so earlier runs are in it unless you cut them off.
+  One export holds the whole session, so earlier runs are in it. By default the checker finds this run
+  by its run ID: it starts at the first sessions_send whose message contains RUN_ID and stops at the first
+  later call that names a different run ID (loopN-scn-NNN). If no message contains RUN_ID it checks all calls and warns.
+  --since      overrides that: only count events at or after this UTC time, for example 2026-10-26T04:07:00Z.
 """
 import argparse
 import json
 import os
+import re
 import sys
 
 MARKER = "SESSION_WORK_START_CHANGED"
@@ -100,6 +103,33 @@ def load_calls(path, since):
     return calls
 
 
+RUN_TOKEN = re.compile(r"loop\d+-scn-\d+")
+
+
+def message_of(call):
+    m = call["args"].get("message")
+    return m if isinstance(m, str) else ""
+
+
+def window_by_run_id(calls, run_id):
+    """Keep the calls of one run: from the first call whose message names run_id up to (not including)
+    the first later call that names a different run ID. Returns (calls, note). calls must be time-sorted."""
+    start = None
+    for i, c in enumerate(calls):
+        if run_id in message_of(c):
+            start = i
+            break
+    if start is None:
+        return calls, "run ID %s not found in any sessions_send message; checking all calls" % run_id
+    end = len(calls)
+    for j in range(start + 1, len(calls)):
+        others = [t for t in RUN_TOKEN.findall(message_of(calls[j])) if t != run_id]
+        if others and run_id not in message_of(calls[j]):
+            end = j
+            break
+    return calls[start:end], ""
+
+
 def short(text, n=110):
     text = " ".join((text or "").split())
     return text if len(text) <= n else text[:n] + "..."
@@ -115,6 +145,11 @@ def run(exports, run_id, since):
             return 2
         calls += load_calls(path, since)
     calls.sort(key=lambda c: c["ts"])
+    window_note = ""
+    if not since:
+        calls, window_note = window_by_run_id(calls, run_id)
+        if not window_note and calls:
+            print("window: starts at %s, the first call that names %s" % (calls[0]["ts"][11:23], run_id))
     print("sessions_send calls (UTC):")
     for c in calls:
         a = c["args"]
@@ -151,6 +186,8 @@ def run(exports, run_id, since):
     others = [c for c in calls if c not in cho_to_cos and c not in cos_to_cho]
     if others:
         warns.append("%d other sessions_send call(s), see the list above" % len(others))
+    if window_note:
+        warns.insert(0, window_note)
     for w in warns:
         print("WARN  " + w)
     print("Result: %s" % ("FAIL (%d)" % len(fails) if fails else "all checks passed"))

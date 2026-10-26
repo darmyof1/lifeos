@@ -704,3 +704,20 @@ Meaning:
 Closes: none (P-38 tracks the check)
 Changeable: yes. A change is a new APR entry.
 Applies to: the CHO and CoS instructions (v1.7); deploy/loop1/loop1-v17-upgrade.sh; scripts/verify/check_sessions_send.py; tests/scenario/bad-sleep-reschedule.md; deploy/loop1/STATE.md; P-38
+
+## APR-0076 - Instruction set v1.7 verified in two Loop 2 runs; P-38 closed
+Status: approved
+Decided by: CEO
+Your answer: "If the transcript is clean, a yes!" (2026-10-26, about run loop2-scn-004; Claude judged the transcript clean against the criteria below)
+Evidence: v1.7 was applied on the VM at 01:43 AST on 2026-10-26 (loop1-v17-upgrade.sh; health check 43 PASS afterwards). Runs loop2-scn-003 (01:55 AST) and loop2-scn-004 (02:00 AST), both from Slack with the post starting with @COO:
+- Checker (scripts/verify/check_sessions_send.py): all checks passed in both runs. Each run had exactly one CHO sessions_send to the CoS (mode followup, timeoutSeconds 120, no watch, status ok); the CoS sent nothing to the CHO; no SESSION_WORK_START_CHANGED in any result. Under v1.6, runs 001 and 002 had 5 and 4 CHO calls and 1 and 3 errors.
+- Journal numstat 2 0 in both runs; the CHO logged -cho-01 (sleep) and -cho-02 (move).
+- The COO reply named the CHO and the CoS with the event IDs in both runs; one line in the CoS channel; two lines in the CHO channel (one per event, as in runs 001, 015 and 016); no late reply; no FAILURE note.
+Meaning:
+- Instruction set v1.7 (APR-0075) stays as applied. P-38 is closed.
+- The config option named in APR-0075 (remove cho from the CoS send list) is not needed. It stays available if a later run shows the CoS sending to the CHO again.
+- Reopen P-38 (new APR entry needed) if the checker fails in a later run: the CHO sets mode notify or resume or watch, or the CoS sends to the CHO.
+- The checker found the run by its run ID from this entry on (fix-68); the first version also counted the previous run's call from the same export.
+Closes: P-38
+Changeable: yes. A change is a new APR entry.
+Applies to: the CHO and CoS instructions (v1.7); tests/scenario/bad-sleep-reschedule.md; deploy/loop1/STATE.md; scripts/verify/check_sessions_send.py

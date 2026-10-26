@@ -1,7 +1,7 @@
 # Pending decisions
 
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
-Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068).
+Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068), P-38 (APR-0076).
 
 ## P-09 - Spikes not yet run
 Planned: SPK-01 to SPK-04 and SPK-07. Done: SPK-06 (see file), SPK-09 (see file). Partial: SPK-05 (see file).
@@ -57,10 +57,4 @@ Code reading (sandbox, 2026-10-25, OpenClaw 2026.10.5 dist): a maintenance plan 
 CEO 2026-10-25: keep P-37 open until it is checked on a real Loop 2 run.
 Needs: on the first Loop 2 runs, grep the gateway log for 'maintenance paused' and 'SQLite session write failed'.
 Checked 2026-10-26: runs loop2-scn-001 and loop2-scn-002, on the gateway process that was ready at 23:46 AST on 2026-10-25: 0 occurrences of 'SQLite session write failed' and 0 of 'maintenance paused' in the gateway logs of 2026-10-25 and 2026-10-26 (the log rotates by local date, so a run that crosses midnight needs both files). Proposed: keep P-37 open for two or three more runs, as the CEO asked.
-
-## P-38 - Check instruction set v1.7 in two Loop 2 runs (APR-0075)
-Status: open. v1.7 is approved (APR-0075); it applies with deploy/loop1/loop1-v17-upgrade.sh.
-Pass, in two Loop 2 scenario runs with a new run ID each: scripts/verify/check_sessions_send.py ends with "all checks passed" (the CHO's first call to the CoS has mode followup, no watch, timeoutSeconds 120 and returns a reply; the CoS sends nothing to the CHO; no SESSION_WORK_START_CHANGED), plus the usual criteria (numstat 2 0; the COO reply names the CHO and the CoS with event IDs; one line each in the CHO and CoS channels; no late reply; no FAILURE note).
-If the CoS still sends to the CHO: propose the config rule named in APR-0075 as a new APR entry.
-Needs: the CEO applies v1.7 on the VM and runs the scenario twice.
-
+Seen 2026-10-26 01:55:50 AST: one 'SQLite session write failed' on the COO (operation session.maintenance.plan, pid 3403610, the gateway started after the v1.7 upgrade), at the post of run loop2-scn-003. Not in loop2-scn-004; 'maintenance paused' 0. No visible effect. Loop 2 tally: 1 occurrence in 4 runs (001, 002, 004: none).

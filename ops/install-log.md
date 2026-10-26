@@ -260,3 +260,10 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - P-37: 0 occurrences in the two runs; stays open.
 - STATE.md: the post must start with @COO; a gateway-log count cannot show SESSION_WORK_START_CHANGED.
 - To do on the VM: pull, stop the gateway, run the upgrade script with --dry-run and then for real, start the gateway, run the scenario twice and run the checker.
+
+## 2026-10-26 - Instruction set v1.7 applied and verified (fix-68)
+- v1.7 applied on the VM at 01:43 AST (dry run first, gateway stopped, health check 43 PASS). Runs loop2-scn-003 and loop2-scn-004 passed: one CHO sessions_send each, no CoS send to the CHO, no SESSION_WORK_START_CHANGED, journal numstat 2 0.
+- APR-0076: P-38 closed. The config option (CoS send list without cho) is not needed.
+- P-37: one occurrence at the run 003 post (01:55:50 AST), none in run 004; stays open.
+- scripts/verify/check_sessions_send.py now finds the run by its run ID (no --since needed); 6 more unit tests.
+- Runs 003 and 004 recorded in the scenario file and STATE.md.

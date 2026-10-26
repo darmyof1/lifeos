@@ -4,7 +4,7 @@ Rules: APR-0052 (synthetic data), APR-0054 (journal), APR-0056 (cost), APR-0057 
 Runs needed to close: three identical passing runs, plus one run with a gateway restart in the middle.
 Status 2026-10-22: both met (runs 3 to 5 passed in a row; run 6 restart and retries passed). First Slack run (loop1-scn-007, 2026-10-24) was partial; instruction set v1.3 (APR-0064) is the fix. Run 009 passed in Slack; run 010 was partial (stale "pending"); instruction set v1.4 (APR-0065) is the fix. Under v1.4: run 011 failed (no task details on first contact), run 012 (CLI to the CHO) passed on content, run 013 passed on content after a COO resend but showed a FAILURE note. Proposed fix: v1.5 (P-34). Under v1.5 and v1.6: runs 015, 016, 017 and 019 passed on content (019 clean: one run per agent); run 018 partial. Closed for Loop 1 on 2026-10-25 (APR-0069); criterion 6 (cost) deferred by the CEO.
 
-Loop 2 (APR-0073): runs loop2-scn-001 and loop2-scn-002 (2026-10-25 and 26, Slack, v1.6) passed on content. The trajectory exports showed that the CHO's sessions_send arguments (notify, watch, resume) start no CoS turn, which explains the CoS running twice. Instruction set v1.7 (APR-0075) is the fix; P-38 tracks the check.
+Loop 2 (APR-0073): runs loop2-scn-001 and loop2-scn-002 (2026-10-25 and 26, Slack, v1.6) passed on content. The trajectory exports showed that the CHO's sessions_send arguments (notify, watch, resume) start no CoS turn, which explains the CoS running twice. Instruction set v1.7 (APR-0075) fixed it: runs loop2-scn-003 and -004 passed with one CHO call each and no CoS send to the CHO (APR-0076, P-38 closed).
 
 ## Setup
 - Agents COO, CHO, CoS and CFO with instruction set v1.2 (deploy/loop1/loop1-agent-files.sh).
@@ -47,12 +47,12 @@ From Slack, the post must start with `@COO ` (the agents answer only when the po
 - What the CEO sees in Slack: runs 009 and 010 showed one line each in the CHO and CoS channels (APR-0050 works). Run 010's COO reply was wrong ("pending"); v1.4 fixed that. Run 013's COO reply named the CHO and the CoS but carried a FAILURE note after a resend (P-34).
 
 ## Loop 2 checks under v1.7 (APR-0075, P-38)
-After the run, and before the next reset, export the CHO and CoS sessions and read their sessions_send calls. One export holds the whole session, so cut off earlier runs with --since (a UTC time a few minutes before the post). Run the last command from the repo clone on the VM:
+After the run, and before the next reset, export the CHO and CoS sessions and read their sessions_send calls. One export holds the whole session; the checker finds the run by its run ID (add --since <UTC time> only to override). Use a new export name for each run: an existing name fails with EEXIST. Run the last command from the repo clone on the VM:
 
     source ~/loop1/env.sh
     openclaw sessions export-trajectory --session-key "agent:cho:main" --workspace ~/loop1/evidence/traj --output <run ID>-cho
     openclaw sessions export-trajectory --session-key "agent:cos:main" --workspace ~/loop1/evidence/traj --output <run ID>-cos
-    python3 scripts/verify/check_sessions_send.py ~/loop1/evidence/traj/.openclaw/trajectory-exports <run ID> --since "$(date -u -d '20 minutes ago' +%FT%TZ)"
+    python3 scripts/verify/check_sessions_send.py ~/loop1/evidence/traj/.openclaw/trajectory-exports <run ID>
 
 Pass (APR-0075): the checker ends with "all checks passed": the CHO's first call to the CoS has mode followup, no watch and timeoutSeconds 120 and returns a reply; the CoS sends nothing to the CHO; no SESSION_WORK_START_CHANGED. A WARN for a second CHO call is allowed (v1.7 lets the CHO resend once). The usual criteria 1 to 5 still apply.
 
@@ -81,5 +81,7 @@ Pass (APR-0075): the checker ends with "all checks passed": the CHO's first call
 | loop1-scn-019 | 2026-10-25 | v1.6 (Slack) | Pass | numstat 2 0; loop1-scn-019-cho-01 in health-plan; COO reply names the CHO and the CoS with event IDs; one line each in the CHO and CoS channels; one run each for the CHO and the CoS; no late reply, no FAILURE note. The CoS reported the P-35 acknowledgement error in v1.6 wording. The CHO treated the sleep report as context and did not log it (runs 015 and 016 logged it). Cost not measured (deferred by the CEO). |
 | loop2-scn-001 | 2026-10-25 | v1.6 (Slack, Loop 2) | Pass on content | First Loop 2 run; post started with @COO. numstat 2 0. CHO trajectory: five sessions_send calls to the CoS (notify with watch: forbidden; notify: queued, no CoS turn; resume twice: rejected; followup: worked). The CHO posted two lines in its channel. One SESSION_WORK_START_CHANGED on the CoS reply to the CHO (sentBeforeError true). P-37: not seen. Per-run cost from the trajectory, CHO only: about 0.01 USD. |
 | loop2-scn-002 | 2026-10-26 | v1.6 (Slack, Loop 2) | Pass on content | numstat 2 0. Four sessions_send calls to the CoS: forbidden, queued, a followup without details (the CoS replied it could not act), then a followup with the full details (worked). Three SESSION_WORK_START_CHANGED on CoS replies. The CEO's post lost its first letter ("oop 1 scenario run"); no effect. P-37: not seen. Per-run cost from the trajectory: CHO about 0.006 USD, each CoS run about 0.003 USD. The export loop2-scn-002-cho holds both runs (one session). |
+| loop2-scn-003 | 2026-10-26 | v1.7 (Slack, Loop 2) | Pass | First run under v1.7 (applied 01:43 AST). numstat 2 0; COO reply names the CHO and the CoS with event IDs loop2-scn-003-cho-01 and -cho-02; one line in the CoS channel, two in the CHO channel (one per event); no late reply, no FAILURE note. Checker: one CHO sessions_send to the CoS (followup, timeoutSeconds 120, ok), none from the CoS, no SESSION_WORK_START_CHANGED. P-37: one 'SQLite session write failed' on the COO at 01:55:50 AST, at the post. |
+| loop2-scn-004 | 2026-10-26 | v1.7 (Slack, Loop 2) | Pass | Second run under v1.7. numstat 2 0; COO reply names the CHO and the CoS with event IDs loop2-scn-004-cho-01 and -cho-02; one line in the CoS channel, two in the CHO channel; no late reply, no FAILURE note. Checker: one CHO call (followup, ok, 06:01:27 UTC), no CoS send, no SESSION_WORK_START_CHANGED. P-37: not seen. The first version of the checker also listed run 003's call from the same export (WARN); fixed in fix-68. |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

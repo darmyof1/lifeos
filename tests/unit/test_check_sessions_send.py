@@ -133,5 +133,73 @@ class CheckSessionsSend(unittest.TestCase):
         self.assertEqual(cs.target_of({}), "")
 
 
+def cho_call(ts_call, ts_res, run, cid, **over):
+    a = {"sessionKey": "agent:cos:main", "message": "Loop 1 run ID %s; event ID %s-cho-02; move it" % (run, run),
+         "timeoutSeconds": 120, "mode": "followup"}
+    a.update(over)
+    return [call(ts_call, "cho", a, cid), result(ts_res, "cho", {"status": "ok", "reply": "Moved"}, cid)]
+
+
+class CheckByRunId(unittest.TestCase):
+    """One export holds several runs; the checker finds the run by its run ID (no --since needed)."""
+
+    def two_runs(self, second_over=None):
+        cho = cho_call("2026-10-26T05:56:29.000Z", "2026-10-26T05:56:59.000Z", "loop2-scn-003", "a")
+        cho += cho_call("2026-10-26T06:01:27.000Z", "2026-10-26T06:01:57.000Z", "loop2-scn-004", "b", **(second_over or {}))
+        return cho
+
+    def test_second_run_is_not_blamed_for_the_first_runs_call(self):
+        with tempfile.TemporaryDirectory() as t:
+            write_run(t, "loop2-scn-004", self.two_runs(), [])
+            rc, out = check(t, "loop2-scn-004")
+            self.assertEqual(rc, 0, out)
+            self.assertIn("window: starts at 06:01:27", out)
+            self.assertIn("1 call(s)", out)
+            self.assertNotIn("WARN  CHO sent", out)
+            self.assertNotIn("05:56:29", out)
+
+    def test_first_run_stops_before_the_next_runs_call(self):
+        with tempfile.TemporaryDirectory() as t:
+            write_run(t, "loop2-scn-003", self.two_runs(second_over={"mode": "notify", "watch": True}), [])
+            rc, out = check(t, "loop2-scn-003")
+            self.assertEqual(rc, 0, out)  # the bad call belongs to run 004
+            self.assertIn("1 call(s)", out)
+
+    def test_bad_call_in_this_run_still_fails(self):
+        with tempfile.TemporaryDirectory() as t:
+            write_run(t, "loop2-scn-004", self.two_runs(second_over={"mode": "notify", "watch": True}), [])
+            rc, out = check(t, "loop2-scn-004")
+            self.assertEqual(rc, 1, out)
+            self.assertIn("FAIL  first CHO call uses mode followup", out)
+
+    def test_cos_send_in_this_run_is_counted_but_not_the_next_runs(self):
+        err = {"status": "error", "error": "SESSION_WORK_START_CHANGED", "sentBeforeError": True}
+        cos_here = [call("2026-10-26T06:01:40.000Z", "cos", {"sessionKey": "agent:cho:main", "message": "done loop2-scn-004"}, "z"),
+                    result("2026-10-26T06:01:41.000Z", "cos", err, "z", success=False)]
+        cos_next = [call("2026-10-26T06:10:40.000Z", "cos", {"sessionKey": "agent:cho:main", "message": "done loop2-scn-005"}, "y"),
+                    result("2026-10-26T06:10:41.000Z", "cos", err, "y", success=False)]
+        cho = self.two_runs() + cho_call("2026-10-26T06:10:00.000Z", "2026-10-26T06:10:30.000Z", "loop2-scn-005", "c")
+        with tempfile.TemporaryDirectory() as t:
+            write_run(t, "loop2-scn-004", cho, cos_here + cos_next)
+            rc, out = check(t, "loop2-scn-004")
+            self.assertEqual(rc, 1, out)
+            self.assertIn("FAIL  CoS sent nothing to the CHO  (1 call(s))", out)
+
+    def test_unknown_run_id_checks_everything_and_warns(self):
+        with tempfile.TemporaryDirectory() as t:
+            write_run(t, "zzz", good_cho(), [])
+            rc, out = check(t, "zzz")
+            self.assertEqual(rc, 0, out)
+            self.assertIn("WARN  run ID zzz not found", out)
+
+    def test_since_overrides_the_run_id_window(self):
+        with tempfile.TemporaryDirectory() as t:
+            write_run(t, "loop2-scn-004", self.two_runs(), [])
+            rc, out = check(t, "loop2-scn-004", "2026-10-26T05:00:00Z")
+            self.assertEqual(rc, 0, out)
+            self.assertIn("2 call(s)", out)
+            self.assertNotIn("window: starts", out)
+
+
 if __name__ == "__main__":
     unittest.main()
