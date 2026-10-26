@@ -109,4 +109,4 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 5. Health check: updated on the VM by the VM agent (it reported 41 PASS). The repo copy, deploy/loop1/health-check.py, is not updated yet; bring the VM patch in through a fix script.
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.
 7. Loop 1 close record: deploy/loop1/LOOP1-CLOSE-RECORD.md, signed off (APR-0071).
-8. P-38 is closed (APR-0076). Still open: P-28 (Loop 2 status set and push job: CEO yes or no), P-31, P-32, P-37 (kept open by the CEO).
+8. P-38 is closed (APR-0076). P-28: the status set and the push job design are approved (APR-0077); the job is not built yet. Still open: P-31, P-32, P-37 (kept open by the CEO).

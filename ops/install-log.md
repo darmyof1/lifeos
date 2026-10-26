@@ -267,3 +267,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - P-37: one occurrence at the run 003 post (01:55:50 AST), none in run 004; stays open.
 - scripts/verify/check_sessions_send.py now finds the run by its run ID (no --since needed); 6 more unit tests.
 - Runs 003 and 004 recorded in the scenario file and STATE.md.
+
+## 2026-10-26 - P-28 status set and push job approved (fix-69)
+- APR-0077: the Loop 2 calendar status set (requested, written, pushed, failed, conflict, moved, delete-pending-approval) and the code push job (5-minute retry, search by unique name first, COO told after 5 failures, writes pause if the token is revoked) approved as proposed. The sandbox draft is not approved as a whole.
+- P-28 stays open: the job is not built, and six points are listed in PENDING (alert target without a CIO, status of an approved delete, high-privacy busy title, what starts the job, create tool, journal line format).

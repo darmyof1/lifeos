@@ -721,3 +721,23 @@ Meaning:
 Closes: P-38
 Changeable: yes. A change is a new APR entry.
 Applies to: the CHO and CoS instructions (v1.7); tests/scenario/bad-sleep-reschedule.md; deploy/loop1/STATE.md; scripts/verify/check_sessions_send.py
+
+## APR-0077 - P-28: the Loop 2 calendar status set and the push job, as proposed
+Status: approved
+Decided by: CEO
+Your answer: "P-28 is yes on the proposed" (2026-10-26). "The proposed" is the P-28 text in decisions/PENDING.md as it stood on 2026-10-26, summarised below. The sandbox draft research/sandbox/2026-10-25-agy/P-28-calendar-sync.md is a draft; this entry does not approve its details.
+Meaning:
+- Status set for the Loop 2 journal: requested, written, pushed, failed (with an attempt count and the last error), conflict, moved and delete-pending-approval, plus the Google event ID once pushed. Each change of status is a new line; the journal stays append-only (APR-0054, APR-0057), with the 14-day active window (APR-0072).
+- Push job: a scheduled job in code, not the model (ADR-0008, ADR-0011), retries pending entries every 5 minutes (S-06, APR-0043). Before a retry it searches Google for the entry's unique name (APR-0034), so a write that succeeded but looked failed is not repeated.
+- After 5 failures the COO is told and the CEO checks (S-06).
+- If the Google token is revoked, all writes pause and an alert is posted (S-07, APR-0043).
+- Unchanged: Google stays the calendar of record and the journal is the hold and audit trail (APR-0031); only title, start and end go to Google (APR-0032); moves and deletes by event ID use scripts/gcal/ (APR-0074); every delete needs the CEO's approval (APR-0044).
+Not decided here (stays in P-28):
+- Who posts the token-revoked alert while the CIO does not exist (Loop 2 has four agents).
+- The status of an approved delete (the sandbox draft suggests "deleted"; it is not in the approved set).
+- How a high-privacy event shows as busy together with the mandated title (APR-0032).
+- What starts the job on the VM (the OpenClaw cron stays off).
+- Which tool the job uses to create events (APR-0074 left it to this step), and the journal line format for the new statuses.
+Closes: none (P-28 stays open until the job is built and tested)
+Changeable: yes. A change is a new APR entry.
+Applies to: P-28; the CoS calendar journal in Loop 2; scripts/gcal/ (the future push job); decisions/PENDING.md

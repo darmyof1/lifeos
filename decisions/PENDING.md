@@ -26,8 +26,9 @@ Added: keep the active journal small, because the CoS reads all of it on every c
 Added: for Loop 2 the status set grows to requested, written, pushed, failed (with attempt count and last error), conflict, moved and delete-pending-approval, plus the Google event ID once pushed. Pushes and retries run in code, not in the model (ADR-0008, ADR-0011).
 Decided: the 14-day active window and monthly archive (APR-0072).
 Calendar driver: decided (APR-0074). Reads stay on gcalcli (guides/calendar-gcalcli.md, APR-0041). Moves and deletes by event ID use the Google Calendar REST API through scripts/gcal/ (guides/calendar-rest-api.md). Test 2026-10-25 on the VM: gcalcli has no ID option for edit or delete; REST create, move, read and delete by ID passed.
-Not covered yet: the push job itself, and how a high-privacy event shows as busy (APR-0032) with the mandated title.
-Needs: CEO yes or no on the Loop 2 status set and the push job.
+Decided (APR-0077, CEO 2026-10-26): the status set and the push job design above. The sandbox draft research/sandbox/2026-10-25-agy/P-28-calendar-sync.md is not approved as a whole.
+Still open: (1) who posts the token-revoked alert while the CIO does not exist (Loop 2 has four agents; Claude's proposal: the job posts in the COO channel); (2) the status of an approved delete (the draft suggests "deleted"); (3) how a high-privacy event shows as busy with the mandated title (APR-0032); (4) what starts the job on the VM (the OpenClaw cron stays off); (5) which tool the job uses to create events (APR-0074 left it to this step); (6) the journal line format for the new statuses.
+Needs: the job built and tested (dry run, unit tests with a fake Google client, then on the VM), and the CEO's answers to (1) to (4).
 
 ## P-31 - Cost hard stop (APR-0056)
 Seen 2026-10-22: the OpenAI project page shows the 5 USD monthly limit as "Limit not enforced". OpenAI sends alerts but does not stop calls. The alerts on that page are monthly thresholds; APR-0056 asked for an alert at 1 USD per day.
