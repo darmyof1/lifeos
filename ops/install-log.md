@@ -300,3 +300,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-26 - P-28 closed (fix-76)
 - CEO: "close p28" (APR-0080). The calendar push job, cron wrapper, tests and guide stay as built. The leftovers for real data are in P-40.
+
+## 2026-10-26 - Scenario run loop2-scn-006 with the calendar cron (fix-77)
+- Same procedure as run 005 (cron paused, leftover event deleted with the CEO's approval, state reset, sessions compacted, seeds pushed by hand; post; checks; job by hand; cron resumed only after the checker passed). Checker passed; the job moved the Google event in place. numstat 5 0, then 6 0.
+- P-39 repeats in part: the CHO logged the sleep line but not the move line in health-plan.md. A CHO rule (v1.8) is proposed in P-39 and waits for the CEO.

@@ -100,6 +100,7 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 | loop2-scn-003 | Slack, v1.7 (Loop 2) | Pass: numstat 2 0, COO named the CHO and the CoS, one CHO call to the CoS (followup), no CoS send, no SESSION_WORK_START_CHANGED; one P-37 line at the post |
 | loop2-scn-004 | Slack, v1.7 (Loop 2) | Pass: same as 003, no P-37 line |
 | loop2-scn-005 | Slack, v1.7 (Loop 2, cron live) | Partial: calendar path passed, and the job moved the Google event in place; the CHO did not write health-plan.md (P-39) |
+| loop2-scn-006 | Slack, v1.7 (Loop 2, cron live) | Partial: calendar path passed again (the job moved the Google event in place); the CHO logged the sleep line but not the move line in health-plan.md (P-39 repeats) |
 
 ## Known issues
 - Agent memory survives a git state reset and a one-line session compaction. A reused run ID can get an answer from memory instead of the reset state. Use a new run ID for every attempt.

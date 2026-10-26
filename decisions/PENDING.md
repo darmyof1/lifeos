@@ -53,7 +53,9 @@ Seen 2026-10-26 01:55:50 AST: one 'SQLite session write failed' on the COO (oper
 Seen 2026-10-26 15:57 AST (run loop2-scn-005, v1.7): the CHO moved the workout through the CoS correctly, but state/health-plan.md stayed unchanged (change log empty). Run loop2-scn-004 logged two lines there (sleep note cho-01, move cho-02). Scenario criterion 2 (APR-0058) failed in run 005. The COO reply gave one event ID (loop2-scn-005-cho-01).
 Instruction today: "Setup note: keep the current plan in state/health-plan.md. Append a line for each change with the run ID and event ID." It is a soft note, not a numbered rule.
 The trajectory export hides exec code, so the CHO's tool calls cannot be read; the export shows 4 exec calls, 1 message and 1 sessions_send, and no mention of health-plan.
-Needs: one more run (loop2-scn-006) to see whether it repeats. If it does, a rule in the CHO instructions (v1.8) needs the CEO's yes recorded as a new APR entry. Nothing is changed without that.
+Run loop2-scn-006 (2026-10-26 16:33 AST): it repeats in part. The CHO logged the sleep line (cho-01) but not the move line (cho-02). Tally under v1.7: run 004 both lines, run 005 none, run 006 one of two. Run 003 was not checked.
+Proposed, not decided: one more CHO rule (instruction set v1.8), added the way v1.7 was (deploy/loop1 upgrade script, gateway stopped, AGENTS.md only, own APR entry): "- Health plan log (instruction set v1.8): for every event ID you create, append one line to state/health-plan.md before you reply: run ID | event ID | change. A sleep note and a calendar move each get their own line. If an event ID is already in the log, do not add it again."
+Needs: the CEO's yes or no on that rule. Nothing is changed without it.
 
 ## P-40 - Calendar: what must be decided before real data
 Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-0073); none of this is needed for that.
