@@ -980,3 +980,18 @@ Meaning:
 Closes: none (P-42 stays open until the re-runs pass)
 Changeable: yes. A change is a new APR entry.
 Applies to: the CoS and COO instructions (v1.10.1); deploy/loop1/loop1-v1101-upgrade.sh; the delete flag in the VM cron environment; the move of the cron to the real calendar (waits); tests/scenario/delete-approval.md; decisions/PENDING.md (P-42)
+
+## APR-0094 - Delete lines carry no privacy mark or detail (instruction set v1.10.2)
+Status: approved
+Decided by: CEO
+Your answer: "A" (2026-10-27 00:46, to the choice between A, a one-line CoS rule, and B, a job change that ignores the detail on delete lines)
+Evidence: handover 5 (ops/handover-2026-10-27-claude-code-report-5.md; tests/scenario/delete-approval.md): in run loop2-scn-030 the CoS added privacy=high to both delete lines of a plain entry; the push job treated the entry as a busy event, found a plain Google event and wrote a conflict line, so the delete did not reach Google (the guard held, nothing was lost). Run 032 had no privacy mark and the delete went through.
+Meaning:
+- On a delete-pending-approval line and on a deleted line the CoS copies only the run ID, the event ID and requested by, and leaves the detail column empty.
+- Option B (the job ignoring the detail on delete lines) is not chosen. Nothing in the job changes.
+- The exact rule text is in deploy/loop1/loop1-v1102-upgrade.sh (CoS only). Built and unit-tested; not applied on the VM by this entry's fix script.
+- Verification (P-42): D2 three runs in a row with new run IDs, each with only the pending line first, deleted second, no detail on either line, and the cron deleting the event; D1 once; the regression once.
+- Not decided: whether the one failure in run 030 blocks the move of the cron to the real calendar. That stays with the CEO and waits for these re-runs.
+Closes: none (P-42 stays open until the re-runs pass)
+Changeable: yes. A change is a new APR entry.
+Applies to: the CoS instructions (v1.10.2); deploy/loop1/loop1-v1102-upgrade.sh; tests/scenario/delete-approval.md; decisions/PENDING.md (P-42)

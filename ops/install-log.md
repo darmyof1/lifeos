@@ -349,3 +349,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-27 - Handover 5 recorded (fix-89)
 - Claude Code applied v1.10.1 (cos bd4b8cd, coo 8cae25a), ran 027 to 032 (D1 x3 pass, D2 partial then pass, regression pass). Repo: report 5 and h4-d1.sh added. No new decision recorded.
+
+## 2026-10-27 - APR-0094 and v1.10.2 built (fix-90)
+- Built deploy/loop1/loop1-v1102-upgrade.sh (CoS: no privacy mark or detail on delete lines). Not applied; Claude Code applies it in handover 6.

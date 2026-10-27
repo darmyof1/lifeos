@@ -39,7 +39,7 @@ The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack,
 | Gateway kept running without a terminal | Done: systemd user service, restarts after a crash and at boot (APR-0091) |
 | P-40 item 2, real calendar | The test on the CEO's primary calendar passed. Moving the cron to the real calendar is a separate CEO decision, not made. |
 | Claude Code handover 2 outputs | In the repo: deploy/loop2/vm/ (service unit, reset report script) and the report (ops/) |
-| P-42, instruction sets v1.10 and v1.10.1 | Both applied. D1 passed three in a row, regression passed, D2 passed once and was partial once (privacy=high on delete lines; the job refused safely). Open: that fix (CEO decision). Deletes are on in the cron on the test calendar |
+| P-42, instruction sets v1.10, v1.10.1 and v1.10.2 | v1.10 and v1.10.1 applied; D1 passed three in a row; D2 partial once (privacy=high on delete lines). v1.10.2 built (APR-0094); open: apply it and pass D2 three in a row. Deletes are on in the cron on the test calendar |
 
 ## 6. Deferred, with reasons
 | Item | Decision | Reason |
