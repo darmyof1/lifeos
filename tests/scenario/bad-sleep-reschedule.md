@@ -143,5 +143,10 @@ The run is the same. The CHO's entries are high privacy by default, so after the
 | loop2-scn-037 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | D2: as 033. |
 | loop2-scn-038 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | D2: as 033; cost 0.0046 USD (measured). |
 | loop2-scn-039 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | Regression bad-sleep-reschedule: checker all passed, numstat 5 0 then 6 0, busy on 10-29; cost 0.0060 USD (measured). |
+| loop2-scn-041 | 2026-10-27 | v1.10.3 (CLI to the COO) | Pass | Other scenario: delete-approval.md, D2 (1 of 3). Pending then deleted, seed-3, empty detail, requested by CEO; the COO's reply had the seven items, one per line, in order; numstat 5 0; the job deleted the event; cost 0.0077 USD. |
+| loop2-scn-042 | 2026-10-27 | v1.10.3 (CLI to the COO) | Pass | D2 (2 of 3): same; cost 0.0041 USD. |
+| loop2-scn-043 | 2026-10-27 | v1.10.3 (CLI to the COO) | Pass | D2 (3 of 3): same; the COO said the deletion was not confirmed, true at that time; cost 0.0074 USD. |
+| loop2-scn-044 | 2026-10-27 | v1.10.3 (CLI to the COO) | Pass | D1: pending then deleted, seed-3, empty detail, numstat 5 0, the job deleted the event; cost 0.0037 USD. |
+| loop2-scn-045 | 2026-10-27 | v1.10.3 (CLI to the COO) | Pass | Regression bad-sleep-reschedule: checker all passed, numstat 5 0 then 6 0, busy on 10-29; the COO named only the CHO as confirming; cost 0.0076 USD. |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

@@ -41,3 +41,9 @@ Second message (the approval): "Run ID <run ID>. This is my approval, as the CEO
 - D1 run 036: PASS. Regression 039: PASS.
 - The privacy=high gap of run 030 did not recur in 6 delete runs.
 - Open (P-42): the COO sometimes answers a delete question without the seven-item request (035). Per-run outputs: ops/scenario-results-2026-10-27/.
+
+## Result 2026-10-27 (handover 7, v1.10.3, APR-0095)
+- D2 runs 041, 042, 043: three PASS in a row. Pending first, deleted second, both seed-3, empty detail, requested by CEO; the COO's reply had the seven items, each on its own line, in order; numstat no removed lines; the job deleted the event; the COO said nothing false about Google.
+- D1 run 044: PASS. Regression 045: PASS (the COO named only the CHO as confirming).
+- Note: the job step ran through the cron wrapper by hand (same code and delete flag as the cron), as in handovers 5 and 6; the cron itself deleted the event in run 025 (handover 4).
+- The P-42 gate is met: D1 passed four in a row (027 to 029, 036, plus 044), D2 three in a row, regression passes. Per-run outputs: ops/scenario-results-2026-10-27/.

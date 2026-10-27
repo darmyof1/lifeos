@@ -135,3 +135,4 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 15. APR-0094 (2026-10-27): instruction set v1.10.2 built (deploy/loop1/loop1-v1102-upgrade.sh), not yet applied: delete lines carry no privacy mark or detail.
 16. Handover 6 (2026-10-27 01:20 AST): v1.10.2 applied (cos 918b843). Instruction versions now coo v1.10.1, cos v1.10.2, cho v1.9, cfo v1.10. D2 4 of 5, D1 and regression pass. Last agent message about 01:19 AST.
 17. APR-0095 (2026-10-27): instruction set v1.10.3 built (deploy/loop1/loop1-v1103-upgrade.sh), approved, not yet applied: the COO always posts the seven delete-approval items, one per line.
+18. Handover 7 (2026-10-27 01:50 AST): v1.10.3 applied (coo 89d43c9). Instruction versions: coo v1.10.3, cos v1.10.2, cho v1.9, cfo v1.10. D2 three in a row, D1 and regression pass; the delete gate is met. Delete flag ON on the test calendar. Last agent message about 01:49 AST.

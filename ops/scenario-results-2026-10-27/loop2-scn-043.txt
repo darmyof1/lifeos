@@ -1,0 +1,39 @@
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop2-scn-043 now, then: scenario-run.sh check loop2-scn-043
+== Q
+CoS confirmed the 2026-10-30, 07:00–08:00 workout is in the journal. `10302026-0001` is the entry suffix; the event ID is `seed-3`. The CoS added a delete-pending-approval line under run `loop2-scn-043`. The workout has **not** been deleted.
+
+What: Delete the 2026-10-30 workout (event ID `seed-3`).
+Used for: The scheduled workout entry.
+Why now: You requested its removal.
+Risk if approved: The workout will be removed from the calendar.
+Risk if not: The workout remains scheduled.
+Recommendation: Approve if you want it removed.
+Reply: approve, explain more, or keep.
+-- journal after question
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop2-scn-043 | seed-3 | CEO
+== APPROVAL
+Journal: CoS appended the approved `deleted` line for workout `seed-3` (run `loop2-scn-043`).
+Google: Deletion is not confirmed; the journal still shows the earlier pushed record.
+Still needed: A delete-push confirmation; nothing further is needed from you.
+-- delete lines (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop2-scn-043 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop2-scn-043 | seed-3 | CEO
+-- criteria
+PASS pending first, then deleted
+PASS event ID seed-3, detail column empty (7 columns, or an empty 8th)
+PASS requested by CEO
+PASS seven items each on its own line, in order (got 7: What,Used for,Why now,Risk if approved,Risk if not,Recommendation,Reply)
+5	0	state/calendar-journal.md
+numstat: 5	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: deleted 931erl3be4je3sbohomc4o8i38
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 1, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+CRON: ACTIVE (*/5)
+-- journal tail
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop2-scn-043 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop2-scn-043 | seed-3 | sync | google=931erl3be4je3sbohomc4o8i38; deleted
+loop2-scn-043: total 0.0074 USD (coo 0.0028, cho 0.0000, cos 0.0046)
+run window UTC: 2026-10-27T05:40:47Z to 2026-10-27T05:42:39Z

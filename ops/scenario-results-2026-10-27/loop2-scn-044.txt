@@ -1,0 +1,16 @@
+posted
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop2-scn-044 now, then: scenario-run.sh check loop2-scn-044
+The CoS recorded the deletion of **CHO - Workout - 10302026-0001** in the calendar journal (event ID: `seed-3`); the push job handles Google Calendar.
+Changed by: **CoS**.
+Still needed from you: **nothing**.
+--- journal
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop2-scn-044 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop2-scn-044 | seed-3 | CEO
+5	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: deleted t0akkaju16pl4miph77hg8v4og
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 1, skipped 0
+CRON: ACTIVE (*/5)
+loop2-scn-044: total 0.0037 USD (coo 0.0022, cho 0.0000, cos 0.0015)

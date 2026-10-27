@@ -1,0 +1,38 @@
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop2-scn-042 now, then: scenario-run.sh check loop2-scn-042
+== Q
+What: Remove the 2026-10-30 workout, "CHO - Workout - 10302026-0001."
+Used for: Calendar entry for the scheduled workout.
+Why now: You requested its removal in run `loop2-scn-042`.
+Risk if approved: The workout entry will be removed.
+Risk if not: The workout entry will remain on the calendar.
+Recommendation: Approve only if you want this workout removed.
+Reply: approve, explain more, or keep
+
+No change yet; no agent has changed it. I need your approval before I can ask the CoS to remove it.
+-- journal after question
+== APPROVAL
+Calendar journal: CoS recorded the workout as deleted (event ID `seed-3`; workout `CHO - Workout - 10302026-0001`).
+Google Calendar: Unchanged; the push job still needs to process the deletion.
+Still needed: Push job processing; no further action from you.
+-- delete lines (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop2-scn-042 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop2-scn-042 | seed-3 | CEO
+-- criteria
+PASS pending first, then deleted
+PASS event ID seed-3, detail column empty (7 columns, or an empty 8th)
+PASS requested by CEO
+PASS seven items each on its own line, in order (got 7: What,Used for,Why now,Risk if approved,Risk if not,Recommendation,Reply)
+5	0	state/calendar-journal.md
+numstat: 5	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: deleted 2hs17kbjusaae3k2ve7b1kbq4g
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 1, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+CRON: ACTIVE (*/5)
+-- journal tail
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop2-scn-042 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop2-scn-042 | seed-3 | sync | google=2hs17kbjusaae3k2ve7b1kbq4g; deleted
+loop2-scn-042: total 0.0041 USD (coo 0.0020, cho 0.0000, cos 0.0021)
+run window UTC: 2026-10-27T05:38:24Z to 2026-10-27T05:39:35Z

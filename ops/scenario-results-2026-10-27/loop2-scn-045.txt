@@ -1,0 +1,10 @@
+Sleep: 5 hours last night logged in `state/health-plan.md`.
+Workout: moved from Wed 2026-10-28 to Thu 2026-10-29, 07:00–08:00; original entry preserved.
+Changed by CHO; event IDs: `loop2-scn-045-cho-01` (sleep), `loop2-scn-045-cho-02` (workout move).
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | moved | loop2-scn-045 | loop2-scn-045-cho-02 | CHO | privacy=high
+CHO - Workout - 10292026-0001 | 2026-10-29 07:00 | 2026-10-29 08:00 | written | loop2-scn-045 | loop2-scn-045-cho-02 | CHO | privacy=high
+numstat: 5	0	state/calendar-journal.md
+Result: all checks passed
+done  CHO - Workout - 10292026-0001: made busy g5jou6h374kipbbj19a4kfur3o
+numstat after the job: 6	0	state/calendar-journal.md
+loop2-scn-045: total 0.0076 USD (coo 0.0016, cho 0.0039, cos 0.0021)
