@@ -1,0 +1,27 @@
+[Unit]
+Description=OpenClaw Gateway (LifeOS Loop 1/2, state in ~/loop1/state)
+After=network-online.target
+Wants=network-online.target
+StartLimitBurst=10
+StartLimitIntervalSec=300
+
+[Service]
+ExecStart=/usr/bin/node --max-old-space-size=8192 /home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/index.js gateway run
+Restart=always
+RestartSec=5
+TimeoutStopSec=330
+SuccessExitStatus=0 143 130
+KillMode=mixed
+KillSignal=SIGINT
+Environment=HOME=/home/ubuntu
+Environment=TMPDIR=/tmp
+Environment=PATH=/usr/bin:/home/ubuntu/.npm-global/bin:/usr/local/bin:/bin:/home/ubuntu/.local/bin
+Environment=OPENCLAW_STATE_DIR=/home/ubuntu/loop1/state
+Environment=OPENCLAW_CONFIG_PATH=/home/ubuntu/loop1/state/openclaw.json
+EnvironmentFile=/home/ubuntu/loop1/slack.env
+EnvironmentFile=/home/ubuntu/loop1/openai.env
+StandardOutput=append:/home/ubuntu/loop1/gateway.log
+StandardError=append:/home/ubuntu/loop1/gateway.log
+
+[Install]
+WantedBy=default.target

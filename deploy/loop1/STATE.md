@@ -43,6 +43,7 @@ Written for a Claude Code session running on the Loop 1 VM, picking up from the 
 - Health check: python3 ~/loop1/health-check.py [--live]. Last run 39 PASS, 0 FAIL, 1 WARN (old /new refusals in the log window). Some of its text is stale (P-31); see "Still to do".
 
 ## Start-up on the VM
+Since 2026-10-26 (APR-0091) the gateway is a systemd user service and terminal T1 is not used: systemctl --user status|stop|start|restart openclaw-loop1-gateway (stop it before changing any AGENTS.md). The T1 command below is the manual fallback; never run it while the service runs.
 Terminal 1 (gateway, owned by the CEO unless he says otherwise):
 
     source ~/loop1/env.sh; set -a; source ~/loop1/slack.env; source ~/loop1/openai.env; set +a; openclaw gateway run
@@ -125,5 +126,5 @@ Every other shell starts with: source ~/loop1/env.sh. Check one gateway process 
 6. CEO housekeeping on the Mac: delete ~/Downloads/spk04-transfer (it holds old secrets) and old copies of health-check.py and the upgrade scripts.
 7. Loop 1 close record: deploy/loop1/LOOP1-CLOSE-RECORD.md, signed off (APR-0071).
 8. P-38 is closed (APR-0076) and P-28 is closed (APR-0080): the calendar push job is built, tested on the VM and running by cron every 5 minutes against the Google test calendar (guides/calendar-sync-job.md; pause it around scenario resets). P-39 is closed (APR-0082): v1.8 was verified by runs 007 and 008. P-31 (APR-0083), P-37 (APR-0084) and P-32 (APR-0085) are closed for Loop 2. Privacy rule decided (APR-0086): the chief marks it, health and finance default to high; it is built, applied and verified (v1.9, v1.9.1; APR-0088, APR-0089; runs 011 and 012). Still open: P-40 (real calendar, archive job), P-41 (memory beyond the state files, deferred).
-9. Gateway ownership: since the Claude Code handover (2026-10-26 evening, APR-0089) the gateway runs from Claude Code's shell in the background (log ~/loop1/gateway.log), not from terminal T1. To give T1 back: stop it with pkill -INT -f openclaw-gateway, then start it in T1 (command above). Until then do not start a second gateway (the batches check for exactly one gateway process).
+9. Gateway ownership: the gateway is the systemd user service openclaw-loop1-gateway (APR-0091); it restarts after a crash and at boot, logs to ~/loop1/gateway.log, and survives the CEO closing his laptop. The batches that check for exactly one gateway process still work. A 05:00 AST cron posts the daily reset report to the COO channel (P-36).
 10. Note from the handover: the COO's wording to the CHO sometimes includes "avoid duplicating an already-handled event"; with a stale CHO session (not compacted) the CHO can skip the move. It did not appear in runs 011 and 012. Compact every session and read the output (see the scenario file).

@@ -331,3 +331,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - Loop 2 next steps decided; close record drafted (fix-84)
 - APR-0090: P-36 becomes a 05:00 AST Slack report (history of past nights first); the gateway must keep running without a terminal; a real-calendar test is authorized (test events only, cron stays on the test calendar); the archive job is deferred.
 - deploy/loop2/LOOP2-CLOSE-RECORD.md drafted (not signed). Handover prompt 2 given to Claude Code on the VM.
+
+## 2026-10-26 - Handover 2 recorded (fix-85)
+- Claude Code (CEO handover, APR-0090): gateway now a systemd user service; 05:00 AST reset report cron; P-36 history read; real-calendar test passed. APR-0091.
+- Added deploy/loop2/vm/ (openclaw-loop1-gateway.service, daily-reset-report.sh, daily-reset-report.py), tests/unit/test_daily_reset_report.py (5 tests), ops/handover-2026-10-26-claude-code-report-2.md and ops/realcal-test-journal-2026-10-26.md.

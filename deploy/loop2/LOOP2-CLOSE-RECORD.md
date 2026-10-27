@@ -33,10 +33,10 @@ The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack,
 ## 5. Open before Loop 2 can close
 | Item | State |
 |---|---|
-| P-36, 04:00 daily reset check | In progress: history of past nights, then a 05:00 AST Slack report built by Claude Code (APR-0090) |
-| Gateway kept running without a terminal | In progress (APR-0090): the CEO's laptop may sleep; the gateway must stay up on the VM |
-| P-40 item 2, real calendar | A test on the CEO's primary calendar is authorized (APR-0090), test events only, nothing stays. Moving the cron to the real calendar is a separate CEO decision. |
-| Claude Code handover 2 outputs | Reset report script, gateway supervisor and the real-calendar test report: to be brought into the repo through fix scripts |
+| P-36, 04:00 daily reset check | History read (one daily reset confirmed); the 05:00 AST report runs from 2026-10-27 and must show the resets of the CHO, CoS and CFO (APR-0091) |
+| Gateway kept running without a terminal | Done: systemd user service, restarts after a crash and at boot (APR-0091) |
+| P-40 item 2, real calendar | The test on the CEO's primary calendar passed. Moving the cron to the real calendar is a separate CEO decision, not made. |
+| Claude Code handover 2 outputs | In the repo: deploy/loop2/vm/ (service unit, reset report script) and the report (ops/) |
 
 ## 6. Deferred, with reasons
 | Item | Decision | Reason |
@@ -50,7 +50,7 @@ The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack,
 - Per-run ceiling 0.05 USD (APR-0056, Loop 1). Per-run cost was not measured in Loop 2 (APR-0073 deferred it); the daily kill and alert are in place (APR-0083).
 
 ## 8. Not yet in the repo
-- The VM's gateway supervisor, the 05:00 reset report script and its cron line (Claude Code, handover 2).
+- The 05:00 report cron line and the installed unit live on the VM only; the repo holds copies (deploy/loop2/vm/).
 - The unrelated stress-ng cron line on the VM is the CEO's and stays.
 
 ## 9. Sign-off

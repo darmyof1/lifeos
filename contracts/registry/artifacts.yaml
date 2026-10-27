@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-84.sh",
+  "generated_by": "fix-85.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -880,6 +880,18 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop2/vm/daily-reset-report.py",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop2/vm/daily-reset-report.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop2/vm/openclaw-loop1-gateway.service",
+      "status": "draft"
+    },
+    {
       "path": "deploy/render/README.md",
       "status": "planned"
     },
@@ -1032,6 +1044,10 @@
       "status": "planned"
     },
     {
+      "path": "ops/handover-2026-10-26-claude-code-report-2.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/handover-2026-10-26-claude-code-report.md",
       "status": "draft"
     },
@@ -1066,6 +1082,10 @@
     {
       "path": "ops/openclaw-update-policy.md",
       "status": "planned"
+    },
+    {
+      "path": "ops/realcal-test-journal-2026-10-26.md",
+      "status": "draft"
     },
     {
       "path": "ops/recovery/agent-recovery.md",
@@ -1701,6 +1721,10 @@
     },
     {
       "path": "tests/unit/test_check_sessions_send.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_daily_reset_report.py",
       "status": "draft"
     },
     {

@@ -931,3 +931,18 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: decisions/PENDING.md (P-36, P-40); deploy/loop2/LOOP2-CLOSE-RECORD.md; deploy/loop1/STATE.md; the gateway and cron on the VM
+
+## APR-0091 - Gateway as a systemd user service; 05:00 reset report cron (carries out APR-0090)
+Status: approved
+Decided by: CEO
+Your answer: the words recorded in APR-0090 ("the gateway need to keep running and i might close the laptop to sleep losing terminal and he should still be running it i the vm"; "create a script that runs say at 5:00 to read it and maybe post it to slack for me to see it. have claude code do that on the prompt"). This entry records what Claude Code built from them; the CEO can refuse or change either part.
+Evidence (2026-10-26 evening, VM; report in ops/handover-2026-10-26-claude-code-report-2.md, files in deploy/loop2/vm/):
+- Gateway: user service openclaw-loop1-gateway (unit file deploy/loop2/vm/openclaw-loop1-gateway.service, installed at ~/.config/systemd/user/). Restart=always (5 s), starts at boot (linger on), log ~/loop1/gateway.log, secrets only through EnvironmentFile (never printed). A kill -9 of the main process was followed by an automatic restart with one process and Slack connected on all four accounts. Commands from any terminal on the VM: systemctl --user status|stop|start|restart openclaw-loop1-gateway. Stop it before changing any AGENTS.md; do not start a second gateway by hand. Stopping can take up to 330 s (graceful drain). Terminal T1 is no longer needed.
+- 05:00 report: cron line 0 5 * * * bash $HOME/loop1/daily-reset-report.sh >> $HOME/loop1/reset-check/cron.out 2>&1 (AST). The script (daily-reset-report.py) is read-only on the agents' databases, never messages an agent, saves an append-only snapshot, appends to ~/loop1/reset-check/report.log and posts to the COO channel. One real run at 20:05 AST posted. A result of "no message since 04:00, reset pending" is normal (the reset is lazy).
+- P-36 history (read-only on the databases): one daily reset confirmed (COO channel session, reason daily, 2026-10-24 18:41, the first message after 04:00). The reset is a marker inside the channel session, not a new session ID; main sessions got new IDs at the first activity after 04:00, but the prep compactions ran at the same times, so daily reset and compaction cannot be separated there. The CHO, CoS and CFO channel sessions show no readable marker; the 05:00 reports will settle it.
+Meaning:
+- The systemd service is the gateway's owner. Claude Code or the CEO may stop and start it with systemctl on the VM.
+- The 05:00 report cron stays on. P-36 stays open until the reports have shown the resets of the CHO, CoS and CFO.
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop2/vm/openclaw-loop1-gateway.service; deploy/loop2/vm/daily-reset-report.sh; deploy/loop2/vm/daily-reset-report.py; the gateway and cron on the VM; deploy/loop1/STATE.md; decisions/PENDING.md (P-36)
