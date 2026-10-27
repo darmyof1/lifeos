@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-87.sh",
+  "generated_by": "fix-88.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -845,6 +845,10 @@
     },
     {
       "path": "deploy/loop1/loop1-v110-upgrade.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop1/loop1-v1101-upgrade.sh",
       "status": "draft"
     },
     {
@@ -1789,6 +1793,10 @@
     },
     {
       "path": "tests/unit/test_gcal_sync_cron.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_loop1_v1101_upgrade.py",
       "status": "draft"
     },
     {

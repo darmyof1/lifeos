@@ -964,3 +964,19 @@ Meaning:
 Closes: none (P-42 opened)
 Changeable: yes. A change is a new APR entry.
 Applies to: the CoS, COO and CFO instructions (v1.10); deploy/loop1/loop1-v110-upgrade.sh; scripts/gcal/gcal_sync_cron.sh; the CFO send list in the OpenClaw config on the VM; tests/scenario/*.md; decisions/PENDING.md (P-42)
+
+## APR-0093 - Delete order, delete-line event IDs, approval layout, delete flag (instruction set v1.10.1)
+Status: approved
+Decided by: CEO
+Your answer: "yes, proceed" (2026-10-26 23:30, to the four proposals below, after Claude Code's handover 4 and the assistant's verification message)
+Evidence: handover 4 (ops/handover-2026-10-26-claude-code-report-4.md; tests/scenario/delete-approval.md): run loop2-scn-018 failed (the CoS wrote only the deleted line, after the COO wrote that the CEO's exact words approved the deletion); 019 wrote the entry title as the event ID on the delete lines and 025 an ID the COO made up; the seven-item approval request (020) came out on one line. Runs 019, 020, 021 and 025 passed; the job's guard held in every run.
+Meaning:
+- 1) GCAL_ALLOW_DELETES=1 stays ON in ~/loop1/gcal-sync/env while the cron pushes only to the test calendar. The cron is not moved to the real calendar until the delete gate passes repeatedly (at least three D1 runs in a row after v1.10.1).
+- 2) The CoS always appends delete-pending-approval first, even when the message says the CEO approved; deleted comes second and only on the CEO's own quoted words. The COO never writes approving or approved unless the CEO's words say so.
+- 3) Both delete lines carry the event ID of the entry's existing journal line (for example seed-3), never the title and never an ID the COO makes up. If the CoS cannot find the entry it writes nothing and says so.
+- 4) Each item of the seven-item approval request is printed on its own line.
+- The exact rule text is in deploy/loop1/loop1-v1101-upgrade.sh (CoS: delete order and event ID; COO: delete requests and approval layout). Built and unit-tested; not applied on the VM by this entry's fix script.
+- Verification (P-42): the D1 delete scenario run at least three times in a row with new run IDs, each with pending then deleted lines, the entry's event ID, and the COO reply true; D2 once more; the regression bad-sleep-reschedule once.
+Closes: none (P-42 stays open until the re-runs pass)
+Changeable: yes. A change is a new APR entry.
+Applies to: the CoS and COO instructions (v1.10.1); deploy/loop1/loop1-v1101-upgrade.sh; the delete flag in the VM cron environment; the move of the cron to the real calendar (waits); tests/scenario/delete-approval.md; decisions/PENDING.md (P-42)

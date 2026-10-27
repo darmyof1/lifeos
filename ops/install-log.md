@@ -343,3 +343,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - Handover 4 recorded (fix-87)
 - Claude Code applied v1.10 (coo 52e4ac9, cos c867da5, cfo c5dd57e), added the CoS to the CFO's send list, ran loop2-scn-018 to 025 (7 pass, 1 fail) and turned GCAL_ALLOW_DELETES=1 on in the cron (the cron deleted the test event at 23:15). Health check reported 54 PASS.
 - Repo: updated health-check.py and scenario-run.sh, added h4-post.sh, the report and the CFO diff. Decisions pending in P-42.
+
+## 2026-10-26 - APR-0093 and v1.10.1 built (fix-88)
+- Built deploy/loop1/loop1-v1101-upgrade.sh (CoS delete order and event ID; COO delete requests and approval layout). Not applied; Claude Code applies it in handover 5.
