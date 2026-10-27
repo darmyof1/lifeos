@@ -361,3 +361,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-27 - Handover 7 recorded (fix-93)
 - Claude Code applied v1.10.3 (coo 89d43c9), updated the live health check (54 PASS), ran 041 to 045 (D2 three in a row, D1 and regression pass). Repo: report 7, health-check output, per-run results. No new decision recorded.
+
+## 2026-10-27 - Loop 2 signed off (fix-94)
+- APR-0096 recorded: Loop 2 closed, APR-0073 ends, P-42 and P-40 item 2 closed, P-36 stays a watch item. Close record signed.
+- Repo fix for the "up unknown" uptime in the 05:00 report (cron has no user systemd bus: XDG_RUNTIME_DIR in the wrapper plus a pgrep fallback). The VM copies in ~/loop1/ are not changed by this script; Claude Code copies them from the repo.

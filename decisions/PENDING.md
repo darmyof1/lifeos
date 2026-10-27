@@ -24,6 +24,7 @@ History read 2026-10-26 (APR-0091): one daily reset confirmed on the COO channel
 Status: in progress. The CEO lifted the "not to be raised" request on 2026-10-26: Claude Code looks at past nights first, then a 05:00 AST cron script posts a read-only report to Slack. A lazy reset (applied at the first message after 04:00) is expected.
 Needs: after the first inbound message past 04:00 AST, record the session IDs of the five main sessions and compare them with the list captured at 00:54 on 2026-10-25.
 Method: section 7.7 of guides/loop1-baseline.md.
+Watch item after Loop 2 (APR-0096): the first 05:00 report (2026-10-27) ran and posted, and showed reset pending for every session (no agent had a message after 04:00). Still to see: a reset on the CHO, CoS and CFO channel sessions after a first normal message that is not /new. Unexplained: new main IDs for the COO and CFO at 20:44 to 20:47 on 2026-10-26 (after a "no compaction needed" result; the CHO and CoS kept their IDs after real compactions); cause unknown, not tested.
 
 ## P-40 - Calendar: what must be decided before real data
 Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-0073); none of this is needed for that.
@@ -31,9 +32,10 @@ Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-00
 2. Real calendar: the test on the CEO's primary calendar PASSED (2026-10-26, Claude Code, APR-0090; ops/handover-2026-10-26-claude-code-report-2.md): create, move in place, raise privacy to busy (mandated title gone), delete by key; 5 non-LifeOS events before and after, no test event left, no personal title shown or saved. The cron stays on the test calendar; switching it to the real calendar is the CEO's decision and is NOT made. The cron pushes to the Google test calendar. Moving it to the real calendar is a one-line change in ~/loop1/gcal-sync/env on the VM, after item 1 passes: first a read-only look at the real calendar, then one fake event created and removed, then the change. Needs the CEO's go.
 3. Monthly archive job (APR-0072): deferred by the CEO (APR-0090). Build it when the journal reaches about 1,000 lines (it is under 100 now).
 4. Busy block in the Google Calendar app: done (APR-0087).
-Needs: item 2 (the CEO's go for the real calendar) before any real data enters Loop 2.
+Item 2 CLOSED 2026-10-27 (APR-0096): the cron is not moved to the real calendar; what works on the test calendar works on the real one.
 
 ## P-42 - Instruction set v1.10: delete gate, CFO route, overlaps, confirmed reports (APR-0092)
+Status: CLOSED 2026-10-27 (APR-0096). The gate passed; the text below is the history.
 Applied 2026-10-26 by Claude Code (handover 4): coo 52e4ac9, cos c867da5, cfo c5dd57e (AGENTS.md only); the CFO send list is now coo and cos (backup ~/loop1/state/openclaw.json.pre-v110-20261026-2237; ops/cfo-send-list-diff-2026-10-26.txt). Re-runs 018 to 025: 7 pass, 1 fail (ops/handover-2026-10-26-claude-code-report-4.md). Health check reported 54 PASS, 0 WARN, 0 FAIL (the saved output file was not updated).
 GCAL_ALLOW_DELETES=1 has been ON in ~/loop1/gcal-sync/env since run 025 (the cron deleted the test event at 23:15). It was turned on although D1 passed 2 of 3 runs; APR-0092 b asked for the gate to pass its re-runs. The job's guard (LifeOS title, a pending line, a deleted line with the same event ID) held in every run. CEO: keep it on (test calendar only) or turn it off until the wording fix below is proven.
 CEO answered "yes, proceed" on 2026-10-26 23:30 to the four proposals: APR-0093 (delete flag stays ON on the test calendar; v1.10.1 delete order; delete-line event ID is the journal entry's; approval request one item per line; no move to the real calendar until D1 passes three times in a row).

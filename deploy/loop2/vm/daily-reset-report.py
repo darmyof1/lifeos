@@ -22,6 +22,8 @@ def gateway():
     n = int(subprocess.run("pgrep -af 'openclaw.*gateway' | grep -v pgrep | wc -l", shell=True, capture_output=True, text=True).stdout.strip() or 0)
     up = subprocess.run("systemctl --user show -p ActiveEnterTimestamp --value openclaw-loop1-gateway", shell=True, capture_output=True, text=True).stdout.strip()
     secs = subprocess.run("ps -o etimes= -p $(systemctl --user show -p MainPID --value openclaw-loop1-gateway)", shell=True, capture_output=True, text=True).stdout.strip()
+    if not secs.isdigit():  # cron has no user systemd bus: fall back to the oldest gateway process
+        secs = subprocess.run("ps -o etimes= -p $(pgrep -of '[o]penclaw.*gateway run')", shell=True, capture_output=True, text=True).stdout.strip()
     h = f"{int(secs)//3600}h{int(secs)%3600//60:02d}m" if secs.isdigit() else "unknown"
     return n, h
 

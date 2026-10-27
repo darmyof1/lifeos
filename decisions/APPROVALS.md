@@ -1010,3 +1010,21 @@ Meaning:
 Closes: none (P-42 stays open until the re-runs pass)
 Changeable: yes. A change is a new APR entry.
 Applies to: the COO instructions (v1.10.3); deploy/loop1/loop1-v1103-upgrade.sh; tests/scenario/delete-approval.md; decisions/PENDING.md (P-42)
+
+## APR-0096 - Loop 2 signed off; APR-0073 ends; no move to the real calendar
+Status: approved
+Decided by: CEO
+Your answer: "approve for loop 2 sign-off" (2026-10-27 09:12, to the assistant's proposal after the first 05:00 report). Earlier the same day: "close after we see the 05:00 report" (for P-42), and on the real calendar: "a calendar yes on stays on test calendar. a test is. a calendar what works there, also works on the real, we can close this idea of real calendar".
+Evidence: deploy/loop2/LOOP2-CLOSE-RECORD.md (now signed); the delete gate passed (D1 in runs 027 to 029, 036 and 044; D2 in runs 041 to 043; regression 031, 039, 045; ops/handover-2026-10-27-claude-code-report-7.md); health check 54 PASS, 0 WARN, 0 FAIL; the 05:00 report ran on 2026-10-27, posted to the COO channel (exit 0) and compared the session IDs with the snapshot, showing "reset pending (normal)" because no agent had a message after 04:00 (ops/ and the report log on the VM).
+Meaning:
+- Loop 2 is closed. The close record is signed by this entry.
+- APR-0073 (cloud-only, synthetic data, time-boxed) ends today. Any new work needs its own APR; a Loop 3 APR is required before real data or a local model.
+- This entry stops nothing on the VM. The gateway, the four agents, the 5-minute cron on the Google TEST calendar (GCAL_ALLOW_DELETES=1) and the 05:00 report keep running as they are, on synthetic data only, until the CEO records a Loop 3 APR or says to stop. No real data enters them. This continuation exists so the P-36 watch below can finish. A change is a new APR.
+- P-42 is closed (the delete gate, instruction sets v1.10 to v1.10.3, APR-0092 to APR-0095).
+- P-40 item 2 is closed: the cron is not moved to the real calendar. What works on the test calendar works on the real one (the real-calendar test of 2026-10-26 passed); the idea is dropped, not scheduled.
+- P-36 stays open as a watch item, not closed: the 05:00 report job works end to end, but no reset has been seen yet on the CHO, CoS and CFO channel sessions, and the new COO and CFO main session IDs seen on 2026-10-26 at 20:44 to 20:47 have an unknown cause (not tested).
+- Deferred and carried on: the monthly journal archive job (about 1,000 lines), P-41 memory beyond the state files, P-26 Slack files:read, P-09 spikes, P-17 dashboard.
+- Loop 3 is not defined by this entry.
+Closes: P-42; P-40 item 2; Loop 2; APR-0073 (ends)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop2/LOOP2-CLOSE-RECORD.md; decisions/PENDING.md (P-36, P-40, P-42); deploy/loop1/STATE.md; the Loop 2 setup on the VM

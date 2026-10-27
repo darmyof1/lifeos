@@ -1,7 +1,7 @@
-# Loop 2 close record (DRAFT, not signed)
+# Loop 2 close record (SIGNED 2026-10-27, APR-0096)
 
 Date drafted: 2026-10-26
-Status: draft for the CEO. Loop 2 is NOT closed. It closes only when the CEO signs section 9 with a new APR entry in his words.
+Status: signed by the CEO on 2026-10-27 (APR-0096). Loop 2 is closed and APR-0073 ends. The Loop 2 setup keeps running on synthetic data only until a Loop 3 APR (APR-0096).
 Scope of Loop 2: APR-0073 (cloud-only on openai/gpt-6-luna, synthetic data only, Google Calendar writes allowed, expiry when Loop 2 closes or on 2026-12-31).
 Based on: decisions/APPROVALS.md (APR-0073 to APR-0090), tests/scenario/bad-sleep-reschedule.md (run log), deploy/loop1/STATE.md, guides/calendar-sync-job.md.
 
@@ -32,14 +32,14 @@ The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack,
 
 - Handover 3 (runs 013 to 017): the delete gate failed (agents skipped the approval step; the COO claimed things it had not checked), the CFO could not reach the CoS, overlaps were refused without a log; privacy on request passed. Decisions APR-0092, instruction set v1.10 (P-42).
 
-## 5. Open before Loop 2 can close
+## 5. State at close
 | Item | State |
 |---|---|
-| P-36, 04:00 daily reset check | History read (one daily reset confirmed); the 05:00 AST report runs from 2026-10-27 and must show the resets of the CHO, CoS and CFO (APR-0091) |
+| P-36, 04:00 daily reset check | Watch item, stays open (APR-0096). The 05:00 report ran on 2026-10-27, posted to Slack and showed reset pending (no message after 04:00). A reset on the CHO, CoS and CFO channel sessions is still to be seen; the new COO and CFO main IDs of 2026-10-26 have an unknown cause |
 | Gateway kept running without a terminal | Done: systemd user service, restarts after a crash and at boot (APR-0091) |
-| P-40 item 2, real calendar | The test on the CEO's primary calendar passed. Moving the cron to the real calendar is a separate CEO decision, not made. |
+| P-40 item 2, real calendar | Closed (APR-0096): the cron is not moved; what works on the test calendar works on the real one |
 | Claude Code handover 2 outputs | In the repo: deploy/loop2/vm/ (service unit, reset report script) and the report (ops/) |
-| P-42, instruction sets v1.10 to v1.10.3 | All applied. Gate met: D1 passed in a row, D2 three in a row (041 to 043), regression passes; total cost about 0.034 USD for the last five runs. Waiting for the CEO to close P-42. Deletes on in the cron on the test calendar |
+| P-42, instruction sets v1.10 to v1.10.3 | Closed (APR-0096). All applied. Gate met: D1 passed in a row, D2 three in a row (041 to 043), regression passes; about 0.034 USD for the last five runs. Deletes on in the cron on the test calendar |
 
 ## 6. Deferred, with reasons
 | Item | Decision | Reason |
@@ -57,4 +57,4 @@ The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack,
 - The unrelated stress-ng cron line on the VM is the CEO's and stays.
 
 ## 9. Sign-off
-Loop 2 closed by the CEO: NOT YET. To close, the CEO says so in his words and the assistant records a new APR entry that also ends APR-0073 and lists any remaining deferred items.
+Loop 2 closed by the CEO: YES, 2026-10-27, "approve for loop 2 sign-off" (APR-0096). APR-0073 ends. Deferred items carried on: the monthly journal archive job, P-41, P-26, P-09, P-17. Loop 3 is not defined and needs its own APR before real data or a local model.
