@@ -58,3 +58,10 @@ The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack,
 
 ## 9. Sign-off
 Loop 2 closed by the CEO: YES, 2026-10-27, "approve for loop 2 sign-off" (APR-0096). APR-0073 ends. Deferred items carried on: the monthly journal archive job, P-41, P-26, P-09, P-17. Loop 3 is not defined and needs its own APR before real data or a local model.
+
+## 10. Errata after signing (2026-10-27, fix-95)
+The record was signed by APR-0096; the sections above are left as signed. These notes correct statements that were out of date when it was signed. They change no decision.
+- Based on: the record covers APR-0073 to APR-0096, not only to APR-0090.
+- Section 3 lacks the later instruction sets: v1.10 (APR-0092: CoS delete gate and overlaps, COO confirmed reports and approval requests, CFO handoff to the CoS), v1.10.1 (APR-0093: delete order, the entry's own event ID on delete lines), v1.10.2 (APR-0094: no privacy mark or detail on delete lines), v1.10.3 (APR-0095: the COO always posts the seven approval items, one per line). Instruction versions at close: COO v1.10.3, CoS v1.10.2, CHO v1.9, CFO v1.10.
+- Section 7, cost: Loop 2 had no automatic per-run cost measurement. Runs 038 to 045 were measured by hand from the session exports: 0.0037 to 0.0077 USD per run, about 0.034 USD for runs 041 to 045. All are under the 0.05 USD per-run ceiling of APR-0056.
+- Section 8: the 05:00 report scripts in deploy/loop2/vm/ now include the uptime fix (fix-94); the VM copies are updated by Claude Code from the repo.

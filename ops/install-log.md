@@ -365,3 +365,10 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-27 - Loop 2 signed off (fix-94)
 - APR-0096 recorded: Loop 2 closed, APR-0073 ends, P-42 and P-40 item 2 closed, P-36 stays a watch item. Close record signed.
 - Repo fix for the "up unknown" uptime in the 05:00 report (cron has no user systemd bus: XDG_RUNTIME_DIR in the wrapper plus a pgrep fallback). The VM copies in ~/loop1/ are not changed by this script; Claude Code copies them from the repo.
+
+## 2026-10-27 - Documentation reconciled after the external reviews (fix-95)
+- deploy/loop1/STATE.md rewritten as the current state; its earlier text kept unchanged in deploy/loop1/STATE-HISTORY-2026-10-27.md.
+- LOOP2-CLOSE-RECORD.md: errata section (coverage to APR-0096, v1.10 to v1.10.3, measured costs); signed sections unchanged.
+- PENDING.md: P-09 summary line matches its detail; P-42 added to the closed list.
+- README.md written (status and where to start). .gitignore already ignores Python and pytest caches; no change needed.
+- No decision recorded; no VM change.

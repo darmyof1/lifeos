@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-94.sh",
+  "generated_by": "fix-95.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -33,7 +33,7 @@
     },
     {
       "path": "README.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/README.md",
@@ -829,6 +829,10 @@
     },
     {
       "path": "deploy/loop1/LOOP1-CLOSE-RECORD.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop1/STATE-HISTORY-2026-10-27.md",
       "status": "draft"
     },
     {
