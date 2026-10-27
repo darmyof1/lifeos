@@ -34,9 +34,14 @@ Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-00
 Needs: item 2 (the CEO's go for the real calendar) before any real data enters Loop 2.
 
 ## P-42 - Instruction set v1.10: delete gate, CFO route, overlaps, confirmed reports (APR-0092)
-Built: deploy/loop1/loop1-v110-upgrade.sh (8 tests); the cron wrapper honours GCAL_ALLOW_DELETES=1 (off by default).
-Open, on the VM: apply v1.10 with the gateway stopped (systemctl --user stop openclaw-loop1-gateway); add the CoS to the CFO's send list in the OpenClaw config; re-run with ~/loop1/scenario-run.sh: delete as a CEO instruction, delete as a CEO question, delete asked by a chief, CFO entry, overlap, and bad-sleep-reschedule as a regression; then set GCAL_ALLOW_DELETES=1 and prove one approved delete reaches the test calendar.
-Loop 2 sign-off waits for this (deploy/loop2/LOOP2-CLOSE-RECORD.md).
+Applied 2026-10-26 by Claude Code (handover 4): coo 52e4ac9, cos c867da5, cfo c5dd57e (AGENTS.md only); the CFO send list is now coo and cos (backup ~/loop1/state/openclaw.json.pre-v110-20261026-2237; ops/cfo-send-list-diff-2026-10-26.txt). Re-runs 018 to 025: 7 pass, 1 fail (ops/handover-2026-10-26-claude-code-report-4.md). Health check reported 54 PASS, 0 WARN, 0 FAIL (the saved output file was not updated).
+GCAL_ALLOW_DELETES=1 has been ON in ~/loop1/gcal-sync/env since run 025 (the cron deleted the test event at 23:15). It was turned on although D1 passed 2 of 3 runs; APR-0092 b asked for the gate to pass its re-runs. The job's guard (LifeOS title, a pending line, a deleted line with the same event ID) held in every run. CEO: keep it on (test calendar only) or turn it off until the wording fix below is proven.
+Open for the CEO:
+1. D1 is not deterministic (run 018: the CoS wrote only the deleted line after the COO wrote "CEO's exact words approving this deletion"). Proposed wording, not applied: CoS "Always append the delete-pending-approval line first, even when the message says the CEO approved; a deleted line without a pending line before it is wrong." COO: "do not write approving when the CEO only asked."
+2. Event ID on delete lines: the entry title (019) or a COO-made ID (025). Proposed: the delete lines carry the entry's own event ID from the journal (for example seed-3); the COO never makes one up.
+3. The seven-item approval request came out on one line; ask for each item on its own line?
+4. Do not move the cron to the real calendar until D1 passes repeatedly.
+Loop 2 sign-off waits for these (deploy/loop2/LOOP2-CLOSE-RECORD.md).
 
 ## P-41 - Memory beyond the state files (deferred from P-32)
 Open when the COO prompt grows (it was about 35,000 tokens of 272,000 on a Slack turn) or a second real use appears. Not needed for Loop 2 (APR-0085).

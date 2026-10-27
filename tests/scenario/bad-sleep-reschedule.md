@@ -122,5 +122,13 @@ The run is the same. The CHO's entries are high privacy by default, so after the
 | loop2-scn-015 | 2026-10-26 | v1.9.1 (CLI to the COO) | Partial | Other scenario: tests/scenario/cfo-entry.md. Right result, but the COO relayed (the CFO cannot message the CoS). |
 | loop2-scn-016 | 2026-10-26 | v1.9.1 (CLI to the COO) | Partial | Other scenario: tests/scenario/overlap-conflict.md. The CoS refused the overlap and logged nothing. |
 | loop2-scn-017 | 2026-10-26 | v1.9.1 (CLI to the COO) | Fail (delete gate) | Other scenario: tests/scenario/delete-approval.md (question wording). Same as 013; the COO made up an event ID. Fixes: APR-0092, v1.10. |
+| loop2-scn-018 | 2026-10-26 | v1.10 (CLI to the COO) | Fail | Other scenario: delete-approval.md, D1 (CEO instruction). The CoS wrote only the deleted line (no pending line); the job guard held, Google unchanged. The COO had told the CoS "CEO's exact words approving this deletion". |
+| loop2-scn-019 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | D1 repeat: pending then deleted, same event ID (the entry title was used as the event ID on both lines); the job by hand with --allow-deletes deleted the Google event. |
+| loop2-scn-020 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | D2 (CEO question "can you remove"): only the pending line; the COO posted the seven-item approval request (on one line); after the approval the CoS appended deleted with the same event ID; the job deleted the event. |
+| loop2-scn-021 | 2026-10-26 | v1.10 (CLI to the CHO) | Pass | D3 (a chief asks): only a pending line, requested by CHO; the CHO told the CEO it waits for his approval. No Google change. |
+| loop2-scn-022 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | CFO entry: the CFO called the CoS itself (followup, ok); event ID loop2-scn-022-cfo-01; requested by CFO; privacy=high; busy event created. |
+| loop2-scn-023 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | Overlap: conflict line (reason=overlaps ...), nearest slot 08:00 to 09:00 offered, the COO sent a short notice; after the CEO accepted, a written line at the new time and a busy event. |
+| loop2-scn-024 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | Regression bad-sleep-reschedule: checker all passed, numstat 5 0 then 6 0, busy on 10-29, sleep fact with its own event ID. |
+| loop2-scn-025 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | D1 with GCAL_ALLOW_DELETES=1 in the cron: pending and deleted lines with the same event ID (loop2-scn-025-coo-01, chosen by the COO or CoS); the 5-minute cron itself deleted the Google event at 23:15. |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

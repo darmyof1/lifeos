@@ -21,7 +21,7 @@ ENV = dict(os.environ, OPENCLAW_STATE_DIR=STATE, OPENCLAW_CONFIG_PATH=os.path.jo
 PINNED = "2026.10.5"
 MODEL = "openai/gpt-6-luna"
 AGENTS = ["coo", "cho", "cos", "cfo"]
-SEND = {"coo": ["cfo", "cho", "cos"], "cho": ["coo", "cos"], "cos": ["cho", "coo"], "cfo": ["coo"]}
+SEND = {"coo": ["cfo", "cho", "cos"], "cho": ["coo", "cos"], "cos": ["cho", "coo"], "cfo": ["coo", "cos"]}
 BANNER = ("OpenClaw ", "│", "◇", "Dry run", "Applied ")
 results = []
 
@@ -306,7 +306,7 @@ except OSError as e:
 rc, out = run(["git", "-C", os.path.join(WS, "cos"), "diff", "--numstat", "HEAD", "--", "state/calendar-journal.md"])
 rec("INFO", "journal vs committed seed (numstat added, removed)", out.strip() or "no change",
     "informational after a run: removed must be 0")
-for agent, ver in (("cos", "v1.9.1"), ("cho", "v1.9"), ("cfo", "v1.9")):
+for agent, ver in (("coo", "v1.10"), ("cos", "v1.10"), ("cho", "v1.9"), ("cfo", "v1.10")):
     try:
         has = ("instruction set " + ver) in open(os.path.join(WS, agent, "AGENTS.md"), encoding="utf-8").read()
     except OSError:
@@ -336,6 +336,13 @@ try:
         "ok" if ok else "GCAL_CALENDAR missing or personal", "cron switched to the real calendar without a decision")
 except OSError:
     rec("FAIL", "gcal-sync env readable", "", "")
+
+try:
+    _ad = [l.strip() for l in open(envf) if l.strip().startswith("GCAL_ALLOW_DELETES=")]
+    rec("INFO", "GCAL_ALLOW_DELETES in the cron", "ON" if _ad and _ad[-1].split("=", 1)[1].strip("\"'") == "1" else "off",
+        "APR-0092: on only after the delete gate passed")
+except OSError:
+    pass
 
 # 8. Live round trips (only with --live)
 if "--live" in sys.argv:

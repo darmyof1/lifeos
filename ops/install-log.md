@@ -339,3 +339,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - Handover 3 recorded; instruction set v1.10 built (fix-86)
 - Claude Code: health check with 12 Loop 2 checks (53 PASS), scenario runner, run-cost estimate, four new scenario files; runs 013 to 017 (about 0.03 USD in total, estimate).
 - CEO "yes to all, proceed" (APR-0092): delete gate, cron deletes behind GCAL_ALLOW_DELETES=1, approval request format, CFO to CoS, overlap log, confirmed reports. deploy/loop1/loop1-v110-upgrade.sh and 8 tests; 2 cron tests. Not applied on the VM (P-42).
+
+## 2026-10-26 - Handover 4 recorded (fix-87)
+- Claude Code applied v1.10 (coo 52e4ac9, cos c867da5, cfo c5dd57e), added the CoS to the CFO's send list, ran loop2-scn-018 to 025 (7 pass, 1 fail) and turned GCAL_ALLOW_DELETES=1 on in the cron (the cron deleted the test event at 23:15). Health check reported 54 PASS.
+- Repo: updated health-check.py and scenario-run.sh, added h4-post.sh, the report and the CFO diff. Decisions pending in P-42.

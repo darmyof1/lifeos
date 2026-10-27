@@ -1,0 +1,5 @@
+backup: /home/ubuntu/loop1/state/openclaw.json.pre-v110-20261026-2237
+setting: agents.entries.cfo.tools.agentToAgent.send
+before: ['coo']
+after:  ['coo', 'cos']
+other differences: none

@@ -31,7 +31,7 @@ done
 REPO="$HOME/lifeos-ro"; W="$HOME/loop1/workspaces"; E="$HOME/loop1/evidence/$(date +%F)"
 PY="$HOME/.local/share/pipx/venvs/gcalcli/bin/python"
 CAL="$(sed -n 's/^GCAL_CALENDAR=//p' "$HOME/loop1/gcal-sync/env" | tr -d "\"'")"
-NOTE="CEO handover 3, 2026-10-26"
+NOTE="CEO handover 4, 2026-10-26"
 cron_state() {
   local l; l="$(crontab -l 2>/dev/null | grep gcal_sync_cron.sh | head -1)"
   case "$l" in '*/5'*) echo "CRON: ACTIVE (*/5)";; '#'*) echo "CRON: PAUSED (line starts with #)";; *) echo "CRON: LINE MISSING";; esac

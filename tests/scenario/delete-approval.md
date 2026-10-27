@@ -24,3 +24,9 @@ Second message (the approval): "Run ID <run ID>. This is my approval, as the CEO
 - Job: dry run without the flag: skip (deleted in the journal, --allow-deletes not set). With --allow-deletes (real run, once): skip, "no delete-pending-approval line for event 10302026-0001 (APR-0044)". The Google event stayed. The guard works; the instructions do not produce the pending line.
 - numstat 4 0 (3 pushed lines + the deleted line), header unchanged, checker all passed (CHO handoff).
 - Cost: about 0.007 USD (013 without the second message), 0.004 USD (017).
+
+## Result 2026-10-26 (handover 4, v1.10, APR-0092)
+- 018 (D1, CEO instruction): FAIL. Only the deleted line, no pending line; the job guard held (Google unchanged). 019 (D1 repeat): PASS, pending then deleted with the same event ID; the job by hand with --allow-deletes deleted the event. 025 (D1, cron with GCAL_ALLOW_DELETES=1): PASS, the cron deleted the event at 23:15.
+- 020 (D2, CEO question): PASS. Only the pending line; the COO posted the seven-item approval request (on one line); after the approval the CoS appended deleted with the same event ID; the job deleted the event.
+- 021 (D3, a chief asks): PASS. Only a pending line; the CHO told the CEO it waits for approval.
+- Open: D1 was not deterministic (1 fail in 3); the event ID on the delete lines was the entry title in 019 and a COO-made ID in 025 (the rule says the entry's own journal event ID). See P-42.

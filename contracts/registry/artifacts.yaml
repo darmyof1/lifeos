@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-86.sh",
+  "generated_by": "fix-87.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -892,6 +892,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop2/vm/h4-post.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop2/vm/openclaw-loop1-gateway.service",
       "status": "draft"
     },
@@ -1048,6 +1052,10 @@
       "status": "planned"
     },
     {
+      "path": "ops/cfo-send-list-diff-2026-10-26.txt",
+      "status": "draft"
+    },
+    {
       "path": "ops/change-control.md",
       "status": "planned"
     },
@@ -1061,6 +1069,10 @@
     },
     {
       "path": "ops/handover-2026-10-26-claude-code-report-3.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-10-26-claude-code-report-4.md",
       "status": "draft"
     },
     {

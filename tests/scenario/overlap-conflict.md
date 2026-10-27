@@ -21,3 +21,6 @@ The CoS decides (keep one or flag both) and the decision is logged (a journal li
 2. Appended the same title at 13:00 to 13:30 (d2-01): the job appended one conflict line (reason=an event with this title exists in Google at another time) and touched nothing in Google.
 3. A second run added nothing (a conflict is not retried).
 Result: PASS. Cleanup: the event was deleted with --title and the approval note.
+
+## Result 2026-10-26 (handover 4, v1.10): PASS (loop2-scn-023)
+Conflict line (requested by CHO, reason=overlaps CHO - Workout - 10282026-0001), no written line, nearest slot 08:00 to 09:00 offered, the COO told the CEO in a short notice. After the CEO accepted, a written line at 08:00 to 09:00 (event ID loop2-scn-023-cho-02) and a busy event. Checker all passed (2 CHO calls); numstat 6 0.

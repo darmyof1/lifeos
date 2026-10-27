@@ -16,3 +16,6 @@ Run: loop2-scn-015. Instructions v1.9.1 / v1.9.
 - Both the CFO's and the CoS's sends to the COO returned SESSION_WORK_START_CHANGED with sentBeforeError true (known, P-35).
 - The sessions_send checker is built for the CHO and was skipped.
 - Cost: about 0.004 USD.
+
+## Result 2026-10-26 (handover 4, v1.10): PASS (loop2-scn-022)
+The CFO called the CoS itself (sessions_send agent:cos:main, followup, timeoutSeconds 120, ok), event ID loop2-scn-022-cfo-01, title CFO - Electricity Bill Payment - 10292026-0001, requested by CFO, privacy=high; the job created the busy event. The CFO's send list is now coo and cos (ops/cfo-send-list-diff-2026-10-26.txt).
