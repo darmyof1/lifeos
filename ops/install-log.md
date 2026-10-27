@@ -352,3 +352,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-27 - APR-0094 and v1.10.2 built (fix-90)
 - Built deploy/loop1/loop1-v1102-upgrade.sh (CoS: no privacy mark or detail on delete lines). Not applied; Claude Code applies it in handover 6.
+
+## 2026-10-27 - Handover 6 recorded (fix-91)
+- Claude Code applied v1.10.2 (cos 918b843), updated the live health check (54 PASS), ran 033 to 039 (D2 4 of 5, D1 and regression pass). Repo: health-check.py, h6-d2.sh, report 6, health-check output, per-run results. No new decision recorded.

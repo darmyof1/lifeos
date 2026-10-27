@@ -136,5 +136,12 @@ The run is the same. The CHO's entries are high privacy by default, so after the
 | loop2-scn-030 | 2026-10-26 | v1.10.1 (CLI to the COO) | Partial | D2 (CEO question): pending only, approval request one item per line, deleted after the approval with seed-3. But the CoS added privacy=high to both delete lines; the job treated the entry as a busy event, found a plain event and wrote a conflict line (nothing changed in Google; the guard held). |
 | loop2-scn-031 | 2026-10-26 | v1.10.1 (CLI to the COO) | Pass | Regression bad-sleep-reschedule: checker all passed, numstat 5 0 then 6 0, busy on 10-29. |
 | loop2-scn-032 | 2026-10-26 | v1.10.1 (CLI to the COO) | Pass | D2 repeat: pending only, then deleted with seed-3 and no privacy mark; the job deleted the event. |
+| loop2-scn-033 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | Other scenario: delete-approval.md, D2. Pending then deleted, seed-3, empty detail, requested by CEO; seven-item request one per line; numstat 5 0; the job deleted the event. |
+| loop2-scn-034 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | D2: same; the delete lines end with an empty 8th column (trailing pipe, nothing written). |
+| loop2-scn-035 | 2026-10-27 | v1.10.2 (CLI to the COO) | Partial | D2: lines right and the job deleted the event, but the COO answered in plain sentences without the seven-item request. |
+| loop2-scn-036 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | D1: pending then deleted, seed-3, empty detail, numstat 5 0, the job deleted the event. |
+| loop2-scn-037 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | D2: as 033. |
+| loop2-scn-038 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | D2: as 033; cost 0.0046 USD (measured). |
+| loop2-scn-039 | 2026-10-27 | v1.10.2 (CLI to the COO) | Pass | Regression bad-sleep-reschedule: checker all passed, numstat 5 0 then 6 0, busy on 10-29; cost 0.0060 USD (measured). |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-90.sh",
+  "generated_by": "fix-91.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -908,6 +908,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop2/vm/h6-d2.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop2/vm/openclaw-loop1-gateway.service",
       "status": "draft"
     },
@@ -1096,6 +1100,14 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-10-27-claude-code-report-6.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-check-output-2026-10-27.txt",
+      "status": "draft"
+    },
+    {
       "path": "ops/incident/graceful-shutdown.md",
       "status": "planned"
     },
@@ -1146,6 +1158,38 @@
     {
       "path": "ops/risk-register.md",
       "status": "planned"
+    },
+    {
+      "path": "ops/scenario-results-2026-10-27/loop2-scn-027-to-032.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/scenario-results-2026-10-27/loop2-scn-033.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/scenario-results-2026-10-27/loop2-scn-034.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/scenario-results-2026-10-27/loop2-scn-035.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/scenario-results-2026-10-27/loop2-scn-036.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/scenario-results-2026-10-27/loop2-scn-037.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/scenario-results-2026-10-27/loop2-scn-038.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/scenario-results-2026-10-27/loop2-scn-039.txt",
+      "status": "draft"
     },
     {
       "path": "ops/success-metrics.md",

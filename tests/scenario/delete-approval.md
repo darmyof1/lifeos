@@ -35,3 +35,9 @@ Second message (the approval): "Run ID <run ID>. This is my approval, as the CEO
 - D1 (CEO instruction), runs 027, 028, 029: three PASS in a row. Pending line first, then deleted, both with the entry's journal event ID seed-3, requested by CEO, numstat 5 0, no Google claim by the COO; the cron (GCAL_ALLOW_DELETES=1) deleted the Google event each time.
 - D2 (CEO question): run 030 PARTIAL. Pending only, the approval request with one item per line, deleted after the approval, same ID seed-3. The CoS added privacy=high to both delete lines; the job treated the entry as busy, found a plain event and wrote a conflict line (reason: that event is not a LifeOS busy event; nothing was changed). Google unchanged; the guard held. Run 032 PASS (no privacy mark; the job deleted the event).
 - Open (P-42): the CoS sometimes adds privacy=high to delete lines of a plain entry. Fix options: one line in the CoS delete rule (copy only the event ID and requested by on delete lines), or the job ignores the detail column on delete lines. CEO decides.
+
+## Result 2026-10-27 (handover 6, v1.10.2, APR-0094)
+- D2 runs 033, 034, 037, 038: PASS. Pending first, deleted second, both seed-3, empty detail column, requested by CEO; seven-item request one per line; the job deleted the event. 035: PARTIAL (lines right, event deleted, but no seven-item request). 4 of 5; longest streak 2 (three in a row not reached).
+- D1 run 036: PASS. Regression 039: PASS.
+- The privacy=high gap of run 030 did not recur in 6 delete runs.
+- Open (P-42): the COO sometimes answers a delete question without the seven-item request (035). Per-run outputs: ops/scenario-results-2026-10-27/.

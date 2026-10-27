@@ -1,0 +1,60 @@
+PASS  state folder is the Loop 1 folder                                      /home/ubuntu/loop1/state/openclaw.json
+PASS  OpenClaw pinned version                                                OpenClaw 2026.10.5 (1b58cb9)
+PASS  config validates                                                       Config valid: ~/loop1/state/openclaw.json
+PASS  gateway running exactly once                                           1 process
+PASS  cron scheduler off (heartbeats off)                                    cron.enabled = False
+PASS  gateway mode local                                                     gateway.mode = 'local'
+PASS  tool profile messaging                                                 tools.profile = 'messaging'
+PASS  memory search off                                                      memory.search.enabled = False
+PASS  dreaming off                                                           plugins.entries.memory-core.config.dreaming.enabled = False
+PASS  default model                                                          primary = 'openai/gpt-6-luna'
+PASS  utility model                                                          utilityModel = 'openai/gpt-6-luna'
+PASS  runtime pinned to openclaw for openai/gpt-6-luna                       agentRuntime.id = 'openclaw'
+PASS  agent-to-agent enabled and limited to the four agents                  allow = ['coo', 'cho', 'cos', 'cfo']
+PASS  sessions visibility agent                                              tools.sessions.visibility = 'agent'
+PASS  sub-agent limits (depth 1, 2 children, 120 s)                          {"maxSpawnDepth": 1, "maxChildrenPerAgent": 2, "runTimeoutSeconds": 120, "maxConcurrent": 8, "archiveAfterMinutes": 60}
+PASS  coo send list                                                          send = ['cho', 'cos', 'cfo']
+PASS  coo has no file tools                                                  alsoAllow = []
+PASS  cho send list                                                          send = ['coo', 'cos']
+PASS  cho file tools limited to workspace                                    alsoAllow = ['read', 'write', 'edit'], workspaceOnly = True
+PASS  cos send list                                                          send = ['coo', 'cho']
+PASS  cos file tools limited to workspace                                    alsoAllow = ['read', 'write', 'edit'], workspaceOnly = True
+PASS  cfo send list                                                          send = ['coo', 'cos']
+PASS  cfo file tools limited to workspace                                    alsoAllow = ['read', 'write', 'edit'], workspaceOnly = True
+PASS  workspace ready: coo                                                   ok
+PASS  workspace ready: cho                                                   ok
+PASS  workspace ready: cos                                                   ok
+PASS  workspace ready: cfo                                                   ok
+PASS  state append-only: cos                                                 0 line(s) removed from state/ since last commit
+PASS  state append-only: cho                                                 0 line(s) removed from state/ since last commit
+PASS  state append-only: cfo                                                 0 line(s) removed from state/ since last commit
+PASS  slack accounts configured (4 accounts)                                 ok (default, cho, cos, cfo)
+PASS  slack channel users allowlists                                         ok (explicit users list in all channels)
+PASS  slack accounts connected (4 accounts)                                  4 connected
+PASS  log: database integrity verification failed                            0 line(s) in the last 4000
+PASS  log: gateway cron.list requires credentials                            0 line(s) in the last 4000
+PASS  log: tools policy: profile                                             0 line(s) in the last 4000
+PASS  log: memory] sync failed                                               0 line(s) in the last 4000
+PASS  log: Path escapes sandbox root                                         0 line(s) in the last 4000
+PASS  log: Agent-to-agent messaging denied                                   0 line(s) in the last 4000
+PASS  log: control-command-unauthorized                                      0 line(s) in window (post-19:19)
+INFO  log: MaxListenersExceededWarning                                       1 warning(s), 1 gateway start(s): known startup warning
+PASS  disk free space                                                        71% free
+INFO  OpenAI spend                                                           not automated: check usage page for life-os key ($5/mo enforced, APR-0056)
+PASS  gateway: exactly one process                                           1 process(es)
+PASS  gateway service active (systemd user)                                  active
+PASS  calendar cron line present and active                                  */5 ... gcal_sync_cron.sh
+PASS  CEO stress-ng cron line present                                        
+PASS  05:00 reset report cron present                                        
+PASS  journal header exactly 7 columns                                       name | start | end | status | run ID | event ID | requested by
+INFO  journal vs committed seed (numstat added, removed)                     3	0	state/calendar-journal.md
+PASS  instructions coo carry v1.10.1                                         
+PASS  instructions cos carry v1.10.2                                         
+PASS  instructions cho carry v1.9                                            
+PASS  instructions cfo carry v1.10                                           
+PASS  last calendar sync run recent and exit 0                               3 min ago, exit 0
+PASS  no login-revoked pause file                                            absent
+PASS  cron targets a test calendar (group calendar, not a personal address)  ok
+INFO  GCAL_ALLOW_DELETES in the cron                                         ON
+
+PASS 54  WARN 0  FAIL 0  INFO 4

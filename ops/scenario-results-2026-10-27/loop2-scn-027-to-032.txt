@@ -1,0 +1,7 @@
+Runs 027 to 032 (handover 5, instruction set v1.10.1). Full detail in REPORT-5.md. Per-run output was not saved to separate files then.
+027 D1 PASS: pending then deleted, seed-3, requested by CEO, numstat 5 0, job deleted the event.
+028 D1 PASS: same.
+029 D1 PASS: same (the COO also printed request ID 10302026-0001).
+030 D2 PARTIAL: lines right, approval request one item per line, but the CoS added privacy=high to both delete lines; job refused (conflict: not a busy event); Google unchanged.
+031 R PASS: checker all passed, numstat 5 0 then 6 0, busy on 10-29.
+032 D2 PASS: pending only after question, deleted after approval, seed-3, job deleted the event.

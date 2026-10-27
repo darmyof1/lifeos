@@ -1,0 +1,12 @@
+Alex Test’s 5 hours of sleep were recorded; the Wednesday workout was moved to Thursday, 2026-10-29, 07:00–08:00 AST.
+Changed by: CHO recorded the sleep; CoS moved the workout.
+Event IDs: `loop2-scn-039-cho-01`, `loop2-scn-039-cho-02`
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | moved | loop2-scn-039 | loop2-scn-039-cho-02 | CHO | privacy=high
+CHO - Workout - 10292026-0001 | 2026-10-29 07:00 | 2026-10-29 08:00 | written | loop2-scn-039 | loop2-scn-039-cho-02 | CHO | privacy=high
+numstat: 5	0	state/calendar-journal.md
+Result: all checks passed
+done  CHO - Workout - 10292026-0001: made busy nm4be43njj8rs3537tbgkcrtf8
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+nm4be43njj8rs3537tbgkcrtf8	2026-10-29T07:00:00-04:00	busy
+akrcgsf172i8odhi04slheiua0	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after the job: 6	0	state/calendar-journal.md
