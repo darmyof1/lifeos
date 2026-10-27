@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-88.sh",
+  "generated_by": "fix-89.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -896,6 +896,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop2/vm/h4-d1.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop2/vm/h4-post.sh",
       "status": "draft"
     },
@@ -1081,6 +1085,10 @@
     },
     {
       "path": "ops/handover-2026-10-26-claude-code-report.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-10-27-claude-code-report-5.md",
       "status": "draft"
     },
     {

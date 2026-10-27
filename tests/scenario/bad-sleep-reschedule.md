@@ -130,5 +130,11 @@ The run is the same. The CHO's entries are high privacy by default, so after the
 | loop2-scn-023 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | Overlap: conflict line (reason=overlaps ...), nearest slot 08:00 to 09:00 offered, the COO sent a short notice; after the CEO accepted, a written line at the new time and a busy event. |
 | loop2-scn-024 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | Regression bad-sleep-reschedule: checker all passed, numstat 5 0 then 6 0, busy on 10-29, sleep fact with its own event ID. |
 | loop2-scn-025 | 2026-10-26 | v1.10 (CLI to the COO) | Pass | D1 with GCAL_ALLOW_DELETES=1 in the cron: pending and deleted lines with the same event ID (loop2-scn-025-coo-01, chosen by the COO or CoS); the 5-minute cron itself deleted the Google event at 23:15. |
+| loop2-scn-027 | 2026-10-26 | v1.10.1 (CLI to the COO) | Pass | Other scenario: delete-approval.md, D1 (1 of 3). Pending line then deleted line, event ID seed-3, requested by CEO; numstat 5 0; the COO made no Google claim; the cron deleted the Google event. |
+| loop2-scn-028 | 2026-10-26 | v1.10.1 (CLI to the COO) | Pass | D1 (2 of 3): same result. |
+| loop2-scn-029 | 2026-10-26 | v1.10.1 (CLI to the COO) | Pass | D1 (3 of 3): same result; the COO also printed the request ID 10302026-0001 next to seed-3. |
+| loop2-scn-030 | 2026-10-26 | v1.10.1 (CLI to the COO) | Partial | D2 (CEO question): pending only, approval request one item per line, deleted after the approval with seed-3. But the CoS added privacy=high to both delete lines; the job treated the entry as a busy event, found a plain event and wrote a conflict line (nothing changed in Google; the guard held). |
+| loop2-scn-031 | 2026-10-26 | v1.10.1 (CLI to the COO) | Pass | Regression bad-sleep-reschedule: checker all passed, numstat 5 0 then 6 0, busy on 10-29. |
+| loop2-scn-032 | 2026-10-26 | v1.10.1 (CLI to the COO) | Pass | D2 repeat: pending only, then deleted with seed-3 and no privacy mark; the job deleted the event. |
 
 Evidence copies stay on the VM in ~/loop1/evidence/ (synthetic data, not in the repo).

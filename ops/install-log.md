@@ -346,3 +346,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-26 - APR-0093 and v1.10.1 built (fix-88)
 - Built deploy/loop1/loop1-v1101-upgrade.sh (CoS delete order and event ID; COO delete requests and approval layout). Not applied; Claude Code applies it in handover 5.
+
+## 2026-10-27 - Handover 5 recorded (fix-89)
+- Claude Code applied v1.10.1 (cos bd4b8cd, coo 8cae25a), ran 027 to 032 (D1 x3 pass, D2 partial then pass, regression pass). Repo: report 5 and h4-d1.sh added. No new decision recorded.
