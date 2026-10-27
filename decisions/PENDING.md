@@ -33,6 +33,11 @@ Left over when P-28 was closed (APR-0080). Loop 2 runs on synthetic data (APR-00
 4. Busy block in the Google Calendar app: done (APR-0087).
 Needs: item 2 (the CEO's go for the real calendar) before any real data enters Loop 2.
 
+## P-42 - Instruction set v1.10: delete gate, CFO route, overlaps, confirmed reports (APR-0092)
+Built: deploy/loop1/loop1-v110-upgrade.sh (8 tests); the cron wrapper honours GCAL_ALLOW_DELETES=1 (off by default).
+Open, on the VM: apply v1.10 with the gateway stopped (systemctl --user stop openclaw-loop1-gateway); add the CoS to the CFO's send list in the OpenClaw config; re-run with ~/loop1/scenario-run.sh: delete as a CEO instruction, delete as a CEO question, delete asked by a chief, CFO entry, overlap, and bad-sleep-reschedule as a regression; then set GCAL_ALLOW_DELETES=1 and prove one approved delete reaches the test calendar.
+Loop 2 sign-off waits for this (deploy/loop2/LOOP2-CLOSE-RECORD.md).
+
 ## P-41 - Memory beyond the state files (deferred from P-32)
 Open when the COO prompt grows (it was about 35,000 tokens of 272,000 on a Slack turn) or a second real use appears. Not needed for Loop 2 (APR-0085).
 Questions: local embeddings after the local model work (SD-005, ADR-0003); checking state files before answering, which needs a token estimate (SD-006); short COO handoffs (SD-007); how much context the COO builds up when it routes everything and what it must ask the chiefs for instead of keeping. Per-agent token counts per scenario run are still to measure.

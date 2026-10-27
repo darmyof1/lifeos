@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Loop 1 health check. Standard library only. Run on the Oracle VM as the ubuntu user.
+"""Loop 1 and Loop 2 health check. Standard library only. Run on the Oracle VM as the ubuntu user.
 
   python3 ~/loop1/health-check.py          offline checks: no model calls, no gateway changes
   python3 ~/loop1/health-check.py --live   offline checks, plus one cheap CoS turn and one refused CFO-to-CHO send
@@ -84,7 +84,7 @@ rec("PASS" if rc == 0 and "Config valid" in out else "FAIL", "config validates",
 
 # 2. Gateway process
 rc, out = run(["pgrep", "-af", "openclaw.*gateway"])
-procs = [l for l in out.splitlines() if l.strip()]
+procs = [l for l in out.splitlines() if l.strip() and (" gateway run" in l or "openclaw-gateway" in l or " gateway --port" in l) and "bash -c" not in l and "pgrep" not in l]
 if len(procs) == 1:
     rec("PASS", "gateway running exactly once", "1 process")
 elif not procs:
@@ -274,6 +274,68 @@ free_pct = free * 100.0 / total
 rec("PASS" if free_pct >= 15 else ("WARN" if free_pct >= 5 else "FAIL"), "disk free space",
     "{:.0f}% free".format(free_pct), "disk full stops writes")
 rec("INFO", "OpenAI spend", "not automated: check usage page for life-os key ($5/mo enforced, APR-0056)")
+
+# 7b. Loop 2 (APR-0078, APR-0086, APR-0089 to APR-0091). Read-only: no model calls, no changes.
+import re
+import time
+rc, out = run(["pgrep", "-af", "openclaw.*gateway"])
+gw = [l for l in out.splitlines() if (" gateway run" in l or "openclaw-gateway" in l or " gateway --port" in l) and "bash -c" not in l and "pgrep" not in l]
+rec("PASS" if len(gw) == 1 else "FAIL", "gateway: exactly one process", "%d process(es)" % len(gw), "two gateways fight over Slack")
+rc, out = run(["systemctl", "--user", "is-active", "openclaw-loop1-gateway"])
+rec("PASS" if out.strip() == "active" else "FAIL", "gateway service active (systemd user)", out.strip(), "gateway not kept alive")
+rc, cron = run(["crontab", "-l"])
+lines = cron.splitlines()
+sync = [l for l in lines if "gcal_sync_cron.sh" in l]
+if any(l.startswith("*/5 ") for l in sync):
+    rec("PASS", "calendar cron line present and active", "*/5 ... gcal_sync_cron.sh", "no push to Google")
+elif sync:
+    rec("WARN", "calendar cron line is commented out", "paused: normal during a scenario run only", "cron left paused after a run")
+else:
+    rec("FAIL", "calendar cron line missing", "", "no push to Google")
+rec("PASS" if any("stress-ng" in l and not l.startswith("#") for l in lines) else "WARN", "CEO stress-ng cron line present", "",
+    "unrelated cron line removed by a pause/resume sed")
+rec("PASS" if any(l.startswith("0 5 ") and "daily-reset-report" in l for l in lines) else "FAIL", "05:00 reset report cron present", "", "P-36 report missing")
+journal = os.path.join(WS, "cos", "state", "calendar-journal.md")
+HEADER = "name | start | end | status | run ID | event ID | requested by"
+try:
+    hdr = [l.rstrip("\n") for l in open(journal, encoding="utf-8") if l.startswith("name |")]
+    rec("PASS" if hdr == [HEADER] else "FAIL", "journal header exactly 7 columns", hdr[0] if hdr else "header not found",
+        "run 009: the CoS added a column to the header")
+except OSError as e:
+    rec("FAIL", "journal readable", str(e), "")
+rc, out = run(["git", "-C", os.path.join(WS, "cos"), "diff", "--numstat", "HEAD", "--", "state/calendar-journal.md"])
+rec("INFO", "journal vs committed seed (numstat added, removed)", out.strip() or "no change",
+    "informational after a run: removed must be 0")
+for agent, ver in (("cos", "v1.9.1"), ("cho", "v1.9"), ("cfo", "v1.9")):
+    try:
+        has = ("instruction set " + ver) in open(os.path.join(WS, agent, "AGENTS.md"), encoding="utf-8").read()
+    except OSError:
+        has = False
+    rec("PASS" if has else "FAIL", "instructions %s carry %s" % (agent, ver), "", "agent on an older instruction set")
+slog = os.path.join(HOME, "loop1", "gcal-sync", "sync.log")
+try:
+    heads = [l for l in open(slog, encoding="utf-8", errors="replace") if l.startswith("=== ")]
+    m = re.match(r"=== (\d{4}-\d\d-\d\d \d\d:\d\d:\d\d) exit (\d+)", heads[-1]) if heads else None
+    if not m:
+        rec("FAIL", "calendar sync log has a run line", "none", "job never ran")
+    else:
+        age = (datetime.datetime.now() - datetime.datetime.strptime(m.group(1), "%Y-%m-%d %H:%M:%S")).total_seconds() / 60
+        paused = bool(sync) and not any(l.startswith("*/5 ") for l in sync)
+        ok = age <= 15 and m.group(2) == "0"
+        rec("PASS" if ok else ("WARN" if paused and m.group(2) == "0" else "FAIL"), "last calendar sync run recent and exit 0",
+            "%.0f min ago, exit %s" % (age, m.group(2)), "cron not running or job failing")
+except OSError:
+    rec("FAIL", "calendar sync log readable", "", "")
+pauses = [p for p in (os.path.join(HOME, "loop1", "gcal-sync", "PAUSED-login-revoked"),) if os.path.exists(p)]
+rec("FAIL" if pauses else "PASS", "no login-revoked pause file", "present" if pauses else "absent", "Google login revoked (S-07)")
+envf = os.path.join(HOME, "loop1", "gcal-sync", "env")
+try:
+    cal = [l.split("=", 1)[1].strip().strip("\"'") for l in open(envf) if l.startswith("GCAL_CALENDAR=")]
+    ok = len(cal) == 1 and cal[0].endswith("@group.calendar.google.com")
+    rec("PASS" if ok else "FAIL", "cron targets a test calendar (group calendar, not a personal address)",
+        "ok" if ok else "GCAL_CALENDAR missing or personal", "cron switched to the real calendar without a decision")
+except OSError:
+    rec("FAIL", "gcal-sync env readable", "", "")
 
 # 8. Live round trips (only with --live)
 if "--live" in sys.argv:

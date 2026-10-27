@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-85.sh",
+  "generated_by": "fix-86.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -844,6 +844,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop1/loop1-v110-upgrade.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop1/loop1-v13-upgrade.sh",
       "status": "draft"
     },
@@ -889,6 +893,14 @@
     },
     {
       "path": "deploy/loop2/vm/openclaw-loop1-gateway.service",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop2/vm/run-cost.py",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop2/vm/scenario-run.sh",
       "status": "draft"
     },
     {
@@ -1045,6 +1057,10 @@
     },
     {
       "path": "ops/handover-2026-10-26-claude-code-report-2.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-10-26-claude-code-report-3.md",
       "status": "draft"
     },
     {
@@ -1716,8 +1732,24 @@
       "status": "draft"
     },
     {
+      "path": "tests/scenario/cfo-entry.md",
+      "status": "draft"
+    },
+    {
+      "path": "tests/scenario/delete-approval.md",
+      "status": "draft"
+    },
+    {
+      "path": "tests/scenario/overlap-conflict.md",
+      "status": "draft"
+    },
+    {
       "path": "tests/scenario/privacy-override.md",
       "status": "planned"
+    },
+    {
+      "path": "tests/scenario/privacy-request.md",
+      "status": "draft"
     },
     {
       "path": "tests/unit/test_check_sessions_send.py",
@@ -1745,6 +1777,10 @@
     },
     {
       "path": "tests/unit/test_gcal_sync_cron.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_loop1_v110_upgrade.py",
       "status": "draft"
     },
     {

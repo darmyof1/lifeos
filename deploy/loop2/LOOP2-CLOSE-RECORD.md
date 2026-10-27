@@ -30,6 +30,8 @@ The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack,
 - Cost control: 5 USD per day kill and 1 USD per day alert, stated done and verified by the CEO (APR-0083); the enforced 5 USD monthly project limit stays.
 - Memory: state files are the agents' memory; memory search and dreaming stay off; ADR-0011 written (APR-0085).
 
+- Handover 3 (runs 013 to 017): the delete gate failed (agents skipped the approval step; the COO claimed things it had not checked), the CFO could not reach the CoS, overlaps were refused without a log; privacy on request passed. Decisions APR-0092, instruction set v1.10 (P-42).
+
 ## 5. Open before Loop 2 can close
 | Item | State |
 |---|---|
@@ -37,6 +39,7 @@ The same four agents (COO, CHO, CoS, CFO) hand work to each other through Slack,
 | Gateway kept running without a terminal | Done: systemd user service, restarts after a crash and at boot (APR-0091) |
 | P-40 item 2, real calendar | The test on the CEO's primary calendar passed. Moving the cron to the real calendar is a separate CEO decision, not made. |
 | Claude Code handover 2 outputs | In the repo: deploy/loop2/vm/ (service unit, reset report script) and the report (ops/) |
+| P-42, instruction set v1.10 | Built (APR-0092): delete gate, CFO to CoS, overlap log, confirmed reports, approval request format. Needs: apply on the VM, CFO send list, re-runs, then deletes on in the cron |
 
 ## 6. Deferred, with reasons
 | Item | Decision | Reason |

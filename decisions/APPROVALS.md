@@ -946,3 +946,21 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop2/vm/openclaw-loop1-gateway.service; deploy/loop2/vm/daily-reset-report.sh; deploy/loop2/vm/daily-reset-report.py; the gateway and cron on the VM; deploy/loop1/STATE.md; decisions/PENDING.md (P-36)
+
+## APR-0092 - Delete gate, approval requests, CFO route, overlaps, confirmed reports (instruction set v1.10)
+Status: approved
+Decided by: CEO
+Your answer: "yes to all, proceed" (2026-10-26, to the six proposals a to f below, after handover 3 showed the gaps; the CEO's own points: "the report should always be confirmed. nothing to assumptions"; on overlaps "COS should log this information and there should be an easy understanding for me to know what happend ... the system can't depend all the time on my to self heal"; on approvals "an agent tell me ... risk analysis and then i can say explain more or approved")
+Evidence: handover 3 (ops/handover-2026-10-26-claude-code-report-3.md; tests/scenario/delete-approval.md, cfo-entry.md, overlap-conflict.md, privacy-request.md): runs loop2-scn-013 and -017 wrote deleted at once with no delete-pending-approval line, the COO said the CEO had approved when he had only asked, and reported Google as deleted when nothing changed (the job's guard held); in 015 the CFO could not message the CoS, so the COO relayed; in 016 the CoS refused an overlap and logged nothing.
+Meaning:
+- a) Deletes (refines APR-0044): the CEO's own clear instruction to delete a named entry is his approval: the CoS appends delete-pending-approval and deleted (same event ID). A delete a chief asks for, or a delete the CEO only asks about, gets only the pending line and the COO asks the CEO. Moves are not deletes (APR-0057).
+- b) Deletes reach Google through the 5-minute job only when GCAL_ALLOW_DELETES=1 is set in ~/loop1/gcal-sync/env, and only after the delete gate passes its re-runs. The job still deletes only a LifeOS-titled event with a pending line and a deleted line for the same event ID; personal events are never touched.
+- c) Approval requests: anything that needs the CEO's yes is asked in one standard message: What. Used for. Why now. Risk if approved. Risk if not. Recommendation. Reply: approve, explain more, or keep. It applies to every agent that asks the CEO (the COO today; the CIO for system changes later).
+- d) The CFO sends its calendar entries straight to the CoS (as APR-0044 intends; the CoS relieves the COO), with the CHO's handoff call and its own event IDs. Its OpenClaw send list must include the CoS (a VM config change).
+- e) Overlaps (S-08): the existing entry keeps its slot; the CoS appends a conflict line (reason=overlaps <entry>), offers the nearest free slot, writes the entry when the requester accepts, and the COO sends the CEO a one-line notice (no action needed unless he overrides). Only when the time cannot move does the CEO decide. Which domain wins a hard clash is not decided here.
+- f) The COO reports only what the CHO, CFO or CoS confirmed, names who confirmed it, says "not confirmed" otherwise, never says Google changed and never makes up an event ID.
+- The exact rule text is in deploy/loop1/loop1-v110-upgrade.sh (CoS: deletes, overlaps; COO: confirmed reports, approval requests and notices; CFO: handoff call). Built and unit-tested; not applied on the VM by this entry's fix script.
+- Verification (P-42): scenario re-runs of delete (CEO instruction, CEO question, chief request), CFO entry, overlap, and the bad-sleep regression; then GCAL_ALLOW_DELETES=1 and one approved delete that reaches the test calendar.
+Closes: none (P-42 opened)
+Changeable: yes. A change is a new APR entry.
+Applies to: the CoS, COO and CFO instructions (v1.10); deploy/loop1/loop1-v110-upgrade.sh; scripts/gcal/gcal_sync_cron.sh; the CFO send list in the OpenClaw config on the VM; tests/scenario/*.md; decisions/PENDING.md (P-42)

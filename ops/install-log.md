@@ -335,3 +335,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-26 - Handover 2 recorded (fix-85)
 - Claude Code (CEO handover, APR-0090): gateway now a systemd user service; 05:00 AST reset report cron; P-36 history read; real-calendar test passed. APR-0091.
 - Added deploy/loop2/vm/ (openclaw-loop1-gateway.service, daily-reset-report.sh, daily-reset-report.py), tests/unit/test_daily_reset_report.py (5 tests), ops/handover-2026-10-26-claude-code-report-2.md and ops/realcal-test-journal-2026-10-26.md.
+
+## 2026-10-26 - Handover 3 recorded; instruction set v1.10 built (fix-86)
+- Claude Code: health check with 12 Loop 2 checks (53 PASS), scenario runner, run-cost estimate, four new scenario files; runs 013 to 017 (about 0.03 USD in total, estimate).
+- CEO "yes to all, proceed" (APR-0092): delete gate, cron deletes behind GCAL_ALLOW_DELETES=1, approval request format, CFO to CoS, overlap log, confirmed reports. deploy/loop1/loop1-v110-upgrade.sh and 8 tests; 2 cron tests. Not applied on the VM (P-42).

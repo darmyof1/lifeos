@@ -6,6 +6,9 @@
 #   GCAL_CALENDAR=<calendar id>            LIFEOS_ALERT_TARGET=channel:<COO channel ID>
 #   LIFEOS_ALERT_ACCOUNT=<slack account>   (optional, default: default)
 #   PATH=...                               (optional, only if cron cannot find openclaw)
+#   GCAL_ALLOW_DELETES=1                   (optional, APR-0092: approved deletes reach Google. Set it only after the
+#                                          delete gate passes. The job still deletes only a LifeOS event with a
+#                                          delete-pending-approval line and a deleted line with the same event ID.)
 # Options for tests: LIFEOS_SYNC_STATE (state folder), LIFEOS_SYNC_PY (Python to use), LIFEOS_SYNC_ARGS (extra options).
 # Exit code is the job's: 0 done, 3 paused (login revoked), 4 could not start.
 set -u
@@ -30,8 +33,12 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG="$STATE/sync.log"
 OUT="$(mktemp)"
 trap 'rm -f "$OUT"' EXIT
+ALLOW=""
+if [ "${GCAL_ALLOW_DELETES:-0}" = "1" ]; then
+  ALLOW="--allow-deletes"
+fi
 # shellcheck disable=SC2086
-"$PY" "$HERE/gcal_sync.py" --state-dir "$STATE" ${LIFEOS_SYNC_ARGS:-} >"$OUT" 2>&1
+"$PY" "$HERE/gcal_sync.py" --state-dir "$STATE" $ALLOW ${LIFEOS_SYNC_ARGS:-} >"$OUT" 2>&1
 CODE=$?
 {
   echo "=== $(date '+%Y-%m-%d %H:%M:%S') exit $CODE"

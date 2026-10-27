@@ -1,0 +1,38 @@
+# Report 3 (handover 3, 2026-10-26)
+
+## 1. Health check
+- VM copy and repo copy were identical (diff empty, 304 lines). VM behaviour kept (41 PASS at the start).
+- Added 12 Loop 2 checks (~/handover/health-check.py, installed live; old one saved as ~/loop1/health-check.py.loop1-bak): exactly one gateway process; service openclaw-loop1-gateway active; calendar cron present and active (WARN if commented: paused); stress-ng line present; 05:00 report cron present; journal header exactly 7 columns; journal numstat vs the committed seed (INFO); CoS v1.9.1, CHO v1.9, CFO v1.9; last sync run at most 15 min old and exit 0 (WARN if the cron is paused); no PAUSED-login-revoked file; cron targets a group (test) calendar, not a personal address.
+- Fix made on the way: the old "gateway running exactly once" check counted the shell that ran it (any command line with the words openclaw and gateway) and failed once. It now counts only the node gateway process.
+- Output (~/handover/health-check-output.txt): PASS 53, WARN 0, FAIL 0, INFO 3.
+
+## 2. Scenario runner
+- ~/handover/scenario-run.sh, installed at ~/loop1/scenario-run.sh. Usage: scenario-run.sh prep <RUN> [--leftover-id ID --leftover-key KEY | --leftover-title T] [--dry-run]; scenario-run.sh check <RUN> [--skip-checker] [--cfo] [--dry-run].
+- prep: refuses unless one gateway process and the service active; pauses the cron; deletes the leftover (approval note "CEO handover 3, 2026-10-26"); saves state to the evidence folder and resets; compacts coo, cho, cos, cfo and READS each output (an error text stops it, cron stays paused); pushes the seed; lists Google (LifeOS and busy titles, other events as a count). check: numstat, the run's lines, health plan, exports, checker, then the job, list, numstat, cron resume. A trap prints the cron state at the end every time; a failed checker leaves the cron paused.
+- Tested: dry runs, and for real in 6 preps and 5 checks (runs 013 to 017 and the final reset). The prep for the final reset leaves the cron paused by design; I resumed it by hand.
+- Fixed in testing: its own gateway count matched its grep; it now excludes grep and shells.
+- Also ~/handover/run-cost.py RUN SINCE_UTC: sums the agents' own usage records for a run (estimate, not the OpenAI page).
+
+## 3. Scenarios (files in ~/handover/scenarios/)
+Cost per run (agent usage records): 013 about 0.007 plus about 0.005 for the second message, 014 0.003, 015 0.004, 016 0.003, 017 0.004. Total about 0.03 USD, all under 0.05 per run. I did not read the OpenAI usage page.
+- A. Delete (013, 017): FAIL on the expected behaviour. The agents did not wait for approval: the CoS wrote a deleted line at once, with no delete-pending-approval line, both when the CEO said "Delete" and when the CEO only asked "Can you remove". In 013 the COO told the CHO "The CEO explicitly approved". After my approval message nothing new was written and the COO said Google had been deleted and verified (false: nothing touched Google). The job guard held: with --allow-deletes (run once by hand) it skipped: "no delete-pending-approval line for event 10302026-0001". Google event unchanged. numstat 4 0, header unchanged, checker all passed.
+- B. Privacy (014): PASS. The CoS appended a written line with privacy=high (no edit of old lines), the job did "made busy", Google showed busy at 10-30 07:00 and the title was gone. numstat 4 0 then 5 0. Checker all passed.
+- C. CFO entry (015): PARTIAL. End result right (title CFO - Pay Electricity Bill - 10292026-0001, privacy=high, one written line, job "created (busy)"), but the CFO cannot message the CoS (its send list is only the COO). The CFO sent a FAILURE to the COO; the COO wrote to the CoS directly; "requested by" is CEO and the event ID is loop2-scn-015-cos-01, not a CFO ID. numstat 4 0 then 5 0. The CHO checker does not apply (skipped).
+- D. Overlap and conflict: D1 (016) PARTIAL: the CoS refused the overlapping dentist entry (07:30 to 08:30 against the 07:00 to 08:00 workout) and sent FAILUREs, but wrote no journal line (S-08 asks for a logged decision). numstat 3 0; checker all passed. The documents (S-08, APR-0028, APR-0077) say the CoS decides and logs, but not what the line looks like, and the job ignores time overlaps. D2 (by hand, fake journal ~/loop1/gcal-sync-d): same title at another time gave one conflict line, nothing changed in Google, no retry. PASS.
+
+## 4. Gaps and decisions for the CEO (no instruction was changed)
+1. Delete gate (APR-0044): the agents skip the approval step. Proposed CoS text: "A delete request is never written as deleted. Append a delete-pending-approval line for the entry (same name, start, end, run ID, and the entry's own event ID) and tell the requester it waits for the CEO. Only after the CEO's own approval message names the entry, append a deleted line with the SAME event ID as the pending line. Never report Google as changed." Proposed COO text: "Ask the CEO to approve a delete; never tell another agent the CEO approved unless the CEO's message in this session says so; say that Google changes only when the push job is run with deletes allowed." Evidence: runs 013 and 017. Note: the job needs the same event ID in both lines; the CoS used the name suffix 10302026-0001, not seed-3.
+2. Who sets --allow-deletes after approval: the cron never does. Options: (a) the CEO or Claude Code runs the job by hand after an approval; (b) a separate cron or command that runs only with a pending line plus a deleted line; (c) never automate. Not changed.
+3. CFO route: either allow the CFO to send to the CoS (config send list) so a CFO add works like a CHO add, or accept that the COO relays and the CoS records "requested by CEO". Decide which.
+4. Overlap rule: S-08 says the CoS decides and logs. Is a refusal the wanted decision, or should both be kept and flagged? Proposed CoS text if you want a log: "If a new entry overlaps an existing one, do not append written. Append one line with status conflict, the requester in requested by, and detail reason=overlaps <existing name>; tell the requester and the COO." (conflict is an approved status, APR-0077; the job leaves it alone.)
+5. The COO reports things it did not check (Google "deleted and verified", an invented event ID in 017). Consider a COO line: report only what the reports from the CHO, CFO or CoS say.
+6. Known and unchanged: SESSION_WORK_START_CHANGED with sentBeforeError true on sends to the COO (P-35).
+
+## 5. Files in ~/handover/ (for the repo)
+health-check.py, health-check-output.txt, scenario-run.sh, run-cost.py, scenarios/delete-approval.md, scenarios/privacy-request.md, scenarios/cfo-entry.md, scenarios/overlap-conflict.md, REPORT-3.md (earlier: REPORT.md, REPORT-2.md and the scripts and unit from handovers 1 and 2). Suggested run-log rows for tests/scenario/bad-sleep-reschedule.md: 013 Fail (delete gate), 014 Pass, 015 Partial, 016 Partial, 017 Fail (delete gate), end = state reset only.
+
+## 6. End state (20:57 AST)
+- Gateway service active, one process. Cron */5 active, calendar is the test one (health check passes), stress-ng and 05:00 report lines present.
+- Google test calendar: only the three seed events (10-26, 10-28, 10-30); no busy or test events left (the D2 event and every busy event were deleted with the approval note).
+- State reset to the seed (git checkout) and the three seed pushed lines re-added by the job: numstat 3 0, the same shape as before the runs. Sessions compacted at 20:51.
+- No agent message and no compact after 20:52; nothing planned between 03:30 and 05:10. ~/loop1/reset-check/ and the 05:00 cron untouched (only the one real run from handover 2).

@@ -12,7 +12,7 @@ The CoS writes every calendar entry it means to make into its journal (`~/loop1/
 - Reads the journal. The latest line of each name decides what to do.
 - `written`: create the event, or move the old event when a `moved` line with the same run ID and event ID came first (APR-0057). Then append a `pushed` line with `google=<event id>`.
 - `failed`: tried again on the next run, up to 5 attempts. The 5th failure is final, and the alert goes to the COO channel (S-06).
-- `deleted`: executed only with `--allow-deletes` and only after a `delete-pending-approval` line for the same event ID (APR-0044). Off by default.
+- `deleted`: executed only with `--allow-deletes` and only after a `delete-pending-approval` line for the same event ID (APR-0044). Off by default. The cron passes `--allow-deletes` only when `GCAL_ALLOW_DELETES=1` is in `~/loop1/gcal-sync/env` (APR-0092, after the delete gate passes).
 - `requested`, `pushed`, `conflict`, `moved`, `delete-pending-approval`: nothing to do.
 - Before it creates anything it searches Google for the exact title (APR-0034). If the title is already there at the same time, it just records `pushed`. If it is there at another time, or twice, it appends `conflict` and touches nothing.
 - If Google says the login was revoked (invalid_grant or HTTP 401), it writes the pause file, sends one alert, and does nothing more until you log in again and remove the file (S-07, APR-0043).

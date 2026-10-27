@@ -67,6 +67,22 @@ class Cron(unittest.TestCase):
         self.assertEqual(log.count("=== "), 2)
         self.assertIn("--dry-run", log)
 
+    def test_deletes_are_off_by_default(self):
+        self.stub(0)
+        self.run_cron()
+        self.assertNotIn("--allow-deletes", self.log())
+
+    def test_deletes_only_with_the_exact_setting_1(self):
+        self.stub(0)
+        with open(os.path.join(self.state, "env"), "w") as fh:
+            fh.write("GCAL_ALLOW_DELETES=yes\n")
+        self.run_cron()
+        self.assertNotIn("--allow-deletes", self.log())
+        with open(os.path.join(self.state, "env"), "w") as fh:
+            fh.write("GCAL_ALLOW_DELETES=1\n")
+        self.run_cron()
+        self.assertEqual(self.log().count("--allow-deletes"), 1)
+
     def test_log_is_trimmed(self):
         self.stub(0)
         with open(os.path.join(self.state, "sync.log"), "w") as fh:
