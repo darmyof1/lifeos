@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-91.sh",
+  "generated_by": "fix-92.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -853,6 +853,10 @@
     },
     {
       "path": "deploy/loop1/loop1-v1102-upgrade.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop1/loop1-v1103-upgrade.sh",
       "status": "draft"
     },
     {
@@ -1857,6 +1861,10 @@
     },
     {
       "path": "tests/unit/test_loop1_v1102_upgrade.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_loop1_v1103_upgrade.py",
       "status": "draft"
     },
     {

@@ -995,3 +995,18 @@ Meaning:
 Closes: none (P-42 stays open until the re-runs pass)
 Changeable: yes. A change is a new APR entry.
 Applies to: the CoS instructions (v1.10.2); deploy/loop1/loop1-v1102-upgrade.sh; tests/scenario/delete-approval.md; decisions/PENDING.md (P-42)
+
+## APR-0095 - The COO answers a pending delete with the seven-item request every time (instruction set v1.10.3)
+Status: approved
+Decided by: CEO
+Your answer: "approved" (2026-10-27 01:28, to the decision the assistant put to him: approve the COO rule that, when the CoS reports a delete-pending-approval line, the COO always posts the seven items, each on its own line)
+Evidence: handover 6 (ops/handover-2026-10-27-claude-code-report-6.md; ops/scenario-results-2026-10-27/loop2-scn-035.txt): in run 035 the COO answered a delete question in plain sentences and skipped the seven-item request; the lines and the job were right. Runs 033, 034, 037 and 038 printed all seven items. D2 stood at 4 of 5.
+Meaning:
+- When the CoS reports a delete-pending-approval line, the COO always posts the seven items (What, Used for, Why now, Risk if approved, Risk if not, Recommendation, Reply), each on its own line. A plain sentence is not enough, and a delete question is never answered in prose only.
+- Nothing else changes: the CoS rules, the job and the delete flag stay as they are.
+- The exact rule text is in deploy/loop1/loop1-v1103-upgrade.sh (COO only). Built and unit-tested; not applied on the VM by this entry's fix script.
+- Verification (P-42): D2 three runs in a row with new run IDs, each with the seven items on their own lines and the delete lines as before; then D1 once and the regression once.
+- Not decided: whether the cron moves to the real calendar. That stays with the CEO and waits for the D2 re-runs and the first 05:00 report.
+Closes: none (P-42 stays open until the re-runs pass)
+Changeable: yes. A change is a new APR entry.
+Applies to: the COO instructions (v1.10.3); deploy/loop1/loop1-v1103-upgrade.sh; tests/scenario/delete-approval.md; decisions/PENDING.md (P-42)
