@@ -1048,3 +1048,17 @@ Meaning:
 Closes: none (P-43 opened)
 Changeable: yes. A change is a new APR entry.
 Applies to: agent-files/; deploy/loop1/health-check.py; the regression suite (deploy/loop3/); src/lifeos/router/gate.py; the security documents listed above; contracts/identity-access.yaml; decisions/PENDING.md (P-43)
+
+## APR-0098 - Slack channel IDs stay out of the repo: placeholders in the agent-files copies
+Status: approved
+Decided by: CEO
+Your answer: "approved." (2026-10-27 22:06, to the proposal that the repo copies of the CoS, CHO and CFO AGENTS.md hold a placeholder instead of the Slack channel ID, and the parity check fills in the real ID from the VM-only slack-channels.env before comparing)
+Evidence: ops/handover-2026-10-27-claude-code-report-8.md: the live cos, cho and cfo AGENTS.md each hold one channel ID (written by loop1-v13-upgrade.sh from ~/loop1/slack-channels.env), so they were not copied; the repo scripts rebuild all 16 live files byte for byte with that env file. A rebuild with placeholder IDs gives files whose sizes differ from the live ones by exactly 7 bytes each (the placeholder is 18 characters, a Slack ID is 11).
+Meaning:
+- agent-files/executive/cos/AGENTS.md, agent-files/department/cho/AGENTS.md and agent-files/department/cfo/AGENTS.md hold {{COS_CHANNEL_ID}}, {{CHO_CHANNEL_ID}} and {{CFO_CHANNEL_ID}} where the live files hold the real ID. They are produced by the repo scripts from a placeholder env file. No real ID enters the repo (STATE.md "Never" stays in force).
+- The health check replaces each placeholder with the real value from ~/loop1/slack-channels.env (keys staff-cos, health-cho, finance-cfo) and compares sha256 with the live file. If the env file or a key is missing, the check is WARN, not PASS.
+- tests/unit/test_agent_files_rebuild.py rebuilds all 16 files from the repo scripts in a temporary home and checks each against agent-files/. A script change that does not reach agent-files/ (or the reverse) fails the unit tests.
+- No agent behaviour changes. No VM change by this entry's fix script; Claude Code installs the updated health check (handover 9).
+Closes: none (P-43 step 1 point)
+Changeable: yes. A change is a new APR entry.
+Applies to: agent-files/; deploy/loop1/health-check.py; tests/unit/test_agent_files_rebuild.py; decisions/PENDING.md (P-43)

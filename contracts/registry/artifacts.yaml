@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-97.sh",
+  "generated_by": "fix-98.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -37,7 +37,7 @@
     },
     {
       "path": "agent-files/README.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/SHA256SUMS",
@@ -149,7 +149,7 @@
     },
     {
       "path": "agent-files/department/cfo/AGENTS.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/cfo/IDENTITY.md",
@@ -173,7 +173,7 @@
     },
     {
       "path": "agent-files/department/cho/AGENTS.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/cho/IDENTITY.md",
@@ -385,7 +385,7 @@
     },
     {
       "path": "agent-files/executive/cos/AGENTS.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/executive/cos/IDENTITY.md",
@@ -1909,6 +1909,10 @@
     },
     {
       "path": "tests/scenario/privacy-request.md",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_agent_files_rebuild.py",
       "status": "draft"
     },
     {

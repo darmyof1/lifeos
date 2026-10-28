@@ -379,3 +379,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 ## 2026-10-27 - Handover 8 recorded (fix-97)
 - Claude Code mirrored 13 of the 16 live agent files (cos, cho and cfo AGENTS.md hold Slack channel IDs and stay on the VM), added 16 parity checks to the health check, built the regression suite and ran the baseline loop3-reg-001 (5 of 7 pass, 0.0455 USD). Repo: agent-files/ and SHA256SUMS, health-check.py, deploy/loop3/vm/, report 8, results. No new decision; APR-0097 covers step 1.
 - Not brought in: the 05:00 report scripts in the handover 8 archive are the old copies (without the fix-94 uptime fix); whether the fixed copies are installed on the VM is to be checked.
+
+## 2026-10-27 - Channel-ID placeholders and the rebuild test (fix-98)
+- APR-0098: agent-files/ now holds all 16 files; cos, cho and cfo AGENTS.md carry placeholders instead of Slack channel IDs. The health check fills them in from the VM-only slack-channels.env. tests/unit/test_agent_files_rebuild.py rebuilds the 16 files from the repo scripts and compares.
+- The 05:00 report fix of fix-94 was confirmed installed on the VM by Claude Code (installed copies identical to the repo, dated 21:18; a dry run with an empty environment printed "up 20h29m" through the process-age fallback). The copies in the handover 8 archive were old ones, now replaced. A dry run from Claude Code's own shell counted 2 gateway processes because its own command line matched; cron has no such shell (the real 05:00 report counted 1).

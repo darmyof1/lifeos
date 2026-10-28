@@ -353,13 +353,39 @@ def _sha(p):
         return hashlib.sha256(open(p, "rb").read()).hexdigest()
     except OSError:
         return None
+_CH_KEYS = {"COO": "operations-coo", "COS": "staff-cos", "CHO": "health-cho", "CFO": "finance-cfo"}
+def _channel_ids():
+    ids = {}
+    try:
+        for _l in open(os.path.join(HOME, "loop1", "slack-channels.env")):
+            _k, _, _v = _l.strip().partition("=")
+            ids[_k] = _v.strip()
+    except OSError:
+        pass
+    return ids
+def _sha_repo(p):
+    # sha256 of a repo copy; {{XXX_CHANNEL_ID}} placeholders are replaced by the real IDs from the VM-only slack-channels.env (APR-0098)
+    try:
+        data = open(p, "rb").read()
+    except OSError:
+        return None
+    ids = _channel_ids()
+    for _t, _k in _CH_KEYS.items():
+        _ph = ("{{%s_CHANNEL_ID}}" % _t).encode()
+        if _ph in data:
+            if not ids.get(_k):
+                return "NOID"
+            data = data.replace(_ph, ids[_k].encode())
+    return hashlib.sha256(data).hexdigest()
 for _a, _d in _PAR.items():
     for _f in ("AGENTS.md", "SOUL.md", "IDENTITY.md", "USER.md"):
         _live = _sha(os.path.join(WS, _a, _f))
         _rp = os.path.join(_REPO, _d, _f)
-        _repo = _sha(_rp) if os.path.exists(_rp) and os.path.getsize(_rp) > 0 else None
+        _repo = _sha_repo(_rp) if os.path.exists(_rp) and os.path.getsize(_rp) > 0 else None
         _name = "parity %s/%s (live = repo agent-files/%s/%s)" % (_a, _f, _d, _f)
-        if _repo is None:
+        if _repo == "NOID":
+            rec("WARN", _name, "channel ID missing in slack-channels.env", "the placeholder in the repo copy cannot be filled")
+        elif _repo is None:
             rec("WARN", _name, "repo copy missing or empty", "the repo cannot rebuild this file until the copy is committed")
         elif _live == _repo:
             rec("PASS", _name, "sha256 equal", "")
