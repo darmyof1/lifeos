@@ -393,3 +393,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Claude Code installed regression-suite.sh, reg-criteria.py, run-metrics.py, solo-run.sh and comparison-driver.sh (sha256 prefixes in report 10, checked by the CEO's side against the tarball), ran 3 more four-agent suites (loop3-cmp-001 to -003) and 42 solo runs, 63 runs in all, about 0.30 USD. Health check 71 PASS, 0 WARN, 0 FAIL. COO, CHO, CoS and CFO files, config and cron unchanged.
 - Tooling: an acknowledgement error is informational; the solo agent uses agent:solo:main.
 - Facts only; no new decision. Structure choice stays with the CEO (separate APR).
+
+## 2026-10-28 - Handover 11 recorded (fix-103)
+- Read-only investigation and a switched-off code check (--require-ceo-ledger). Nothing installed on the VM; no agent file, config or cron changed. The cron does not use the new option.

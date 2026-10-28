@@ -11,7 +11,8 @@ What it does, per entry (the latest line of each name decides):
   written           push it: create the event, or move the old event when a "moved" line with the same run ID and
                     event ID came first (APR-0057), then append  pushed  with the Google event ID
   failed            retry on the next run until 5 attempts; the 5th failure is final and the alert goes to the COO channel
-  deleted           only with --allow-deletes, only after a  delete-pending-approval  line for the same event ID (APR-0044)
+  deleted           only with --allow-deletes, only after a  delete-pending-approval  line for the same event ID (APR-0044);
+                    with --require-ceo-ledger PATH also only if the ledger holds a CEO entry for that run and event (APR-0100)
   requested, pushed, conflict, moved, delete-pending-approval   nothing to do
 Before it creates anything it searches Google for the exact title (APR-0034). A write that worked but looked failed is
 therefore not repeated. If the title exists at another time, or twice, the job appends  conflict  and touches nothing.
@@ -30,6 +31,7 @@ Exit codes: 0 done, 2 usage, 3 paused (login revoked), 4 could not start (login 
 """
 import argparse
 import datetime
+import json
 import os
 import subprocess
 import sys
@@ -130,6 +132,31 @@ def moved_hint(entries, e):
 
 def delete_was_requested(entries, e):
     return any(x.lineno < e.lineno and x.status == "delete-pending-approval" and x.event == e.event for x in entries)
+
+
+def ceo_approval_recorded(ledger, e, now=None):
+    """APR-0100: True if the CEO ledger (outside every agent workspace) holds an entry for this run and event.
+    One JSON object per line: time, run, event, channel, sender, text_sha256. sender must be "CEO" and time must not be
+    later than now. The journal has no time column, so 'before the deleted line' means 'before this job run'.
+    A missing or unreadable ledger, or a damaged line, approves nothing."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    try:
+        with open(os.path.expanduser(ledger), encoding="utf-8") as fh:
+            lines = fh.read().splitlines()
+    except OSError:
+        return False
+    for line in lines:
+        try:
+            r = json.loads(line)
+            t = datetime.datetime.fromisoformat(str(r["time"]).replace("Z", "+00:00"))
+            if t.tzinfo is None:
+                t = t.replace(tzinfo=datetime.timezone.utc)
+        except (ValueError, KeyError, TypeError):
+            continue
+        if (isinstance(r, dict) and r.get("sender") == "CEO" and r.get("run") == e.run and r.get("event") == e.event
+                and t <= now):
+            return True
+    return False
 
 
 def detail_value(detail, field):
@@ -364,7 +391,7 @@ def pause_run(state_dir, alert, name, dry_run, out, exc, counts):
 
 
 def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run=False, allow_deletes=False,
-         max_per_run=MAX_PER_RUN, out=print):
+         max_per_run=MAX_PER_RUN, out=print, ceo_ledger=None, now=None):
     """Process the journal once. Returns (exit code, counts)."""
     counts = {"pushed": 0, "conflict": 0, "failed": 0, "final": 0, "deleted": 0, "skipped": 0}
     if os.path.exists(pause_path(state_dir)):
@@ -391,6 +418,10 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
                 continue
             if not delete_was_requested(entries, e):
                 out("skip   %s: no delete-pending-approval line for event %s (APR-0044)" % (e.name, e.event))
+                counts["skipped"] += 1
+                continue
+            if ceo_ledger and not ceo_approval_recorded(ceo_ledger, e, now):
+                out("skip   %s: no CEO approval record for event %s (APR-0100)" % (e.name, e.event))
                 counts["skipped"] += 1
                 continue
         if done >= max_per_run:
@@ -443,6 +474,8 @@ def main(argv=None, service=None, alert_runner=None):
     p.add_argument("--journal", default=DEFAULT_JOURNAL, help="the CoS journal (default %s)" % DEFAULT_JOURNAL)
     p.add_argument("--state-dir", default=DEFAULT_STATE_DIR, help="lock, pause file and logs (default %s)" % DEFAULT_STATE_DIR)
     p.add_argument("--allow-deletes", action="store_true", help="also run approved deletes (APR-0044)")
+    p.add_argument("--require-ceo-ledger", metavar="PATH", default=None,
+                   help="run a delete only if this ledger (JSON lines, outside the agent workspaces) holds a CEO entry for the run and event (APR-0100)")
     p.add_argument("--max-per-run", type=int, default=MAX_PER_RUN)
     p.add_argument("--test-alert", action="store_true", help="send one test message to the alert channel and stop")
     args = p.parse_args(argv)
@@ -476,7 +509,7 @@ def main(argv=None, service=None, alert_runner=None):
             print("error: " + str(exc), file=sys.stderr)
             return 4
         code, counts = sync(service, args.calendar, args.journal, args.state_dir, alert, args.tz, args.dry_run,
-                            args.allow_deletes, args.max_per_run)
+                            args.allow_deletes, args.max_per_run, ceo_ledger=args.require_ceo_ledger)
     print("%s: pushed %d, conflict %d, failed %d (final %d), deleted %d, skipped %d" % (
         "dry run" if args.dry_run else "summary", counts["pushed"], counts["conflict"], counts["failed"],
         counts["final"], counts["deleted"], counts["skipped"]))

@@ -1,0 +1,72 @@
+--- a/tests/unit/test_gcal_sync.py	2026-10-28 18:26:58.325167359 -0400
++++ b/tests/unit/test_gcal_sync.py	2026-10-28 18:27:16.290030415 -0400
+@@ -347,6 +347,69 @@
+         self.assertIn("already gone", self.new_lines(before)[0])
+ 
+ 
++class CeoLedgerTests(DeleteTests):
++    """APR-0100: --require-ceo-ledger. Off by default; the inherited DeleteTests run without the flag and must still pass."""
++    NOW = None
++
++    def ledger(self, *rows):
++        import json
++        self.lpath = os.path.join(self.tmp, "ceo-ledger.jsonl")
++        with open(self.lpath, "w") as fh:
++            for r in rows:
++                fh.write((r if isinstance(r, str) else json.dumps(r)) + "\n")
++        return self.lpath
++
++    def row(self, **kw):
++        r = {"time": "2020-01-01T00:00:00Z", "run": "r3", "event": "r3-cho-01", "channel": "slack", "sender": "CEO",
++             "text_sha256": "0" * 64}
++        r.update(kw)
++        return r
++
++    def gate(self, path):
++        self.write(*self.lines())
++        return self.go(allow_deletes=True, ceo_ledger=path)
++
++    def test_no_entry_no_delete(self):
++        _, counts, out = self.gate(self.ledger())
++        self.assertEqual((counts["deleted"], counts["skipped"]), (0, 1))
++        self.assertIn("no CEO approval record for event r3-cho-01", out)
++        self.assertIn("x1", self.svc.store)
++
++    def test_missing_ledger_no_delete(self):
++        _, counts, _ = self.gate(os.path.join(self.tmp, "nope.jsonl"))
++        self.assertEqual(counts["deleted"], 0)
++        self.assertIn("x1", self.svc.store)
++
++    def test_matching_entry_deletes(self):
++        _, counts, _ = self.gate(self.ledger(self.row()))
++        self.assertEqual(counts["deleted"], 1)
++        self.assertNotIn("x1", self.svc.store)
++
++    def test_other_run_or_event_no_delete(self):
++        for kw in ({"run": "r9"}, {"event": "r9-cho-01"}):
++            self.setUp()
++            _, counts, _ = self.gate(self.ledger(self.row(**kw)))
++            self.assertEqual(counts["deleted"], 0, kw)
++            self.assertIn("x1", self.svc.store)
++
++    def test_sender_not_ceo_or_future_time_or_bad_line_no_delete(self):
++        for r in (self.row(sender="COO"), self.row(time="2999-01-01T00:00:00Z"), self.row(time="not a time"), "{broken", "[1]"):
++            self.setUp()
++            _, counts, _ = self.gate(self.ledger(r))
++            self.assertEqual(counts["deleted"], 0, r)
++            self.assertIn("x1", self.svc.store)
++
++    def test_pending_line_is_still_required(self):
++        self.write(*self.lines(with_request=False))
++        _, counts, out = self.go(allow_deletes=True, ceo_ledger=self.ledger(self.row()))
++        self.assertEqual(counts["deleted"], 0)
++        self.assertIn("no delete-pending-approval", out)
++
++    def test_main_accepts_the_flag(self):
++        import inspect
++        self.assertIn("--require-ceo-ledger", inspect.getsource(gs.main))
++
++
+ class HighPrivacyTests(Base):
+     """High-privacy entries show in Google as busy, with a hidden key and never the mandated title (APR-0032, APR-0079)."""
+     HP = "privacy=high"

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-102.sh",
+  "generated_by": "fix-103.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1176,6 +1176,22 @@
       "status": "planned"
     },
     {
+      "path": "ops/delete-gate/README.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/delete-gate/gcal_sync.ceo-ledger.patch",
+      "status": "draft"
+    },
+    {
+      "path": "ops/delete-gate/rule-A-proposal.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/delete-gate/test_gcal_sync.ceo-ledger.patch",
+      "status": "draft"
+    },
+    {
       "path": "ops/handover-2026-10-26-claude-code-report-2.md",
       "status": "draft"
     },
@@ -1213,6 +1229,10 @@
     },
     {
       "path": "ops/handover-2026-10-28-claude-code-report-10.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-10-28-claude-code-report-11.md",
       "status": "draft"
     },
     {
