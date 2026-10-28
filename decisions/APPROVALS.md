@@ -1078,3 +1078,16 @@ Meaning:
 Closes: none (P-43 step 2 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop3/structure-test/; deploy/loop3/vm/regression-suite.sh and reg-criteria.py; decisions/PENDING.md (P-43)
+## APR-0100 - Delete gate in code and in instructions (option C)
+Status: approved
+Decided by: CEO
+Your answer: "c is approved, fix 101 is done" (2026-10-28 18:22, to the proposal: A an instruction rule that only the CEO's own message counts as approval, B a code check in the push job that refuses a delete without proof of a CEO approval, C both with the code check first)
+Evidence: ops/structure-test/comparison/loop3-cmp-001/loop3-cmp-001-04.txt and loop3-cmp-003/loop3-cmp-003-04.txt (a delete asked for by the CHO ended as a deleted line and a deleted Google event with no CEO message; in 003-04 the COO told the CoS it relayed the CEO's approval); comparison.md; APR-0044, APR-0093.
+Meaning:
+- Code first: the push job gets a check that runs a deleted line only when a ledger outside the agents' workspaces holds a CEO approval record for the same run and event. Built and tested switched off (handover 11); switched on only after the writer of the ledger exists and a regression run shows D1, D2 and D3 behave.
+- Then the instruction rule (A): a deleted line requested by CEO only when the agent itself received the CEO's own message; a chief's request or a relayed approval gives a pending line only. The exact text is shown to the CEO before it goes live (new APR for the wording if it differs from this entry).
+- Handover 11 first checks whether an agent-proof record can be made on this VM; if that needs a CEO decision, it stops and asks.
+- No agent file, config, binding or cron changes in this entry. The four-agent design is unchanged. The D2 and overlap gaps stay held until this is settled.
+Closes: none (P-43 continues; opens as P-44 below)
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/gcal/gcal_sync.py; the COO, CoS, CHO, CFO AGENTS.md (later); decisions/PENDING.md (P-44)

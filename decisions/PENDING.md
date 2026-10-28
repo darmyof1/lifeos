@@ -60,3 +60,5 @@ Loop 2 sign-off waits for these (deploy/loop2/LOOP2-CLOSE-RECORD.md).
 Open when the COO prompt grows (it was about 35,000 tokens of 272,000 on a Slack turn) or a second real use appears. Not needed for Loop 2 (APR-0085).
 Questions: local embeddings after the local model work (SD-005, ADR-0003); checking state files before answering, which needs a token estimate (SD-006); short COO handoffs (SD-007); how much context the COO builds up when it routes everything and what it must ask the chiefs for instead of keeping. Per-agent token counts per scenario run are still to measure.
 Sandbox draft: research/sandbox/2026-10-25-agy/P-32-memory.md.
+## P-44 - Delete gate in code (APR-0100)
+Open since 2026-10-28. Steps: (1) handover 11: find an agent-proof CEO approval record (ledger outside the workspaces), build the push-job check switched off, draft rule A; (2) ledger writer built and tested; (3) check switched on in the cron after a regression run with D1, D2, D3 (3 runs each); (4) rule A applied with the CEO's yes on the wording. Held until then: the D2 requested-by gap and the overlap slot gap.
