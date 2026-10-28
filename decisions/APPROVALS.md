@@ -1062,3 +1062,19 @@ Meaning:
 Closes: none (P-43 step 1 point)
 Changeable: yes. A change is a new APR entry.
 Applies to: agent-files/; deploy/loop1/health-check.py; tests/unit/test_agent_files_rebuild.py; decisions/PENDING.md (P-43)
+
+## APR-0099 - Structure test: counted comparison of one agent against the four-agent set
+Status: approved
+Decided by: CEO
+Your answer: "so we are still no deviating from our architeture multiagent design, we are just doing a single agent test, right? if so, then i approved to test. multiagent still holds since the entire architecture is disign like this, but testing a new a pproach is always welcoming. fix99 is in place, proceed, i approved." (2026-10-27 23:23, after the answer that the four-agent design is unchanged and the solo agent is a test-only copy)
+Evidence: ops/handover-2026-10-27-claude-code-report-9.md; deploy/loop3/structure-test/design.md; baseline runs ops/regression/loop3-reg-001 to -003; decisions/PENDING.md P-43 step 2.
+Meaning:
+- The four-agent architecture (COO, CHO, CoS, CFO) stays the design and stays running, unchanged. The solo agent is a test-only copy on synthetic data and the Google test calendar. No decision about the structure is taken here; any change of structure is a separate CEO decision with its own APR.
+- P-35 treatment (tooling only): a sessions_send acknowledgement error is reported as informational ("ack error seen") and does not fail a run; the runner runs the job when the journal checks pass. A missing or duplicate write stays a failure. The three baseline runs are re-scored with both rules side by side.
+- Design adjustments: the solo agent uses one persistent main session compacted like the other agents; the counted comparison is six runs per scenario per variant (the three baseline runs plus three new four-agent suites, and six solo runs per scenario, about 63 runs, about 0.30 USD); criteria that exist only for hand-offs are reported separately as "4-set only".
+- The test measures reliability, not data-scope isolation (ADR-0016, APR-0086); it cannot alone justify merging agents.
+- The two four-agent gaps (D2 "requested by COO", overlap slot not offered) are held until the comparison is done so the baseline stays stable.
+- Go for handover 10 (deploy/loop3/handover-10-claude-code-vm.md), outside 02:30 to 05:10 AST. Cost limits as before: under 0.05 USD per run, under 1 USD per night.
+Closes: none (P-43 step 2 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop3/structure-test/; deploy/loop3/vm/regression-suite.sh and reg-criteria.py; decisions/PENDING.md (P-43)
