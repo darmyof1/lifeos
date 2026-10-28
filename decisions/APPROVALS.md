@@ -1091,3 +1091,17 @@ Meaning:
 Closes: none (P-43 continues; opens as P-44 below)
 Changeable: yes. A change is a new APR entry.
 Applies to: scripts/gcal/gcal_sync.py; the COO, CoS, CHO, CFO AGENTS.md (later); decisions/PENDING.md (P-44)
+## APR-0101 - Delete gate: runner-written ledger first, then the gateway plugin
+Status: approved
+Decided by: CEO
+Your answer: "C approve first then A" (2026-10-28 18:37, to the proposal: A a gateway plugin on the message_received hook writes the ledger; B a transcript reader; C a runner-written ledger for the regression scenarios only; recommendation C first, then A; "fix 103 in place")
+Evidence: ops/handover-2026-10-28-claude-code-report-11.md (the inbound record exists outside the agent workspaces; senders are written by the gateway); the --require-ceo-ledger check in scripts/gcal/gcal_sync.py; ops/delete-gate/.
+Meaning:
+- Step C (handover 12): the scenario runner, which is code, writes a ledger line for each CEO message that asks for or approves a delete; the regression job step runs the push job with --require-ceo-ledger. The cron does not get the option. Three runs each of D1, D2, D3 and a by-hand forged-line test show the gate.
+- Step A comes after C is read: a gateway plugin on message_received appending the CEO's Slack messages to a ledger outside the workspaces. It needs a gateway restart, the CEO's Slack user ID in a local file (never in the repo) and the CEO's separate yes on the plugin code before it is installed. That yes is a new APR.
+- commands.ownerAllowFrom stays unset. The cron stays without the option until A is installed and tested.
+- Rule A (instruction wording) is rewritten after A is designed, shown to the CEO, and recorded with its own APR.
+- No agent file, config, binding or cron changes in this entry. The four-agent design is unchanged.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop3/vm/regression-suite.sh; scenario-run.sh; ~/loop1/ceo-ledger/ (VM); decisions/PENDING.md (P-44)
