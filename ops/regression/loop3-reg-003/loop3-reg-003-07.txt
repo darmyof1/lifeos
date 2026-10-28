@@ -1,0 +1,45 @@
+== loop3-reg-003-07  privacy request  2026-10-27 22:53 AST
+-- cleanup of the previous run's busy events
+deleted	bnfv5jpkrgm8dlds5uemmgp3kc	busy	approval: CEO handover 9, 2026-10-27
+-- prep
+compact coo: Compacted session agent:coo:main (kept 1 lines). 
+compact cho: Compacted session agent:cho:main (kept 1 lines). 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-reg-003-07 now, then: scenario-run.sh check loop3-reg-003-07
+-- reply of the agent (first message)
+   Changed: The 2026-10-30 workout is marked private in the calendar journal; the push job handles Google Calendar visibility.
+   Who changed it: CHO confirmed.
+   Event ID: CHO - Workout - 10302026-0001
+-- journal lines for loop3-reg-003-07 (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | written | loop3-reg-003-07 | CHO - Workout - 10302026-0001 | CHO | privacy=high
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop3-reg-003-07 | CHO - Workout - 10302026-0001 | sync | google=n4p28fjdee3k1797aj2hkn5deg; privacy=high
+-- check output
+numstat: 4	0	state/calendar-journal.md
+PASS  CHO sent to the CoS  (1 call(s))
+PASS  first CHO call uses mode followup  (mode=followup)
+PASS  first CHO call does not set watch
+PASS  first CHO call has timeoutSeconds 120  (timeoutSeconds=120)
+PASS  first CHO call returned ok (a reply)  (status=ok)
+PASS  CoS sent nothing to the CHO  (0 call(s))
+PASS  no SESSION_WORK_START_CHANGED in any sessions_send result  (0 result(s))
+Result: all checks passed
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: made busy n4p28fjdee3k1797aj2hkn5deg
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+numstat after the job: 5	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+7nufm8ja7nl94cft1guom3ce4g	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+n4p28fjdee3k1797aj2hkn5deg	2026-10-30T07:00:00-04:00	busy
+-- criteria
+PASS numstat before the job has no removed lines (4 0)
+PASS numstat after the job has no removed lines (5 0)
+PASS journal header unchanged (7 columns)
+PASS new line for the 10-30 entry with privacy=high
+PASS Google shows busy at 10-30 07:00 and the title is gone
+PASS sessions_send checker: all checks passed
+PASS COO reply names who changed it and an event ID
+-- cost: loop3-reg-003-07: total 0.0071 USD (coo 0.0021, cho 0.0017, cos 0.0033, cfo 0.0000)
+RESULT loop3-reg-003-07 PASS (7 pass, 0 fail)

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-98.sh",
+  "generated_by": "fix-99.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -936,6 +936,58 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop3/structure-test/add-solo-agent.py",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/compose-solo.py",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/config-diff-solo.txt",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/design.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-agent-files/AGENTS.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-agent-files/IDENTITY.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-agent-files/SOUL.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-agent-files/USER.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-run.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-runs/loop3-solo-smoke-01.cost.txt",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-runs/loop3-solo-smoke-01.q.txt",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-runs/loop3-solo-smoke-02.cost.txt",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/structure-test/solo-runs/loop3-solo-smoke-02.q.txt",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop3/vm/reg-criteria.py",
       "status": "draft"
     },
@@ -1132,11 +1184,19 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-10-27-claude-code-report-9.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
     {
       "path": "ops/health-check-output-2026-10-27-c.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-check-output-2026-10-27-d.txt",
       "status": "draft"
     },
     {
@@ -1221,6 +1281,70 @@
     },
     {
       "path": "ops/regression/loop3-reg-001/loop3-reg-001-07.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-002.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-002/loop3-reg-002-01.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-002/loop3-reg-002-02.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-002/loop3-reg-002-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-002/loop3-reg-002-04.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-002/loop3-reg-002-05.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-002/loop3-reg-002-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-002/loop3-reg-002-07.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-003.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-003/loop3-reg-003-01.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-003/loop3-reg-003-02.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-003/loop3-reg-003-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-003/loop3-reg-003-04.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-003/loop3-reg-003-05.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-003/loop3-reg-003-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-003/loop3-reg-003-07.txt",
       "status": "draft"
     },
     {

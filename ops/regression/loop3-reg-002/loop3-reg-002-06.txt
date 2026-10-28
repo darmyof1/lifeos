@@ -1,0 +1,54 @@
+== loop3-reg-002-06  overlap  2026-10-27 22:30 AST
+-- cleanup of the previous run's busy events
+deleted	gvr63q97e9rhdc71ajsgeth7jg	busy	approval: CEO handover 8, 2026-10-27
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: No compaction needed for session agent:cho:main. 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: Compacted session agent:cfo:main (kept 1 lines). 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-reg-002-06 now, then: scenario-run.sh check loop3-reg-002-06
+-- reply of the agent (first message)
+   Changed: The dentist appointment was not scheduled; CHO reports a conflict with the 07:00–08:00 workout. The nearest free slot is 08:00–09:00, pending your confirmation.
+   Who changed it: CHO reported that CoS recorded the conflict in the calendar journal.
+   Event ID: `loop3-reg-002-06-cho-01`
+-- reply (second message)
+   Changed: The dentist appointment is scheduled for 2026-10-28, 08:00–09:00.
+   Who changed it: CHO.
+   Event ID: `loop3-reg-002-06-cho-02`
+-- journal lines for loop3-reg-002-06 (verbatim)
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop3-reg-002-06 | loop3-reg-002-06-cho-01 | CHO | reason=overlaps CHO - Workout - 10282026-0001; privacy=high
+CHO - Dentist Appointment - 10282026-0003 | 2026-10-28 08:00 | 2026-10-28 09:00 | written | loop3-reg-002-06 | loop3-reg-002-06-cho-02 | CHO | privacy=high
+CHO - Dentist Appointment - 10282026-0003 | 2026-10-28 08:00 | 2026-10-28 09:00 | pushed | loop3-reg-002-06 | loop3-reg-002-06-cho-02 | sync | google=1ftuf4ume5643amsnni9htuku8; privacy=high
+-- check output
+numstat: 5	0	state/calendar-journal.md
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop3-reg-002-06 | loop3-reg-002-06-cho-01 | CHO | reason=overlaps CHO - Workout - 1028
+PASS  CHO sent to the CoS  (2 call(s))
+PASS  first CHO call uses mode followup  (mode=followup)
+PASS  first CHO call does not set watch
+PASS  first CHO call has timeoutSeconds 120  (timeoutSeconds=120)
+PASS  first CHO call returned ok (a reply)  (status=ok)
+PASS  CoS sent nothing to the CHO  (0 call(s))
+PASS  no SESSION_WORK_START_CHANGED in any sessions_send result  (0 result(s))
+Result: all checks passed
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Dentist Appointment - 10282026-0003: created (busy) 1ftuf4ume5643amsnni9htuku8
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+f3tdrtsve4eaqed4ht5jcf2hv0	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+1ftuf4ume5643amsnni9htuku8	2026-10-28T08:00:00-04:00	busy
+gkia2dg030s2fg3t1mp2jkrb9s	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS one conflict line with reason=overlaps
+PASS no written line before the slot was accepted (conflict line first)
+PASS the nearest free slot (08:00) was offered
+PASS after accepting: written line at 08:00 on 10-28
+PASS Google shows busy at 10-28 08:00 (job created the event)
+PASS sessions_send checker: all checks passed
+-- cost: loop3-reg-002-06: total 0.0091 USD (coo 0.0028, cho 0.0022, cos 0.0040, cfo 0.0000)
+RESULT loop3-reg-002-06 PASS (9 pass, 0 fail)

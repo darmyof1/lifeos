@@ -1,0 +1,1 @@
+loop3-solo-smoke-01: total 0.0023 USD (solo 0.0023)

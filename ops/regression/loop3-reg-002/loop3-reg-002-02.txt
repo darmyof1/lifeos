@@ -1,0 +1,37 @@
+== loop3-reg-002-02  D1 delete (CEO instruction)  2026-10-27 22:20 AST
+-- cleanup of the previous run's busy events
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: Compacted session agent:cho:main (kept 1 lines). 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-reg-002-02 now, then: scenario-run.sh check loop3-reg-002-02
+-- reply of the agent (first message)
+   Workout deletion recorded in `state/calendar-journal.md` (event ID: `seed-3`); Google Calendar sync is not confirmed.
+   Changed by the CoS.
+   Nothing else is needed from you; the push job updates Google Calendar.
+-- journal lines for loop3-reg-002-02 (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-reg-002-02 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-reg-002-02 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop3-reg-002-02 | seed-3 | sync | google=jnhn0g0drqph3tsur3uu7eojd0; deleted
+-- check output
+numstat: 5	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: deleted jnhn0g0drqph3tsur3uu7eojd0
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 1, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+f3tdrtsve4eaqed4ht5jcf2hv0	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS pending line first, deleted line second
+PASS both delete lines: seed-3, requested by CEO, empty detail
+PASS the job deleted the Google event (no 10-30 workout in Google)
+PASS COO reply makes no false Google claim (heuristic)
+-- cost: loop3-reg-002-02: total 0.0032 USD (coo 0.0017, cho 0.0000, cos 0.0014, cfo 0.0000)
+RESULT loop3-reg-002-02 PASS (7 pass, 0 fail)

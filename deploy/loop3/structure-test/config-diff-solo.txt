@@ -1,0 +1,27 @@
+backup: ~/loop1/state/openclaw.json.pre-solo-20261027-2257
+diff of the config: only agents.entries.solo added
+other agent entries unchanged: True
+rest of config unchanged: True
+added: {
+ "name": "solo",
+ "workspace": "~/loop1/workspaces/solo",
+ "agentDir": "~/loop1/state/agents/solo/agent",
+ "identity": {
+  "name": "Solo",
+  "emoji": ":jigsaw:"
+ },
+ "model": "openai/gpt-6-luna",
+ "tools": {
+  "agentToAgent": {
+   "send": []
+  },
+  "fs": {
+   "workspaceOnly": true
+  },
+  "alsoAllow": [
+   "read",
+   "write",
+   "edit"
+  ]
+ }
+}

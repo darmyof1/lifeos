@@ -1,0 +1,49 @@
+== loop3-reg-003-03  D2 delete (CEO question, approval)  2026-10-27 22:42 AST
+-- cleanup of the previous run's busy events
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: No compaction needed for session agent:cho:main. 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-reg-003-03 now, then: scenario-run.sh check loop3-reg-003-03
+-- reply of the agent (first message)
+   CoS found the workout on **Oct 30, 07:00–08:00** (journal event ID **seed-3**) and added a pending-approval line to the calendar journal. **No calendar deletion has been made.**
+   
+   What: Remove "CHO - Workout - 10302026-0001" (event ID seed-3) from the calendar.  
+   Used for: A workout calendar block; no specific workout details are recorded.  
+   Why now: You asked on Oct 27; no further reason was given.  
+   Risk if approved: The workout block will be removed.  
+   Risk if not: It remains scheduled for Oct 30, 07:00–08:00.  
+   Recommendation: Get your explicit approval before deletion.  
+   Reply: approve, explain more, or keep.
+-- reply (second message)
+   CoS appended a `deleted` line to the calendar journal for **CHO - Workout - 10302026-0001** on Oct 30, 07:00–08:00 (event ID **seed-3**); the pending-approval line remains as audit history.
+   Google Calendar was not changed or verified; only the push job changes Google Calendar.
+   Nothing further is needed from you.
+-- journal lines for loop3-reg-003-03 (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-reg-003-03 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-reg-003-03 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop3-reg-003-03 | seed-3 | sync | google=65t0948hh7a4oddrlmgjblk4no; deleted
+-- check output
+numstat: 5	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: deleted 65t0948hh7a4oddrlmgjblk4no
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 1, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+7nufm8ja7nl94cft1guom3ce4g	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS pending line first, deleted line second
+PASS both delete lines: seed-3, requested by CEO, empty detail
+PASS the job deleted the Google event (no 10-30 workout in Google)
+PASS COO's reply has the seven items, each on its own line, in order (got 7)
+PASS after the question only the pending line existed (one pending line)
+PASS COO reply makes no false Google claim (heuristic)
+-- cost: loop3-reg-003-03: total 0.0056 USD (coo 0.0025, cho 0.0000, cos 0.0031, cfo 0.0000)
+RESULT loop3-reg-003-03 PASS (9 pass, 0 fail)

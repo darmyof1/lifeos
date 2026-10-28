@@ -1,0 +1,3 @@
+Workout CHO - Workout - 10302026-0001 (event ID seed-3) is recorded as deleted in `state/calendar-journal.md`; Google Calendar sync is not confirmed.
+Who changed it: Solo recorded the deletion at your request under run ID loop3-solo-smoke-02.
+Still needed from you: nothing; the push job still needs to sync the deletion to Google Calendar.

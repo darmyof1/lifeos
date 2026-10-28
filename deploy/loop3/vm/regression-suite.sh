@@ -51,7 +51,7 @@ cleanup_busy() {  # delete the busy events the run left in Google (the run's pus
   local run="$1" gid key
   grep -F "| pushed | $run |" "$W/cos/state/calendar-journal.md" | grep 'privacy=high' | grep -v 'deleted' | while IFS='|' read -r _ _ _ _ _ key _ det; do
     gid="$(echo "$det" | sed -n 's/.*google=\([a-z0-9]*\).*/\1/p')"; key="$(echo "$key" | xargs)"
-    [ -n "$gid" ] && GCAL_CALENDAR="$CAL" "$PY" "$REPO/scripts/gcal/gcal_delete.py" --id "$gid" --busy-key "$key" --ceo-approved --approval-note "CEO handover 8, 2026-10-27" 2>&1 | tail -1 | cut -c1-80
+    [ -n "$gid" ] && GCAL_CALENDAR="$CAL" "$PY" "$REPO/scripts/gcal/gcal_delete.py" --id "$gid" --busy-key "$key" --ceo-approved --approval-note "CEO handover 9, 2026-10-27" 2>&1 | tail -1 | cut -c1-80
   done
 }
 echo "| run | scenario | result | criteria (pass/fail) | numstat before / after the job | cost USD |" > "$SUM.rows"
