@@ -1,0 +1,41 @@
+== loop3-cmp-s-015  solo  privacy  2026-10-28 00:19 AST
+-- prep
+deleted	5cokmu99sgm5e5g0t107d90v0s	busy	approval: CEO handover 10, 2026-10-27
+solo state reset to the seed
+compact solo: Compacted session agent:solo:main (kept 1 lines). 
+done  CHO - Workout - 10302026-0001: already in Google 551gog2s1mnibq7ft5rc3cm8eg
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+ggl8soenvtks9fgkhnhp3dcq7s	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+551gog2s1mnibq7ft5rc3cm8eg	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+-- reply of the agent (first message)
+   Changed: Appended `privacy=high` for CHO - Workout - 10302026-0001 in `state/calendar-journal.md`; the journal update is confirmed.
+   Who: Solo (CoS), at the CEO’s request.
+   Event IDs: seed-3 (run ID: loop3-cmp-s-015).
+-- check output
+numstat: 4	0	state/calendar-journal.md
+--- journal lines for loop3-cmp-s-015
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | written | loop3-cmp-s-015 | seed-3 | CEO | privacy=high
+--- health plan tail
+
+## Change log
+(run ID | event ID | change)
+--- job
+done  CHO - Workout - 10302026-0001: made busy 551gog2s1mnibq7ft5rc3cm8eg
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+ggl8soenvtks9fgkhnhp3dcq7s	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+551gog2s1mnibq7ft5rc3cm8eg	2026-10-30T07:00:00-04:00	busy
+numstat after the job: 5	0	state/calendar-journal.md
+-- criteria
+PASS numstat before the job has no removed lines (4 0)
+PASS numstat after the job has no removed lines (5 0)
+PASS journal header unchanged (7 columns)
+PASS new line for the 10-30 entry with privacy=high (exactly one)
+PASS Google shows busy at 10-30 07:00 and the title is gone
+PASS reply names an event ID
+4-SET-ONLY sessions_send checker (no sessions_send in the solo set)
+-- cost: loop3-cmp-s-015: total 0.0025 USD (solo 0.0025)
+-- metrics (wall 33s): {"run": "loop3-cmp-s-015", "agents": {"solo": {"input": 138, "output": 2475, "cacheRead": 67808, "cacheWrite": 4520, "cost": 0.00249, "turns": 6, "tool_calls": 16, "first_turn_tokens": 9682, "instr_bytes": 9072}}, "total": {"input": 138, "output": 2475, "cacheRead": 67808, "cacheWrite": 4520, "cost": 0.00249, "turns": 6, "tool_calls": 16, "first_turn_tokens": 9682, "instr_bytes": 9072}}
+RESULT loop3-cmp-s-015 PASS (6 pass, 0 fail)

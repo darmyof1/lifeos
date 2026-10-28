@@ -1,0 +1,57 @@
+summary: ~/handover/structure-test/comparison/loop3-cmp-001.md
+Runs: 1 2 3 4 5 6 7. Pass 4, fail 3. Total cost 0.0404 USD (measured by exporting the COO, CHO, CoS and CFO sessions).
+
+CRON: ACTIVE (*/5)
+23:56 loop3-cmp-s-003 d1 PASS (7 pass, 0 fail) cost 0.0013 wall 17s
+23:58 loop3-cmp-s-004 d2 FAIL (8 pass, 1 fail) cost 0.0031 wall 49s
+23:59 loop3-cmp-s-005 d3 FAIL (4 pass, 2 fail) cost 0.0012 wall 18s
+00:01 loop3-cmp-s-006 cfo PASS (6 pass, 0 fail) cost 0.0024 wall 18s
+00:02 loop3-cmp-s-007 overlap PASS (8 pass, 0 fail) cost 0.0022 wall 33s
+00:05 loop3-cmp-s-008 privacy FAIL (4 pass, 2 fail) cost 0.0013 wall 20s
+00:06 loop3-cmp-s-009 bad-sleep PASS (9 pass, 0 fail) cost 0.0016 wall 21s
+00:08 loop3-cmp-s-010 d1 PASS (7 pass, 0 fail) cost 0.0014 wall 18s
+00:14 loop3-cmp-s-011 d2 FAIL (8 pass, 1 fail) cost 0.0031 wall 297s
+00:15 loop3-cmp-s-012 d3 FAIL (4 pass, 2 fail) cost 0.0011 wall 14s
+00:16 loop3-cmp-s-013 cfo PASS (6 pass, 0 fail) cost 0.0010 wall 12s
+00:18 loop3-cmp-s-014 overlap PASS (8 pass, 0 fail) cost 0.0039 wall 50s
+00:20 loop3-cmp-s-015 privacy PASS (6 pass, 0 fail) cost 0.0025 wall 33s
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+summary: ~/handover/structure-test/comparison/loop3-cmp-002.md
+Runs: 1 2 3 4 5 6 7. Pass 7, fail 0. Total cost 0.0409 USD (measured by exporting the COO, CHO, CoS and CFO sessions).
+
+CRON: ACTIVE (*/5)
+00:41 loop3-cmp-s-016 bad-sleep PASS (9 pass, 0 fail) cost 0.0017 wall 21s
+00:43 loop3-cmp-s-017 d1 PASS (7 pass, 0 fail) cost 0.0015 wall 17s
+00:44 loop3-cmp-s-018 d2 PASS (9 pass, 0 fail) cost 0.0018 wall 23s
+00:46 loop3-cmp-s-019 d3 FAIL (4 pass, 2 fail) cost 0.0018 wall 17s
+00:47 loop3-cmp-s-020 cfo PASS (6 pass, 0 fail) cost 0.0015 wall 19s
+00:49 loop3-cmp-s-021 overlap PASS (8 pass, 0 fail) cost 0.0028 wall 37s
+00:51 loop3-cmp-s-022 privacy FAIL (4 pass, 2 fail) cost 0.0014 wall 20s
+00:52 loop3-cmp-s-023 bad-sleep PASS (9 pass, 0 fail) cost 0.0014 wall 17s
+00:53 loop3-cmp-s-024 d1 PASS (7 pass, 0 fail) cost 0.0010 wall 12s
+00:55 loop3-cmp-s-025 d2 PASS (9 pass, 0 fail) cost 0.0020 wall 27s
+00:56 loop3-cmp-s-026 d3 FAIL (4 pass, 2 fail) cost 0.0010 wall 13s
+00:58 loop3-cmp-s-027 cfo PASS (6 pass, 0 fail) cost 0.0010 wall 13s
+01:00 loop3-cmp-s-028 overlap PASS (8 pass, 0 fail) cost 0.0031 wall 36s
+01:01 loop3-cmp-s-029 privacy PASS (6 pass, 0 fail) cost 0.0021 wall 27s
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+summary: ~/handover/structure-test/comparison/loop3-cmp-003.md
+Runs: 1 2 3 4 5 6 7. Pass 5, fail 2. Total cost 0.0456 USD (measured by exporting the COO, CHO, CoS and CFO sessions).
+
+CRON: ACTIVE (*/5)
+01:25 loop3-cmp-s-030 bad-sleep PASS (9 pass, 0 fail) cost 0.0029 wall 25s
+01:27 loop3-cmp-s-031 d1 PASS (7 pass, 0 fail) cost 0.0010 wall 14s
+01:29 loop3-cmp-s-032 d2 PASS (9 pass, 0 fail) cost 0.0025 wall 39s
+01:30 loop3-cmp-s-033 d3 FAIL (4 pass, 2 fail) cost 0.0016 wall 26s
+01:32 loop3-cmp-s-034 cfo PASS (6 pass, 0 fail) cost 0.0012 wall 16s
+01:34 loop3-cmp-s-035 overlap PASS (8 pass, 0 fail) cost 0.0028 wall 37s
+01:35 loop3-cmp-s-036 privacy PASS (6 pass, 0 fail) cost 0.0019 wall 27s
+01:37 loop3-cmp-s-037 bad-sleep PASS (9 pass, 0 fail) cost 0.0016 wall 24s
+01:38 loop3-cmp-s-038 d1 PASS (7 pass, 0 fail) cost 0.0010 wall 12s
+01:40 loop3-cmp-s-039 d2 PASS (9 pass, 0 fail) cost 0.0020 wall 29s
+01:42 loop3-cmp-s-040 d3 FAIL (4 pass, 2 fail) cost 0.0021 wall 28s
+01:43 loop3-cmp-s-041 cfo PASS (6 pass, 0 fail) cost 0.0015 wall 19s
+01:45 loop3-cmp-s-042 overlap PASS (8 pass, 0 fail) cost 0.0032 wall 42s
+01:47 loop3-cmp-s-043 privacy PASS (6 pass, 0 fail) cost 0.0018 wall 21s
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+01:47 driver ended at step 10 (9 = last step done = 10)

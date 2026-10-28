@@ -1,0 +1,39 @@
+== loop3-cmp-003-05  CFO entry  2026-10-28 01:14 AST
+-- cleanup of the previous run's busy events
+-- prep
+compact coo: Compacted session agent:coo:main (kept 1 lines). 
+compact cho: No compaction needed for session agent:cho:main. 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-cmp-003-05 now, then: scenario-run.sh check loop3-cmp-003-05
+-- reply of the agent (first message)
+   Added the Alex Test electricity-bill reminder for 2026-10-29, 09:00–09:30 AST, to `state/calendar-journal.md`.
+   Changed by the CFO; no overlap was reported.
+   Event ID: `loop3-cmp-003-05-cfo-01`
+-- journal lines for loop3-cmp-003-05 (verbatim)
+CFO - Electricity Bill Payment - 10292026-0001 | 2026-10-29 09:00 | 2026-10-29 09:30 | written | loop3-cmp-003-05 | loop3-cmp-003-05-cfo-01 | CFO | privacy=high
+CFO - Electricity Bill Payment - 10292026-0001 | 2026-10-29 09:00 | 2026-10-29 09:30 | pushed | loop3-cmp-003-05 | loop3-cmp-003-05-cfo-01 | sync | google=dcqopjev5l1gpgqarg5ir30sco; privacy=high
+-- check output
+numstat: 4	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CFO - Electricity Bill Payment - 10292026-0001: created (busy) dcqopjev5l1gpgqarg5ir30sco
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+numstat after the job: 5	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+m5jj5qo7c6qnc5n5i7u51amuio	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+dcqopjev5l1gpgqarg5ir30sco	2026-10-29T09:00:00-04:00	busy
+em30hi887efm1jqvv32sboljpg	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+-- criteria
+PASS numstat before the job has no removed lines (4 0)
+PASS numstat after the job has no removed lines (5 0)
+PASS journal header unchanged (7 columns)
+PASS one written line: CFO title, event ID loop3-cmp-003-05-cfo-01, requested by CFO, privacy=high
+PASS the CFO called the CoS itself (agent:cos:main, followup, timeoutSeconds 120)
+PASS COO reply gives the CFO event ID
+PASS Google shows busy at 10-29 09:00 (job created a busy event)
+-- cost: loop3-cmp-003-05: total 0.0058 USD (coo 0.0014, cho 0.0000, cos 0.0019, cfo 0.0025)
+-- metrics (wall 55s): {"run": "loop3-cmp-003-05", "agents": {"coo": {"input": 46, "output": 435, "cacheRead": 8221, "cacheWrite": 8758, "cost": 0.0014, "turns": 2, "tool_calls": 3, "first_turn_tokens": 8244, "instr_bytes": 6120}, "cho": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0, "cost": 0.0, "turns": 0, "tool_calls": 0, "first_turn_tokens": 0, "instr_bytes": 5030}, "cos": {"input": 408, "output": 1649, "cacheRead": 47854, "cacheWrite": 4228, "cost": 0.00187, "turns": 4, "tool_calls": 11, "first_turn_tokens": 11276, "instr_bytes": 8795}, "cfo": {"input": 327, "output": 1518, "cacheRead": 20771, "cacheWrite": 11864, "cost": 0.00248, "turns": 3, "tool_calls": 6, "first_turn_tokens": 10151, "instr_bytes": 4159}}, "total": {"input": 781, "output": 3602, "cacheRead": 76846, "cacheWrite": 24850, "cost": 0.00575, "turns": 9, "tool_calls": 20, "first_turn_tokens": 29671, "instr_bytes": 24104}}
+RESULT loop3-cmp-003-05 PASS (7 pass, 0 fail)

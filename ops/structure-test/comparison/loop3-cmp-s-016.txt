@@ -1,0 +1,45 @@
+== loop3-cmp-s-016  solo  bad-sleep  2026-10-28 00:41 AST
+-- prep
+solo state reset to the seed
+compact solo: No compaction needed for session agent:solo:main. 
+done  CHO - Workout - 10302026-0001: already in Google id1g9l98qipf5ucb6e0g24c80s
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+r64o84l9g9rah51kn4i29b6ekc	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+id1g9l98qipf5ucb6e0g24c80s	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+-- reply of the agent (first message)
+   Moved the workout to Thu 2026-10-29, 07:00–08:00 in `state/calendar-journal.md`; recorded 5 hours of sleep in `state/health-plan.md`.
+   Changed by Solo at Alex Test’s request.
+   Event IDs: `loop3-cmp-s-016-solo-01` (sleep), `loop3-cmp-s-016-solo-02` (workout move).
+-- check output
+numstat: 5	0	state/calendar-journal.md
+--- journal lines for loop3-cmp-s-016
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | moved | loop3-cmp-s-016 | loop3-cmp-s-016-solo-02 | CEO | privacy=high
+CHO - Workout - 10292026-0001 | 2026-10-29 07:00 | 2026-10-29 08:00 | written | loop3-cmp-s-016 | loop3-cmp-s-016-solo-02 | CEO | privacy=high
+--- health plan tail
+## Change log
+(run ID | event ID | change)
+loop3-cmp-s-016 | loop3-cmp-s-016-solo-01 | Reported sleep: 5 hours last night (2026-10-28).
+--- job
+done  CHO - Workout - 10292026-0001: made busy r64o84l9g9rah51kn4i29b6ekc
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+r64o84l9g9rah51kn4i29b6ekc	2026-10-29T07:00:00-04:00	busy
+id1g9l98qipf5ucb6e0g24c80s	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after the job: 6	0	state/calendar-journal.md
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS 10-28 workout moved line with privacy=high (exactly one: a duplicate write fails)
+PASS 10-29 07:00 written line with privacy=high (exactly one)
+PASS numstat 5 0 then 6 0
+PASS Google shows busy at 10-29 07:00
+PASS sleep fact in the health plan with its own event ID
+PASS reply gives the event ID
+4-SET-ONLY sessions_send checker (no sessions_send in the solo set)
+4-SET-ONLY reply names the CHO and the CoS
+-- cost: loop3-cmp-s-016: total 0.0017 USD (solo 0.0017)
+-- metrics (wall 21s): {"run": "loop3-cmp-s-016", "agents": {"solo": {"input": 92, "output": 1452, "cacheRead": 42255, "cacheWrite": 3964, "cost": 0.00165, "turns": 4, "tool_calls": 12, "first_turn_tokens": 9691, "instr_bytes": 9072}}, "total": {"input": 92, "output": 1452, "cacheRead": 42255, "cacheWrite": 3964, "cost": 0.00165, "turns": 4, "tool_calls": 12, "first_turn_tokens": 9691, "instr_bytes": 9072}}
+RESULT loop3-cmp-s-016 PASS (9 pass, 0 fail)

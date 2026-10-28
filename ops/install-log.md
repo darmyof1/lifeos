@@ -388,3 +388,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Claude Code installed the updated health check (70 PASS, all 16 parity lines PASS, the cos check also done by hand without printing an ID), ran the baseline twice more (loop3-reg-002 5 of 7, loop3-reg-003 7 of 7), wrote the structure-test design, built the solo agent and ran two smoke runs (not counted). A config entry for agent solo was added (backup openclaw.json.pre-solo-20261027-2257; only that entry changed); the gateway was restarted once (one process, four Slack accounts connected).
 - Correction: the handover 8 report and fix-97 said the bad-sleep move was written twice. The run files show one moved and one written line (numstat 5 0). The failures were the P-35 criterion and the runner not running the job after it. PENDING and STATE corrected.
 - Repo: structure-test files under deploy/loop3/structure-test/, the suite with the handover 9 approval note, report 9, results of loop3-reg-002 and -003. Config paths in the copies show ~ instead of the home directory. No new decision; APR-0097 covers step 2.
+
+## 2026-10-28 - Handover 10 recorded (fix-101)
+- Claude Code installed regression-suite.sh, reg-criteria.py, run-metrics.py, solo-run.sh and comparison-driver.sh (sha256 prefixes in report 10, checked by the CEO's side against the tarball), ran 3 more four-agent suites (loop3-cmp-001 to -003) and 42 solo runs, 63 runs in all, about 0.30 USD. Health check 71 PASS, 0 WARN, 0 FAIL. COO, CHO, CoS and CFO files, config and cron unchanged.
+- Tooling: an acknowledgement error is informational; the solo agent uses agent:solo:main.
+- Facts only; no new decision. Structure choice stays with the CEO (separate APR).

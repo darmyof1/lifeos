@@ -1,0 +1,55 @@
+== loop3-cmp-002-06  overlap  2026-10-28 00:34 AST
+-- cleanup of the previous run's busy events
+deleted	r31n5hjdotamdatd6k4mf09j9s	busy	approval: CEO handover 9, 2026-10-27
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: No compaction needed for session agent:cho:main. 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: Compacted session agent:cfo:main (kept 1 lines). 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-cmp-002-06 now, then: scenario-run.sh check loop3-cmp-002-06
+-- reply of the agent (first message)
+   What changed: The dentist appointment was not added; it conflicts with the existing workout. The nearest free hour is 08:00–09:00 AST, pending your confirmation.
+   Who changed it: No appointment change; CHO reported that CoS logged the conflict.
+   Event ID: `loop3-cmp-002-06-cho-01`
+-- reply (second message)
+   What changed: CHO recorded the dentist appointment for 2026-10-28, 08:00–09:00 AST in `state/calendar-journal.md`; Google Calendar was not changed.
+   New appointment event ID: `loop3-cmp-002-06-cho-02`.
+   Earlier conflict record (still in place): `loop3-cmp-002-06-cho-01`.
+-- journal lines for loop3-cmp-002-06 (verbatim)
+CHO - Dentist appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop3-cmp-002-06 | loop3-cmp-002-06-cho-01 | CHO | reason=overlaps CHO - Workout - 10282026-0001; privacy=high
+CHO - Dentist appointment - 10282026-0003 | 2026-10-28 08:00 | 2026-10-28 09:00 | written | loop3-cmp-002-06 | loop3-cmp-002-06-cho-02 | CHO | privacy=high
+CHO - Dentist appointment - 10282026-0003 | 2026-10-28 08:00 | 2026-10-28 09:00 | pushed | loop3-cmp-002-06 | loop3-cmp-002-06-cho-02 | sync | google=agef8a9i48l2nrbeqa8s6cge9k; privacy=high
+-- check output
+numstat: 5	0	state/calendar-journal.md
+CHO - Dentist appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop3-cmp-002-06 | loop3-cmp-002-06-cho-01 | CHO | reason=overlaps CHO - Workout - 1028
+PASS  CHO sent to the CoS  (2 call(s))
+PASS  first CHO call uses mode followup  (mode=followup)
+PASS  first CHO call does not set watch
+PASS  first CHO call has timeoutSeconds 120  (timeoutSeconds=120)
+PASS  first CHO call returned ok (a reply)  (status=ok)
+PASS  CoS sent nothing to the CHO  (0 call(s))
+PASS  no SESSION_WORK_START_CHANGED in any sessions_send result  (0 result(s))
+Result: all checks passed
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Dentist appointment - 10282026-0003: created (busy) agef8a9i48l2nrbeqa8s6cge9k
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+r64o84l9g9rah51kn4i29b6ekc	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+agef8a9i48l2nrbeqa8s6cge9k	2026-10-28T08:00:00-04:00	busy
+hqtpdmt4lfeg8no5eo33i4ba80	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS one conflict line with reason=overlaps
+PASS no written line before the slot was accepted (conflict line first)
+PASS the nearest free slot (08:00) was offered
+PASS after accepting: exactly one written line at 08:00 on 10-28
+PASS Google shows busy at 10-28 08:00 (job created the event)
+PASS sessions_send checker: all checks passed
+-- cost: loop3-cmp-002-06: total 0.0088 USD (coo 0.0024, cho 0.0026, cos 0.0038, cfo 0.0000)
+-- metrics (wall 101s): {"run": "loop3-cmp-002-06", "agents": {"coo": {"input": 138, "output": 1050, "cacheRead": 48345, "cacheWrite": 11285, "cost": 0.00243, "turns": 6, "tool_calls": 11, "first_turn_tokens": 8239, "instr_bytes": 6120}, "cho": {"input": 763, "output": 2149, "cacheRead": 83039, "cacheWrite": 4660, "cost": 0.00256, "turns": 7, "tool_calls": 15, "first_turn_tokens": 10373, "instr_bytes": 5030}, "cos": {"input": 918, "output": 2656, "cacheRead": 129273, "cacheWrite": 9096, "cost": 0.00385, "turns": 9, "tool_calls": 24, "first_turn_tokens": 11283, "instr_bytes": 8795}}, "total": {"input": 1819, "output": 5855, "cacheRead": 260657, "cacheWrite": 25041, "cost": 0.00884, "turns": 22, "tool_calls": 50, "first_turn_tokens": 29895, "instr_bytes": 19945}}
+RESULT loop3-cmp-002-06 PASS (9 pass, 0 fail)

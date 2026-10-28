@@ -15,7 +15,7 @@ while [ $# -gt 0 ]; do case "$1" in --only) ONLY="${2:-}"; shift;; --dry-run) DR
 . "$HOME/loop1/env.sh"
 export TZ=America/Santo_Domingo
 REPO="$HOME/lifeos-ro"; W="$HOME/loop1/workspaces"; PY="$HOME/.local/share/pipx/venvs/gcalcli/bin/python"
-OUTD="$HOME/handover/regression"; RD="$OUTD/$SUITE"; SUM="$OUTD/$SUITE.md"; TMP="$(mktemp -d)"
+OUTD="${REG_OUTD:-$HOME/handover/regression}"; RD="$OUTD/$SUITE"; SUM="$OUTD/$SUITE.md"; TMP="$(mktemp -d)"
 EX="$HOME/loop1/evidence/traj/.openclaw/trajectory-exports"
 NAMES=(x "bad-sleep-reschedule" "D1 delete (CEO instruction)" "D2 delete (CEO question, approval)" "D3 delete asked by a chief" "CFO entry" "overlap" "privacy request")
 CODES=(x R D1 D2 D3 C O P)
@@ -64,7 +64,7 @@ for n in $RUNS; do
     echo "-- prep"; "$HOME/loop1/scenario-run.sh" prep "$R" 2>&1 | grep -E "STOP|READY|numstat|compact (coo|cho|cos|cfo):"
   } >"$F" 2>&1
   if grep -q "^STOP" "$F"; then echo "$R: prep STOPPED, see $F"; echo "| $R | ${NAMES[$n]} | FAIL | prep stopped | | |" >> "$SUM.rows"; FAILN=$((FAILN+1)); PREV="$R"; break; fi
-  T0="$(date -u +%FT%TZ)"; SK=""
+  T0="$(date -u +%FT%TZ)"; S0=$(date +%s); SK=""
   case "$S" in
     R)  ask coo "$R-coo" "Loop 1 scenario run, run ID $R. Alex Test slept 5 hours last night. Move the Wednesday workout on 2026-10-28 to Thursday 2026-10-29, 07:00 to 08:00. Route this to the CHO, which owns health. Wait for the result, then tell me in 3 lines what changed, who changed it, and the event IDs." "$WD/q.txt";;
     D1) ask coo "$R-coo" "Loop 2 scenario run, run ID $R. I am the CEO. Delete the workout on 2026-10-30 (CHO - Workout - 10302026-0001) from the calendar. Wait for the result, then tell me in 3 lines what changed, who changed it, and what is still needed from me." "$WD/q.txt"; SK="--skip-checker";;
@@ -76,8 +76,20 @@ for n in $RUNS; do
         ask coo "$R-coo" "Run ID $R. Yes, take the 08:00 to 09:00 slot for the dentist appointment on 2026-10-28. Tell me in 3 lines what changed and the event IDs." "$WD/a.txt";;
     P)  ask coo "$R-coo" "Loop 2 scenario run, run ID $R. I am the CEO. Please make the workout on 2026-10-30 (CHO - Workout - 10302026-0001) private. Wait for the result, then tell me in 3 lines what changed, who changed it, and the event IDs." "$WD/q.txt";;
   esac
+  WALL=$(( $(date +%s) - S0 ))
   # shellcheck disable=SC2086
   "$HOME/loop1/scenario-run.sh" check "$R" $SK >"$WD/check.txt" 2>&1
+  # APR-0099 item 1: an acknowledgement error (SESSION_WORK_START_CHANGED) alone does not stop the job. If the checker failed, run the job
+  # whenever the journal and reply criteria pass (reg-criteria.py --prejob); a missing or duplicate write keeps the job from running.
+  if grep -q "CHECKER FAILED" "$WD/check.txt"; then
+    if python3 "$HOME/loop1/reg-criteria.py" --prejob "$S" "$R" "$WD" >"$WD/prejob.txt" 2>&1; then
+      { echo "--- suite: checker failed but the journal checks pass; running the job by hand (ack error rule, APR-0099)"
+        bash "$REPO/scripts/gcal/gcal_sync_cron.sh" >/dev/null 2>&1; tail -n 4 "$HOME/loop1/gcal-sync/sync.log" | cut -c1-170
+        echo "numstat after the job: $(git -C "$W/cos" diff --numstat state/calendar-journal.md)"; } >>"$WD/check.txt"
+    else
+      echo "--- suite: journal checks failed, job not run" >>"$WD/check.txt"
+    fi
+  fi
   glist >"$WD/glist.txt"
   if [ "$S" = C ]; then python3 - "$R" "$WD/cfo.json" <<'P'
 import json, sys, os
@@ -99,8 +111,10 @@ P
   for a in cho cos cfo; do [ -e "$EX/$R-$a" ] || openclaw sessions export-trajectory --session-key "agent:$a:main" --workspace "$HOME/loop1/evidence/traj" --output "$R-$a" >/dev/null 2>&1; done
   COST="$(python3 "$HOME/loop1/run-cost.py" "$R" "$T0" 2>&1 | tail -1)"
   CV="$(echo "$COST" | sed -n 's/.*total \([0-9.]*\) USD.*/\1/p')"; CV="${CV:-0}"
+  AGS="coo cho cos"; [ "$S" = C ] && AGS="coo cho cos cfo"; [ "$S" = D3 ] && AGS="cho cos"
+  MET="$(python3 "$HOME/loop1/run-metrics.py" "$R" "$T0" $AGS 2>&1 | tail -1)"; echo "$MET" | python3 -c "import json,sys; d=json.loads(sys.stdin.read()); d['wall_s']=$WALL; d['variant']='4set'; d['scenario']='$S'; print(json.dumps(d))" > "$RD/$R.metrics.json" 2>/dev/null
   CRIT="$(python3 "$HOME/loop1/reg-criteria.py" "$S" "$R" "$WD" 2>&1)"
-  NP="$(echo "$CRIT" | grep -c '^PASS')"; NF="$(echo "$CRIT" | grep -vc '^PASS')"
+  NP="$(echo "$CRIT" | grep -c '^PASS')"; NF="$(echo "$CRIT" | grep -c '^FAIL')"
   RES=PASS; [ "$NF" -gt 0 ] && RES=FAIL
   NB="$(grep -m1 '^numstat:' "$WD/check.txt" | sed 's/numstat: //;s/state.*//' | tr -s '[:space:]' ' ')"; NA="$(grep 'numstat after the job' "$WD/check.txt" | tail -1 | sed 's/.*: //;s/state.*//' | tr -s '[:space:]' ' ')"
   { echo "-- reply of the agent (first message)"; sed -e 's/^/   /' "$WD/q.txt" | tail -n 25 | cut -c1-300
@@ -109,12 +123,12 @@ P
     echo "-- check output"; grep -E "Result|PASS|FAIL|numstat|done|created|made busy|skip|summary|conflict" "$WD/check.txt" | cut -c1-180
     echo "-- Google after the job"; cut -c1-120 "$WD/glist.txt"
     echo "-- criteria"; echo "$CRIT"
-    echo "-- cost: $COST"
+    echo "-- cost: $COST"; echo "-- metrics (wall ${WALL}s): $MET"
     echo "RESULT $R $RES ($NP pass, $NF fail)"
   } >>"$F"
   TOTAL="$(python3 -c "print(round($TOTAL+$CV,4))")"; if [ "$RES" = PASS ]; then PASSN=$((PASSN+1)); else FAILN=$((FAILN+1)); fi
-  FL="$(echo "$CRIT" | grep -v '^PASS' | sed 's/^FAIL //' | tr '\n' ';' | cut -c1-200)"
-  echo "| $R | ${NAMES[$n]} | $RES | $NP pass, $NF fail${FL:+ (fail: $FL)} | $NB / $NA | $CV |" >> "$SUM.rows"
+  FL="$(echo "$CRIT" | grep '^FAIL' | sed 's/^FAIL //' | tr '\n' ';' | cut -c1-200)"
+  echo "| $R | ${NAMES[$n]} | $RES | $NP pass, $NF fail${FL:+ (fail: $FL)}$(echo "$CRIT" | grep -q '^INFO ack' && echo ' [ack error seen]') | $NB / $NA | $CV |" >> "$SUM.rows"
   echo "$R $RES ($NP pass, $NF fail) cost $CV"
   post "Regression $SUITE, run $R (${NAMES[$n]}): $RES - $NP criteria pass, $NF fail, cost $CV USD"
   PREV="$R"

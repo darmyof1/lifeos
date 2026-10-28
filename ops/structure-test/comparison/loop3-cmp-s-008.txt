@@ -1,0 +1,43 @@
+== loop3-cmp-s-008  solo  privacy  2026-10-28 00:03 AST
+-- prep
+deleted	mcd2areqbgfudpb5qblh6s91bo	busy	approval: CEO handover 10, 2026-10-27
+solo state reset to the seed
+compact solo: Compacted session agent:solo:main (kept 1 lines). 
+  <style>
+    *). It may have expired or been revoked: see guides/calendar-gcalcli.md, Troubleshooting.
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+l5nbnmq4g2244vip4ulh2k0hmk	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+me1b0hfcjfj715jddrk7k9un50	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after seed (expect 3 0): 
+-- reply of the agent (first message)
+   Changed: Marked **CHO - Workout - 10302026-0001** private (`privacy=high`) in `state/calendar-journal.md`; Google Calendar was not changed.
+   Who: Solo, at the CEO’s request.
+   Event IDs: `seed-3` (workout); `loop3-cmp-s-008-solo-01` (privacy update).
+-- check output
+numstat: 1	0	state/calendar-journal.md
+--- journal lines for loop3-cmp-s-008
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | updated | loop3-cmp-s-008 | loop3-cmp-s-008-solo-01 | CEO | privacy=high
+--- health plan tail
+
+## Change log
+(run ID | event ID | change)
+--- job
+done  CHO - Workout - 10262026-0001: already in Google v2err3l29fgtk81pcfhkihstp8
+done  CHO - Workout - 10282026-0001: already in Google l5nbnmq4g2244vip4ulh2k0hmk
+done  CHO - Workout - 10302026-0001: already in Google me1b0hfcjfj715jddrk7k9un50
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+l5nbnmq4g2244vip4ulh2k0hmk	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+me1b0hfcjfj715jddrk7k9un50	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after the job: 4	0	state/calendar-journal.md
+-- criteria
+PASS numstat before the job has no removed lines (1 0)
+PASS numstat after the job has no removed lines (4 0)
+PASS journal header unchanged (7 columns)
+FAIL new line for the 10-30 entry with privacy=high (exactly one)
+FAIL Google shows busy at 10-30 07:00 and the title is gone
+PASS reply names an event ID
+4-SET-ONLY sessions_send checker (no sessions_send in the solo set)
+-- cost: loop3-cmp-s-008: total 0.0013 USD (solo 0.0013)
+-- metrics (wall 20s): {"run": "loop3-cmp-s-008", "agents": {"solo": {"input": 92, "output": 1247, "cacheRead": 40949, "cacheWrite": 2423, "cost": 0.00135, "turns": 4, "tool_calls": 10, "first_turn_tokens": 9682, "instr_bytes": 9072}}, "total": {"input": 92, "output": 1247, "cacheRead": 40949, "cacheWrite": 2423, "cost": 0.00135, "turns": 4, "tool_calls": 10, "first_turn_tokens": 9682, "instr_bytes": 9072}}
+RESULT loop3-cmp-s-008 FAIL (4 pass, 2 fail)

@@ -1,0 +1,39 @@
+== loop3-cmp-003-02  D1 delete (CEO instruction)  2026-10-28 01:05 AST
+-- cleanup of the previous run's busy events
+deleted	ii6j2r56lqurqdm6od01micc3g	busy	approval: CEO handover 9, 2026-10-27
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: Compacted session agent:cho:main (kept 1 lines). 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-cmp-003-02 now, then: scenario-run.sh check loop3-cmp-003-02
+-- reply of the agent (first message)
+   Workout **CHO - Workout - 10302026-0001** was deleted from the calendar journal; event ID **seed-3** (run **loop3-cmp-003-02**).  
+   **CoS** confirmed the deletion and recorded the audit trail; this does not itself update Google Calendar.  
+   Nothing further is needed from you.
+-- journal lines for loop3-cmp-003-02 (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-cmp-003-02 | seed-3 | CEO |
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-cmp-003-02 | seed-3 | CEO |
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop3-cmp-003-02 | seed-3 | sync | google=l5ihmr54mo4kjiaqsdrcfm0li8; deleted
+-- check output
+numstat: 5	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: deleted l5ihmr54mo4kjiaqsdrcfm0li8
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 1, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+m5jj5qo7c6qnc5n5i7u51amuio	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS pending line first, deleted line second
+PASS both delete lines: seed-3, requested by CEO, empty detail
+PASS the job deleted the Google event (no 10-30 workout in Google)
+PASS reply makes no false Google claim (heuristic)
+-- cost: loop3-cmp-003-02: total 0.0036 USD (coo 0.0016, cho 0.0000, cos 0.0019, cfo 0.0000)
+-- metrics (wall 40s): {"run": "loop3-cmp-003-02", "agents": {"coo": {"input": 69, "output": 628, "cacheRead": 16834, "cacheWrite": 9123, "cost": 0.00163, "turns": 3, "tool_calls": 6, "first_turn_tokens": 8229, "instr_bytes": 6120}, "cho": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0, "cost": 0.0, "turns": 0, "tool_calls": 0, "first_turn_tokens": 0, "instr_bytes": 5030}, "cos": {"input": 545, "output": 1512, "cacheRead": 62247, "cacheWrite": 4012, "cost": 0.00193, "turns": 5, "tool_calls": 12, "first_turn_tokens": 11321, "instr_bytes": 8795}}, "total": {"input": 614, "output": 2140, "cacheRead": 79081, "cacheWrite": 13135, "cost": 0.00356, "turns": 8, "tool_calls": 18, "first_turn_tokens": 19550, "instr_bytes": 19945}}
+RESULT loop3-cmp-003-02 PASS (7 pass, 0 fail)

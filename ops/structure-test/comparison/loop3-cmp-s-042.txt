@@ -1,0 +1,53 @@
+== loop3-cmp-s-042  solo  overlap  2026-10-28 01:44 AST
+-- prep
+deleted	p97fp9capmolna0p8g6uc9p7mg	busy	approval: CEO handover 10, 2026-10-27
+solo state reset to the seed
+compact solo: Compacted session agent:solo:main (kept 1 lines). 
+done  CHO - Workout - 10302026-0001: already in Google b4if4rhvtif80htdea7l4phvj0
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+cveslemltiinhpa0rtsbbj8oog	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+b4if4rhvtif80htdea7l4phvj0	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+-- reply of the agent (first message)
+   What: Solo logged a conflict for the dentist appointment; it wasn’t added at 07:30–08:30.
+   Used for: Record the clash with CHO - Workout - 10282026-0001; event ID loop3-cmp-s-042-solo-01.
+   Why now: The workout occupies 07:00–08:00 on 2026-10-28.
+   Risk if approved: The appointment would be scheduled for 08:00–09:00 instead.
+   Risk if not: The appointment remains unwritten; the conflict stays logged.
+   Recommendation: Accept 08:00–09:00, the nearest free one-hour slot.
+   Reply: approve, explain more, or keep.
+-- reply (second message)
+   Added CHO - Dentist Appointment - 10282026-0002 for 2026-10-28, 08:00–09:00; the earlier conflict entry remains logged.
+   Changed by Solo in `state/calendar-journal.md`.
+   Event ID: `loop3-cmp-s-042-solo-01` (both entries).
+-- check output
+numstat: 5	0	state/calendar-journal.md
+--- journal lines for loop3-cmp-s-042
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop3-cmp-s-042 | loop3-cmp-s-042-solo-01 | CEO | reason=overlaps CHO - Workout - 10282026-0001; privacy=hi
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 08:00 | 2026-10-28 09:00 | written | loop3-cmp-s-042 | loop3-cmp-s-042-solo-01 | CEO | privacy=high
+--- health plan tail
+
+## Change log
+(run ID | event ID | change)
+--- job
+done  CHO - Dentist Appointment - 10282026-0002: created (busy) puof7lvcujj5q936lobisnj1lk
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+cveslemltiinhpa0rtsbbj8oog	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+puof7lvcujj5q936lobisnj1lk	2026-10-28T08:00:00-04:00	busy
+b4if4rhvtif80htdea7l4phvj0	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after the job: 6	0	state/calendar-journal.md
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS one conflict line with reason=overlaps
+PASS no written line before the slot was accepted (conflict line first)
+PASS the nearest free slot (08:00) was offered
+PASS after accepting: exactly one written line at 08:00 on 10-28
+PASS Google shows busy at 10-28 08:00 (job created the event)
+4-SET-ONLY sessions_send checker (no sessions_send in the solo set)
+-- cost: loop3-cmp-s-042: total 0.0032 USD (solo 0.0032)
+-- metrics (wall 42s): {"run": "loop3-cmp-s-042", "agents": {"solo": {"input": 184, "output": 2915, "cacheRead": 98140, "cacheWrite": 6339, "cost": 0.00325, "turns": 8, "tool_calls": 18, "first_turn_tokens": 9691, "instr_bytes": 9072}}, "total": {"input": 184, "output": 2915, "cacheRead": 98140, "cacheWrite": 6339, "cost": 0.00325, "turns": 8, "tool_calls": 18, "first_turn_tokens": 9691, "instr_bytes": 9072}}
+RESULT loop3-cmp-s-042 PASS (8 pass, 0 fail)

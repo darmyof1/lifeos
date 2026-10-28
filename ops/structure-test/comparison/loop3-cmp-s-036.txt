@@ -1,0 +1,41 @@
+== loop3-cmp-s-036  solo  privacy  2026-10-28 01:34 AST
+-- prep
+deleted	dvj5k0cr7pjaqcat68n3h44ct8	busy	approval: CEO handover 10, 2026-10-27
+solo state reset to the seed
+compact solo: Compacted session agent:solo:main (kept 1 lines). 
+done  CHO - Workout - 10302026-0001: already in Google c5od9u9ubu0suh3dkt3one7so4
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+luvemuvqkspsf6f0rdu6vvb44o	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+c5od9u9ubu0suh3dkt3one7so4	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+-- reply of the agent (first message)
+   Changed: Marked CHO - Workout - 10302026-0001 `privacy=high` in `state/calendar-journal.md`; Google update is not confirmed pending the push job.
+   Who: Recorded by Solo at the CEO’s request.
+   Event IDs: Existing entry `seed-3`; privacy change `loop3-cmp-s-036-solo-01`.
+-- check output
+numstat: 4	0	state/calendar-journal.md
+--- journal lines for loop3-cmp-s-036
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | written | loop3-cmp-s-036 | loop3-cmp-s-036-solo-01 | CEO | privacy=high
+--- health plan tail
+
+## Change log
+(run ID | event ID | change)
+--- job
+done  CHO - Workout - 10302026-0001: made busy c5od9u9ubu0suh3dkt3one7so4
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+luvemuvqkspsf6f0rdu6vvb44o	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+c5od9u9ubu0suh3dkt3one7so4	2026-10-30T07:00:00-04:00	busy
+numstat after the job: 5	0	state/calendar-journal.md
+-- criteria
+PASS numstat before the job has no removed lines (4 0)
+PASS numstat after the job has no removed lines (5 0)
+PASS journal header unchanged (7 columns)
+PASS new line for the 10-30 entry with privacy=high (exactly one)
+PASS Google shows busy at 10-30 07:00 and the title is gone
+PASS reply names an event ID
+4-SET-ONLY sessions_send checker (no sessions_send in the solo set)
+-- cost: loop3-cmp-s-036: total 0.0019 USD (solo 0.0019)
+-- metrics (wall 27s): {"run": "loop3-cmp-s-036", "agents": {"solo": {"input": 92, "output": 2103, "cacheRead": 42430, "cacheWrite": 3617, "cost": 0.00194, "turns": 4, "tool_calls": 10, "first_turn_tokens": 9682, "instr_bytes": 9072}}, "total": {"input": 92, "output": 2103, "cacheRead": 42430, "cacheWrite": 3617, "cost": 0.00194, "turns": 4, "tool_calls": 10, "first_turn_tokens": 9682, "instr_bytes": 9072}}
+RESULT loop3-cmp-s-036 PASS (6 pass, 0 fail)

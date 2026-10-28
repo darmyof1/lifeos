@@ -1,0 +1,5 @@
+== loop3-cmp-s-001  solo  bad-sleep  2026-10-27 23:33 AST
+-- prep
+solo state reset to the seed
+compact solo: Compaction failed: Session agent:solo:main not found. Run openclaw sessions list --json to choose a valid key. 
+STOP: compact output for solo looks like an error
