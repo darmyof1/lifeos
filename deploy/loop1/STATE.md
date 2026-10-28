@@ -1,6 +1,6 @@
 # LifeOS VM state and handoff (as of 2026-10-27, 11:40 AST)
 
-Loop 1 is closed (APR-0071). Loop 2 is closed (APR-0096, signed 2026-10-27) and APR-0073 has ended. Loop 3 is not defined yet: it needs its own APR before any real data or a local model.
+Loop 1 is closed (APR-0071). Loop 2 is closed (APR-0096, signed 2026-10-27) and APR-0073 has ended. Loop 3 scope is approved (APR-0097, P-43): rebuildable repo, structure test, privacy gate in code, security minimum, identity-access contract, then one real feed after a separate yes.
 The Loop 2 setup keeps running on the VM as it is, on synthetic data only, until the CEO records a Loop 3 APR or says to stop (APR-0096).
 
 Written for a Claude Code session on the VM and for the planning chat. Read this first. Nothing here is a decision: decisions live in decisions/APPROVALS.md, open questions in decisions/PENDING.md. The history of how this state was reached (run tables, earlier to-do lists, Loop 1 start-up commands) is in deploy/loop1/STATE-HISTORY-2026-10-27.md.
@@ -38,7 +38,7 @@ Written for a Claude Code session on the VM and for the planning chat. Read this
 - Calendar: the CoS journal (state/calendar-journal.md, append-only) is pushed by scripts/gcal/gcal_sync.py through scripts/gcal/gcal_sync_cron.sh every 5 minutes (plain cron under ubuntu) to the Google TEST calendar. GCAL_ALLOW_DELETES=1 is set in ~/loop1/gcal-sync/env (APR-0093): the job deletes only a LifeOS-titled event with a delete-pending-approval line and a deleted line for the same event ID. The cron is not moved to the real calendar (APR-0096).
 - 05:00 AST report: ~/loop1/daily-reset-report.sh (copies in deploy/loop2/vm/) posts a read-only session report to the COO channel and appends it to ~/loop1/reset-check/report.log.
 - Health check: python3 ~/loop1/health-check.py (copy in deploy/loop1/health-check.py). Last run 2026-10-27 01:49: 54 PASS, 0 WARN, 0 FAIL, 4 INFO (ops/health-check-output-2026-10-27-b.txt).
-- Cost: a daily alert at 1 USD and a kill at 5 USD (APR-0083); the OpenAI project limit stays. Scenario runs measured by hand cost 0.0037 to 0.0077 USD each (runs 038 to 045).
+- Cost: a daily alert at 1 USD and a kill at 5 USD, set by the CEO on the OpenAI side (APR-0083 rests on his statement; there is no kill switch in our code yet: scripts/ops/kill-switch.sh is empty, Loop 3 step 4); the 5 USD monthly project limit stays. Scenario runs measured by hand cost 0.0037 to 0.0077 USD each (runs 038 to 045).
 
 ## Running a scenario (CLI route, synthetic data)
 1. Prep: ~/loop1/scenario-run.sh prep <RUN> (pauses the cron, saves and resets state, compacts sessions and reads every output, pushes the seed lines, lists Google). Any STOP means wait and retry; the cron stays paused.

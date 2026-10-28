@@ -3,6 +3,16 @@
 Nothing here is binding. Each item moves to APPROVALS.md only when you answer it.
 Closed since the last version: P-08 (APR-0040), P-13 (APR-0041), P-18 (APR-0042), P-19 (APR-0043), calendar routing (APR-0044), Slack exemption (APR-0045), P-20 (APR-0046), P-21 (APR-0047), P-22 (APR-0048), P-24 (APR-0049), P-23 (APR-0050), P-25 (APR-0051), P-27 (APR-0062), P-30 (APR-0060), P-33 (APR-0063), P-29 (solved by a finding, guides/loop1-baseline.md section 7.10), P-34 (APR-0066), P-35 (APR-0068), P-38 (APR-0076), P-28 (APR-0080), P-39 (APR-0082), P-31 (APR-0083), P-37 (APR-0084), P-32 (APR-0085), P-42 (APR-0096).
 
+## P-43 - Loop 3 (APR-0097)
+Steps and status:
+1. Rebuildable repo (mirror the four agents' live files into agent-files/, VM-to-repo check, regression suite): handover 8 to Claude Code, open.
+2. Structure test (one agent vs four on the same suite): open, after step 1.
+3. Privacy gate in code: open.
+4. Security minimum (threat model, update policy, kill switch in code, restore drill; isolation and public-repo decisions): open.
+5. Identity-access contract: open.
+6. Success metrics, one real feed (health), hardware, real data after a separate yes: open.
+Questions for the CEO later: when a chief is its own agent; tiered approvals; the public repo.
+
 ## P-09 - Spikes not yet run
 Summary (2026-10-27, from the detail below and the spike files): done SPK-01 (mechanism), SPK-02, SPK-06, SPK-07, SPK-09; partial SPK-03 (isolation-on deferred, APR-0070), SPK-04 (Part A done; Part B closed for the test, leakage check open), SPK-05. None is planned and untouched.
 Several need the OpenClaw runtime running on the VM. Run them when the system is up.

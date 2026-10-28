@@ -1028,3 +1028,23 @@ Meaning:
 Closes: P-42; P-40 item 2; Loop 2; APR-0073 (ends)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop2/LOOP2-CLOSE-RECORD.md; decisions/PENDING.md (P-36, P-40, P-42); deploy/loop1/STATE.md; the Loop 2 setup on the VM
+
+## APR-0097 - Loop 3 scope: rebuildable repo, structure test, privacy gate and security before real data
+Status: approved
+Decided by: CEO
+Your answer: "ok, i approve you loop 3 scope. proceed so cclod cn start working" (2026-10-27 20:57, to the assistant's revised Loop 3 scope after five external reviews; on the structure test he asked "what changes in our design if i approve?" and was told: nothing until a separate decision on the results)
+Evidence: the external reviews and their verification (2026-10-27, in the planning chat): src/lifeos/router/gate.py is empty; agent-files/ is empty while the live instructions exist only on the VM (baseline plus 13 appended rule sets); the security documents (research/threat-model.md, ops/risk-register.md, ops/incident/kill-switch.md, ops/incident/p1-response.md, ops/recovery/host-loss.md, ops/recovery/restore-drill.md, ops/openclaw-update-policy.md, ops/success-metrics.md) and scripts/ops/kill-switch.sh are empty; most Loop 2 failures came from hand-offs between agents (tests/scenario/bad-sleep-reschedule.md run log); the code guard of the push job held when the agents skipped the delete gate (runs 013, 017, 018).
+Meaning:
+- Loop 3 runs in this order:
+  1. Rebuildable repo: the live agent files of the COO, CHO, CoS and CFO are mirrored unchanged into agent-files/; a check compares the VM with the repo; a one-command regression suite runs all Loop 2 scenarios with measured cost.
+  2. Structure test: the same suite run with one agent holding the four domains' rules behind the same code guards; compare pass rate, tokens, cost and prompt size. It does not change the running agents. Any change of structure is a separate CEO decision with its own APR.
+  3. Privacy gate in code (ADR-0003): privacy follows the data's source domain (health and finance high, APR-0086); a model may raise the level, never lower it; tests for S-04.
+  4. Security minimum: threat model, OpenClaw update and patch policy, a kill switch in code, a restore drill; decisions on agent isolation (APR-0070 deferred Docker) and on the public repo (ADR-0015).
+  5. Identity-access contract (contracts/identity-access.yaml, ADR-0016).
+  6. Success metrics and one real data feed (health), the local-model hardware decision, then real data behind the gate only after a separate CEO yes.
+- Consolidating each chief's instructions into one clean file waits for the result of step 2.
+- Until step 6 is approved, the VM setup stays on synthetic data, the cloud model and the Google test calendar, as APR-0096 left it. No new exception is granted here.
+- Brought to the CEO later as separate questions: the rule for when a chief is its own agent (data scope, privacy tier, autonomy), tiered approvals once the regression suite exists, the public repo.
+Closes: none (P-43 opened)
+Changeable: yes. A change is a new APR entry.
+Applies to: agent-files/; deploy/loop1/health-check.py; the regression suite (deploy/loop3/); src/lifeos/router/gate.py; the security documents listed above; contracts/identity-access.yaml; decisions/PENDING.md (P-43)

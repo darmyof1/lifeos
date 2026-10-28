@@ -372,3 +372,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - PENDING.md: P-09 summary line matches its detail; P-42 added to the closed list.
 - README.md written (status and where to start). .gitignore already ignores Python and pytest caches; no change needed.
 - No decision recorded; no VM change.
+
+## 2026-10-27 - Loop 3 scope recorded (fix-96)
+- APR-0097 and P-43. STATE.md and README updated; the cost line in STATE.md now says the kill is an OpenAI-side setting, not our code. No VM change.

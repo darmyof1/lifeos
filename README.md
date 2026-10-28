@@ -5,7 +5,7 @@ A personal operating system run by a team of AI agents (chiefs) for one person, 
 ## Status (2026-10-27)
 - Loop 1 (first agents on a VM, synthetic data) closed: APR-0071, deploy/loop1/LOOP1-CLOSE-RECORD.md.
 - Loop 2 (four agents COO, CHO, CoS, CFO hand work to each other through Slack; the CoS journal is pushed to a Google test calendar by code; high-privacy entries become "busy"; deletes need the CEO's approval) closed: APR-0096, deploy/loop2/LOOP2-CLOSE-RECORD.md.
-- Loop 3 is not defined yet. No real personal data is used until a Loop 3 approval says so.
+- Loop 3 scope approved (APR-0097): a rebuildable repo, a test of the agent structure, the privacy gate in code and a security minimum come first. No real personal data is used until a separate approval.
 
 ## Where to start
 - decisions/APPROVALS.md: every decision, in the CEO's words (append-only).
