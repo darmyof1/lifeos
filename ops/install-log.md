@@ -375,3 +375,7 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-27 - Loop 3 scope recorded (fix-96)
 - APR-0097 and P-43. STATE.md and README updated; the cost line in STATE.md now says the kill is an OpenAI-side setting, not our code. No VM change.
+
+## 2026-10-27 - Handover 8 recorded (fix-97)
+- Claude Code mirrored 13 of the 16 live agent files (cos, cho and cfo AGENTS.md hold Slack channel IDs and stay on the VM), added 16 parity checks to the health check, built the regression suite and ran the baseline loop3-reg-001 (5 of 7 pass, 0.0455 USD). Repo: agent-files/ and SHA256SUMS, health-check.py, deploy/loop3/vm/, report 8, results. No new decision; APR-0097 covers step 1.
+- Not brought in: the 05:00 report scripts in the handover 8 archive are the old copies (without the fix-94 uptime fix); whether the fixed copies are installed on the VM is to be checked.

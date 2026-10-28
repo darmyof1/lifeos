@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-96.sh",
+  "generated_by": "fix-97.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -38,6 +38,10 @@
     {
       "path": "agent-files/README.md",
       "status": "planned"
+    },
+    {
+      "path": "agent-files/SHA256SUMS",
+      "status": "draft"
     },
     {
       "path": "agent-files/_template/AGENTS.md",
@@ -149,7 +153,7 @@
     },
     {
       "path": "agent-files/department/cfo/IDENTITY.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/cfo/MEMORY.md",
@@ -157,7 +161,7 @@
     },
     {
       "path": "agent-files/department/cfo/SOUL.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/cfo/TOOLS.md",
@@ -165,7 +169,7 @@
     },
     {
       "path": "agent-files/department/cfo/USER.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/cho/AGENTS.md",
@@ -173,7 +177,7 @@
     },
     {
       "path": "agent-files/department/cho/IDENTITY.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/cho/MEMORY.md",
@@ -181,7 +185,7 @@
     },
     {
       "path": "agent-files/department/cho/SOUL.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/cho/TOOLS.md",
@@ -189,7 +193,7 @@
     },
     {
       "path": "agent-files/department/cho/USER.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/clo/AGENTS.md",
@@ -353,7 +357,7 @@
     },
     {
       "path": "agent-files/executive/coo/AGENTS.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/executive/coo/HEARTBEAT.md",
@@ -361,7 +365,7 @@
     },
     {
       "path": "agent-files/executive/coo/IDENTITY.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/executive/coo/MEMORY.md",
@@ -369,7 +373,7 @@
     },
     {
       "path": "agent-files/executive/coo/SOUL.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/executive/coo/TOOLS.md",
@@ -377,7 +381,7 @@
     },
     {
       "path": "agent-files/executive/coo/USER.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/executive/cos/AGENTS.md",
@@ -385,7 +389,7 @@
     },
     {
       "path": "agent-files/executive/cos/IDENTITY.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/executive/cos/MEMORY.md",
@@ -393,7 +397,7 @@
     },
     {
       "path": "agent-files/executive/cos/SOUL.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/executive/cos/TOOLS.md",
@@ -401,7 +405,7 @@
     },
     {
       "path": "agent-files/executive/cos/USER.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/executive/csto/AGENTS.md",
@@ -932,6 +936,14 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop3/vm/reg-criteria.py",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/vm/regression-suite.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/render/README.md",
       "status": "planned"
     },
@@ -1116,7 +1128,15 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-10-27-claude-code-report-8.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-check-output-2026-10-27-c.txt",
       "status": "draft"
     },
     {
@@ -1170,6 +1190,38 @@
     {
       "path": "ops/recovery/restore-drill.md",
       "status": "planned"
+    },
+    {
+      "path": "ops/regression/loop3-reg-001.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-001/loop3-reg-001-01.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-001/loop3-reg-001-02.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-001/loop3-reg-001-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-001/loop3-reg-001-04.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-001/loop3-reg-001-05.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-001/loop3-reg-001-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-reg-001/loop3-reg-001-07.txt",
+      "status": "draft"
     },
     {
       "path": "ops/risk-register.md",

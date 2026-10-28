@@ -344,6 +344,28 @@ try:
 except OSError:
     pass
 
+# 7c. Parity: live agent files against the repo copies (APR-0097, P-43)
+import hashlib
+_PAR = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo"}
+_REPO = os.path.join(HOME, "lifeos-ro", "agent-files")
+def _sha(p):
+    try:
+        return hashlib.sha256(open(p, "rb").read()).hexdigest()
+    except OSError:
+        return None
+for _a, _d in _PAR.items():
+    for _f in ("AGENTS.md", "SOUL.md", "IDENTITY.md", "USER.md"):
+        _live = _sha(os.path.join(WS, _a, _f))
+        _rp = os.path.join(_REPO, _d, _f)
+        _repo = _sha(_rp) if os.path.exists(_rp) and os.path.getsize(_rp) > 0 else None
+        _name = "parity %s/%s (live = repo agent-files/%s/%s)" % (_a, _f, _d, _f)
+        if _repo is None:
+            rec("WARN", _name, "repo copy missing or empty", "the repo cannot rebuild this file until the copy is committed")
+        elif _live == _repo:
+            rec("PASS", _name, "sha256 equal", "")
+        else:
+            rec("FAIL", _name, "live %s, repo %s" % ((_live or "missing")[:12], _repo[:12]), "live agent file differs from the repo copy")
+
 # 8. Live round trips (only with --live)
 if "--live" in sys.argv:
     rc, out = run(["openclaw", "agent", "--agent", "cos", "--timeout", "120",
