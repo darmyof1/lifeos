@@ -1,0 +1,55 @@
+== loop3-v1105-001-06  overlap  2026-10-29 00:23 AST
+-- cleanup of the previous run's busy events
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: No compaction needed for session agent:cho:main. 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: Compacted session agent:cfo:main (kept 1 lines). 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1105-001-06 now, then: scenario-run.sh check loop3-v1105-001-06
+-- reply of the agent (first message)
+   Dentist appointment for Alex Test was not added; it conflicts with the 07:00–08:00 workout, and 08:00–09:00 was suggested pending confirmation.
+   CHO reported that CoS recorded the conflict in the calendar journal.
+   Event ID: `loop3-v1105-001-06-cho-01`
+-- reply (second message)
+   Dentist appointment for synthetic Alex Test was added for 2026-10-28, 08:00–09:00 AST.
+   CHO confirmed the change; CoS recorded it in the calendar journal as "CHO - Dentist Appointment - 10282026-0003."
+   Event ID: `loop3-v1105-001-06-cho-02`
+-- journal lines for loop3-v1105-001-06 (verbatim)
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop3-v1105-001-06 | loop3-v1105-001-06-cho-01 | CHO | privacy=high; reason=overlaps CHO - Workout - 10282026-0001
+CHO - Dentist Appointment - 10282026-0003 | 2026-10-28 08:00 | 2026-10-28 09:00 | written | loop3-v1105-001-06 | loop3-v1105-001-06-cho-02 | CHO | privacy=high
+CHO - Dentist Appointment - 10282026-0003 | 2026-10-28 08:00 | 2026-10-28 09:00 | pushed | loop3-v1105-001-06 | loop3-v1105-001-06-cho-02 | sync | google=d39vk42f03aee2suognssuergg; privacy=high
+-- check output
+numstat: 5	0	state/calendar-journal.md
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop3-v1105-001-06 | loop3-v1105-001-06-cho-01 | CHO | privacy=high; reason=overlaps CH
+PASS  CHO sent to the CoS  (2 call(s))
+PASS  first CHO call uses mode followup  (mode=followup)
+PASS  first CHO call does not set watch
+PASS  first CHO call has timeoutSeconds 120  (timeoutSeconds=120)
+PASS  first CHO call returned ok (a reply)  (status=ok)
+PASS  CoS sent nothing to the CHO  (0 call(s))
+PASS  no SESSION_WORK_START_CHANGED in any sessions_send result  (0 result(s))
+Result: all checks passed
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Dentist Appointment - 10282026-0003: created (busy) d39vk42f03aee2suognssuergg
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+rd2jc697hdi4saskqtluccplcs	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+d39vk42f03aee2suognssuergg	2026-10-28T08:00:00-04:00	busy
+ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+cnggpfgui5ik7n3esdnb8fhakk	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS one conflict line with reason=overlaps
+PASS no written line before the slot was accepted (conflict line first)
+PASS the nearest free slot (08:00) was offered
+PASS after accepting: exactly one written line at 08:00 on 10-28
+PASS Google shows busy at 10-28 08:00 (job created the event)
+PASS sessions_send checker: all checks passed
+-- cost: loop3-v1105-001-06: total 0.0100 USD (coo 0.0040, cho 0.0026, cos 0.0034, cfo 0.0000)
+-- metrics (wall 115s): {"run": "loop3-v1105-001-06", "agents": {"coo": {"input": 230, "output": 1409, "cacheRead": 116658, "cacheWrite": 17020, "cost": 0.00402, "turns": 10, "tool_calls": 21, "first_turn_tokens": 8528, "instr_bytes": 7332}, "cho": {"input": 770, "output": 2095, "cacheRead": 83568, "cacheWrite": 4761, "cost": 0.00256, "turns": 7, "tool_calls": 13, "first_turn_tokens": 10374, "instr_bytes": 5030}, "cos": {"input": 816, "output": 2555, "cacheRead": 111478, "cacheWrite": 7209, "cost": 0.00338, "turns": 8, "tool_calls": 18, "first_turn_tokens": 11262, "instr_bytes": 8795}}, "total": {"input": 1816, "output": 6059, "cacheRead": 311704, "cacheWrite": 28990, "cost": 0.00996, "turns": 25, "tool_calls": 52, "first_turn_tokens": 30164, "instr_bytes": 21157}}
+RESULT loop3-v1105-001-06 PASS (9 pass, 0 fail)

@@ -1,0 +1,10 @@
+== loop3-v1105-d1-3 00:03 AST
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1105-d1-3 now, then: scenario-run.sh check loop3-v1105-d1-3
+-- D1 order
+Changed: CoS recorded the deletion in the calendar journal (event ID seed-3; run loop3-v1105-d1-3); Google Calendar change is unconfirmed.
+Who changed it: CoS.
+Still needed from you: Nothing; the Google Calendar push is unconfirmed. CoS also reported an acknowledgement error (P-35).
+-- journal
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1105-d1-3 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-v1105-d1-3 | seed-3 | CEO

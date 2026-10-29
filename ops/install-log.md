@@ -408,3 +408,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-28 - Handover 15 recorded (fix-111)
 - Claude Code applied COO v1.10.4 (gateway stopped 22:18:40, started 22:18:45; commit c55f008 in the COO workspace, AGENTS.md only), installed the repo health-check.py (checked equal), changed the D2 approval message in regression-suite.sh and solo-run.sh to approve seed-3, and ran 21 counted runs plus two by-hand sequences. CHO, CoS, CFO, config and cron unchanged; the plugin is not installed; the cron has no --require-ceo-ledger.
+
+## 2026-10-29 - Handover 16 recorded (fix-113)
+- Claude Code applied COO v1.10.5 (gateway stopped and started once; commit 0fc4e16 in the COO workspace, AGENTS.md only), installed the repo health-check.py (checked equal), and ran 9 by-hand sequences and 21 counted runs. CHO, CoS, CFO, config and cron unchanged; the plugin is not installed; the cron has no --require-ceo-ledger.
