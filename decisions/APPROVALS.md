@@ -1145,3 +1145,17 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: the COO instructions (v1.10.4); deploy/loop1/loop1-v1104-upgrade.sh; agent-files/executive/coo/AGENTS.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-44)
+
+## APR-0105 - The COO uses the journal event ID and asks only after the pending line (instruction set v1.10.5)
+Status: approved
+Decided by: CEO
+Your answer: "approve as written." (2026-10-28 23:42, to the proposed sentence: the event ID in the Reply line is the journal event ID the CoS reported, for example seed-3, never the entry's title or date; post a delete approval request only after the CoS has written the delete-pending-approval line and told the COO the event ID; if the CEO's own words already clearly tell the COO to delete the named entry, pass them to the CoS at once and do not ask for approval again)
+Evidence: ops/handover-2026-10-28-claude-code-report-15.md (loop3-v1104-003-02 and by-hand run h-1: the COO skipped the CoS and used the title ID 10302026-0001, so approve seed-3 was refused; the COO skipped the CoS in 2 of 4 tries); APR-0104.
+Meaning:
+- COO instruction set v1.10.5: the line in deploy/loop1/loop1-v1105-upgrade.sh (COO only; cos v1.10.2, cho v1.9, cfo v1.10 unchanged).
+- Applied on the VM by handover 16, then checked with six question sequences, three explicit D1 orders and three counted suites. If the COO still skips the CoS in that check, the result is brought to the CEO; nothing is tuned to make runs pass.
+- The plugin install and the cron option are not part of this entry; the install needs the CEO's separate yes (new APR) after the COO check.
+- The four-agent design is unchanged.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: the COO instructions (v1.10.5); deploy/loop1/loop1-v1105-upgrade.sh; agent-files/executive/coo/AGENTS.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-44)
