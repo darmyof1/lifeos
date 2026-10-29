@@ -411,3 +411,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-29 - Handover 16 recorded (fix-113)
 - Claude Code applied COO v1.10.5 (gateway stopped and started once; commit 0fc4e16 in the COO workspace, AGENTS.md only), installed the repo health-check.py (checked equal), and ran 9 by-hand sequences and 21 counted runs. CHO, CoS, CFO, config and cron unchanged; the plugin is not installed; the cron has no --require-ceo-ledger.
+
+## 2026-10-29 - Handover 17 recorded (fix-115)
+- Claude Code proved the first-message reset of the four main sessions (07:42), applied COO v1.10.6 (gateway stopped and started once; commit bb47390 in the COO workspace, AGENTS.md only), installed the repo health-check.py (checked equal) and ran 12 by-hand sequences and 21 counted runs. CHO, CoS, CFO, config and cron unchanged; the plugin is not installed; the cron has no --require-ceo-ledger.

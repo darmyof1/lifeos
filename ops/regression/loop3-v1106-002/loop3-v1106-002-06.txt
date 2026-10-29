@@ -1,0 +1,61 @@
+== loop3-v1106-002-06  overlap  2026-10-29 08:29 AST
+-- cleanup of the previous run's busy events
+deleted	daeolr8di0nesmq4qrnoct6sg0	busy	approval: CEO handover 9, 2026-10-27
+-- prep
+compact coo: Compacted session agent:coo:main (kept 1 lines). 
+compact cho: No compaction needed for session agent:cho:main. 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: Compacted session agent:cfo:main (kept 1 lines). 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-002-06 now, then: scenario-run.sh check loop3-v1106-002-06
+-- reply of the agent (first message)
+   Changed: Dentist appointment recorded for Oct 28, 07:30–08:30 AST; overlapping workout moved to 08:30–09:30 AST. Google Calendar was not changed.
+   Who changed it: CHO confirmed both changes; CoS confirmed they were journal changes only.
+   Event IDs: loop3-v1106-002-06-cho-01 (dentist); loop3-v1106-002-06-cho-02 (workout move).
+-- reply (second message)
+   Changed: Dentist appointment moved to Oct 28, 08:00–09:00 AST; previous entry retained and marked moved.
+   Changed: Workout moved to 09:00–10:00 AST to resolve the overlap; these are journal changes only, not Google Calendar updates.
+   Event IDs: loop3-v1106-002-06-coo-01 (dentist); loop3-v1106-002-06-cho-03 (workout).
+-- journal lines for loop3-v1106-002-06 (verbatim)
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | moved | loop3-v1106-002-06 | loop3-v1106-002-06-cho-02 | CHO | privacy=high
+CHO - Workout - 10282026-0001 | 2026-10-28 08:30 | 2026-10-28 09:30 | written | loop3-v1106-002-06 | loop3-v1106-002-06-cho-02 | CHO | privacy=high
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | written | loop3-v1106-002-06 | loop3-v1106-002-06-cho-01 | CHO | privacy=high
+CHO - Workout - 10282026-0001 | 2026-10-28 08:30 | 2026-10-28 09:30 | moved | loop3-v1106-002-06 | loop3-v1106-002-06-cho-03 | CHO | privacy=high
+CHO - Workout - 10282026-0001 | 2026-10-28 09:00 | 2026-10-28 10:00 | written | loop3-v1106-002-06 | loop3-v1106-002-06-cho-03 | CHO | privacy=high
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | moved | loop3-v1106-002-06 | loop3-v1106-002-06-coo-01 | CHO | privacy=high
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 08:00 | 2026-10-28 09:00 | written | loop3-v1106-002-06 | loop3-v1106-002-06-coo-01 | CHO | privacy=high
+CHO - Workout - 10282026-0001 | 2026-10-28 09:00 | 2026-10-28 10:00 | pushed | loop3-v1106-002-06 | loop3-v1106-002-06-cho-03 | sync | google=50qbnapcqof3dk82uh73tl9bn4; privacy=high
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 08:00 | 2026-10-28 09:00 | pushed | loop3-v1106-002-06 | loop3-v1106-002-06-coo-01 | sync | google=siftipvlhd4di15hq12ctc5pgk; privacy=high
+-- check output
+numstat: 10	0	state/calendar-journal.md
+PASS  CHO sent to the CoS  (2 call(s))
+PASS  first CHO call uses mode followup  (mode=followup)
+PASS  first CHO call does not set watch
+PASS  first CHO call has timeoutSeconds 120  (timeoutSeconds=120)
+PASS  first CHO call returned ok (a reply)  (status=ok)
+PASS  CoS sent nothing to the CHO  (0 call(s))
+PASS  no SESSION_WORK_START_CHANGED in any sessions_send result  (0 result(s))
+Result: all checks passed
+done  CHO - Workout - 10282026-0001: made busy 50qbnapcqof3dk82uh73tl9bn4
+done  CHO - Dentist Appointment - 10282026-0002: created (busy) siftipvlhd4di15hq12ctc5pgk
+summary: pushed 2, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+numstat after the job: 12	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+siftipvlhd4di15hq12ctc5pgk	2026-10-28T08:00:00-04:00	busy
+50qbnapcqof3dk82uh73tl9bn4	2026-10-28T09:00:00-04:00	busy
+ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+8dp0rl15ujs5u3q2ff6uv6jr90	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+-- criteria
+PASS numstat before the job has no removed lines (10 0)
+PASS numstat after the job has no removed lines (12 0)
+PASS journal header unchanged (7 columns)
+FAIL one conflict line with reason=overlaps
+FAIL no written line before the slot was accepted (conflict line first)
+FAIL the nearest free slot (08:00) was offered
+FAIL after accepting: exactly one written line at 08:00 on 10-28
+PASS Google shows busy at 10-28 08:00 (job created the event)
+PASS sessions_send checker: all checks passed
+-- cost: loop3-v1106-002-06: total 0.0167 USD (coo 0.0059, cho 0.0050, cos 0.0058, cfo 0.0000)
+-- metrics (wall 169s): {"run": "loop3-v1106-002-06", "agents": {"coo": {"input": 138, "output": 2426, "cacheRead": 113204, "cacheWrite": 28159, "cost": 0.00588, "turns": 6, "tool_calls": 12, "first_turn_tokens": 8666, "instr_bytes": 7883}, "cho": {"input": 1100, "output": 4517, "cacheRead": 138351, "cacheWrite": 10308, "cost": 0.00504, "turns": 10, "tool_calls": 25, "first_turn_tokens": 10391, "instr_bytes": 5030}, "cos": {"input": 1122, "output": 4586, "cacheRead": 180526, "cacheWrite": 12680, "cost": 0.0058, "turns": 11, "tool_calls": 29, "first_turn_tokens": 11322, "instr_bytes": 8795}}, "total": {"input": 2360, "output": 11529, "cacheRead": 432081, "cacheWrite": 51147, "cost": 0.01672, "turns": 27, "tool_calls": 66, "first_turn_tokens": 30379, "instr_bytes": 21708}}
+RESULT loop3-v1106-002-06 FAIL (5 pass, 4 fail)

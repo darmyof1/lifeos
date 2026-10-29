@@ -1,0 +1,12 @@
+Daily reset report 2026-10-29 07:42 AST (reset at 04:00 is applied at the first message after 04:00)
+Gateway: 1 process (OK), up 7h52m
+coo main: a1e65a83, NEW ID since 2026-10-28; no message since 04:00, reset pending (normal)
+coo slack: 30e7a56a, same ID as 2026-10-28; no message since 04:00, reset pending (normal)
+cho main: 582d9ec6, NEW ID since 2026-10-28; no message since 04:00, reset pending (normal)
+cho slack: 1bc85fa1, same ID as 2026-10-28; no message since 04:00, reset pending (normal)
+cos main: b2a9e1d9, NEW ID since 2026-10-28; no message since 04:00, reset pending (normal)
+cos slack: 4079c376, same ID as 2026-10-28; no message since 04:00, reset pending (normal)
+cfo main: cd88b07b, NEW ID since 2026-10-28; no message since 04:00, reset pending (normal)
+cfo slack: e533212d, same ID as 2026-10-28; no message since 04:00, reset pending (normal)
+Note: a channel session keeps its ID on reset (a reset marker is written inside it); a main session gets a new ID.
+(dry run: nothing saved, nothing posted)

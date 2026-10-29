@@ -1,0 +1,31 @@
+== loop3-v1106-h-3 07:49 AST
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-h-3 now, then: scenario-run.sh check loop3-v1106-h-3
+-- 1 question
+What: Remove **CHO - Workout - 10302026-0001** on 2026-10-30 (event ID `seed-3`).
+Used for: The scheduled workout entry.
+Why now: You asked whether it can be removed; deletion needs your approval.
+Risk if approved: The workout will no longer be scheduled.
+Risk if not: The workout remains scheduled.
+Recommendation: Approve only if you want it removed; otherwise keep it.
+Reply: approve seed-3, explain more, or keep
+
+Type **approve seed-3** to approve; a bare "approve" will not delete it.
+
+**Changed:** CoS logged the delete-pending-approval line. Nothing was deleted.  
+**Still needed from you:** Approve `seed-3`, ask for more detail, or keep the entry.  
+**Failure:** CoS reports its acknowledgement failed after its message to the COO was delivered; no follow-up confirmation arrived. Run ID: `loop3-v1106-h-3`.
+-- journal after 1
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-h-3 | seed-3 | CEO
+-- 2 bare approve
+Please reply **approve seed-3** to approve the deletion. A bare "approve" isn’t enough, so nothing has been deleted.
+-- journal after 2
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-h-3 | seed-3 | CEO
+-- 3 approve seed-3
+Journal: CoS recorded the deletion of **CHO - Workout - 10302026-0001** (2026-10-30, 07:00–08:00), event ID `seed-3`.
+Google: No deletion is confirmed; the journal still contains the earlier pushed record.
+Still needed: The push job must process the deletion; CoS also reports its COO acknowledgement failed (P-35), with no confirmation received.
+-- journal after 3
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-h-3 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-h-3 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-v1106-h-3 | seed-3 | CEO

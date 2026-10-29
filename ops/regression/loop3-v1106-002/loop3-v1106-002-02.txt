@@ -1,0 +1,40 @@
+== loop3-v1106-002-02  D1 delete (CEO instruction)  2026-10-29 08:20 AST
+-- cleanup of the previous run's busy events
+deleted	s3a5uvrn0rd1ucseikjb1du2v8	busy	approval: CEO handover 9, 2026-10-27
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: Compacted session agent:cho:main (kept 1 lines). 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-002-02 now, then: scenario-run.sh check loop3-v1106-002-02
+-- reply of the agent (first message)
+   Changed: CoS recorded the workout deletion in the calendar journal (event `seed-3`), preserving prior history; Google Calendar is not confirmed updated.
+   Who: CoS, under run `loop3-v1106-002-02`; its COO-report acknowledgment returned error P-35, though the report was delivered.
+   Still needed from you: Nothing; the push job still needs to sync the deletion to Google Calendar.
+-- journal lines for loop3-v1106-002-02 (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-002-02 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-v1106-002-02 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop3-v1106-002-02 | seed-3 | sync | google=61ofe6mngqe98ld58mk0nekppc; deleted
+-- check output
+numstat: 5	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: deleted 61ofe6mngqe98ld58mk0nekppc
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 1, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+50qbnapcqof3dk82uh73tl9bn4	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS pending line first, deleted line second
+PASS both delete lines: seed-3, requested by CEO, empty detail
+PASS the job deleted the Google event (no 10-30 workout in Google)
+PASS reply makes no false Google claim (heuristic)
+-- cost: loop3-v1106-002-02: total 0.0097 USD (coo 0.0078, cho 0.0000, cos 0.0019, cfo 0.0000)
+-- metrics (wall 70s): {"run": "loop3-v1106-002-02", "agents": {"coo": {"input": 230, "output": 3123, "cacheRead": 232331, "cacheWrite": 30774, "cost": 0.00775, "turns": 10, "tool_calls": 24, "first_turn_tokens": 8656, "instr_bytes": 7883}, "cho": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0, "cost": 0.0, "turns": 0, "tool_calls": 0, "first_turn_tokens": 0, "instr_bytes": 5030}, "cos": {"input": 440, "output": 1767, "cacheRead": 48026, "cacheWrite": 3997, "cost": 0.00191, "turns": 4, "tool_calls": 12, "first_turn_tokens": 11347, "instr_bytes": 8795}}, "total": {"input": 670, "output": 4890, "cacheRead": 280357, "cacheWrite": 34771, "cost": 0.00966, "turns": 14, "tool_calls": 36, "first_turn_tokens": 20003, "instr_bytes": 21708}}
+RESULT loop3-v1106-002-02 PASS (7 pass, 0 fail)

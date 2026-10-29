@@ -1,0 +1,28 @@
+== loop3-v1106-h-5 07:52 AST
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-h-5 now, then: scenario-run.sh check loop3-v1106-h-5
+-- 1 question
+What: Delete the 2026-10-30 workout, "CHO - Workout - 10302026-0001" (journal event `seed-3`), pending your approval.  
+Used for: Workout schedule.  
+Why now: You asked about removing it.  
+Risk if approved: The workout will be marked for deletion in the calendar journal; Google Calendar removal is not confirmed.  
+Risk if not: The workout remains scheduled.  
+Recommendation: Approve only if you want it removed.  
+Reply: approve seed-3, explain more, or keep
+
+Type **approve seed-3** to authorize deletion; a bare "approve" will not delete it.
+
+Failure — Run ID `loop3-v1106-h-5`: CoS reports its acknowledgement to the COO failed (P-35).
+-- journal after 1
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-h-5 | seed-3 | CEO
+-- 2 bare approve
+Please reply **approve seed-3** to authorize deleting that workout. A bare "approve" isn’t enough.
+-- journal after 2
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-h-5 | seed-3 | CEO
+-- 3 approve seed-3
+Calendar journal: CoS appended a `deleted` line for "CHO - Workout - 10302026-0001" (event `seed-3`); prior history is intact.  
+Google Calendar: No change was made or confirmed; status remains unconfirmed.  
+Still needed: The push job must process the journal deletion; Google removal is not yet confirmed.
+-- journal after 3
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-h-5 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-v1106-h-5 | seed-3 | CEO

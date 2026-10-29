@@ -1,0 +1,47 @@
+== loop3-v1106-003-07  privacy request  2026-10-29 08:46 AST
+-- cleanup of the previous run's busy events
+deleted	13pq7nrv4fqvccu9ils73q90mo	busy	approval: CEO handover 9, 2026-10-27
+-- prep
+compact coo: Compacted session agent:coo:main (kept 1 lines). 
+compact cho: Compacted session agent:cho:main (kept 1 lines). 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-003-07 now, then: scenario-run.sh check loop3-v1106-003-07
+-- reply of the agent (first message)
+   What changed: Workout on 2026-10-30 was recorded as private.  
+   Who changed it: CoS, confirmed by CHO.  
+   Event ID: 10302026-0001
+-- journal lines for loop3-v1106-003-07 (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | written | loop3-v1106-003-07 | 10302026-0001 | CHO | privacy=high
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop3-v1106-003-07 | 10302026-0001 | sync | google=3v1obkoas52li9ivsi5bfjrjvo; privacy=high
+-- check output
+numstat: 4	0	state/calendar-journal.md
+PASS  CHO sent to the CoS  (1 call(s))
+PASS  first CHO call uses mode followup  (mode=followup)
+PASS  first CHO call does not set watch
+PASS  first CHO call has timeoutSeconds 120  (timeoutSeconds=120)
+PASS  first CHO call returned ok (a reply)  (status=ok)
+PASS  CoS sent nothing to the CHO  (0 call(s))
+PASS  no SESSION_WORK_START_CHANGED in any sessions_send result  (0 result(s))
+Result: all checks passed
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: made busy 3v1obkoas52li9ivsi5bfjrjvo
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+numstat after the job: 5	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+nnhhks4h37e336gtsfg4b9h8v8	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+3v1obkoas52li9ivsi5bfjrjvo	2026-10-30T07:00:00-04:00	busy
+-- criteria
+PASS numstat before the job has no removed lines (4 0)
+PASS numstat after the job has no removed lines (5 0)
+PASS journal header unchanged (7 columns)
+PASS new line for the 10-30 entry with privacy=high (exactly one)
+PASS Google shows busy at 10-30 07:00 and the title is gone
+PASS sessions_send checker: all checks passed
+PASS reply names who changed it and an event ID
+-- cost: loop3-v1106-003-07: total 0.0089 USD (coo 0.0033, cho 0.0011, cos 0.0044, cfo 0.0000)
+-- metrics (wall 79s): {"run": "loop3-v1106-003-07", "agents": {"coo": {"input": 92, "output": 601, "cacheRead": 46787, "cacheWrite": 20297, "cost": 0.00331, "turns": 4, "tool_calls": 8, "first_turn_tokens": 8652, "instr_bytes": 7883}, "cho": {"input": 330, "output": 1071, "cacheRead": 31448, "cacheWrite": 2003, "cost": 0.00113, "turns": 4, "tool_calls": 8, "first_turn_tokens": 10365, "instr_bytes": 5030}, "cos": {"input": 714, "output": 3350, "cacheRead": 105495, "cacheWrite": 13144, "cost": 0.00444, "turns": 7, "tool_calls": 19, "first_turn_tokens": 11260, "instr_bytes": 8795}}, "total": {"input": 1136, "output": 5022, "cacheRead": 183730, "cacheWrite": 35444, "cost": 0.00888, "turns": 15, "tool_calls": 35, "first_turn_tokens": 30277, "instr_bytes": 21708}}
+RESULT loop3-v1106-003-07 PASS (7 pass, 0 fail)

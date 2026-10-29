@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-114.sh",
+  "generated_by": "fix-115.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1340,6 +1340,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-10-29-claude-code-report-17.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
@@ -1361,6 +1365,10 @@
     },
     {
       "path": "ops/health-check-output-2026-10-28.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-check-output-2026-10-29-b.txt",
       "status": "draft"
     },
     {
@@ -2148,7 +2156,255 @@
       "status": "draft"
     },
     {
+      "path": "ops/regression/loop3-v1106-001.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-01.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-01.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-02.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-02.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-04.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-04.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-05.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-05.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-07.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-001/loop3-v1106-001-07.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-01.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-01.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-02.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-02.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-04.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-04.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-05.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-05.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-07.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-002/loop3-v1106-002-07.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-01.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-01.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-02.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-02.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-04.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-04.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-05.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-05.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-07.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-003/loop3-v1106-003-07.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/d1-1.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/d1-2.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/d1-3.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/final-reset.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/h-1.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/h-2.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/h-3.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/h-4.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/h-5.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/h-6.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/q-1.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/q-2.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-v1106-h/q-3.txt",
+      "status": "draft"
+    },
+    {
       "path": "ops/regression/rescore.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/reset-proof-2026-10-29/after-dryrun.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/reset-proof-2026-10-29/before-dryrun.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/reset-proof-2026-10-29/messages.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/reset-proof-2026-10-29/session-links.txt",
       "status": "draft"
     },
     {

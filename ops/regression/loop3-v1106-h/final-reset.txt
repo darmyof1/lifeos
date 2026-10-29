@@ -1,0 +1,3 @@
+other events: 0
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-h-99-final now, then: scenario-run.sh check loop3-v1106-h-99-final

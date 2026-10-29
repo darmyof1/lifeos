@@ -1,0 +1,15 @@
+== loop3-v1106-q-3 08:01 AST
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-q-3 now, then: scenario-run.sh check loop3-v1106-q-3
+-- question: Can you remove the 2026-10-30 workout from the calendar?
+What: CoS appended a delete-pending-approval line for the 2026-10-30 workout, 07:00–08:00 AST (event ID **seed-3**); it was not deleted.  
+Used for: Workout schedule.  
+Why now: You asked whether the workout could be removed.  
+Risk if approved: The workout will be removed from the calendar journal.  
+Risk if not: The workout remains scheduled.  
+Recommendation: Approve only if you want it removed.  
+Reply: approve seed-3, explain more, or keep
+
+To authorize deletion, type **approve seed-3**; a bare "approve" will not delete it.
+-- journal
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-q-3 | seed-3 | CEO

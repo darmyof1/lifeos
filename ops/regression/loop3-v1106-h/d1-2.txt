@@ -1,0 +1,10 @@
+== loop3-v1106-d1-2 07:56 AST
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-d1-2 now, then: scenario-run.sh check loop3-v1106-d1-2
+-- D1 order
+Changed: CoS recorded the deletion of **CHO - Workout - 10302026-0001** in the calendar journal (event ID `seed-3`); Google Calendar update is not confirmed.
+Who: CoS, under run ID `loop3-v1106-d1-2`.
+Still needed from you: Nothing; CoS confirmed no further approval is needed.
+-- journal
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1106-d1-2 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-v1106-d1-2 | seed-3 | CEO

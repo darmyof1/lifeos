@@ -1,0 +1,49 @@
+== loop3-v1106-002-01  bad-sleep-reschedule  2026-10-29 08:18 AST
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: No compaction needed for session agent:cho:main. 
+compact cos: No compaction needed for session agent:cos:main. 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1106-002-01 now, then: scenario-run.sh check loop3-v1106-002-01
+-- reply of the agent (first message)
+   Moved the Wednesday workout (2026-10-28) to Thursday (2026-10-29), 07:00–08:00 AST; recorded Alex Test’s 5-hour sleep.
+   CHO reports CoS moved the workout; CHO recorded the sleep.
+   Event IDs: workout `loop3-v1106-002-01-cho-02`; sleep `loop3-v1106-002-01-cho-01`.
+-- journal lines for loop3-v1106-002-01 (verbatim)
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | moved | loop3-v1106-002-01 | loop3-v1106-002-01-cho-02 | CHO | privacy=high
+CHO - Workout - 10292026-0001 | 2026-10-29 07:00 | 2026-10-29 08:00 | written | loop3-v1106-002-01 | loop3-v1106-002-01-cho-02 | CHO | privacy=high
+CHO - Workout - 10292026-0001 | 2026-10-29 07:00 | 2026-10-29 08:00 | pushed | loop3-v1106-002-01 | loop3-v1106-002-01-cho-02 | sync | google=s3a5uvrn0rd1ucseikjb1du2v8; privacy=high
+-- check output
+numstat: 5	0	state/calendar-journal.md
+PASS  CHO sent to the CoS  (1 call(s))
+PASS  first CHO call uses mode followup  (mode=followup)
+PASS  first CHO call does not set watch
+PASS  first CHO call has timeoutSeconds 120  (timeoutSeconds=120)
+PASS  first CHO call returned ok (a reply)  (status=ok)
+PASS  CoS sent nothing to the CHO  (0 call(s))
+PASS  no SESSION_WORK_START_CHANGED in any sessions_send result  (0 result(s))
+Result: all checks passed
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10292026-0001: made busy s3a5uvrn0rd1ucseikjb1du2v8
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+s3a5uvrn0rd1ucseikjb1du2v8	2026-10-29T07:00:00-04:00	busy
+ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+61ofe6mngqe98ld58mk0nekppc	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS 10-28 workout moved line with privacy=high (exactly one: a duplicate write fails)
+PASS 10-29 07:00 written line with privacy=high (exactly one)
+PASS sessions_send checker: all checks passed
+PASS numstat 5 0 then 6 0
+PASS Google shows busy at 10-29 07:00
+PASS sleep fact in the health plan with its own event ID
+PASS COO reply names the CHO and the CoS and gives the event ID
+-- cost: loop3-v1106-002-01: total 0.0092 USD (coo 0.0044, cho 0.0030, cos 0.0018, cfo 0.0000)
+-- metrics (wall 107s): {"run": "loop3-v1106-002-01", "agents": {"coo": {"input": 184, "output": 2101, "cacheRead": 104700, "cacheWrite": 18010, "cost": 0.00437, "turns": 8, "tool_calls": 20, "first_turn_tokens": 8672, "instr_bytes": 7883}, "cho": {"input": 550, "output": 3267, "cacheRead": 58356, "cacheWrite": 6218, "cost": 0.00305, "turns": 6, "tool_calls": 15, "first_turn_tokens": 10410, "instr_bytes": 5030}, "cos": {"input": 408, "output": 1735, "cacheRead": 47882, "cacheWrite": 3494, "cost": 0.00182, "turns": 4, "tool_calls": 10, "first_turn_tokens": 11289, "instr_bytes": 8795}}, "total": {"input": 1142, "output": 7103, "cacheRead": 210938, "cacheWrite": 27722, "cost": 0.00924, "turns": 18, "tool_calls": 45, "first_turn_tokens": 30371, "instr_bytes": 21708}}
+RESULT loop3-v1106-002-01 PASS (10 pass, 0 fail)
