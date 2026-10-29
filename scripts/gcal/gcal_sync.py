@@ -180,7 +180,7 @@ def find_ceo_approval(ledger, e, now=None, state_dir=None):
     """APR-0100/0102: the ledger entry (a dict) that approves this deleted line, or None. The ledger lives outside every agent
     workspace; one JSON object per line. Two kinds of entry, both need sender "CEO" and a time not later than now:
       scenario entry (runner, APR-0101):  run and event equal the deleted line's run and event.
-      Slack entry (plugin, APR-0102):     the event ID is one of event_tokens; the entry is not older than LEDGER_MAX_AGE_SECONDS;
+      Slack entry (plugin, APR-0102/0103): approve_word is true (a missing field is false); the event ID is one of event_tokens; the entry is not older than LEDGER_MAX_AGE_SECONDS;
                                           it is not older than the first time the job saw the pending line (less
                                           LEDGER_GRACE_SECONDS); its message_id was not used for an earlier delete.
     A missing or unreadable ledger, a damaged line, or a Slack entry with no state_dir approves nothing."""
@@ -212,7 +212,8 @@ def find_ceo_approval(ledger, e, now=None, state_dir=None):
             continue
         tokens = r.get("event_tokens")
         mid = str(r.get("message_id") or "")
-        if (isinstance(tokens, list) and e.event.lower() in [str(x).lower() for x in tokens] and mid and mid not in used
+        if (r.get("approve_word") is True and isinstance(tokens, list) and e.event.lower() in [str(x).lower() for x in tokens]
+                and mid and mid not in used
                 and first_seen is not None and state_dir
                 and t >= first_seen - datetime.timedelta(seconds=LEDGER_GRACE_SECONDS)
                 and (now - t).total_seconds() <= LEDGER_MAX_AGE_SECONDS):

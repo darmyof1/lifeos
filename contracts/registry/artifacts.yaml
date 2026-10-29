@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-108.sh",
+  "generated_by": "fix-109.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -940,6 +940,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop3/ceo-plugin/coo-reply-line-proposal.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop3/ceo-plugin/design.md",
       "status": "draft"
     },
@@ -1297,6 +1301,10 @@
     },
     {
       "path": "ops/handover-2026-10-28-claude-code-report-13.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-10-28-claude-code-report-14.md",
       "status": "draft"
     },
     {

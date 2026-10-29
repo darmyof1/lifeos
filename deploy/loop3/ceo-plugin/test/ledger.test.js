@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { createHandler, extractTokens, sha256 } from "../ledger.js";
+import { createHandler, extractTokens, approveWord, sha256 } from "../ledger.js";
 
 const FAKE_CEO = "UFAKECEO01", OTHER = "UFAKEOTHER2";
 const ctx = { channelId: "slack", accountId: "default", conversationId: "CFAKECHAN01" };
@@ -22,7 +22,7 @@ test("a CEO message writes exactly one line with the fixed fields", async () => 
   const s = setup(); await s.h(ev(), ctx);
   const [l] = s.lines();
   assert.equal(s.lines().length, 1);
-  assert.deepEqual(Object.keys(l), ["time", "channel", "account", "conversation", "message_id", "sender", "text_sha256", "event_tokens"]);
+  assert.deepEqual(Object.keys(l), ["time", "channel", "account", "conversation", "message_id", "sender", "text_sha256", "event_tokens", "approve_word"]);
   assert.equal(l.time, "2026-10-28T01:02:03Z"); assert.equal(l.channel, "slack"); assert.equal(l.sender, "CEO");
   assert.deepEqual(l.event_tokens, ["loop2-scn-021-cho-01"]);
   assert.equal(l.text_sha256, sha256("Yes, approve deleting loop2-scn-021-cho-01"));
@@ -97,4 +97,24 @@ test("the plugin entry registers only message_received (needs the OpenClaw packa
   for (const k of ["registerTool", "registerService", "registerHttpRoute", "registerCommand"]) api[k] = () => { throw new Error("must not be called: " + k); };
   const entry = mod.default; (entry.register ?? entry.default?.register)(api);
   assert.deepEqual(calls, [["message_received", "function"]]);
+});
+
+test("approve_word: true only for a whole-word approval with no blocking word", () => {
+  const yes = ["approve loop2-x-01", "approved: loop2-x-01", "approve", "APPROVE loop2-x-01", "ApPrOvEd!", "  approve, loop2-x-01.  ",
+    "Yes, approve deleting loop2-scn-021-cho-01", "I am approving loop2-x-01", "approve\nloop2-x-01", "\u201capprove loop2-x-01\u201d"];
+  const no = ["do not approve loop2-x-01", "Do NOT approve loop2-x-01", "Reply: approve, explain more, or keep", "please keep it", "no", "",
+    "approve loop2-x-01 but wait", "approve without delay", "don't approve loop2-x-01", "don\u2019t approve loop2-x-01", "can't approve",
+    "never approve", "cancel, approve", "stop. approve", "hold off, approve", "I won't approve", "cannot approve", "approve? explain",
+    "yes", "disapprove loop2-x-01", "approval loop2-x-01", "approves loop2-x-01", null, undefined];
+  for (const t of yes) assert.equal(approveWord(t), true, JSON.stringify(t));
+  for (const t of no) assert.equal(approveWord(t), false, JSON.stringify(t));
+});
+
+test("approve_word is written to the ledger line and the text is still not stored", async () => {
+  const s = setup();
+  await s.h(ev({ content: "approve loop2-x-01", messageId: "m1" }), ctx);
+  await s.h(ev({ content: "do not approve loop2-x-01", messageId: "m2" }), ctx);
+  await s.h(ev({ content: "Reply: approve, explain more, or keep", messageId: "m3" }), ctx);
+  assert.deepEqual(s.lines().map((l) => l.approve_word), [true, false, false]);
+  assert.ok(!fs.readFileSync(s.ledger, "utf8").includes("explain"));
 });

@@ -433,7 +433,7 @@ class SlackLedgerTests(Base):
 
     def entry(self, minutes, **kw):
         r = {"time": self.at(minutes).strftime("%Y-%m-%dT%H:%M:%SZ"), "channel": "slack", "account": "default", "conversation": "c-0",
-             "message_id": "m1", "sender": "CEO", "text_sha256": "0" * 64, "event_tokens": ["r3-cho-01"]}
+             "message_id": "m1", "sender": "CEO", "text_sha256": "0" * 64, "event_tokens": ["r3-cho-01"], "approve_word": True}
         r.update(kw)
         return r
 
@@ -444,6 +444,33 @@ class SlackLedgerTests(Base):
 
     def run_at(self, minutes, ledgers=None):
         return self.go(allow_deletes=True, ceo_ledger=ledgers or [self.lpath], now=self.at(minutes))
+
+    def test_approve_word_false_or_missing_does_not_delete(self):
+        # APR-0103: the plugin must have seen an approving message; a missing field counts as false
+        missing = self.entry(10)
+        del missing["approve_word"]
+        for r in (self.entry(10, approve_word=False), missing, self.entry(10, approve_word="true"), self.entry(10, approve_word=None)):
+            self.setUp()
+            self.run_at(0)
+            self.put(r)
+            _, counts, out = self.run_at(15)
+            self.assertEqual(counts["deleted"], 0, r)
+            self.assertIn("no CEO approval record", out)
+            self.assertIn("x1", self.svc.store)
+
+    def test_approve_word_true_with_the_event_token_deletes(self):
+        self.run_at(0)
+        self.put(self.entry(10, approve_word=True))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+
+    def test_a_later_approving_message_counts_after_a_non_approving_one(self):
+        self.run_at(0)
+        self.put(self.entry(10, approve_word=False), self.entry(12, message_id="m2", approve_word=True))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+
+    def test_scenario_entries_do_not_need_approve_word(self):
+        self.put({"time": "2026-10-28T11:59:00Z", "sender": "CEO", "run": "r3", "event": "r3-cho-01"})
+        self.assertEqual(self.run_at(0)[1]["deleted"], 1)
 
     def test_first_job_run_records_when_the_pending_line_was_seen(self):
         self.put()

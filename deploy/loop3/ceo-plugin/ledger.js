@@ -24,6 +24,25 @@ export function extractTokens(text) {
   return out;
 }
 
+// approve_word (APR-0103). Conservative on purpose: a false is safe (the CEO writes the message again), a wrong true is not.
+// The words are matched whole, lower-cased, after splitting on anything but letters, digits and apostrophes (so a hyphenated
+// event ID is split too: an ID containing "no" or "stop" as a piece makes the message false). All word lists live here.
+export const APPROVE_WORDS = ["approve", "approved", "approving"];
+export const BLOCK_WORDS = ["not", "no", "never", "cannot", "without", "cancel", "stop", "keep", "explain",
+  "dont", "don't", "cant", "can't", "wont", "won't", "wait"];
+export const BLOCK_PHRASES = [["hold", "off"], ["do", "not"]]; // "do not" is also caught by "not"; listed for clarity
+
+export function approveWord(text) {
+  const words = String(text ?? "").toLowerCase().replace(/[\u2018\u2019\u02bc]/g, "'")
+    .split(/[^a-z0-9']+/).map((w) => w.replace(/^'+|'+$/g, "")).filter(Boolean);
+  if (!words.some((w) => APPROVE_WORDS.includes(w))) return false;
+  if (words.some((w) => BLOCK_WORDS.includes(w))) return false;
+  for (const ph of BLOCK_PHRASES) {
+    for (let i = 0; i + ph.length <= words.length; i++) if (ph.every((w, j) => words[i + j] === w)) return false;
+  }
+  return true;
+}
+
 export function makeLine({ now, account, conversation, messageId, text }) {
   return JSON.stringify({
     time: new Date(now).toISOString().replace(/\.\d{3}Z$/, "Z"),
@@ -34,6 +53,7 @@ export function makeLine({ now, account, conversation, messageId, text }) {
     sender: "CEO",
     text_sha256: sha256(String(text ?? "")),
     event_tokens: extractTokens(text),
+    approve_word: approveWord(text),
   });
 }
 

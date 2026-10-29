@@ -402,3 +402,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-28 - Handover 13 recorded (fix-107)
 - Design, plugin code, tests and an install plan only. Nothing installed on the VM: no plugin entry in the config, no gateway restart, cron without --require-ceo-ledger. The repo now holds the push-job matching rule for Slack ledger entries (off unless the flag is given).
+
+## 2026-10-28 - Handover 14 recorded (fix-109)
+- Code, tests and drafts only. Nothing installed: no plugin entry in the config, no gateway restart, no agent file change, cron without --require-ceo-ledger. The repo holds the approve-word flag, the job requirement and the install plan update.
