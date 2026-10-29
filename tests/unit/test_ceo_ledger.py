@@ -20,7 +20,8 @@ class LedgerTests(unittest.TestCase):
 
     def test_append_only_and_modes(self):
         cl.append(self.path, "r1", "seed-3", "a", T); cl.append(self.path, "r2", "seed-3", "b", T)
-        lines = open(self.path).read().splitlines()
+        with open(self.path) as fh:
+            lines = fh.read().splitlines()
         self.assertEqual([json.loads(l)["run"] for l in lines], ["r1", "r2"])
         self.assertEqual(stat.S_IMODE(os.stat(os.path.dirname(self.path)).st_mode), 0o700)
         self.assertEqual(stat.S_IMODE(os.stat(self.path).st_mode), 0o600)
@@ -32,7 +33,9 @@ class LedgerTests(unittest.TestCase):
     def test_command_line(self):
         env = dict(os.environ, CEO_LEDGER=self.path)
         r = subprocess.run([sys.executable, "-B", os.path.join(HERE, "ceo-ledger.py"), "append", "r9", "seed-3", "text"], env=env, capture_output=True, text=True)
-        self.assertEqual(r.returncode, 0); self.assertEqual(json.loads(open(self.path).read())["run"], "r9")
+        self.assertEqual(r.returncode, 0)
+        with open(self.path) as fh:
+            self.assertEqual(json.loads(fh.read())["run"], "r9")
         self.assertNotEqual(subprocess.run([sys.executable, "-B", os.path.join(HERE, "ceo-ledger.py")], env=env, capture_output=True).returncode, 0)
 
     def test_line_is_accepted_by_the_push_job_check(self):

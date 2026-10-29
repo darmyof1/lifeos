@@ -1105,3 +1105,16 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop3/vm/regression-suite.sh; scenario-run.sh; ~/loop1/ceo-ledger/ (VM); decisions/PENDING.md (P-44)
+## APR-0102 - Delete gate step A: build and test the CEO ledger plugin (not installed)
+Status: approved
+Decided by: CEO
+Your answer: "approved." (2026-10-28 20:17, to the proposal: build and test the gateway plugin code on the VM, but do not install it until the CEO has seen the code)
+Evidence: ops/handover-2026-10-28-claude-code-report-12.md (the gate works in the regression runs: D1 and D2 deletes done with a ledger line, D3 deleted lines skipped by the job, the forged-line test refused); ops/handover-2026-10-28-claude-code-report-11.md (the message_received hook; the sender is written by the gateway).
+Meaning:
+- Handover 13 designs and writes the plugin (observe-only, fail closed, stores the hash and event-like tokens of the CEO's Slack messages, not the text) and the matching rule in the push job, with tests on fake payloads, plus an install test plan. Nothing is installed, no gateway restart, no config change, the cron stays without the option.
+- Installing the plugin (one gateway restart, the CEO's Slack ID in ~/loop1/ceo-slack-id) needs the CEO's separate yes on the code and the test plan, as a new APR.
+- Rule A (instruction wording) is rewritten after the install is decided and is recorded with its own APR.
+- The four-agent design is unchanged. The D2 requested-by and overlap gaps stay held.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/gcal/gcal_sync.py; a new plugin (VM, later); decisions/PENDING.md (P-44)
