@@ -1174,3 +1174,19 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: the COO instructions (v1.10.6); deploy/loop1/loop1-v1106-upgrade.sh; agent-files/executive/coo/AGENTS.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-44, P-36)
+
+## APR-0107 - Install the CEO ledger plugin (observe-only); the cron option stays off
+Status: approved
+Decided by: CEO
+Your answer: "approve" (2026-10-29 18:55, to the proposal: install the CEO ledger plugin under the install plan, still without the cron option; one gateway restart; the CEO types his Slack user ID into ~/loop1/ceo-slack-id himself; nine D1/D2/D3 runs before and after, four test messages in the Slack channels, a hook-only check and a rollback)
+Evidence: deploy/loop3/ceo-plugin/design.md and install-test-plan.md; ops/handover-2026-10-28-claude-code-report-13.md and -14.md (the plugin is hook-only, fails closed, stores a hash, event-like tokens and approve_word, never the text); ops/handover-2026-10-29-claude-code-report-17.md (COO v1.10.6 asks for approve <event ID> correctly: 9 of 9 questions by hand).
+Meaning:
+- Handover 18 installs the plugin from the repo copy, with one gateway restart, and tests it with the CEO's own Slack messages and by hand. Only the plugin entry changes in the OpenClaw config (backup first). No agent file, binding or cron changes.
+- The cron does NOT get --require-ceo-ledger. Switching it on is a further decision after the plugin has been watched working, and needs its own APR.
+- Any failed check means the plan's rollback at once and a report to the CEO.
+- The CEO's Slack user ID lives only in ~/loop1/ceo-slack-id on the VM (mode 600); it is never in the repo, a report, a ledger line or a chat.
+- The CEO's test messages in the four channels also serve the P-36 check of the Slack-channel sessions after 04:00.
+- The four-agent design is unchanged.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: ~/loop1/plugins/ceo-ledger and the plugin entry in the OpenClaw config (VM); deploy/loop3/ceo-plugin/; decisions/PENDING.md (P-44, P-36)

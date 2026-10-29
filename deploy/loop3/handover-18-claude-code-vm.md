@@ -1,0 +1,21 @@
+# Handover 18 to Claude Code on the LifeOS VM (install the CEO ledger plugin, observe-only; cron option stays OFF)
+
+Same Claude Code as handovers 1 to 17. The CEO approved the install (APR-0107). The plan is deploy/loop3/ceo-plugin/install-test-plan.md; follow it step by step, with the changes below. Pull first: `cd ~/lifeos-ro && git pull -q` (expect "APR-0107 ..." at the top; deploy/loop3/ceo-plugin/ must exist). If not, stop and tell the CEO.
+
+## Hard limits (as before, plus)
+1. The cron does NOT get `--require-ceo-ledger`. No agent file, no other config entry, no binding changes. The only config change is the plugin entry that `openclaw plugins install/enable` writes. Back up openclaw.json first (plan 0.2).
+2. Exactly one gateway restart for the install (plan step 3). If a second is needed, or anything in the plan fails, stop and roll back by the plan's rollback section, then tell the CEO. The rollback restart is the only other allowed one.
+3. The CEO's Slack ID is typed by the CEO into `~/loop1/ceo-slack-id` (mode 600). You never ask for it in chat, never print it, never copy it into ~/handover, the report or the repo. Check only the mode and length. Grep the ledger and the report for it without printing it.
+4. Synthetic data and the Google TEST calendar only. No secrets, Slack IDs, tokens, calendar ID or VM address in ~/handover/.
+5. TIME WINDOW: no agent message, `sessions compact` or gateway restart between 03:30 and 05:10 AST; agent runs end by 02:30 AST. Cost under 0.05 USD per run, 1 USD per day.
+6. Journals and git history append-only. Never reuse a run ID. Do not change an instruction to make a run pass.
+
+## Changes to the plan
+- Use the plugin files from the repo, `~/lifeos-ro/deploy/loop3/ceo-plugin/{openclaw.plugin.json,package.json,index.js,ledger.js}`, not from ~/handover. Run the plugin tests there (`node --test test/ledger.test.js`, 12 OK) and the gcal tests from the repo copy.
+- The health check expects PASS 70, WARN 0, FAIL 0 now (not 71).
+- The plan needs the CEO to type and to send Slack messages at set points. Work in this order and wait for the CEO in this session at each "CEO" step; say exactly what to do and what to reply when done: (CEO 1) create `~/loop1/ceo-slack-id` with the plan's command (plan 0.5); (CEO 2) after the restart, the Slack messages of plan step 4 (one in each of the four agent channels with the exact texts the plan gives, the duplicate resend, the three approve_word texts in the COO channel); (CEO 3) the Slack steps of plan step 5 (ask the COO in Slack to delete the 10-30 workout; later send exactly "approve <event ID>" with the ID from the COO request; the bare "approve"; "do not approve <event ID>").
+- Because the CEO's messages are also the first Slack messages after 04:00 today, use them for the P-36 channel-session check: run `python3 ~/loop1/daily-reset-report.py --dry-run` (read-only) right BEFORE the CEO's first Slack message and again AFTER the four channel messages, and report per channel session: ID before and after, and the "reset applied ... (reason)" line if any. Do not run a prep or compact on the channel sessions in between.
+- The before-regression (plan step 1) and after-regression (plan step 6) are 9 runs each as written. If an after-run fails, compare with the before-run of the same scenario and with handover 17 and report it as it happened.
+
+## Report (~/handover/REPORT-18.md)
+In plain words first: is the plugin installed, hook-only, loaded, and did it write exactly the expected lines (4 channel lines, 3 approve_word lines true/false/false, none for CLI, none for a non-CEO sender or say that none was available); did the bare "approve" and "do not approve" delete nothing; did "approve <event ID>" delete once and not again; the P-36 channel-session result. Then sha256 prefixes of the four installed plugin files (equal to the repo copies), the config diff (plugin entry only, no ID), the before/after regression tables, failures exactly as they happened, and the end state (gateway one process, cron unchanged and without the option, calendar at the three seed events, journals at the seed, ledger files and modes). If you rolled back, say so first. Package with `tar czf ~/handover-18.tar.gz -C ~ handover` after a secrets check that includes the CEO's Slack ID (compare against the ID file without printing it).
