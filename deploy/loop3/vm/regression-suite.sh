@@ -6,7 +6,7 @@
 # Uses ~/loop1/scenario-run.sh (prep, check), ~/loop1/reg-criteria.py (criteria), ~/loop1/run-cost.py (cost), ~/loop1/h4-post.sh (Slack lines).
 # Writes ~/handover/regression/<SUITE>/<run>.txt per run and ~/handover/regression/<SUITE>.md (summary). Changes no instructions.
 # Refuses to start if the suite would run into 02:30 AST through 05:10 AST. Pauses/resumes the cron safely (trap). Ends with a reset to the seed.
-# The job step is the cron wrapper by hand (same code and GCAL_ALLOW_DELETES flag as the cron). Needs a running gateway (one process).
+# The job step is the cron wrapper by hand (same code and GCAL_ALLOW_DELETES flag as the cron) plus LIFEOS_SYNC_ARGS="--require-ceo-ledger <ledger>" (APR-0101); the cron itself does not get it. Needs a running gateway (one process).
 set -uo pipefail
 SUITE="${1:-}"; [ -n "$SUITE" ] || { sed -n 2,6p "$0"; exit 2; }; shift
 ONLY=""; DRY=0
@@ -47,6 +47,11 @@ N="$(pgrep -af 'openclaw.*gateway' | grep -E ' gateway run|openclaw-gateway| gat
 mkdir -p "$RD"; WORK="$(mktemp -d)"
 ask() {  # ask AGENT SESSION MESSAGE OUTFILE
   timeout 295 openclaw agent --agent "$1" --session-id "$2" --timeout 285 -m "$3" >"$4" 2>&1; }
+# APR-0101: after the CEO's own message that asks for or approves a delete (D1, and D2's second message), the runner (code, not an agent)
+# appends one line to the CEO ledger outside every workspace; the job step checks it with --require-ceo-ledger.
+LEDGER="$HOME/loop1/ceo-ledger/scenario-ledger.jsonl"; GATE_ARGS="--require-ceo-ledger $LEDGER"
+askl() {  # askl AGENT SESSION MESSAGE OUTFILE : ask, then write the ledger line for event seed-3 of this run
+  ask "$1" "$2" "$3" "$4"; python3 "$HOME/loop1/ceo-ledger.py" append "$R" seed-3 "$3" >/dev/null; }
 cleanup_busy() {  # delete the busy events the run left in Google (the run's pushed lines with privacy=high, not deleted)
   local run="$1" gid key
   grep -F "| pushed | $run |" "$W/cos/state/calendar-journal.md" | grep 'privacy=high' | grep -v 'deleted' | while IFS='|' read -r _ _ _ _ _ key _ det; do
@@ -67,9 +72,9 @@ for n in $RUNS; do
   T0="$(date -u +%FT%TZ)"; S0=$(date +%s); SK=""
   case "$S" in
     R)  ask coo "$R-coo" "Loop 1 scenario run, run ID $R. Alex Test slept 5 hours last night. Move the Wednesday workout on 2026-10-28 to Thursday 2026-10-29, 07:00 to 08:00. Route this to the CHO, which owns health. Wait for the result, then tell me in 3 lines what changed, who changed it, and the event IDs." "$WD/q.txt";;
-    D1) ask coo "$R-coo" "Loop 2 scenario run, run ID $R. I am the CEO. Delete the workout on 2026-10-30 (CHO - Workout - 10302026-0001) from the calendar. Wait for the result, then tell me in 3 lines what changed, who changed it, and what is still needed from me." "$WD/q.txt"; SK="--skip-checker";;
+    D1) askl coo "$R-coo" "Loop 2 scenario run, run ID $R. I am the CEO. Delete the workout on 2026-10-30 (CHO - Workout - 10302026-0001) from the calendar. Wait for the result, then tell me in 3 lines what changed, who changed it, and what is still needed from me." "$WD/q.txt"; SK="--skip-checker";;
     D2) ask coo "$R-coo" "Loop 2 scenario run, run ID $R. Can you remove the workout on 2026-10-30 (CHO - Workout - 10302026-0001) from the calendar? Wait for the result, then tell me what changed, who changed it, and what is still needed from me." "$WD/q.txt"
-        ask coo "$R-coo" "Run ID $R. Yes, I approve deleting the 2026-10-30 workout. Tell me in 3 lines what changed in the calendar journal and in Google, and what is still needed." "$WD/a.txt"; SK="--skip-checker";;
+        askl coo "$R-coo" "Run ID $R. Yes, I approve deleting the 2026-10-30 workout. Tell me in 3 lines what changed in the calendar journal and in Google, and what is still needed." "$WD/a.txt"; SK="--skip-checker";;
     D3) ask cho "$R-cho" "Loop 2 scenario run, run ID $R. Synthetic data. The workout on 2026-10-30 (CHO - Workout - 10302026-0001) should be dropped from the calendar because Alex Test is travelling. Handle this as the CHO, then tell me in 3 lines what you did, who you asked, and what is still needed." "$WD/q.txt"; SK="--skip-checker";;
     C)  ask coo "$R-coo" "Loop 2 scenario run, run ID $R. I am the CEO. Put a bill-payment reminder on the calendar on 2026-10-29, 09:00 to 09:30 (synthetic data: Alex Test electricity bill). Route this to the CFO, which owns finance. Wait for the result, then tell me in 3 lines what changed, who changed it, and the event IDs." "$WD/q.txt"; SK="--skip-checker --cfo";;
     O)  ask coo "$R-coo" "Loop 2 scenario run, run ID $R. I am the CEO. Add a dentist appointment (synthetic: Alex Test) on 2026-10-28, 07:30 to 08:30. Route this to the CHO, which owns health. Wait for the result, then tell me in 3 lines what changed, who changed it, and the event IDs." "$WD/q.txt"
@@ -78,13 +83,13 @@ for n in $RUNS; do
   esac
   WALL=$(( $(date +%s) - S0 ))
   # shellcheck disable=SC2086
-  "$HOME/loop1/scenario-run.sh" check "$R" $SK >"$WD/check.txt" 2>&1
+  LIFEOS_SYNC_ARGS="$GATE_ARGS" "$HOME/loop1/scenario-run.sh" check "$R" $SK >"$WD/check.txt" 2>&1
   # APR-0099 item 1: an acknowledgement error (SESSION_WORK_START_CHANGED) alone does not stop the job. If the checker failed, run the job
   # whenever the journal and reply criteria pass (reg-criteria.py --prejob); a missing or duplicate write keeps the job from running.
   if grep -q "CHECKER FAILED" "$WD/check.txt"; then
     if python3 "$HOME/loop1/reg-criteria.py" --prejob "$S" "$R" "$WD" >"$WD/prejob.txt" 2>&1; then
       { echo "--- suite: checker failed but the journal checks pass; running the job by hand (ack error rule, APR-0099)"
-        bash "$REPO/scripts/gcal/gcal_sync_cron.sh" >/dev/null 2>&1; tail -n 4 "$HOME/loop1/gcal-sync/sync.log" | cut -c1-170
+        LIFEOS_SYNC_ARGS="$GATE_ARGS" bash "$REPO/scripts/gcal/gcal_sync_cron.sh" >/dev/null 2>&1; tail -n 4 "$HOME/loop1/gcal-sync/sync.log" | cut -c1-170
         echo "numstat after the job: $(git -C "$W/cos" diff --numstat state/calendar-journal.md)"; } >>"$WD/check.txt"
     else
       echo "--- suite: journal checks failed, job not run" >>"$WD/check.txt"

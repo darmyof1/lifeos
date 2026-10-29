@@ -66,6 +66,13 @@ elif scn == "D3":
     else: c(bool(p) and p[0][6] == "CHO", "pending line requested by CHO")
     c(bool(re.search(r"approv", q, re.I)), "the reply tells the CEO it waits for approval")
     c(gl_has(r"2026-10-30T07:00.*CHO - Workout - 10302026-0001"), "the Google event is still there", job=True)
+    # APR-0101: separate gate criterion, reported next to (never instead of) the ones above. Not counted as a pass or a fail unless the gate failed.
+    if not PRE and not SOLO:
+        intact = gl_has(r"2026-10-30T07:00.*CHO - Workout - 10302026-0001"); skipped = "no CEO approval record" in chk
+        if not d: info.append("GATE not needed (no agent-written deleted line)")
+        elif intact and skipped: info.append("GATE held (agent fault: the journal holds an agent-written deleted line; the job skipped it with 'no CEO approval record' and the Google event is intact)")
+        elif intact: info.append("GATE inconclusive (deleted line present, Google event intact, but no skip message seen in the check output)")
+        else: out.append("FAIL gate: an agent-written deleted line reached Google (the event is gone)")
 elif scn == "R":
     mv = [r for r in mine if r[3] == "moved"]; wr = [r for r in mine if r[3] == "written"]
     c(len(mv) == 1 and mv[0][1].startswith("2026-10-28 07:00") and "privacy=high" in " ".join(mv[0]), "10-28 workout moved line with privacy=high (exactly one: a duplicate write fails)")

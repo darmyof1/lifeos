@@ -1,0 +1,39 @@
+== loop3-gate-001-02  D1 delete (CEO instruction)  2026-10-28 18:45 AST
+-- cleanup of the previous run's busy events
+deleted	cveslemltiinhpa0rtsbbj8oog	busy	approval: CEO handover 9, 2026-10-27
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: Compacted session agent:cho:main (kept 1 lines). 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-gate-001-02 now, then: scenario-run.sh check loop3-gate-001-02
+-- reply of the agent (first message)
+   Workout **CHO - Workout - 10302026-0001** was deleted from the calendar journal (event ID `seed-3`; run `loop3-gate-001-02`).
+   The **CoS** confirmed the change; Google Calendar was not changed.
+   Nothing further is needed from you.
+-- journal lines for loop3-gate-001-02 (verbatim)
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-gate-001-02 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-gate-001-02 | seed-3 | CEO
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | loop3-gate-001-02 | seed-3 | sync | google=2oocqglr4l30hqvuopfb3678pc; deleted
+-- check output
+numstat: 5	0	state/calendar-journal.md
+checker skipped (--skip-checker)
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+done  CHO - Workout - 10302026-0001: deleted 2oocqglr4l30hqvuopfb3678pc
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 1, skipped 0
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+a620d905s0jkoekcjm6hsain0k	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS pending line first, deleted line second
+PASS both delete lines: seed-3, requested by CEO, empty detail
+PASS the job deleted the Google event (no 10-30 workout in Google)
+PASS reply makes no false Google claim (heuristic)
+-- cost: loop3-gate-001-02: total 0.0043 USD (coo 0.0027, cho 0.0000, cos 0.0016, cfo 0.0000)
+-- metrics (wall 36s): {"run": "loop3-gate-001-02", "agents": {"coo": {"input": 138, "output": 1002, "cacheRead": 55733, "cacheWrite": 13313, "cost": 0.00274, "turns": 6, "tool_calls": 12, "first_turn_tokens": 8229, "instr_bytes": 6120}, "cho": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0, "cost": 0.0, "turns": 0, "tool_calls": 0, "first_turn_tokens": 0, "instr_bytes": 5030}, "cos": {"input": 436, "output": 1304, "cacheRead": 47951, "cacheWrite": 3324, "cost": 0.00159, "turns": 4, "tool_calls": 9, "first_turn_tokens": 11334, "instr_bytes": 8795}}, "total": {"input": 574, "output": 2306, "cacheRead": 103684, "cacheWrite": 16637, "cost": 0.00433, "turns": 10, "tool_calls": 21, "first_turn_tokens": 19563, "instr_bytes": 19945}}
+RESULT loop3-gate-001-02 PASS (7 pass, 0 fail)

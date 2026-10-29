@@ -396,3 +396,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-28 - Handover 11 recorded (fix-103)
 - Read-only investigation and a switched-off code check (--require-ceo-ledger). Nothing installed on the VM; no agent file, config or cron changed. The cron does not use the new option.
+
+## 2026-10-28 - Handover 12 recorded (fix-105)
+- Claude Code installed ceo-ledger.py, reg-criteria.py, regression-suite.sh and solo-run.sh (sha256 prefixes in report 12; they equal the tarball copies) and created ~/loop1/ceo-ledger/ (mode 700, file 600). Ran 21 gated regression runs and the forged-line test. No agent file, config, binding or cron changed; the cron does not have --require-ceo-ledger.
