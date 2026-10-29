@@ -1,0 +1,16 @@
+{
+  "name": "lifeos-ceo-ledger",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "peerDependencies": {
+    "openclaw": ">=2026.10.5"
+  },
+  "openclaw": {
+    "extensions": ["./index.js"],
+    "compat": {
+      "pluginApi": ">=2026.10.5",
+      "minGatewayVersion": "2026.10.5"
+    }
+  }
+}

@@ -12,7 +12,7 @@ What it does, per entry (the latest line of each name decides):
                     event ID came first (APR-0057), then append  pushed  with the Google event ID
   failed            retry on the next run until 5 attempts; the 5th failure is final and the alert goes to the COO channel
   deleted           only with --allow-deletes, only after a  delete-pending-approval  line for the same event ID (APR-0044);
-                    with --require-ceo-ledger PATH also only if the ledger holds a CEO entry for that run and event (APR-0100)
+                    with --require-ceo-ledger PATH (once per ledger file) also only if a ledger holds a CEO entry for it (APR-0100, APR-0102)
   requested, pushed, conflict, moved, delete-pending-approval   nothing to do
 Before it creates anything it searches Google for the exact title (APR-0034). A write that worked but looked failed is
 therefore not repeated. If the title exists at another time, or twice, the job appends  conflict  and touches nothing.
@@ -134,29 +134,111 @@ def delete_was_requested(entries, e):
     return any(x.lineno < e.lineno and x.status == "delete-pending-approval" and x.event == e.event for x in entries)
 
 
-def ceo_approval_recorded(ledger, e, now=None):
-    """APR-0100: True if the CEO ledger (outside every agent workspace) holds an entry for this run and event.
-    One JSON object per line: time, run, event, channel, sender, text_sha256. sender must be "CEO" and time must not be
-    later than now. The journal has no time column, so 'before the deleted line' means 'before this job run'.
-    A missing or unreadable ledger, or a damaged line, approves nothing."""
+LEDGER_GRACE_SECONDS = 300      # an approval may arrive this long before the job first saw the pending line (cron interval)
+LEDGER_MAX_AGE_SECONDS = 48 * 3600
+
+
+def _utc(text):
+    t = datetime.datetime.fromisoformat(str(text).replace("Z", "+00:00"))
+    return t if t.tzinfo else t.replace(tzinfo=datetime.timezone.utc)
+
+
+def _state_json(state_dir, name):
+    try:
+        with open(os.path.join(state_dir, name), encoding="utf-8") as fh:
+            d = json.load(fh)
+        return d if isinstance(d, dict) else {}
+    except (OSError, ValueError, TypeError):
+        return {}
+
+
+def _save_state_json(state_dir, name, data):
+    os.makedirs(state_dir, exist_ok=True)
+    tmp = os.path.join(state_dir, name + ".tmp")
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, sort_keys=True)
+    os.replace(tmp, os.path.join(state_dir, name))
+
+
+def pending_key(e):
+    return e.run + "|" + e.event
+
+
+def note_pending_seen(state_dir, entries, now=None):
+    """APR-0102: the journal has no time column, so the job remembers when it first saw each delete-pending-approval line
+    (state file ceo-ledger-seen.json). A Slack approval older than that moment (less the grace) does not count."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    seen = _state_json(state_dir, "ceo-ledger-seen.json")
+    new = {pending_key(x): now.strftime("%Y-%m-%dT%H:%M:%SZ") for x in entries
+           if x.status == "delete-pending-approval" and pending_key(x) not in seen}
+    if new:
+        seen.update(new)
+        _save_state_json(state_dir, "ceo-ledger-seen.json", seen)
+
+
+def find_ceo_approval(ledger, e, now=None, state_dir=None):
+    """APR-0100/0102: the ledger entry (a dict) that approves this deleted line, or None. The ledger lives outside every agent
+    workspace; one JSON object per line. Two kinds of entry, both need sender "CEO" and a time not later than now:
+      scenario entry (runner, APR-0101):  run and event equal the deleted line's run and event.
+      Slack entry (plugin, APR-0102):     the event ID is one of event_tokens; the entry is not older than LEDGER_MAX_AGE_SECONDS;
+                                          it is not older than the first time the job saw the pending line (less
+                                          LEDGER_GRACE_SECONDS); its message_id was not used for an earlier delete.
+    A missing or unreadable ledger, a damaged line, or a Slack entry with no state_dir approves nothing."""
     now = now or datetime.datetime.now(datetime.timezone.utc)
     try:
         with open(os.path.expanduser(ledger), encoding="utf-8") as fh:
             lines = fh.read().splitlines()
     except OSError:
-        return False
+        return None
+    seen = _state_json(state_dir, "ceo-ledger-seen.json") if state_dir else {}
+    used = set(_state_json(state_dir, "ceo-ledger-used.json")) if state_dir else set()
+    first_seen = None
+    if seen.get(pending_key(e)):
+        try:
+            first_seen = _utc(seen[pending_key(e)])
+        except ValueError:
+            first_seen = None
     for line in lines:
         try:
             r = json.loads(line)
-            t = datetime.datetime.fromisoformat(str(r["time"]).replace("Z", "+00:00"))
-            if t.tzinfo is None:
-                t = t.replace(tzinfo=datetime.timezone.utc)
+            t = _utc(r["time"])
         except (ValueError, KeyError, TypeError):
             continue
-        if (isinstance(r, dict) and r.get("sender") == "CEO" and r.get("run") == e.run and r.get("event") == e.event
-                and t <= now):
-            return True
-    return False
+        if not isinstance(r, dict) or r.get("sender") != "CEO" or t > now:
+            continue
+        if "event_tokens" not in r:
+            if r.get("run") == e.run and r.get("event") == e.event:
+                return r
+            continue
+        tokens = r.get("event_tokens")
+        mid = str(r.get("message_id") or "")
+        if (isinstance(tokens, list) and e.event.lower() in [str(x).lower() for x in tokens] and mid and mid not in used
+                and first_seen is not None and state_dir
+                and t >= first_seen - datetime.timedelta(seconds=LEDGER_GRACE_SECONDS)
+                and (now - t).total_seconds() <= LEDGER_MAX_AGE_SECONDS):
+            return r
+    return None
+
+
+def ceo_approval_recorded(ledger, e, now=None, state_dir=None):
+    return find_ceo_approval(ledger, e, now, state_dir) is not None
+
+
+def approved_by_any(ledgers, e, now=None, state_dir=None):
+    for ledger in ([ledgers] if isinstance(ledgers, str) else ledgers or []):
+        r = find_ceo_approval(ledger, e, now, state_dir)
+        if r is not None:
+            return r
+    return None
+
+
+def mark_ledger_used(state_dir, record):
+    """A Slack approval covers one delete once: remember its message_id after the delete ran."""
+    mid = str((record or {}).get("message_id") or "")
+    if mid:
+        used = _state_json(state_dir, "ceo-ledger-used.json")
+        used[mid] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        _save_state_json(state_dir, "ceo-ledger-used.json", used)
 
 
 def detail_value(detail, field):
@@ -404,8 +486,11 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
     except OSError as exc:
         out("error: cannot read the journal: %s" % exc)
         return 4, counts
+    if ceo_ledger and not dry_run:
+        note_pending_seen(state_dir, entries, now)
     todo, attempts = latest_by_name(entries)
     done = 0
+    approvals = {}
     for e in todo:
         if e.status == "failed" and attempts[e.name] >= MAX_ATTEMPTS:
             continue
@@ -420,10 +505,12 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
                 out("skip   %s: no delete-pending-approval line for event %s (APR-0044)" % (e.name, e.event))
                 counts["skipped"] += 1
                 continue
-            if ceo_ledger and not ceo_approval_recorded(ceo_ledger, e, now):
-                out("skip   %s: no CEO approval record for event %s (APR-0100)" % (e.name, e.event))
-                counts["skipped"] += 1
-                continue
+            if ceo_ledger:
+                approvals[e.lineno] = approved_by_any(ceo_ledger, e, now, state_dir)
+                if approvals[e.lineno] is None:
+                    out("skip   %s: no CEO approval record for event %s (APR-0100)" % (e.name, e.event))
+                    counts["skipped"] += 1
+                    continue
         if done >= max_per_run:
             out("stop   %d entries done this run; the rest waits for the next run" % done)
             break
@@ -433,6 +520,8 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
                 action, gid = delete_entry(service, calendar, e, tz, dry_run, entries)
                 detail = ("google=%s; deleted" % gid) if gid else "already gone"
                 counts["deleted"] += 1
+                if not dry_run and approvals.get(e.lineno):
+                    mark_ledger_used(state_dir, approvals[e.lineno])
             else:
                 action, gid = push_entry(service, calendar, e, moved_hint(entries, e), tz, dry_run, entries)
                 detail = "google=" + gid + ("; privacy=high" if high_for_entry(entries, e) else "")
@@ -474,8 +563,9 @@ def main(argv=None, service=None, alert_runner=None):
     p.add_argument("--journal", default=DEFAULT_JOURNAL, help="the CoS journal (default %s)" % DEFAULT_JOURNAL)
     p.add_argument("--state-dir", default=DEFAULT_STATE_DIR, help="lock, pause file and logs (default %s)" % DEFAULT_STATE_DIR)
     p.add_argument("--allow-deletes", action="store_true", help="also run approved deletes (APR-0044)")
-    p.add_argument("--require-ceo-ledger", metavar="PATH", default=None,
-                   help="run a delete only if this ledger (JSON lines, outside the agent workspaces) holds a CEO entry for the run and event (APR-0100)")
+    p.add_argument("--require-ceo-ledger", metavar="PATH", action="append", default=None,
+                   help="run a delete only if a ledger (JSON lines, outside the agent workspaces) holds a CEO entry for it (APR-0100, APR-0102); "
+                        "give the option once per ledger file (scenario ledger, Slack ledger)")
     p.add_argument("--max-per-run", type=int, default=MAX_PER_RUN)
     p.add_argument("--test-alert", action="store_true", help="send one test message to the alert channel and stop")
     args = p.parse_args(argv)

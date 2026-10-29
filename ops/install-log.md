@@ -399,3 +399,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-28 - Handover 12 recorded (fix-105)
 - Claude Code installed ceo-ledger.py, reg-criteria.py, regression-suite.sh and solo-run.sh (sha256 prefixes in report 12; they equal the tarball copies) and created ~/loop1/ceo-ledger/ (mode 700, file 600). Ran 21 gated regression runs and the forged-line test. No agent file, config, binding or cron changed; the cron does not have --require-ceo-ledger.
+
+## 2026-10-28 - Handover 13 recorded (fix-107)
+- Design, plugin code, tests and an install plan only. Nothing installed on the VM: no plugin entry in the config, no gateway restart, cron without --require-ceo-ledger. The repo now holds the push-job matching rule for Slack ledger entries (off unless the flag is given).

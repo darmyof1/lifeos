@@ -1,0 +1,13 @@
+{
+  "id": "ceo-ledger",
+  "name": "CEO ledger",
+  "description": "Observe-only: appends one ledger line (hash and event tokens, no text) for each Slack message sent by the CEO. Changes, blocks and replies to nothing.",
+  "categories": ["other"],
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false
+  }
+}

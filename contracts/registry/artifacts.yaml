@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-106.sh",
+  "generated_by": "fix-107.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -936,6 +936,38 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop3/ceo-plugin/README.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/ceo-plugin/design.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/ceo-plugin/index.js",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/ceo-plugin/install-test-plan.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/ceo-plugin/ledger.js",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/ceo-plugin/openclaw.plugin.json",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/ceo-plugin/package.json",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/ceo-plugin/test/ledger.test.js",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop3/handover-10-claude-code-vm.md",
       "status": "draft"
     },
@@ -1257,6 +1289,10 @@
     },
     {
       "path": "ops/handover-2026-10-28-claude-code-report-12.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-10-28-claude-code-report-13.md",
       "status": "draft"
     },
     {

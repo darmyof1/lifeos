@@ -410,6 +410,158 @@ class CeoLedgerTests(DeleteTests):
         self.assertIn("--require-ceo-ledger", inspect.getsource(gs.main))
 
 
+class SlackLedgerTests(Base):
+    """APR-0102: Slack ledger entries (event_tokens) and the matching rule; the scenario ledger keeps working."""
+    T0 = None
+
+    def setUp(self):
+        super().setUp()
+        import datetime, json
+        self.dt, self.json = datetime, json
+        self.T0 = datetime.datetime(2026, 10, 28, 12, 0, 0, tzinfo=datetime.timezone.utc)
+        self.svc.add("x1", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.lpath = os.path.join(self.tmp, "slack-ledger.jsonl")
+        self.write(*self.journal_lines())
+
+    def journal_lines(self, run="r3", event="r3-cho-01"):
+        return [jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", run="s", event="s-1", by="sync", detail="google=x1"),
+                jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "delete-pending-approval", run=run, event=event),
+                jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "deleted", run=run, event=event)]
+
+    def at(self, minutes):
+        return self.T0 + self.dt.timedelta(minutes=minutes)
+
+    def entry(self, minutes, **kw):
+        r = {"time": self.at(minutes).strftime("%Y-%m-%dT%H:%M:%SZ"), "channel": "slack", "account": "default", "conversation": "c-0",
+             "message_id": "m1", "sender": "CEO", "text_sha256": "0" * 64, "event_tokens": ["r3-cho-01"]}
+        r.update(kw)
+        return r
+
+    def put(self, *rows):
+        with open(self.lpath, "w") as fh:
+            for r in rows:
+                fh.write(self.json.dumps(r) + "\n")
+
+    def run_at(self, minutes, ledgers=None):
+        return self.go(allow_deletes=True, ceo_ledger=ledgers or [self.lpath], now=self.at(minutes))
+
+    def test_first_job_run_records_when_the_pending_line_was_seen(self):
+        self.put()
+        self.run_at(0)
+        with open(os.path.join(self.state, "ceo-ledger-seen.json")) as fh:
+            seen = self.json.load(fh)
+        self.assertEqual(seen, {"r3|r3-cho-01": "2026-10-28T12:00:00Z"})
+
+    def test_dry_run_records_nothing(self):
+        self.put()
+        self.go(allow_deletes=True, ceo_ledger=[self.lpath], now=self.at(0), dry_run=True)
+        self.assertFalse(os.path.exists(os.path.join(self.state, "ceo-ledger-seen.json")))
+
+    def test_approval_after_the_pending_line_was_seen_deletes(self):
+        self.put()
+        _, counts, _ = self.run_at(0)
+        self.assertEqual(counts["deleted"], 0)
+        self.put(self.entry(10))
+        _, counts, _ = self.run_at(15)
+        self.assertEqual(counts["deleted"], 1)
+        self.assertNotIn("x1", self.svc.store)
+
+    def test_event_not_in_the_tokens_does_not_delete(self):
+        self.run_at(0)
+        self.put(self.entry(10, event_tokens=["r3-cho-02", "seed-3"]), self.entry(11, message_id="m2", event_tokens=[]))
+        _, counts, out = self.run_at(15)
+        self.assertEqual(counts["deleted"], 0)
+        self.assertIn("no CEO approval record", out)
+
+    def test_token_match_is_case_insensitive_and_exact(self):
+        self.run_at(0)
+        self.put(self.entry(10, event_tokens=["R3-CHO-01"]))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+
+    def test_an_approval_older_than_the_first_sight_does_not_count(self):
+        self.run_at(0)
+        self.put(self.entry(-30))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 0)
+        self.assertIn("x1", self.svc.store)
+
+    def test_an_approval_within_the_grace_before_the_first_sight_counts(self):
+        self.run_at(0)
+        self.put(self.entry(-4))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+
+    def test_an_approval_older_than_48_hours_does_not_count(self):
+        self.run_at(0)
+        self.put(self.entry(1))
+        self.assertEqual(self.run_at(60 * 49)[1]["deleted"], 0)
+
+    def test_without_state_a_slack_entry_never_counts(self):
+        self.put(self.entry(10))
+        e = gs.Entry(3, "n", "s", "e", "deleted", "r3", "r3-cho-01", "CEO")
+        self.assertIsNone(gs.find_ceo_approval(self.lpath, e, self.at(15)))
+
+    def test_not_ceo_or_future_or_broken_entries_do_not_count(self):
+        self.run_at(0)
+        for r in (self.entry(10, sender="COO"), self.entry(60), "{broken", self.entry(10, message_id="")):
+            self.setUp()
+            self.run_at(0)
+            with open(self.lpath, "w") as fh:
+                fh.write((r if isinstance(r, str) else self.json.dumps(r)) + "\n")
+            self.assertEqual(self.run_at(15)[1]["deleted"], 0, r)
+            self.assertIn("x1", self.svc.store)
+
+    def test_one_approval_covers_one_delete_once(self):
+        self.run_at(0)
+        self.put(self.entry(10))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+        with open(os.path.join(self.state, "ceo-ledger-used.json")) as fh:
+            used = self.json.load(fh)
+        self.assertEqual(list(used), ["m1"])
+        # the same event ID comes back in a later run: the old message must not approve it again
+        self.svc.add("x2", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.write(*self.journal_lines(run="r4", event="r3-cho-01"))
+        self.run_at(20)
+        _, counts, out = self.run_at(25)
+        self.assertEqual(counts["deleted"], 0)
+        self.assertIn("no CEO approval record", out)
+
+    def test_an_approval_from_before_a_reused_event_pending_line_does_not_count(self):
+        self.run_at(0)
+        self.put(self.entry(10))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+        self.svc.add("x2", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.write(*self.journal_lines(run="r4", event="r3-cho-01"))
+        self.run_at(120)                       # first sight of the new pending line, two hours later
+        self.put(self.entry(10, message_id="m9"))
+        self.assertEqual(self.run_at(125)[1]["deleted"], 0)
+
+    def test_any_channel_counts(self):
+        self.run_at(0)
+        self.put(self.entry(10, conversation="c-other"))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+
+    def test_scenario_ledger_still_works_next_to_the_slack_ledger(self):
+        sc = os.path.join(self.tmp, "scenario-ledger.jsonl")
+        with open(sc, "w") as fh:
+            fh.write(self.json.dumps({"time": "2026-10-28T11:00:00Z", "run": "r3", "event": "r3-cho-01", "channel": "cli", "sender": "CEO", "text_sha256": "0" * 64}) + "\n")
+        self.put()
+        self.assertEqual(self.run_at(5, ledgers=[sc, self.lpath])[1]["deleted"], 1)
+
+    def test_a_missing_slack_ledger_is_fail_closed(self):
+        _, counts, out = self.run_at(5, ledgers=[os.path.join(self.tmp, "none.jsonl")])
+        self.assertEqual(counts["deleted"], 0)
+        self.assertIn("x1", self.svc.store)
+
+    def test_a_string_ledger_argument_still_works(self):
+        self.put()
+        self.go(allow_deletes=True, ceo_ledger=self.lpath, now=self.at(0))
+        self.put(self.entry(10))
+        self.assertEqual(self.go(allow_deletes=True, ceo_ledger=self.lpath, now=self.at(15))[1]["deleted"], 1)
+
+    def test_main_takes_the_option_more_than_once(self):
+        import inspect
+        self.assertIn('action="append"', inspect.getsource(gs.main))
+
+
 class HighPrivacyTests(Base):
     """High-privacy entries show in Google as busy, with a hidden key and never the mandated title (APR-0032, APR-0079)."""
     HP = "privacy=high"
