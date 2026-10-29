@@ -1,0 +1,7 @@
+done  CHO - Workout - 10302026-0001: already in Google 76v0tec07tc9n9t5iguniavfeo
+v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+mgij4gg09dam3fqam0rafqhdmg	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+76v0tec07tc9n9t5iguniavfeo	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+other events: 0
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-v1104-h-99-final now, then: scenario-run.sh check loop3-v1104-h-99-final

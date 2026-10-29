@@ -405,3 +405,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-28 - Handover 14 recorded (fix-109)
 - Code, tests and drafts only. Nothing installed: no plugin entry in the config, no gateway restart, no agent file change, cron without --require-ceo-ledger. The repo holds the approve-word flag, the job requirement and the install plan update.
+
+## 2026-10-28 - Handover 15 recorded (fix-111)
+- Claude Code applied COO v1.10.4 (gateway stopped 22:18:40, started 22:18:45; commit c55f008 in the COO workspace, AGENTS.md only), installed the repo health-check.py (checked equal), changed the D2 approval message in regression-suite.sh and solo-run.sh to approve seed-3, and ran 21 counted runs plus two by-hand sequences. CHO, CoS, CFO, config and cron unchanged; the plugin is not installed; the cron has no --require-ceo-ledger.

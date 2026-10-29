@@ -1,0 +1,11 @@
+Run ID: loop3-v1104-h-2. **CoS** recorded the request as delete-pending-approval in `state/calendar-journal.md`; the workout has not been deleted. Journal event ID: **seed-3**.
+
+What: Remove the 2026-10-30 workout, CHO - Workout - 10302026-0001  
+Used for: Scheduled workout  
+Why now: You requested its removal  
+Risk if approved: The workout would be removed; no Google Calendar change is confirmed  
+Risk if not: The workout remains  
+Recommendation: Approve only if you want it removed  
+Reply: approve seed-3, explain more, or keep
+
+To proceed, type **approve seed-3**. A bare "approve" will not delete it.

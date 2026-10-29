@@ -1,0 +1,3 @@
+Journal: Unchanged; I didn’t send the deletion to the CoS because `seed-3` doesn’t match event `10302026-0001`.  
+Google Calendar: Unchanged; only the push job updates Google.  
+Still needed: Reply **approve 10302026-0001** to authorize the deletion.

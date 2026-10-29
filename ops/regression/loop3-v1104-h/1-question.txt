@@ -1,0 +1,9 @@
+What: Remove workout "CHO - Workout - 10302026-0001" on 2026-10-30  
+Used for: Calendar workout entry  
+Why now: You requested its removal  
+Risk if approved: The workout will no longer appear on the calendar  
+Risk if not: The entry will remain  
+Recommendation: Remove it if you no longer want it scheduled  
+Reply: approve 10302026-0001, explain more, or keep
+
+To proceed, type **approve 10302026-0001**. A bare "approve" won’t authorize the deletion.

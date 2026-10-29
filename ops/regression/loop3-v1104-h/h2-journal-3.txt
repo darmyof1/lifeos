@@ -1,0 +1,2 @@
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-v1104-h-2 | seed-3 | CEO | 
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | deleted | loop3-v1104-h-2 | seed-3 | CEO | 

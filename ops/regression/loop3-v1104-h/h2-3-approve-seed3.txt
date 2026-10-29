@@ -1,0 +1,3 @@
+CoS appended a **deleted** line for CHO - Workout - 10302026-0001 (event ID **seed-3**) to the calendar journal.  
+Google Calendar was not changed; the push job handles that separately.  
+Still needed from you: nothing.

@@ -1,0 +1,1 @@
+Please send **approve 10302026-0001** to authorize removing that calendar entry. A bare "approve" isn’t enough.
