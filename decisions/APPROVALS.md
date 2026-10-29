@@ -1159,3 +1159,18 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: the COO instructions (v1.10.5); deploy/loop1/loop1-v1105-upgrade.sh; agent-files/executive/coo/AGENTS.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-44)
+
+## APR-0106 - Only an order to delete goes straight to the CoS; a question always gets the pending line and the seven items (instruction set v1.10.6)
+Status: approved
+Decided by: CEO
+Your answer: "approve as written." (2026-10-29 07:37, to the proposed sentence: pass the CEO's words to the CoS at once, with no approval request, only when they order the delete; a question or a wish is not an order and always gets the delete-pending-approval line from the CoS and then the seven items, each on its own line, and the COO waits for approve <event ID>; never tell the CEO an entry is deleted or recorded as deleted after a question)
+Evidence: ops/handover-2026-10-29-claude-code-report-16.md (loop3-v1105-002-03 and -003-03: the COO answered the question without the seven items and told the CEO the entry was recorded as deleted while only the pending line existed; D2 0 of 3 by the suite, 15 of 21 in all); APR-0105.
+Meaning:
+- COO instruction set v1.10.6: the line in deploy/loop1/loop1-v1106-upgrade.sh (COO only; cos v1.10.2, cho v1.9, cfo v1.10 unchanged).
+- Applied on the VM by handover 17, then checked with six question sequences, three differently phrased questions, three explicit D1 orders and three counted suites. Failures are reported, not tuned away.
+- Handover 17 first proves the 04:00 session reset (P-36) before any compact. That check changes nothing.
+- The plugin install and the cron option are not part of this entry; the install needs the CEO's separate yes (new APR) after the COO check.
+- The four-agent design is unchanged.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: the COO instructions (v1.10.6); deploy/loop1/loop1-v1106-upgrade.sh; agent-files/executive/coo/AGENTS.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-44, P-36)
