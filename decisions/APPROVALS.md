@@ -1118,3 +1118,16 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: scripts/gcal/gcal_sync.py; a new plugin (VM, later); decisions/PENDING.md (P-44)
+## APR-0103 - Delete gate step A: approve word and the event ID in the COO reply line
+Status: approved
+Decided by: CEO
+Your answer: "approved you recommended options." (2026-10-28 21:23, to the two decisions: intent: (i) the plugin also records whether the message has the word approve with no negation and the job requires it; approvals without an event ID: (a) the COO's request line asks for "approve <event ID>"; "fix 107 is done")
+Evidence: ops/handover-2026-10-28-claude-code-report-13.md and deploy/loop3/ceo-plugin/design.md section 4 (the matching rule cannot prove intent; an approval with no event ID does not count).
+Meaning:
+- Handover 14 adds the boolean approve_word to the plugin (true only with a whole-word approve and none of a conservative list of blocking words) and makes the job require it for Slack ledger entries. A false is safe: the CEO writes the message again.
+- The COO reply line becomes "Reply: approve <event ID>, explain more, or keep". It is an instruction change: Claude Code only drafts the text (v1.10.4). The CEO approves the wording first, as a new APR. A bare "approve" will not delete.
+- Nothing is installed. The install of the plugin (one gateway restart, the CEO's Slack ID typed by the CEO into ~/loop1/ceo-slack-id) is a separate yes and a new APR, after handover 14.
+- The cron stays without the option. The four-agent design is unchanged; the D2 requested-by and overlap gaps stay held.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop3/ceo-plugin/; scripts/gcal/gcal_sync.py; the COO AGENTS.md (later, v1.10.4); decisions/PENDING.md (P-44)
