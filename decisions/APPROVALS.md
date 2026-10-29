@@ -1131,3 +1131,17 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop3/ceo-plugin/; scripts/gcal/gcal_sync.py; the COO AGENTS.md (later, v1.10.4); decisions/PENDING.md (P-44)
+
+## APR-0104 - The COO's delete reply line asks for "approve <event ID>" (instruction set v1.10.4)
+Status: approved
+Decided by: CEO
+Your answer: "approve" (2026-10-28 22:06, to the exact wording in deploy/loop3/ceo-plugin/coo-reply-line-proposal.md: for deletes only, the last item "Reply: approve <event ID>, explain more, or keep"; one short sentence telling the CEO to type approve and the event ID; a bare approve is not passed on and the COO asks once for approve and the event ID; recommendation: approve as written)
+Evidence: APR-0103; ops/handover-2026-10-28-claude-code-report-14.md (the approve-word flag and the job's requirement of the event ID); deploy/loop3/ceo-plugin/design.md section 4.
+Meaning:
+- COO instruction set v1.10.4: the line in deploy/loop1/loop1-v1104-upgrade.sh (COO only; cos v1.10.2, cho v1.9, cfo v1.10 unchanged). Other approval requests keep the old Reply wording.
+- Applied on the VM by handover 15 (gateway stopped, the script, gateway started), then checked with the health check and counted D1, D2, D3 runs. The D2 regression approval message becomes "approve seed-3", because the approved rule changed what the CEO types.
+- The plugin install and the cron option are not part of this entry; the install needs the CEO's separate yes (new APR).
+- No other agent behaviour changes. The four-agent design is unchanged.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: the COO instructions (v1.10.4); deploy/loop1/loop1-v1104-upgrade.sh; agent-files/executive/coo/AGENTS.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-44)
