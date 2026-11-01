@@ -414,3 +414,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-29 - Handover 17 recorded (fix-115)
 - Claude Code proved the first-message reset of the four main sessions (07:42), applied COO v1.10.6 (gateway stopped and started once; commit bb47390 in the COO workspace, AGENTS.md only), installed the repo health-check.py (checked equal) and ran 12 by-hand sequences and 21 counted runs. CHO, CoS, CFO, config and cron unchanged; the plugin is not installed; the cron has no --require-ceo-ledger.
+
+## 2026-10-29 - Handover 18 recorded (fix-117)
+- Claude Code staged the plugin files (read-only), installed them with openclaw plugins install --force and enabled the plugin (hot reload, no restart), after a backup of openclaw.json (pre-ceo-ledger-20261029-1908). Only the plugin entry was added. The CEO created ~/loop1/ceo-slack-id himself. 14 ledger lines, 18 regression runs, one Slack delete walk-through. The cron has no --require-ceo-ledger.
