@@ -1205,3 +1205,17 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: the crontab (VM, calendar-job line only); decisions/PENDING.md (P-44)
+
+## APR-0109 - Tooling change (two health-check lines, reset-report process count); COO wording unchanged; measure the two held gaps first
+Status: approved
+Decided by: CEO
+Your answer: "ok, go ahead. approved." (2026-11-01 01:27, to the three-part request: (1) add two health-check lines and make the reset report count gateway processes with the same filter as the health check; (2) keep the COO's wording as it is for the rare wrong "already approved" reply; (3) measure the two held gaps with a short handover before proposing any wording)
+Evidence: ops/handover-2026-11-01-claude-code-report-19.md; ops/health-check-proposal-2026-11-01.md; tests/unit/test_health_check_ledger_lines.py
+Meaning:
+- health-check.py gets two checks: the CEO ledger plugin is enabled, hook-only and equal to the repo copy; the calendar-job cron line carries --require-ceo-ledger for both ledgers (INFO if paused). daily-reset-report.py counts gateway processes with the health check's filter, so a shell that only mentions the gateway is not counted. Read-only tools; no agent, config, plugin or cron change.
+- The COO instructions stay at v1.10.6. The wrong "already approved" reply is watched, not changed; it comes back to the CEO if it recurs in real use.
+- Handover 20 installs the two tool files on the VM and measures the D2 "requested by" gap and the overlap 08:00 slot gap by repeated single-scenario runs. It changes no instruction. Any wording proposal comes back to the CEO as its own request.
+- The four-agent design is unchanged. The real calendar is still not connected.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop1/health-check.py; deploy/loop2/vm/daily-reset-report.py; decisions/PENDING.md (P-44)

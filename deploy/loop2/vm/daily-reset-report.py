@@ -18,8 +18,13 @@ hm = lambda ms: dt.datetime.fromtimestamp(ms / 1000, TZ).strftime("%m-%d %H:%M")
 def db(a):
     return sqlite3.connect(f"file:{STATE}/agents/{a}/agent/openclaw-agent.sqlite?mode=ro", uri=True, timeout=5)
 
+def gateway_count(out):
+    # same filter as health-check.py: a shell or tool whose command text mentions the gateway is not a gateway (handover 19)
+    return len([l for l in out.splitlines() if l.strip() and (" gateway run" in l or "openclaw-gateway" in l or " gateway --port" in l)
+                and "bash -c" not in l and "pgrep" not in l])
+
 def gateway():
-    n = int(subprocess.run("pgrep -af 'openclaw.*gateway' | grep -v pgrep | wc -l", shell=True, capture_output=True, text=True).stdout.strip() or 0)
+    n = gateway_count(subprocess.run(["pgrep", "-af", "openclaw.*gateway"], capture_output=True, text=True).stdout)
     up = subprocess.run("systemctl --user show -p ActiveEnterTimestamp --value openclaw-loop1-gateway", shell=True, capture_output=True, text=True).stdout.strip()
     secs = subprocess.run("ps -o etimes= -p $(systemctl --user show -p MainPID --value openclaw-loop1-gateway)", shell=True, capture_output=True, text=True).stdout.strip()
     if not secs.isdigit():  # cron has no user systemd bus: fall back to the oldest gateway process

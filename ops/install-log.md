@@ -420,3 +420,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-01 - Handover 19 recorded (fix-119)
 - Claude Code changed one crontab line on the VM (the calendar job now runs with --require-ceo-ledger for both ledgers; backup crontab.pre-ceo-ledger-20261101-0005), after a read-only review of the ledger and of the 3-process reading. No agent file, OpenClaw config, plugin or gateway change.
+
+## 2026-11-01 - APR-0109 (fix-120)
+- Repo only: two health-check lines, reset-report process filter, tests, handover 20. VM install is done by handover 20.

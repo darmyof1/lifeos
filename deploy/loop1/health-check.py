@@ -8,6 +8,7 @@ Each check prints PASS, WARN, FAIL or INFO, with the incident it would have caug
 Exit code 1 if any check FAILs. The script never reads or prints a key or a gateway token.
 """
 import datetime
+import hashlib
 import json
 import os
 import shutil
@@ -295,6 +296,51 @@ else:
 rec("PASS" if any("stress-ng" in l and not l.startswith("#") for l in lines) else "WARN", "CEO stress-ng cron line present", "",
     "unrelated cron line removed by a pause/resume sed")
 rec("PASS" if any(l.startswith("0 5 ") and "daily-reset-report" in l for l in lines) else "FAIL", "05:00 reset report cron present", "", "P-36 report missing")
+
+
+def cron_ledger_status(cron_lines):
+    # APR-0108: the calendar-job cron line carries --require-ceo-ledger for both ledgers
+    sync = [l for l in cron_lines if "gcal_sync_cron.sh" in l]
+    active = [l for l in sync if not l.lstrip().startswith("#")]
+    if active:
+        l = active[0]
+        if l.count("--require-ceo-ledger") == 2 and "scenario-ledger.jsonl" in l and "slack-ledger.jsonl" in l:
+            return "PASS", "both ledgers"
+        return "FAIL", "the active calendar cron line lacks --require-ceo-ledger for both ledgers"
+    if sync:
+        return "INFO", "calendar cron line is paused (normal during a scenario run only)"
+    return "FAIL", "calendar cron line missing"
+
+
+def plugin_inspect_status(text):
+    # APR-0107: the CEO ledger plugin is enabled and has no capabilities (hook-only)
+    t = (text or "").lower()
+    if not t.strip() or "not found" in t:
+        return "FAIL", "plugin missing"
+    if "status: enabled" not in t:
+        return "FAIL", "plugin not enabled"
+    if "non-capability" in t and "capability mode: none" in t:
+        return "PASS", "enabled, hook-only"
+    return "WARN", "plugin shape changed"
+
+
+st, det = cron_ledger_status(lines)
+rec(st, "calendar cron line requires the CEO ledger (both ledgers)", det, "delete gate switched off (APR-0108)")
+rc_pl, out_pl = run(["openclaw", "plugins", "inspect", "ceo-ledger"])
+st, det = plugin_inspect_status(out_pl) if rc_pl == 0 else ("FAIL", "plugin inspect failed")
+rec(st, "CEO ledger plugin loaded and hook-only", det, "ledger plugin missing or changed (APR-0107)")
+_PL_FILES = ("openclaw.plugin.json", "package.json", "index.js", "ledger.js")
+_pl_bad = []
+for _f in _PL_FILES:
+    try:
+        _a = hashlib.sha256(open(os.path.join(STATE, "extensions", "ceo-ledger", _f), "rb").read()).hexdigest()
+        _b = hashlib.sha256(open(os.path.join(HOME, "lifeos-ro", "deploy", "loop3", "ceo-plugin", _f), "rb").read()).hexdigest()
+    except OSError:
+        _pl_bad.append(_f + " unreadable")
+        continue
+    if _a != _b:
+        _pl_bad.append(_f + " differs")
+rec("PASS" if not _pl_bad else "FAIL", "CEO ledger plugin files equal the repo copy", "; ".join(_pl_bad) or "4 files equal", "plugin changed without the repo")
 journal = os.path.join(WS, "cos", "state", "calendar-journal.md")
 HEADER = "name | start | end | status | run ID | event ID | requested by"
 try:
@@ -345,7 +391,7 @@ except OSError:
     pass
 
 # 7c. Parity: live agent files against the repo copies (APR-0097, P-43)
-import hashlib
+import hashlib  # (kept; also imported near the top)
 _PAR = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo"}
 _REPO = os.path.join(HOME, "lifeos-ro", "agent-files")
 def _sha(p):
