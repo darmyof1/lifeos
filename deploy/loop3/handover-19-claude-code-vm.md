@@ -1,0 +1,30 @@
+# Handover 19 to Claude Code on the LifeOS VM (delete gate: explain the 3-process reading, review the ledger, switch the cron option on)
+
+Same Claude Code as handovers 1 to 18. The CEO approved switching `--require-ceo-ledger` on in the live cron (APR-0108), in three steps, in this order. Pull first: `cd ~/lifeos-ro && git pull -q` (expect "APR-0108 ..." at the top; deploy/loop3/ceo-plugin/ must exist). If not, stop and tell the CEO.
+
+## Hard limits (as before, plus)
+1. Steps 1 and 2 change nothing. Step 3 changes ONE thing: the crontab line of the calendar job (a backup of the whole crontab first). No agent file, no OpenClaw config, no plugin change, no gateway restart. The stress-ng line and the 05:00 reset-report line stay exactly as they are.
+2. Synthetic data and the Google TEST calendar only. No secrets, Slack IDs, tokens, calendar ID or VM address in ~/handover/. Never print the CEO's Slack ID (~/loop1/ceo-slack-id); check against it by grep -cF without printing.
+3. TIME WINDOW: no agent message, `sessions compact` or gateway restart between 03:30 and 05:10 AST; agent runs end by 02:30 AST. Cost under 0.05 USD per run, 1 USD per day.
+4. Journals and git history append-only. Never reuse a run ID. Do not change an instruction to make a run pass.
+5. If anything in step 3 fails, restore the crontab backup at once and tell the CEO.
+
+## Step 1. Explain the 3-process reading (read only)
+On 2026-10-29 at 20:17 a reset-report dry run read "Gateway: 3 processes (EXPECTED 1)"; at 20:20 and in the health check it read 1. Find out why, with evidence, without changing anything: what `pgrep` pattern the report uses; what the three matches were at that moment if the logs or history show it (gateway log around the plugin hot reload at about 20:07 to 20:12, "Plugin slack forced retirement after 5000ms ... resource cleanup remains pending", any child or temporary process, a CLI `openclaw` call by your own step at 20:17); whether a second Slack connection or a leftover plugin instance could have existed (duplicate message delivery would show as duplicate transcript events or duplicate ledger lines: there were none, say so from the files). Conclude one of: benign (name the three processes), or unexplained (say so, with what you checked). Check now that exactly one gateway process runs.
+
+## Step 2. Review the plugin ledger since install (read only)
+Read `~/loop1/ceo-ledger/slack-ledger.jsonl` and `scenario-ledger.jsonl` by fields only (never the IDs or text): line count, time range, any line with an unexpected channel, sender or account, duplicates of a message ID, lines for messages the CEO did not send (compare with the CEO's Slack messages Claude knows of: none outside the planned tests), file modes (directory 700, files 600), the plugin entry still `enabled`, the four plugin file hashes unchanged (ee4e490ab5108b30, 767ca80faa71b970, a97a8993eb9d3bd9, 1b98f60e4fbff9cc as prefixes), gateway log warnings from `[ceo-ledger]` since install. Also: has the cron job run normally (sync.log lines every 5 minutes, exit 0), and are the Google test calendar and CoS journal still at the three seed events and 3 0.
+
+## Step 3. Switch the cron option on
+1. `crontab -l > ~/loop1/crontab.pre-ceo-ledger-$(date +%Y%m%d-%H%M)` (keep it; do not put it in ~/handover).
+2. Check how regression-suite.sh and scenario-run.sh pause and resume the cron line (pattern on `gcal_sync_cron.sh`): confirm by a dry run of the pause/resume logic that the NEW line is paused and restored byte for byte. If the pause/resume breaks on the new line format, stop and tell the CEO before changing the crontab.
+3. Change only the calendar-job line from `*/5 * * * * bash $HOME/lifeos-ro/scripts/gcal/gcal_sync_cron.sh` to `*/5 * * * * LIFEOS_SYNC_ARGS="--require-ceo-ledger $HOME/loop1/ceo-ledger/scenario-ledger.jsonl --require-ceo-ledger $HOME/loop1/ceo-ledger/slack-ledger.jsonl" bash $HOME/lifeos-ro/scripts/gcal/gcal_sync_cron.sh`. Show the crontab diff (the other lines identical). Wait for the next two runs of the job in sync.log: exit 0, no new errors, the job's state dir holds its files.
+4. Delete walk-through through the CRON (no hand-run job), with the CEO in Slack. Say exactly to the CEO what to type; remember messages need an @mention of the COO: (a) the CEO asks the COO in Slack to delete the 2026-10-30 workout; the COO and CoS write the pending line and the COO posts the seven items; wait for two cron runs: nothing deleted. (b) the CEO sends a bare "@COO approve": wait two cron runs: nothing deleted. (c) the CEO sends "@COO approve <event ID>" with the ID from the COO's request: within two cron runs the event is deleted in Google exactly once (check sync.log and the Google list; a list failure must be reported as "list failed", not as an empty calendar), and `ceo-ledger-used.json` grows by one. (d) restore the seed (3 events, journal 3 0) with the usual reset.
+5. A D3 run through the cron path: one single-scenario D3 suite (`regression-suite.sh loop3-cron-d3-1 --only 4`) and report whether an agent-written deleted line appeared and whether the cron or the suite job skipped it.
+6. Leave the new crontab line in place unless something failed. Report the exact line.
+
+## Optional proposal (do not install)
+Write ~/handover/health-check-proposal.md or a diff: two new health-check lines: the plugin is loaded and hook-only, and the calendar-job cron line carries `--require-ceo-ledger` for both ledgers. The CEO decides later; I turn it into a fix script.
+
+## Report (~/handover/REPORT-19.md)
+Step 1 answer first in plain words (benign or unexplained). Then step 2 findings, step 3: the crontab diff, the sync.log lines, the four Slack walk-through results (a, b, c, d) and the D3 run, anything that failed and whether you restored the backup. End state: gateway one process, the crontab line as it is now, calendar at the seed, plugin enabled, hashes. Package with `tar czf ~/handover-19.tar.gz -C ~ handover` after a secrets check that includes the CEO's Slack ID (compare against the ID file without printing it).

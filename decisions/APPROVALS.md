@@ -1190,3 +1190,18 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: ~/loop1/plugins/ceo-ledger and the plugin entry in the OpenClaw config (VM); deploy/loop3/ceo-plugin/; decisions/PENDING.md (P-44, P-36)
+
+## APR-0108 - Switch --require-ceo-ledger on in the live cron (three steps)
+Status: approved
+Decided by: CEO
+Your answer: "approve" (2026-10-31 23:55, to the request: switch the delete check on in the every-5-minutes calendar job, using both ledgers; recommendation: first Claude Code explains the 3-process reading and reviews the plugin ledger since install with no changes, then the crontab edit, then a delete check on the test calendar through Slack)
+Evidence: ops/handover-2026-10-29-claude-code-report-18.md (plugin installed, observe-only; the Slack delete walk-through held: nothing deleted without "approve seed-3", deleted once, not again; 14 ledger lines for 14 CEO messages; one unexplained "3 processes" reading); ops/regression/loop3-post-d3-*; APR-0100, APR-0101, APR-0107.
+Meaning:
+- Handover 19 first explains the 3-process reading and reviews the ledger since install (read only). Only then it changes one crontab line (backup first): the calendar job runs with LIFEOS_SYNC_ARGS="--require-ceo-ledger <scenario ledger> --require-ceo-ledger <Slack ledger>". Nothing else changes: no agent file, no OpenClaw config, no plugin change, no restart.
+- From then on a deleted journal line reaches the Google test calendar only if a ledger holds the CEO's approval for that run and event. In Slack the CEO writes "@COO approve <event ID>" (the ID from the COO's request, with the @mention of the COO, within 48 hours). A missing or unreadable record means the delete waits; the entry stays in Google.
+- Rollback: restore the crontab backup (no restart). If the pause/resume logic of the regression scripts cannot handle the new line, Claude Code stops before changing it and reports.
+- The real calendar is still not connected; this applies to the test calendar only.
+- The two held gaps (D2 requested-by, overlap slot offer) are not part of this entry.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: the crontab (VM, calendar-job line only); decisions/PENDING.md (P-44)
