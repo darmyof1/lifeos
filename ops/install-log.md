@@ -426,3 +426,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-01 - APR-0110 (fix-121)
 - Repo only: plain approve rule in the push job, tests, COO v1.10.7 drafted (not installed). Handover 20 results recorded in PENDING.
+
+## 2026-11-01 - APR-0111 (fix-122)
+- Repo only: wording approved, handover 21 added. The COO v1.10.7 install is done by handover 21.

@@ -1234,3 +1234,18 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: scripts/gcal/gcal_sync.py; tests/unit/test_gcal_sync.py; decisions/PENDING.md (P-44)
+
+## APR-0111 - COO instruction set v1.10.7: a plain approve is passed on when exactly one request is waiting
+Status: approved
+Decided by: CEO
+Your answer: "approve as written" (2026-11-01 05:04, to the exact text of the COO rule in deploy/loop1/loop1-v1107-upgrade.sh)
+Evidence: deploy/loop1/loop1-v1107-upgrade.sh and agent-files/executive/coo/AGENTS.md (same text); APR-0110; tests/unit/test_loop1_v1107_upgrade.py
+Meaning:
+- The COO keeps the last item "Reply: approve <event ID>, explain more, or keep" and adds to the sentence after the seven items: type approve and the event ID, or just approve if this is the only request waiting.
+- A plain approve with exactly one delete request waiting is passed to the CoS with the CEO's words quoted and that request's event ID. With more than one waiting, or when unsure, the COO does not pass it and asks once for approve and the event ID. The gate (APR-0110) decides independently and refuses a plain approve when two were waiting.
+- This replaces the v1.10.4 rule about an approve without an event ID. Only the COO changes (v1.10.7); the CoS (v1.10.2), CHO (v1.9) and CFO (v1.10) stay.
+- Handover 21 installs it (gateway stopped, AGENTS.md only) and tests with one and with two requests waiting. Failure means the COO file goes back to v1.10.6.
+- The four-agent design is unchanged. The real calendar is still not connected.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: the COO instructions (v1.10.7); deploy/loop1/loop1-v1107-upgrade.sh; agent-files/executive/coo/AGENTS.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-44)
