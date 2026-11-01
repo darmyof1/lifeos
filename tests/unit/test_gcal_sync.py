@@ -495,7 +495,7 @@ class SlackLedgerTests(Base):
 
     def test_event_not_in_the_tokens_does_not_delete(self):
         self.run_at(0)
-        self.put(self.entry(10, event_tokens=["r3-cho-02", "seed-3"]), self.entry(11, message_id="m2", event_tokens=[]))
+        self.put(self.entry(10, event_tokens=["r3-cho-02", "seed-3"]), self.entry(11, message_id="m2", event_tokens=["other-9"]))
         _, counts, out = self.run_at(15)
         self.assertEqual(counts["deleted"], 0)
         self.assertIn("no CEO approval record", out)
@@ -892,6 +892,121 @@ class AlertAndMainTests(Base):
                     os.remove(gs.pause_path(self.state))
         finally:
             gc.build_service = old
+
+
+class PlainApprovalTests(Base):
+    """APR-0110: a plain "approve" (no event ID in the message) counts only when no other event was waiting at the time of the message."""
+
+    def setUp(self):
+        super().setUp()
+        import datetime, json
+        self.dt, self.json = datetime, json
+        self.T0 = datetime.datetime(2026, 10, 28, 12, 0, 0, tzinfo=datetime.timezone.utc)
+        self.svc.add("x1", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.svc.add("x2", N2, "2026-10-28T09:00:00-04:00", "2026-10-28T10:00:00-04:00")
+        self.lpath = os.path.join(self.tmp, "slack-ledger.jsonl")
+
+    def at(self, m):
+        return self.T0 + self.dt.timedelta(minutes=m)
+
+    def entry(self, m, tokens=(), mid="m1", **kw):
+        r = {"time": self.at(m).strftime("%Y-%m-%dT%H:%M:%SZ"), "channel": "slack", "account": "default", "conversation": "c-0",
+             "message_id": mid, "sender": "CEO", "text_sha256": "0" * 64, "event_tokens": list(tokens), "approve_word": True}
+        r.update(kw)
+        return r
+
+    def put(self, *rows):
+        with open(self.lpath, "w") as fh:
+            for r in rows:
+                fh.write(self.json.dumps(r) + "\n")
+
+    def base(self, n1=True, n2=True, deleted=("a", "b")):
+        rows = [jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", run="s", event="s-1", by="sync", detail="google=x1"),
+                jl(N2, "2026-10-28 09:00", "2026-10-28 10:00", "pushed", run="s", event="s-2", by="sync", detail="google=x2")]
+        if n1:
+            rows.append(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "delete-pending-approval", run="ra", event="ev-1", by="CEO"))
+        if n2:
+            rows.append(jl(N2, "2026-10-28 09:00", "2026-10-28 10:00", "delete-pending-approval", run="rb", event="ev-2", by="CEO"))
+        if n1 and "a" in deleted:
+            rows.append(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "deleted", run="ra", event="ev-1", by="CEO"))
+        if n2 and "b" in deleted:
+            rows.append(jl(N2, "2026-10-28 09:00", "2026-10-28 10:00", "deleted", run="rb", event="ev-2", by="CEO"))
+        self.write(*rows)
+
+    def run_at(self, m):
+        return self.go(allow_deletes=True, ceo_ledger=[self.lpath], now=self.at(m))
+
+    def test_two_requests_waiting_a_plain_approve_deletes_neither(self):
+        # the first test the CEO asked for (APR-0110)
+        self.base()
+        self.run_at(0)
+        self.put(self.entry(10))
+        _, counts, out = self.run_at(15)
+        self.assertEqual(counts["deleted"], 0)
+        self.assertIn("no CEO approval record", out)
+        self.assertIn("x1", self.svc.store)
+        self.assertIn("x2", self.svc.store)
+
+    def test_two_waiting_an_id_approval_deletes_only_that_one(self):
+        self.base()
+        self.run_at(0)
+        self.put(self.entry(10, tokens=["ev-2"]))
+        _, counts, _ = self.run_at(15)
+        self.assertEqual(counts["deleted"], 1)
+        self.assertIn("x1", self.svc.store)
+        self.assertNotIn("x2", self.svc.store)
+
+    def test_a_single_request_a_plain_approve_deletes_it_once(self):
+        self.base(n2=False)
+        self.run_at(0)
+        self.put(self.entry(10))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+        self.assertNotIn("x1", self.svc.store)
+        self.assertEqual(self.run_at(20)[1]["deleted"], 0)
+
+    def test_a_plain_approve_sent_while_two_waited_does_not_approve_the_rest_later(self):
+        self.base()
+        self.run_at(0)
+        self.put(self.entry(10), self.entry(12, mid="m2", tokens=["ev-1"]))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)           # ev-1 by ID (m2); the plain message m1 is not used
+        self.assertNotIn("x1", self.svc.store)
+        _, counts, _ = self.run_at(30)                                # ev-2 is now the only one waiting
+        self.assertEqual(counts["deleted"], 0)                        # but m1 was sent when two waited
+        self.assertIn("x2", self.svc.store)
+
+    def test_a_plain_approve_sent_after_the_other_was_closed_works(self):
+        self.base()
+        self.run_at(0)
+        self.put(self.entry(10, tokens=["ev-1"]))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+        self.put(self.entry(10, tokens=["ev-1"]), self.entry(25, mid="m3"))
+        self.assertEqual(self.run_at(30)[1]["deleted"], 1)
+        self.assertNotIn("x2", self.svc.store)
+
+    def test_plain_approve_older_than_the_pending_line_does_not_count(self):
+        self.base(n2=False)
+        self.put(self.entry(-60))
+        self.run_at(0)
+        _, counts, _ = self.run_at(15)
+        self.assertEqual(counts["deleted"], 0)
+
+    def test_plain_approve_needs_the_approve_word(self):
+        self.base(n2=False)
+        self.run_at(0)
+        self.put(self.entry(10, approve_word=False))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 0)
+
+    def test_a_stale_pending_of_another_event_does_not_block(self):
+        self.base(n1=True, n2=True, deleted=("b",))
+        # ev-1 was first seen 3 days before the plain message and never closed: older than 48 h, so it does not count as waiting
+        old = self.T0 - self.dt.timedelta(days=3)
+        os.makedirs(self.state, exist_ok=True)
+        with open(os.path.join(self.state, "ceo-ledger-seen.json"), "w") as fh:
+            self.json.dump({"ra|ev-1": old.strftime("%Y-%m-%dT%H:%M:%SZ")}, fh)
+        self.run_at(0)
+        self.put(self.entry(10))
+        self.assertEqual(self.run_at(15)[1]["deleted"], 1)
+        self.assertNotIn("x2", self.svc.store)
 
 
 if __name__ == "__main__":

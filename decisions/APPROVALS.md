@@ -1219,3 +1219,18 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop1/health-check.py; deploy/loop2/vm/daily-reset-report.py; decisions/PENDING.md (P-44)
+
+## APR-0110 - Plain "approve" for a delete when exactly one request is waiting (gate rule; COO wording follows separately)
+Status: approved
+Decided by: CEO
+Your answer: "approve, with the first test being what the gate does when two requests are pending at once." (2026-11-01 03:20, to the request: the gate accepts "@COO approve" with no event ID when exactly one delete is pending, and still requires the ID when two or more are pending)
+Evidence: scripts/gcal/gcal_sync.py (plain_approval_ambiguous, find_ceo_approval); tests/unit/test_gcal_sync.py class PlainApprovalTests (the two-pending test is the first); ops/handover-2026-11-01-claude-code-report-20.md
+Meaning:
+- A Slack approval with approve_word true and no event ID in the message counts for a delete only if no other event was waiting for approval at the time of that message (another pending line the job first saw not later than the message, less 300 s, not older than 48 h at the message, and not closed before it). Two requests waiting: a plain "approve" deletes neither; "approve <event ID>" still deletes exactly that one.
+- A plain "approve" sent while two were waiting never counts later, even when only one is left; it must be sent again. It covers one delete once (message used once). The 48-hour limit, the grace of 300 s and the CEO-only sender rule are unchanged. A missing or unreadable record still means no delete.
+- This is a code change of the push job only (read from the repo copy on the VM). The ledger plugin is unchanged.
+- The COO's wording does not change under this entry: it still tells the CEO that a bare approve will not delete, and does not pass a bare approve on. The new COO wording (v1.10.7, drafted in deploy/loop1/loop1-v1107-upgrade.sh) needs its own yes, recorded as a new APR, on the exact text and is not installed.
+- The real calendar is still not connected; the test calendar only.
+Closes: none (P-44 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/gcal/gcal_sync.py; tests/unit/test_gcal_sync.py; decisions/PENDING.md (P-44)

@@ -423,3 +423,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-01 - APR-0109 (fix-120)
 - Repo only: two health-check lines, reset-report process filter, tests, handover 20. VM install is done by handover 20.
+
+## 2026-11-01 - APR-0110 (fix-121)
+- Repo only: plain approve rule in the push job, tests, COO v1.10.7 drafted (not installed). Handover 20 results recorded in PENDING.

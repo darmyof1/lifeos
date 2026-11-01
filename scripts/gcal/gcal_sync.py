@@ -176,13 +176,50 @@ def note_pending_seen(state_dir, entries, now=None):
         _save_state_json(state_dir, "ceo-ledger-seen.json", seen)
 
 
-def find_ceo_approval(ledger, e, now=None, state_dir=None):
-    """APR-0100/0102: the ledger entry (a dict) that approves this deleted line, or None. The ledger lives outside every agent
+def _closed_state(state_dir):
+    return _state_json(state_dir, "ceo-ledger-closed.json") if state_dir else {}
+
+
+def mark_event_closed(state_dir, event, now=None):
+    """APR-0110: remember when a delete for this event ID ran, so a plain approval can be checked against what was waiting at the time."""
+    closed = _state_json(state_dir, "ceo-ledger-closed.json")
+    closed[event.lower()] = (now or datetime.datetime.now(datetime.timezone.utc)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    _save_state_json(state_dir, "ceo-ledger-closed.json", closed)
+
+
+def plain_approval_ambiguous(entries, e, t, seen, closed):
+    """APR-0110: True if, at the time t of a plain approval (no event ID in the message), any OTHER event could have been waiting
+    for approval. Fail closed: a pending line the job has no first-seen time for counts as waiting. A pending line counts as waiting
+    at t if the job first saw it (less the grace) not later than t and not more than 48 h before t, and it was not closed (a later
+    pushed line for the same event ID) before t. An event closed before this rule existed has no closed time and counts as closed."""
+    for x in entries:
+        if x.status != "delete-pending-approval" or x.event.lower() == e.event.lower():
+            continue
+        try:
+            fs = _utc(seen[pending_key(x)])
+        except (KeyError, ValueError, TypeError):
+            return True
+        if fs - datetime.timedelta(seconds=LEDGER_GRACE_SECONDS) > t or (t - fs).total_seconds() > LEDGER_MAX_AGE_SECONDS:
+            continue
+        if any(y.lineno > x.lineno and y.status == "pushed" and y.event.lower() == x.event.lower() for y in entries):
+            try:
+                if _utc(closed[x.event.lower()]) <= t:
+                    continue
+            except (KeyError, ValueError, TypeError):
+                continue
+        return True
+    return False
+
+
+def find_ceo_approval(ledger, e, now=None, state_dir=None, entries=None):
+    """APR-0100/0102/0110: the ledger entry (a dict) that approves this deleted line, or None. The ledger lives outside every agent
     workspace; one JSON object per line. Two kinds of entry, both need sender "CEO" and a time not later than now:
       scenario entry (runner, APR-0101):  run and event equal the deleted line's run and event.
-      Slack entry (plugin, APR-0102/0103): approve_word is true (a missing field is false); the event ID is one of event_tokens; the entry is not older than LEDGER_MAX_AGE_SECONDS;
-                                          it is not older than the first time the job saw the pending line (less
-                                          LEDGER_GRACE_SECONDS); its message_id was not used for an earlier delete.
+      Slack entry (plugin, APR-0102/0103): approve_word is true (a missing field is false); the event ID is one of event_tokens
+                                          (or, APR-0110, event_tokens is empty and no other event was waiting at the time of the
+                                          message: see plain_approval_ambiguous; needs entries); the entry is not older than
+                                          LEDGER_MAX_AGE_SECONDS; it is not older than the first time the job saw the pending line
+                                          (less LEDGER_GRACE_SECONDS); its message_id was not used for an earlier delete.
     A missing or unreadable ledger, a damaged line, or a Slack entry with no state_dir approves nothing."""
     now = now or datetime.datetime.now(datetime.timezone.utc)
     try:
@@ -192,6 +229,7 @@ def find_ceo_approval(ledger, e, now=None, state_dir=None):
         return None
     seen = _state_json(state_dir, "ceo-ledger-seen.json") if state_dir else {}
     used = set(_state_json(state_dir, "ceo-ledger-used.json")) if state_dir else set()
+    closed = _closed_state(state_dir)
     first_seen = None
     if seen.get(pending_key(e)):
         try:
@@ -212,22 +250,26 @@ def find_ceo_approval(ledger, e, now=None, state_dir=None):
             continue
         tokens = r.get("event_tokens")
         mid = str(r.get("message_id") or "")
-        if (r.get("approve_word") is True and isinstance(tokens, list) and e.event.lower() in [str(x).lower() for x in tokens]
+        if not (r.get("approve_word") is True and isinstance(tokens, list)
                 and mid and mid not in used
                 and first_seen is not None and state_dir
                 and t >= first_seen - datetime.timedelta(seconds=LEDGER_GRACE_SECONDS)
                 and (now - t).total_seconds() <= LEDGER_MAX_AGE_SECONDS):
+            continue
+        if e.event.lower() in [str(x).lower() for x in tokens]:
+            return r
+        if not tokens and entries is not None and not plain_approval_ambiguous(entries, e, t, seen, closed):
             return r
     return None
 
 
-def ceo_approval_recorded(ledger, e, now=None, state_dir=None):
-    return find_ceo_approval(ledger, e, now, state_dir) is not None
+def ceo_approval_recorded(ledger, e, now=None, state_dir=None, entries=None):
+    return find_ceo_approval(ledger, e, now, state_dir, entries) is not None
 
 
-def approved_by_any(ledgers, e, now=None, state_dir=None):
+def approved_by_any(ledgers, e, now=None, state_dir=None, entries=None):
     for ledger in ([ledgers] if isinstance(ledgers, str) else ledgers or []):
-        r = find_ceo_approval(ledger, e, now, state_dir)
+        r = find_ceo_approval(ledger, e, now, state_dir, entries)
         if r is not None:
             return r
     return None
@@ -507,7 +549,7 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
                 counts["skipped"] += 1
                 continue
             if ceo_ledger:
-                approvals[e.lineno] = approved_by_any(ceo_ledger, e, now, state_dir)
+                approvals[e.lineno] = approved_by_any(ceo_ledger, e, now, state_dir, entries)
                 if approvals[e.lineno] is None:
                     out("skip   %s: no CEO approval record for event %s (APR-0100)" % (e.name, e.event))
                     counts["skipped"] += 1
@@ -523,6 +565,8 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
                 counts["deleted"] += 1
                 if not dry_run and approvals.get(e.lineno):
                     mark_ledger_used(state_dir, approvals[e.lineno])
+                if not dry_run and ceo_ledger:
+                    mark_event_closed(state_dir, e.event, now)
             else:
                 action, gid = push_entry(service, calendar, e, moved_hint(entries, e), tz, dry_run, entries)
                 detail = "google=" + gid + ("; privacy=high" if high_for_entry(entries, e) else "")
