@@ -1,0 +1,4 @@
+25c25
+< */5 * * * * bash $HOME/lifeos-ro/scripts/gcal/gcal_sync_cron.sh
+---
+> */5 * * * * LIFEOS_SYNC_ARGS="--require-ceo-ledger $HOME/loop1/ceo-ledger/scenario-ledger.jsonl --require-ceo-ledger $HOME/loop1/ceo-ledger/slack-ledger.jsonl" bash $HOME/lifeos-ro/scripts/gcal/gcal_sync_cron.sh

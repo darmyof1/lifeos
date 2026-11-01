@@ -417,3 +417,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-10-29 - Handover 18 recorded (fix-117)
 - Claude Code staged the plugin files (read-only), installed them with openclaw plugins install --force and enabled the plugin (hot reload, no restart), after a backup of openclaw.json (pre-ceo-ledger-20261029-1908). Only the plugin entry was added. The CEO created ~/loop1/ceo-slack-id himself. 14 ledger lines, 18 regression runs, one Slack delete walk-through. The cron has no --require-ceo-ledger.
+
+## 2026-11-01 - Handover 19 recorded (fix-119)
+- Claude Code changed one crontab line on the VM (the calendar job now runs with --require-ceo-ledger for both ledgers; backup crontab.pre-ceo-ledger-20261101-0005), after a read-only review of the ledger and of the 3-process reading. No agent file, OpenClaw config, plugin or gateway change.
