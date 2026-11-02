@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-122.sh",
+  "generated_by": "fix-123.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1388,6 +1388,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-11-01-claude-code-report-21.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
@@ -1421,6 +1425,10 @@
     },
     {
       "path": "ops/health-check-output-2026-10-29.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-check-output-2026-11-01-handover-21.txt",
       "status": "draft"
     },
     {
@@ -1701,6 +1709,18 @@
     },
     {
       "path": "ops/regression/loop3-gate-003/loop3-gate-003-07.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-p21-d1.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-p21-d2.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/regression/loop3-p21-d3.md",
       "status": "draft"
     },
     {
