@@ -1249,3 +1249,18 @@ Meaning:
 Closes: none (P-44 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: the COO instructions (v1.10.7); deploy/loop1/loop1-v1107-upgrade.sh; agent-files/executive/coo/AGENTS.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-44)
+
+## APR-0112 - Close Loop 3 in one handover: privacy gate code, security minimum, identity-access contract, non-CEO sender test, metrics and hardware
+Status: approved
+Decided by: CEO
+Your answer: "in the next can you include all in the hand over, so ccode can work on all, need this quickly since its taking a long time to close loop3 ... privacy gate in code, the security minimum (kill switch, restore drill, threat model), the identity-access contract, non-CEO sender test, and the metrics and hardware" (2026-11-01 21:03)
+Evidence: deploy/loop3/handover-22-claude-code-vm.md; PENDING P-43 steps 3 to 6; ops/handover-2026-11-01-claude-code-report-21.md
+Meaning:
+- Handover 22 has Claude Code build and test, in a scratch copy of the repo, the privacy gate function and its tests (unwired), the threat model, the update policy, the kill switch script and its notes, the restore drill notes, the identity-access contract and its drift test, the success metrics and the hardware note, and return one patch. Claude applies it through a fix script and the CEO pushes.
+- On the VM it runs the non-CEO sender test, one live kill-switch drill (stop, check, restore) and one restore drill on a copy of synthetic data. Everything is put back as it was.
+- Nothing is wired into the live agents; no agent instruction, config, plugin or crontab change. Anything that would change a live thing comes back as a request for the CEO's yes.
+- Real data, the real calendar and the health feed stay closed: a separate CEO yes is needed. Isolation, the public repo, wiring the gate, adopting the metrics and the hardware choice are decisions for the CEO after the report.
+- The four-agent design is unchanged.
+Closes: none (P-43 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop3/handover-22-claude-code-vm.md; decisions/PENDING.md (P-43)

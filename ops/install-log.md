@@ -432,3 +432,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-01 - Handover 21 recorded (fix-123)
 - Claude Code installed COO v1.10.7 (AGENTS.md only, one gateway restart) and the repo health-check.py; the gate rule came with the repo pull. Live check: one waiting, plain approve deletes once; two waiting, plain approve deletes nothing, ID approve deletes only that one. No plugin, config or crontab change.
+
+## 2026-11-01 - APR-0112 (fix-124)
+- Repo only: handover 22 added. Nothing installed or changed on the VM by this entry.
