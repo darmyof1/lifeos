@@ -1264,3 +1264,31 @@ Meaning:
 Closes: none (P-43 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop3/handover-22-claude-code-vm.md; decisions/PENDING.md (P-43)
+
+## APR-0113 - Five Loop 3 items approved: off-VM backup, gate wiring design-and-test, second-human test, COO session measure, accept the drafts
+Status: approved
+Decided by: CEO
+Your answer: "approve all/" (2026-11-04 04:42, to the list of five: weekly off-VM backup; wiring the gate as a design-and-test handover with no live wiring; a second-human test; clearing the COO's channel session as a measurement with no instruction change; accepting the identity contract, adopting the metrics and choosing the hardware direction)
+Evidence: ops/handover-2026-11-01-claude-code-report-22.md (the seven-item requests); deploy/loop3/handover-23-claude-code-vm.md
+Meaning:
+- Handover 23 builds and tests, in a scratch copy of the repo and on a scratch OpenClaw state folder, the weekly encrypted backup script (the off-VM destination is not decided and nothing is installed in the crontab), the prefilter and the gating plugin (not installed live), and the history scan; it runs the second-human test with the CEO's helper, and measures the COO channel session with and without a compaction.
+- The identity-access contract becomes accepted and the success metrics adopted; the CFO send-list difference is NOT closed by this entry (a change to a live thing needs its own yes). The hardware direction is a home box for the high-privacy path after the gate is wired: no purchase, no setup.
+- Wiring the gate live, the off-VM destination, installing the backup cron line, the CFO fix and any instruction change each come back to the CEO as their own request.
+- Isolation was not part of this answer and stays open. Real data, the real calendar and the health feed stay closed (separate yes).
+- The four-agent design is unchanged.
+Closes: none (P-43 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop3/handover-23-claude-code-vm.md; contracts/identity-access.yaml; ops/success-metrics.md; research/hardware.md; decisions/PENDING.md (P-43)
+
+## APR-0114 - The repo stays public until Loop 3 and the build are finished
+Status: approved
+Decided by: CEO
+Your answer: "i want that public untill we finish since i want you to have access" (2026-11-04 04:40)
+Evidence: history scan of all 131 commits on 2026-11-04 (no tokens, keys, VM addresses or real Slack IDs; only fake test IDs and 127.0.0.1; the CEO's address appears as author on 4 old commits)
+Meaning:
+- Anyone can read the design, agent instructions, approvals and handover reports. The rule stays: no secrets, IDs, tokens, calendar ID, VM address or account names in the repo; handover 23 adds a history scan script to run before pushes.
+- Real data is never put in the repo. Before real data enters the system the visibility is re-checked and decided again.
+- This is not a decision to publish anything beyond the repo itself.
+Closes: none (P-43 continues)
+Changeable: yes. A change is a new APR entry.
+Applies to: the GitHub repository visibility; decisions/PENDING.md (P-43)

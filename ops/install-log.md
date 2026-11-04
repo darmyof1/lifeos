@@ -440,3 +440,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 - Claude Code ran one kill-switch drill (gateway stopped and started once, calendar cron line paused and restored; crontab identical) and a restore drill on a copy in a temp folder (deleted after). No agent file, config, plugin or crontab change remains. The patch adds docs, the unwired gate and tests to the repo only.
 - Straight quotes replaced curly quotes in the copied evidence files under ops/loop3-close-2026-11-01 (validator rule); content otherwise as received.
 - Straight quotes replaced curly quotes in the copied evidence files under ops/loop3-close-2026-11-01 (validator rule); content otherwise as received.
+
+## 2026-11-04 - APR-0113, APR-0114 (fix-126)
+- Repo only: two approvals recorded and handover 23 added. Nothing installed or changed on the VM by this entry.
