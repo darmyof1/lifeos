@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-124.sh",
+  "generated_by": "fix-125.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -629,7 +629,7 @@
     },
     {
       "path": "contracts/identity-access.yaml",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "contracts/models/aliases.yaml",
@@ -1173,7 +1173,7 @@
     },
     {
       "path": "design/identity-and-access.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "design/memory-and-data.md",
@@ -1396,6 +1396,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-11-01-claude-code-report-22.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
@@ -1449,7 +1453,7 @@
     },
     {
       "path": "ops/incident/kill-switch.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "ops/incident/p1-response.md",
@@ -1457,6 +1461,58 @@
     },
     {
       "path": "ops/install-log.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/crontab-final.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/kill-switch-drill/crontab-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/kill-switch-drill/crontab-compare.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/kill-switch-drill/execute.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/kill-switch-drill/health-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/kill-switch-drill/restore.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/kill-switch-drill/timings.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/kill-switch-dryrun.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/non-ceo-test/evidence.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/non-ceo-test/request-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/non-ceo-test/sent-at.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/non-ceo-test/sync-log-excerpt.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-close-2026-11-01/restore-drill/result.txt",
       "status": "draft"
     },
     {
@@ -1473,7 +1529,7 @@
     },
     {
       "path": "ops/openclaw-update-policy.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "ops/plugin-install-2026-10-29/crontab-before-step5.txt",
@@ -1533,7 +1589,7 @@
     },
     {
       "path": "ops/recovery/restore-drill.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "ops/regression/loop3-gate-001.md",
@@ -3337,7 +3393,7 @@
     },
     {
       "path": "ops/success-metrics.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "pyproject.toml",
@@ -3353,7 +3409,7 @@
     },
     {
       "path": "research/hardware.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "research/llm-comparison.md",
@@ -3477,7 +3533,7 @@
     },
     {
       "path": "research/threat-model.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "scripts/README.md",
@@ -3561,7 +3617,7 @@
     },
     {
       "path": "scripts/ops/kill-switch.sh",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "scripts/setup/01-oracle-vm-provision.sh",
@@ -3761,7 +3817,7 @@
     },
     {
       "path": "src/lifeos/router/gate.py",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "src/lifeos/router/optimizer.py",
@@ -3989,7 +4045,7 @@
     },
     {
       "path": "tests/unit/test_gate.py",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "tests/unit/test_gcal_scripts.py",
@@ -4005,6 +4061,14 @@
     },
     {
       "path": "tests/unit/test_health_check_ledger_lines.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_identity_access.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_kill_switch.py",
       "status": "draft"
     },
     {

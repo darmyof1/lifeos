@@ -1,0 +1,7 @@
+KILL SWITCH (EXECUTE)
+gateway service openclaw-loop1-gateway: active
+calendar cron line: active
+check: calendar cron line paused
+check: gateway stopped
+Marker written: /home/ubuntu/loop1/kill-switch.marker
+To restore: bash /home/ubuntu/work22/scripts/ops/kill-switch.sh --restore --execute

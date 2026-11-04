@@ -1,0 +1,9 @@
+What: CoS added a delete-pending-approval line for "CHO - Workout - 10302026-0001" on 2026-10-30; it has not been deleted.  
+Used for: Workout slot, 07:00–08:00.  
+Why now: Not stated.  
+Risk if approved: Not provided.  
+Risk if not: Not provided.  
+Recommendation: Explain why you want it removed and weigh the risks before deciding.  
+Reply: approve seed-3, explain more, or keep
+
+Type approve and the event ID, or just approve if this is the only request waiting. CoS made the journal change; your decision is still needed.

@@ -1,5 +1,5 @@
 # contracts/policy/privacy.yaml
-# Status: draft. Not yet enforced in code (ADR-0003: gate.py not written). Approvals: APR-0001, APR-0007, APR-0045.
+# Status: draft. Code exists but is NOT wired: src/lifeos/router/gate.py with tests/unit/test_gate.py (APR-0112); nothing calls it yet, so nothing is enforced. Approvals: APR-0001, APR-0007, APR-0045.
 schema_version: "1.0"
 status: draft
 precedence: privacy_wins            # APR-0007: critical complexity never unlocks cloud for high privacy

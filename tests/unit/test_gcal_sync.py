@@ -536,6 +536,21 @@ class SlackLedgerTests(Base):
             self.assertEqual(self.run_at(15)[1]["deleted"], 0, r)
             self.assertIn("x1", self.svc.store)
 
+    def test_a_sender_that_is_missing_empty_lowercase_or_not_a_string_never_counts(self):
+        # APR-0112 item 1: only the exact sender "CEO" (written by the plugin for the CEO's own Slack user) approves.
+        for sender in ("MISSING", "", "ceo", " CEO", "CEO ", None, 0, ["CEO"], "Bot", "U0ANYONE"):
+            self.setUp()
+            self.run_at(0)
+            row = self.entry(10)
+            if sender == "MISSING":
+                row.pop("sender", None)
+            else:
+                row["sender"] = sender
+            with open(self.lpath, "w") as fh:
+                fh.write(self.json.dumps(row) + "\n")
+            self.assertEqual(self.run_at(15)[1]["deleted"], 0, sender)
+            self.assertIn("x1", self.svc.store)
+
     def test_one_approval_covers_one_delete_once(self):
         self.run_at(0)
         self.put(self.entry(10))

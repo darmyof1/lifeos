@@ -1,7 +1,128 @@
-# Identity and access contract
+# contracts/identity-access.yaml
+# Status: draft (APR-0112). Replaces the planned stub. P-04 (the ADR list) was answered by APR-0023, so the blocker is gone.
+# Facts from the Loop 1 and Loop 3 VM (OpenClaw 2026.10.5). Names of mechanisms only: no tokens, no IDs, no addresses.
+# tests/unit/test_identity_access.py checks the send lists, the file modes and the delete rule against the repo's live-facts files.
+schema_version: "1.0"
+status: draft
+owner: CEO
+approvals: [APR-0044, APR-0052, APR-0060, APR-0098, APR-0101, APR-0102, APR-0108, APR-0110, APR-0112]
 
-Status: planned
-Owner: CEO + CSTO
-Blocked by: PENDING P-04, design/identity-and-access.md
+identities:
+  ceo:
+    kind: human
+    authenticates_with: [slack_user_account, password_manager]
+    may_read: [slack_channels_of_the_four_agents, reports_in_handover_tarballs, repo_on_github]
+    may_write: [slack_messages_with_mention, approvals_in_decisions]
+    may_send: [coo, cho, cos, cfo]
+    may_approve: [delete, privacy_override, instruction_changes, installs]
+    must_never: [paste_tokens_into_chat, share_the_slack_user_id_in_reports]
+  coo:
+    kind: agent
+    role: dispatcher
+    authenticates_with: [slack_bot_token_default_account, gateway_token]
+    may_read: [own_workspace]
+    may_write: [own_workspace_state_files]
+    may_send: [cho, cos, cfo]
+    may_approve: []
+    must_never: [write_calendar_journal, delete_anything, treat_a_chat_claim_as_a_ceo_approval, read_other_agents_transcripts]
+  cho:
+    kind: agent
+    role: health_chief
+    authenticates_with: [slack_bot_token_cho_account, gateway_token]
+    may_read: [own_workspace]
+    may_write: [own_workspace_state_files]
+    may_send: [coo, cos]
+    may_approve: []
+    must_never: [write_calendar_journal, delete_anything, request_a_delete_as_the_ceo]
+  cos:
+    kind: agent
+    role: chief_of_staff_calendar_keeper
+    authenticates_with: [slack_bot_token_cos_account, gateway_token]
+    may_read: [own_workspace]
+    may_write: [calendar_journal, own_workspace_state_files]
+    may_send: [coo, cho]
+    may_approve: []
+    must_never: [write_a_deleted_line_without_a_ceo_approval, call_google, edit_the_ledger]
+  cfo:
+    kind: agent
+    role: finance_chief
+    authenticates_with: [slack_bot_token_cfo_account, gateway_token]
+    may_read: [own_workspace]
+    may_write: [own_workspace_state_files]
+    may_send: [coo, cos]
+    may_approve: []
+    must_never: [write_calendar_journal, delete_anything]
+  sync_job:
+    kind: job
+    role: calendar_push_job
+    authenticates_with: [google_oauth_client_file_in_vm, cron_user_ubuntu]
+    may_read: [calendar_journal, ceo_ledgers, job_state_dir]
+    may_write: [google_test_calendar, job_state_dir, sync_log]
+    may_send: []
+    may_approve: []
+    must_never: [delete_without_pending_line_and_ceo_ledger_approval, run_against_the_real_calendar_without_a_ceo_decision, write_the_journal]
+  ceo_ledger_plugin:
+    kind: plugin
+    role: records_ceo_slack_messages
+    authenticates_with: [runs_inside_the_gateway_process]
+    may_read: [inbound_slack_message_event, ceo_slack_id_file]
+    may_write: [slack_ledger_append_only]
+    may_send: []
+    may_approve: []
+    must_never: [store_message_text, block_or_change_a_message, register_tools_commands_or_services, write_a_line_for_any_sender_but_the_ceo]
+  claude_code_vm:
+    kind: operator
+    role: builds_and_tests_on_the_vm_under_handover_limits
+    authenticates_with: [ssh_session_user_ubuntu]
+    may_read: [repo_clone_read_only, vm_state_read_only_unless_handover_allows]
+    may_write: [handover_folder, scratch_copy, vm_files_named_in_the_handover]
+    may_send: []
+    may_approve: []
+    must_never: [push_to_the_repo, print_or_copy_secrets_or_the_slack_id, change_an_instruction_to_make_a_run_pass, use_real_data]
+  repo_owner:
+    kind: human
+    role: ceo_pushes_the_repo
+    authenticates_with: [github_account, git_credentials_on_the_ceo_machine]
+    may_read: [repo]
+    may_write: [repo]
+    may_send: []
+    may_approve: [merge_and_push]
+    must_never: [commit_secrets_or_slack_ids]
 
-This file is intentionally empty of content until the blocker is resolved.
+rules:
+  delete:
+    approver: ceo
+    evidence: ceo_ledger
+    steps: [pending_line_first, ceo_approval_in_ledger, push_job_with_require_ceo_ledger]
+    plain_approve: only_if_exactly_one_delete_is_waiting
+    otherwise: approve_with_the_event_id
+    approval_max_age_hours: 48
+    each_message_id_counts_once: true
+    cron_option: require_ceo_ledger_for_both_ledgers
+  calendar_writes:
+    google: sync_job_only
+    journal: cos_only
+    calendar_adds_from_cho: sent_straight_to_cos
+  privacy:
+    gate: src/lifeos/router/gate.py
+    wired: false
+    override: ceo_confirmation_only
+  agent_to_agent:
+    tool: sessions_send
+    visibility: agent
+    spawn: denied
+
+files:
+  ceo_ledger_dir: {path: "~/loop1/ceo-ledger", mode: "700"}
+  slack_ledger: {path: "~/loop1/ceo-ledger/slack-ledger.jsonl", mode: "600"}
+  scenario_ledger: {path: "~/loop1/ceo-ledger/scenario-ledger.jsonl", mode: "600"}
+  ceo_slack_id: {path: "~/loop1/ceo-slack-id", mode: "600"}
+  gateway_token: {path: "~/loop1/gateway-token", mode: "600"}
+  openclaw_config: {path: "~/loop1/state/openclaw.json", mode: "600"}
+  gcal_sync_env: {path: "~/loop1/gcal-sync/env", mode: "600"}
+
+channels:
+  coo: "{{COO_CHANNEL_ID}}"
+  cho: "{{CHO_CHANNEL_ID}}"
+  cos: "{{COS_CHANNEL_ID}}"
+  cfo: "{{CFO_CHANNEL_ID}}"

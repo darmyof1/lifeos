@@ -1,0 +1,7 @@
+files: 259
+result: ALL FILES MATCH (259 files)
+copy+redact 0.1 s
+encrypt 1.1 s
+decrypt+extract 0.4 s
+total 1.5 s
+wrong passphrase: refused, no output

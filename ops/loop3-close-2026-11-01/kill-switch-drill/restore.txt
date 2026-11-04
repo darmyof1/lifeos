@@ -1,0 +1,5 @@
+KILL SWITCH RESTORE (EXECUTE)
+marker: gateway_was_active=1 cron_was_active=1
+check: crontab identical to the copy taken at the kill
+check: gateway active
+Marker removed. The crontab copy stays: /home/ubuntu/loop1/kill-switch-crontab.20261101-215227

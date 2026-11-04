@@ -1,0 +1,9 @@
+KILL SWITCH (dry run)
+gateway service openclaw-loop1-gateway: active
+calendar cron line: active
+[dry run] would run: pause_cron
+[dry run] would run: systemctl --user stop openclaw-loop1-gateway
+[dry run] would write /home/ubuntu/loop1/kill-switch.marker and a crontab copy in /home/ubuntu/loop1
+Run with --execute to act.
+KILL SWITCH RESTORE (dry run)
+No marker /home/ubuntu/loop1/kill-switch.marker: nothing to restore. Nothing done.

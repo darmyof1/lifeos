@@ -435,3 +435,8 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-01 - APR-0112 (fix-124)
 - Repo only: handover 22 added. Nothing installed or changed on the VM by this entry.
+
+## 2026-11-01 - Handover 22 recorded (fix-125)
+- Claude Code ran one kill-switch drill (gateway stopped and started once, calendar cron line paused and restored; crontab identical) and a restore drill on a copy in a temp folder (deleted after). No agent file, config, plugin or crontab change remains. The patch adds docs, the unwired gate and tests to the repo only.
+- Straight quotes replaced curly quotes in the copied evidence files under ops/loop3-close-2026-11-01 (validator rule); content otherwise as received.
+- Straight quotes replaced curly quotes in the copied evidence files under ops/loop3-close-2026-11-01 (validator rule); content otherwise as received.
