@@ -1308,3 +1308,31 @@ Meaning:
 Closes: P-43; P-44; Loop 3
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop3/LOOP3-CLOSE-RECORD.md; decisions/PENDING.md
+
+## APR-0116 - Calendar privacy must be flexible (a toggle), and the real-calendar testing is done
+Status: approved
+Decided by: CEO
+Your answer: "on the calendar, i dont want the privacy there, its fine to show it what it actually is, I should be able to toggle when i want to see it just busy and when i want to see it like it is, maybe a yaml file i can toggle? keep that in mind." and "we need flexibility on these (APR-0079, 0086, 0088) there will be times when i actually dont care, so never should not be the right word here." and "Full means Google holds the real titles: that is ok." and "we dont need to test any more calendar on real data. we prove it lets call it done." (2026-11-05 15:57 and 16:02)
+Evidence: ops/handover-2026-10-26-claude-code-report-2.md (the real-calendar test of 2026-10-26: create, move, raise to busy, delete by key, no test event left); APR-0079, APR-0086, APR-0088
+Meaning:
+- Requirement, not built yet: a setting in a YAML file (busy or full) that the CEO can change. In busy mode a high-privacy entry shows as "busy" in Google, as today. In full mode Google shows the real title and Google holds it; the CEO accepts that. Changing the setting must also retitle the events already in Google (the hidden key on each event allows it). It will be built in a later loop and needs its own approval entry for the wording and the file.
+- Until it is built, behaviour is unchanged: the rule of APR-0079, APR-0086 and APR-0088 (the mandated title of a high-privacy entry does not reach Google) stays in force. Where those entries say "never", the words describe the default, not a permanent ban; the toggle is how the CEO lifts it.
+- No more testing on the real calendar. The real-calendar proof of 2026-10-26 is accepted as done. The cron stays on the Google TEST calendar; moving it to the real calendar remains the CEO's decision and is not made here.
+- The privacy gate for model calls (ADR-0003) is a separate matter and is not changed by this entry.
+Closes: none (P-40 note)
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/gcal/gcal_sync.py (later); contracts/policy (later); decisions/PENDING.md (P-40)
+
+## APR-0117 - Loop 4: backup and recovery, with a controlled restore drill
+Status: approved
+Decided by: CEO
+Your answer: "now, write Loop 4. but keep in mind i dont want to wait for a week to restore, so set the timing cron in a controlled way so we can back it up, restore right away an verify. procceed." (2026-11-05 16:02), after "for vm backup would that be a better test for loop 4?"
+Evidence: deploy/loop4/LOOP4-SCOPE.md; deploy/loop4/handover-24-claude-code-vm.md; ops/handover-2026-11-04-claude-code-report-23.md (backup script and live check); ops/recovery/backup-weekly.md
+Meaning:
+- Loop 4 is backup and recovery on synthetic data. Handover 24 has Claude Code finish the scripts (push, restore, time in the archive name), add a health-check line, set up a private backup repository with a write-only deploy key, install the CEO's PUBLIC backup key on the VM, and run the drill: one real backup, a temporary 5-minute cron line that fires twice by cron and is then removed, a restore on the CEO's Mac with 0 mismatches, and only then the weekly cron line (Sundays 06:15, outside the 03:30 to 05:10 AST window).
+- This entry approves the crontab lines named in handover 24 (the temporary drill line and the weekly line) and nothing else in the crontab. The private backup key never goes to the VM. The backup repository holds ciphertext only and is separate from the public LifeOS repository (APR-0114).
+- No agent instruction, OpenClaw config, plugin or gateway change. No real data. The privacy gate wiring, the calendar toggle, isolation, the CFO difference and the COO session compaction stay parked (APR-0115, APR-0116).
+- Loop 4 passes only on the criteria in the scope (ciphertext only, restore on another machine matches the manifest, cron fired by cron, crontab otherwise unchanged).
+Closes: none (P-45 opened)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop4/; scripts/ops/backup-weekly.sh; scripts/ops/backup-push.sh; scripts/ops/backup-run.sh; scripts/ops/restore-backup.sh; deploy/loop1/health-check.py; ops/recovery/; decisions/PENDING.md (P-45)
