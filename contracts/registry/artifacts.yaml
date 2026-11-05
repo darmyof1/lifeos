@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-127.sh",
+  "generated_by": "fix-128.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -949,6 +949,10 @@
     },
     {
       "path": "deploy/loop2/vm/scenario-run.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/LOOP3-CLOSE-RECORD.md",
       "status": "draft"
     },
     {

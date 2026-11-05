@@ -446,3 +446,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-04 - Handover 23 recorded (fix-127)
 - Claude Code ran a backup live check (throwaway key, test files deleted), a gate test on a scratch OpenClaw state folder (deleted; live config and plugin hashes unchanged) and 12 COO-session runs. No agent file, config, plugin, crontab or gateway change on the live system. Straight quotes replaced curly quotes in copied evidence files.
+
+## 2026-11-04 - Loop 3 closed (fix-128)
+- Repo only: close record and APR-0115. Nothing changed on the VM.

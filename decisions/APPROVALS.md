@@ -1292,3 +1292,19 @@ Meaning:
 Closes: none (P-43 continues)
 Changeable: yes. A change is a new APR entry.
 Applies to: the GitHub repository visibility; decisions/PENDING.md (P-43)
+
+## APR-0115 - Loop 3 closed
+Status: approved
+Decided by: CEO
+Your answer: "close Loop 3" (2026-11-04 21:46), after "stop. we are deviating from the basic make it work idea first" (21:42), to the assistant's proposal to park the backup, the gate wiring, the second-human test, the CFO send-list difference and the compaction of the COO channel session
+Evidence: deploy/loop3/LOOP3-CLOSE-RECORD.md (signed by this entry); ops/handover-2026-11-04-claude-code-report-23.md; ops/handover-2026-11-01-claude-code-report-21.md; health check PASS 74, WARN 0, FAIL 0; 383 unit tests
+Meaning:
+- Loop 3 is closed. The close record is signed by this entry. P-43 and P-44 are closed.
+- The parked items in the close record are not scheduled. Each needs its own APR to start. The privacy gate is built but unwired; wiring it is the carry-over into the next loop.
+- Nothing is stopped on the VM. The gateway, the four agents, the cron on the Google TEST calendar with the CEO ledger, the plugin and the 05:00 report keep running on synthetic data only.
+- No real data, no real calendar, no health data. A new loop and a new APR come first.
+- The repo stays public (APR-0114). The four-agent design is unchanged.
+- The earlier approvals for the weekly backup, the gate wiring design-and-test and the second-human test (APR-0113) are fulfilled up to what was built; nothing further is started.
+Closes: P-43; P-44; Loop 3
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop3/LOOP3-CLOSE-RECORD.md; decisions/PENDING.md
