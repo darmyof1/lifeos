@@ -1,0 +1,7 @@
+8362db375a57186ad22047074d47b0301d9c37f542260438fa4f109ca515e74a  /home/ubuntu/loop1/state/openclaw.json
+ee4e490ab5108b30ebcf94c0b5f2c7e0470740a27e009abb55490915682b8f80  /home/ubuntu/loop1/state/extensions/ceo-ledger/index.js
+767ca80faa71b970fed1ef3d7097f9185870ed1a60ae3c08eca48d8966560722  /home/ubuntu/loop1/state/extensions/ceo-ledger/ledger.js
+a97a8993eb9d3bd92a83b3d9f1d490685f3d6b8cad7fad6282b61e80c0044795  /home/ubuntu/loop1/state/extensions/ceo-ledger/openclaw.plugin.json
+1b98f60e4fbff9ccb12d92c6c7862e780681401cb10dfcda8aaa44ec03adc5f0  /home/ubuntu/loop1/state/extensions/ceo-ledger/package.json
+2
+70a5c01bd4e67efc89503d1b6ccea9942127072dd2f5f7268ab06fc5c87c5c9a  -

@@ -6,7 +6,9 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 from lifeos.router import gate  # noqa: E402
 
 POLICY = os.path.join(ROOT, "contracts", "policy", "privacy.yaml")
-CONFIRM = {"confirmed": True, "confirmed_by": "CEO", "confirmation_id": "c-1"}
+NOW = 1_800_000_000.0                 # a fixed "now" in seconds; the gate never reads the clock itself
+CONFIRM = {"confirmed": True, "confirmed_by": "CEO", "confirmation_id": "c-1",
+           "request_hash": gate.request_hash("r-1"), "confirmed_at": NOW - 60}      # names request r-1, one minute old
 
 
 def read(path):
@@ -64,7 +66,7 @@ class TableTests(unittest.TestCase):
 
     def test_table(self):
         for name, fields, allow, reason in self.CASES:
-            a = gate.decide(build(fields), POLICY)
+            a = gate.decide(build(fields), POLICY, now=NOW)
             self.assertEqual((a["allow"], a["reason"]), (allow, reason), name)
 
     def test_not_a_dict_is_denied(self):
@@ -75,12 +77,71 @@ class TableTests(unittest.TestCase):
 
     def test_allow_is_a_real_bool_and_only_set_by_a_rule(self):
         for _, fields, allow, _ in self.CASES:
-            self.assertIs(gate.decide(build(fields), POLICY)["allow"], allow)
+            self.assertIs(gate.decide(build(fields), POLICY, now=NOW)["allow"], allow)
+
+
+class OverrideBindingTests(unittest.TestCase):
+    """APR-0113: an override confirmation must name the request and be at most 10 minutes old."""
+
+    def ask(self, confirmation, now=NOW, **kw):
+        return gate.decide(req(privacy="high", override=True, confirmation=confirmation, **kw), POLICY, now=now)
+
+    def test_a_confirmation_for_another_request_is_denied(self):
+        a = self.ask(dict(CONFIRM, request_hash=gate.request_hash("some-other-request")))
+        self.assertFalse(a["allow"])
+        self.assertEqual(a["reason"], "override_confirmation_not_for_this_request")
+        self.assertIsNone(a["ciso_notice"])
+
+    def test_a_confirmation_without_a_request_hash_is_denied(self):
+        c = dict(CONFIRM)
+        del c["request_hash"]
+        self.assertEqual(self.ask(c)["reason"], "override_confirmation_not_for_this_request")
+
+    def test_the_same_confirmation_cannot_cover_a_second_request(self):
+        a = gate.decide(req(request_id="r-2", privacy="high", override=True, confirmation=CONFIRM), POLICY, now=NOW)
+        self.assertFalse(a["allow"])
+        self.assertEqual(a["reason"], "override_confirmation_not_for_this_request")
+
+    def test_age_limit_is_ten_minutes(self):
+        for age, ok in ((0, True), (599, True), (600, True), (601, False), (3600, False), (-1, False), (-600, False)):
+            a = self.ask(dict(CONFIRM, confirmed_at=NOW - age))
+            self.assertEqual(a["allow"], ok, age)
+            if not ok:
+                self.assertEqual(a["reason"], "override_confirmation_expired", age)
+
+    def test_without_now_or_without_a_time_the_override_cannot_be_verified(self):
+        self.assertEqual(self.ask(CONFIRM, now=None)["reason"], "override_confirmation_expired")
+        c = dict(CONFIRM)
+        del c["confirmed_at"]
+        self.assertEqual(self.ask(c)["reason"], "override_confirmation_expired")
+        for bad in ("yesterday", "2026-11-04 08:00:00", "", None, True, [], {}):
+            self.assertEqual(self.ask(dict(CONFIRM, confirmed_at=bad))["reason"], "override_confirmation_expired", repr(bad))
+        self.assertEqual(self.ask(CONFIRM, now="soon")["reason"], "override_confirmation_expired")
+
+    def test_iso_utc_times_work(self):
+        # 2027-01-15T08:00:00Z = 1799049600
+        c = dict(CONFIRM, confirmed_at="2027-01-15T07:55:00Z")
+        self.assertTrue(self.ask(c, now="2027-01-15T08:00:00Z")["allow"])
+        self.assertFalse(self.ask(c, now="2027-01-15T08:10:01Z")["allow"])
+
+    def test_valid_override_still_logs_and_notifies(self):
+        a = self.ask(CONFIRM)
+        self.assertTrue(a["allow"])
+        self.assertEqual(a["ciso_notice"]["request_hash"], gate.request_hash("r-1"))
+        self.assertTrue(a["log"]["override_confirmed"])
+
+    def test_structure_is_checked_before_the_binding(self):
+        self.assertEqual(self.ask(dict(CONFIRM, confirmed_by="COO"))["reason"], "override_without_confirmation")
+        self.assertEqual(self.ask(dict(CONFIRM, confirmed=1))["reason"], "override_without_confirmation")
+
+    def test_the_log_never_holds_the_confirmation_text(self):
+        a = self.ask(dict(CONFIRM, confirmation_id="private-confirmation-text"))
+        self.assertNotIn("private-confirmation-text", str(a))
 
 
 class OverrideAndLogTests(unittest.TestCase):
     def test_override_logs_and_notifies_the_ciso(self):
-        a = gate.decide(req(privacy="high", override=True, confirmation=CONFIRM), POLICY)
+        a = gate.decide(req(privacy="high", override=True, confirmation=CONFIRM), POLICY, now=NOW)
         self.assertTrue(a["allow"])
         self.assertEqual(a["ciso_notice"]["kind"], "privacy_override")
         self.assertEqual(a["ciso_notice"]["to"], "CISO")

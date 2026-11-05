@@ -22,3 +22,7 @@ Privacy wins over complexity. A critical-complexity request with high privacy st
 - No cloud adapter may be enabled until gate.py exists and its unit tests pass.
 - The gate is testable with unit tests (tests/unit/test_gate.py).
 - A wrong triage label can still send data incorrectly. Mitigation to confirm: when triage is unsure, treat the query as high privacy.
+
+## Implementation note (APR-0112, APR-0113)
+Implementation status (2026-11-01): src/lifeos/router/gate.py and tests/unit/test_gate.py exist (APR-0112). The gate is not wired into any model call.
+Built and tested on a scratch folder, not live (2026-11-04, APR-0113): the rules-based prefilter (src/lifeos/router/prefilter.py) and the gating plugin (deploy/loop3/gate-plugin/). Neither is installed in the live gateway.

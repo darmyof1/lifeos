@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-126.sh",
+  "generated_by": "fix-127.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -988,6 +988,46 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop3/gate-plugin/README.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/gate.js",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/index.js",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/openclaw.plugin.json",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/package.json",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/prefilter.js",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/prefilter_rules.json",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/privacy.yaml",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/tests/gate.test.js",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop3/gate-plugin/tests/table.js",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop3/handover-10-claude-code-vm.md",
       "status": "draft"
     },
@@ -1404,6 +1444,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-11-04-claude-code-report-23.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
@@ -1520,6 +1564,94 @@
       "status": "draft"
     },
     {
+      "path": "ops/loop3-h23-2026-11-04/backup-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop-summary.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m1.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m10.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m11.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m12.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m2.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m3.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m4.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m5.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m6.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m7.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m8.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/d2/loop3-h23-m9.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/gate-plugin-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/gate-scratch-log.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/gate-scratch.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/health-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/history-scan.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/item3-instructions.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/live-hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop3-h23-2026-11-04/live-hashes-before.txt",
+      "status": "draft"
+    },
+    {
       "path": "ops/maintenance-schedule.md",
       "status": "planned"
     },
@@ -1586,6 +1718,10 @@
     {
       "path": "ops/recovery/agent-recovery.md",
       "status": "planned"
+    },
+    {
+      "path": "ops/recovery/backup-weekly.md",
+      "status": "draft"
     },
     {
       "path": "ops/recovery/host-loss.md",
@@ -3612,6 +3748,10 @@
       "status": "planned"
     },
     {
+      "path": "scripts/ops/backup-weekly.sh",
+      "status": "draft"
+    },
+    {
       "path": "scripts/ops/cko-janitor.sh",
       "status": "planned"
     },
@@ -3653,6 +3793,10 @@
     },
     {
       "path": "scripts/verify/check_sessions_send.py",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/verify/history_scan.sh",
       "status": "draft"
     },
     {
@@ -3833,7 +3977,11 @@
     },
     {
       "path": "src/lifeos/router/prefilter.py",
-      "status": "planned"
+      "status": "draft"
+    },
+    {
+      "path": "src/lifeos/router/prefilter_rules.json",
+      "status": "draft"
     },
     {
       "path": "src/lifeos/router/route.py",
@@ -3996,6 +4144,18 @@
       "status": "planned"
     },
     {
+      "path": "tests/data/gate_cases.json",
+      "status": "draft"
+    },
+    {
+      "path": "tests/data/make_gate_cases.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/data/prefilter_cases.json",
+      "status": "draft"
+    },
+    {
       "path": "tests/dry-run/README.md",
       "status": "planned"
     },
@@ -4032,6 +4192,10 @@
       "status": "draft"
     },
     {
+      "path": "tests/unit/test_backup_weekly.py",
+      "status": "draft"
+    },
+    {
       "path": "tests/unit/test_ceo_ledger.py",
       "status": "draft"
     },
@@ -4052,6 +4216,10 @@
       "status": "draft"
     },
     {
+      "path": "tests/unit/test_gate_parity.py",
+      "status": "draft"
+    },
+    {
       "path": "tests/unit/test_gcal_scripts.py",
       "status": "draft"
     },
@@ -4065,6 +4233,10 @@
     },
     {
       "path": "tests/unit/test_health_check_ledger_lines.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_history_scan.py",
       "status": "draft"
     },
     {
@@ -4125,7 +4297,7 @@
     },
     {
       "path": "tests/unit/test_prefilter.py",
-      "status": "planned"
+      "status": "draft"
     }
   ]
 }

@@ -1,0 +1,44 @@
+== dry run
+public key file present: it will be imported (public part only)
+BACKUP (dry run)
+would copy: workspaces coo cho cos cfo and the config with token-like fields replaced by <redacted>
+would write: /home/ubuntu/loop1/backups/lifeos-backup-20261104.tar.gpg and a .sha256 line; keep the last 4; encrypt to fingerprint ending ...50842A3F
+Run with --execute to act.
+exit 0
+== execute
+public key file present: it will be imported (public part only)
+BACKUP done: lifeos-backup-20261104.tar.gpg, 174657 bytes, 259 files, mode 600
+kept: 1 of at most 4
+elapsed 0.12 s, max mem 10404 KB
+exit 0
+== decrypt with the matching private key (separate keyring)
+decrypt exit 0
+FILES.sha256
+a.tar
+cfo
+cho
+coo
+cos
+openclaw.json
+== sha256 of the archive file vs .sha256
+lifeos-backup-20261104.tar.gpg: OK
+== FILES.sha256 inside the archive vs extracted files
+OK 259
+== extracted vs LIVE workspaces (sha256 of every file)
+live files compared: 258, differing or missing: 0
+== config in archive has no token values
+1
+0
+== archive layout
+./
+./cho/
+./cho/IDENTITY.md
+./cho/state/
+./cho/state/health-plan.md
+== cleanup
+/home/ubuntu/loop1/backup-tooling-20261101-0134:
+daily-reset-report.py
+health-check.py
+
+/home/ubuntu/loop1/backups:
+0

@@ -1,0 +1,410 @@
+[
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Remind me about my doctor appointment on Friday",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Book a dentist visit next week",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Log a 45 minute workout for tomorrow morning",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "I slept badly again, move my early meetings",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "What should my meal plan look like this week",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "My blood pressure reading was 130 over 85",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "I need to refill my prescription",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Schedule physiotherapy for my shoulder injury",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Update the grocery budget to 150 dollars",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "What did I spend on rent this month",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Pay the electricity bill on the 5th",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Transfer $200 into savings",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Is my credit card payment due",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Draft a note about my mortgage rate",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "How much tax do I owe",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Summarize my expenses for October",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Plan a birthday dinner for my daughter",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Remind me to call my mother on Sunday",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "My wife and I want a weekend away",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Pick up the kids at 4",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Ask my brother about the holiday plans",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Write a card for my father",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Add this to my journal: today was a long day",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Dear diary, I feel tired",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "These are private notes, keep them safe",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Save my password hint in a note",
+  "truth": "high",
+  "note": "",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Anything on my plate tomorrow",
+  "truth": "high",
+  "note": "no rule matches: doubt means high",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "cho",
+  "text": "Good morning",
+  "truth": "high",
+  "note": "CHO channel is high whatever the text",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "cfo",
+  "text": "What is the capital of France?",
+  "truth": "high",
+  "note": "CFO channel is high whatever the text",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "cos",
+  "text": "Schedule a meeting with the design team on Thursday",
+  "truth": "medium",
+  "note": "",
+  "expect": "medium"
+ },
+ {
+  "channel": "slack",
+  "agent": "cos",
+  "text": "Add a project deadline to the calendar for the 12th",
+  "truth": "medium",
+  "note": "",
+  "expect": "medium"
+ },
+ {
+  "channel": "slack",
+  "agent": "cos",
+  "text": "Send the contact details to the team",
+  "truth": "medium",
+  "note": "",
+  "expect": "medium"
+ },
+ {
+  "channel": "slack",
+  "agent": "cos",
+  "text": "Book a flight and a hotel for the conference",
+  "truth": "medium",
+  "note": "",
+  "expect": "medium"
+ },
+ {
+  "channel": "slack",
+  "agent": "cos",
+  "text": "Reschedule the review to next Tuesday",
+  "truth": "medium",
+  "note": "",
+  "expect": "medium"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "What is the capital of France?",
+  "truth": "low",
+  "note": "",
+  "expect": "low"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Convert 5 miles to kilometres",
+  "truth": "low",
+  "note": "",
+  "expect": "low"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Write a haiku about spring",
+  "truth": "low",
+  "note": "",
+  "expect": "low"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Translate good morning into Spanish",
+  "truth": "low",
+  "note": "",
+  "expect": "low"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Explain how a transistor works",
+  "truth": "low",
+  "note": "",
+  "expect": "low"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Give me the square root of 144",
+  "truth": "low",
+  "note": "",
+  "expect": "low"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Write a Python function that sorts a list",
+  "truth": "low",
+  "note": "",
+  "expect": "low"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "What is the weather forecast like in general for April",
+  "truth": "low",
+  "note": "",
+  "expect": "low"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "The company will pay the supplier by courier",
+  "truth": "low",
+  "note": "near miss: contains pay, harmless, filter blocks (false block)",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "The bridge has a weight limit sign",
+  "truth": "low",
+  "note": "near miss: weight, harmless, filter blocks (false block)",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Look up the history of the stock exchange building",
+  "truth": "low",
+  "note": "near miss: stock, harmless, filter blocks (false block)",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Define the word partner",
+  "truth": "low",
+  "note": "near miss: partner, harmless, filter blocks (false block)",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "My kid sister needs a lift",
+  "truth": "high",
+  "note": "family wording",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "hello there",
+  "truth": "high",
+  "note": "empty meaning: doubt means high",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "",
+  "truth": "high",
+  "note": "empty text",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "   ",
+  "truth": "high",
+  "note": "blank text",
+  "expect": "high"
+ },
+ {
+  "channel": "slack",
+  "agent": "coo",
+  "text": "Weather forecast for my doctor visit",
+  "truth": "high",
+  "note": "low word plus a health word: health wins",
+  "expect": "high"
+ }
+]

@@ -443,3 +443,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-04 - APR-0113, APR-0114 (fix-126)
 - Repo only: two approvals recorded and handover 23 added. Nothing installed or changed on the VM by this entry.
+
+## 2026-11-04 - Handover 23 recorded (fix-127)
+- Claude Code ran a backup live check (throwaway key, test files deleted), a gate test on a scratch OpenClaw state folder (deleted; live config and plugin hashes unchanged) and 12 COO-session runs. No agent file, config, plugin, crontab or gateway change on the live system. Straight quotes replaced curly quotes in copied evidence files.

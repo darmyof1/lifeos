@@ -1,0 +1,13 @@
+{
+  "id": "gate-plugin",
+  "name": "Privacy gate",
+  "description": "Gate: blocks a model turn when the privacy gate (prefilter label, then rules) denies it. Fails closed. Built and tested on a scratch state folder only.",
+  "categories": ["other"],
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false
+  }
+}

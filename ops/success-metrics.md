@@ -1,9 +1,9 @@
-# Success metrics (proposed, not decided)
+# Success metrics (adopted)
 
-Status: draft proposal, written 2026-11-01 under APR-0112. Every threshold below is "proposed, not decided"; the CEO decides. Baselines come from real run files (137 regression runs in 47 single- or multi-scenario suites, 2026-10-27 to 2026-11-01, files in ~/handover/regression on the VM and in the handover packages) and from the handover reports. Synthetic data only.
+Status: adopted by the CEO (APR-0113); written 2026-11-01 under APR-0112. The metrics and thresholds below are in force from 2026-11-04 and are reviewed after each handover. The health feed section is a design only: no real data, no connection. Baselines come from real run files (137 regression runs in 47 single- or multi-scenario suites, 2026-10-27 to 2026-11-01, files in ~/handover/regression on the VM and in the handover packages) and from the handover reports. Synthetic data only.
 
 ## Metrics
-| # | Metric | Baseline today | Proposed threshold (not decided) |
+| # | Metric | Baseline today | Threshold (adopted) |
 |---|---|---|---|
 | 1 | Scenario pass rate, four-agent set (per scenario, last 10 runs) | See table below | Each scenario at least 9 of 10; D3 judged by metric 5 and 6 as well |
 | 2 | Cost per run and per day | Mean 0.0064 USD per run (n 137), highest 0.0167; Handover 20 day about 0.09 USD; Handover 21 day about 0.03 USD | Under 0.05 USD per run and 1 USD per day (the limits already in force) |
@@ -30,7 +30,7 @@ Status: draft proposal, written 2026-11-01 under APR-0112. Every threshold below
 | 7 privacy request | 12 of 15 | not run |
 The instruction sets changed between these (v1.10.1 to v1.10.7), so the two columns are not the same system.
 
-## Health feed (design only; nothing is connected)
+## Health feed (design only, no real data; nothing is connected)
 One real feed, health, would come in this way. No real data and no connection is made by this document.
 | Item | Design |
 |---|---|

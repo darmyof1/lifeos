@@ -84,7 +84,7 @@ class IdentityAccessContract(unittest.TestCase):
         cls.c = parse(cls.text)
 
     def test_shape(self):
-        self.assertEqual(self.c["status"], "draft")
+        self.assertEqual(self.c["status"], "accepted")
         want = {"ceo", "coo", "cho", "cos", "cfo", "sync_job", "ceo_ledger_plugin", "claude_code_vm", "repo_owner"}
         self.assertEqual(set(self.c["identities"]), want)
         for name, ident in self.c["identities"].items():
@@ -162,6 +162,13 @@ class IdentityAccessContract(unittest.TestCase):
     def test_the_privacy_gate_is_declared_unwired_and_the_code_exists(self):
         self.assertEqual(self.c["rules"]["privacy"]["wired"], "false")
         self.assertTrue(os.path.getsize(os.path.join(ROOT, self.c["rules"]["privacy"]["gate"])) > 0)
+
+    def test_the_known_cfo_difference_is_recorded_and_still_true(self):
+        self.assertIn("cfo_send_text_vs_config", self.c["known_differences"])
+        m = re.search(r"## You may send to\n([^\n]+)", read("agent-files/department/cfo/AGENTS.md"))
+        text = {x.strip().lower() for x in re.sub(r"\(.*?\)", "", m.group(1)).replace(".", "").split(",") if x.strip()}
+        config = set(self.c["identities"]["cfo"]["may_send"])
+        self.assertTrue(text < config, "if the text and the config now agree, remove the known difference")
 
     def test_the_parser_rejects_a_duplicate_key(self):
         with self.assertRaises(ValueError):

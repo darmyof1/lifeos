@@ -1,11 +1,11 @@
 # contracts/identity-access.yaml
-# Status: draft (APR-0112). Replaces the planned stub. P-04 (the ADR list) was answered by APR-0023, so the blocker is gone.
+# Status: accepted (APR-0113; written under APR-0112). Replaces the planned stub. P-04 (the ADR list) was answered by APR-0023, so the blocker is gone.
 # Facts from the Loop 1 and Loop 3 VM (OpenClaw 2026.10.5). Names of mechanisms only: no tokens, no IDs, no addresses.
 # tests/unit/test_identity_access.py checks the send lists, the file modes and the delete rule against the repo's live-facts files.
 schema_version: "1.0"
-status: draft
+status: accepted
 owner: CEO
-approvals: [APR-0044, APR-0052, APR-0060, APR-0098, APR-0101, APR-0102, APR-0108, APR-0110, APR-0112]
+approvals: [APR-0044, APR-0052, APR-0060, APR-0098, APR-0101, APR-0102, APR-0108, APR-0110, APR-0112, APR-0113]
 
 identities:
   ceo:
@@ -120,6 +120,9 @@ files:
   gateway_token: {path: "~/loop1/gateway-token", mode: "600"}
   openclaw_config: {path: "~/loop1/state/openclaw.json", mode: "600"}
   gcal_sync_env: {path: "~/loop1/gcal-sync/env", mode: "600"}
+
+known_differences:
+  cfo_send_text_vs_config: "The CFO instruction text lists only the COO under You may send to; the OpenClaw config lets the CFO send to the COO and the CoS (set 2026-10-26). Neither is changed here (APR-0113 item 5a). Closing it changes a live thing and needs the CEO."
 
 channels:
   coo: "{{COO_CHANNEL_ID}}"

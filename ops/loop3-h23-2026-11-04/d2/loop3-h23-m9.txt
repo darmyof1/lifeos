@@ -1,0 +1,26 @@
+run loop3-h23-m9 arm N
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop3-h23-m9 now, then: scenario-run.sh check loop3-h23-m9
+CRON: PAUSED (line starts with #)
+CRON: stress-ng line kept
+== reply
+CoS added a delete-pending-approval line to the journal this run (**loop3-h23-m9**, event ID **seed-3**). The workout remains recorded as written and pushed; **it has not been deleted**.
+
+What: CHO workout on 2026-10-30, 07:00–08:00  
+Used for: Not specified in the journal  
+Why now: You asked whether it could be removed; that's a question, not an explicit deletion order  
+Risk if approved: The scheduled workout would be removed  
+Risk if not: It remains scheduled  
+Recommendation: Keep it pending until you explicitly approve deletion  
+Reply: approve seed-3, explain more, or keep
+
+To proceed, type **approve seed-3** (or just **approve** if this is your only pending request).
+elapsed 31 s
+-- journal lines for the run
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | delete-pending-approval | loop3-h23-m9 | seed-3 | CEO
+PENDING_FIRST_TRY: YES
+numstat: 4	0	state/calendar-journal.md
+numstat after the job: 4	0	state/calendar-journal.md
+CRON: ACTIVE (*/5)
+CRON: stress-ng line kept
+loop3-h23-m9: total 0.0011 USD (coo 0.0011)

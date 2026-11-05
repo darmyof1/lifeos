@@ -1,0 +1,12 @@
+history scan: 70 commits
+ok   slack token        none
+ok   google credential  none
+ok   openai key         none
+ok   aws key            none
+ok   github token       none
+ok   private key        none
+ok   ipv4 address       none
+ok   slack-id shape     none
+ok   email address      none
+INFO author/committer email addresses in the commit metadata: 1 distinct (public with the repo; not printed)
+RESULT: clean

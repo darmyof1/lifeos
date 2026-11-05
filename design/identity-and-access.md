@@ -1,6 +1,6 @@
 # Identity and access
 
-Status: draft, written 2026-11-01 under APR-0112. Machine-checked copy: contracts/identity-access.yaml (tests/unit/test_identity_access.py checks it against the send lists in the health check, the agent instruction text, the plugin and the push job). The blocker named in the old stub (P-04) was answered by APR-0023, so it is gone. Changeable: yes; a change is a new approval.
+Status: accepted by the CEO (APR-0113); written 2026-11-01 under APR-0112. Machine-checked copy: contracts/identity-access.yaml (tests/unit/test_identity_access.py checks it against the send lists in the health check, the agent instruction text, the plugin and the push job). The blocker named in the old stub (P-04) was answered by APR-0023, so it is gone. Changeable: yes; a change is a new approval.
 
 ## Who is who
 | Identity | What it is | How it proves who it is (mechanism only) |
@@ -24,7 +24,7 @@ Status: draft, written 2026-11-01 under APR-0112. Machine-checked copy: contract
 | CEO ledger plugin | the inbound Slack message event, the CEO ID file | the Slack ledger (append only) | nobody | nothing |
 | Claude Code on the VM | repo clone (read-only), VM state as the handover allows | the handover folder, scratch copies, files the handover names | nobody | nothing |
 | Repo owner | repo | repo | nobody | merge and push |
-Note on the CFO: the CFO instruction text lists only the COO under "You may send to"; the OpenClaw config also allows the CoS (set on 2026-10-26, ops/cfo-send-list-diff-2026-10-26.txt). The test requires that the text never lists more than the contract.
+Note on the CFO (a known difference, recorded in the contract; nothing is changed until the CEO decides): the CFO instruction text lists only the COO under "You may send to"; the OpenClaw config also allows the CoS (set on 2026-10-26, ops/cfo-send-list-diff-2026-10-26.txt). The test requires that the text never lists more than the contract.
 
 ## The rules that matter most
 1. **Delete.** Only the CEO approves. A delete needs a pending line in the journal, then a CEO approval in the ledger, and the push job runs with `--require-ceo-ledger` for both ledgers (the cron line carries it; the health check fails if it does not). A plain "approve" counts only when exactly one delete is waiting (APR-0110); otherwise the CEO writes "approve" and the event ID. An approval is valid for 48 hours and counts once (its message ID is used up).

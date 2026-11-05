@@ -1,0 +1,35 @@
+== high | 9.16s
+Your message could not be sent: This message was held back by the privacy gate and was not sent to the model (privacy_high_cloud_denied). Nothing was changed. (blocked by gate-plugin)
+== low | 83.27s
+Request timed out before a response was generated. Please try again, or increase `agents.defaults.timeoutSeconds` in your config.
+== medium | 4.64s
+Your message could not be sent: This message was held back by the privacy gate and was not sent to the model (medium_not_low_sensitivity). Nothing was changed. (blocked by gate-plugin)
+== high2 | 3.75s
+Your message could not be sent: This message was held back by the privacy gate and was not sent to the model (privacy_high_cloud_denied). Nothing was changed. (blocked by gate-plugin)
+== low2 | 83.39s
+Request timed out before a response was generated. Please try again, or increase `agents.defaults.timeoutSeconds` in your config.
+##### missing label (no rule matches: the prefilter gives no label, treated as high)
+== nolabel | 3.40s
+Your message could not be sent: This message was held back by the privacy gate and was not sent to the model (privacy_high_cloud_denied). Nothing was changed. (blocked by gate-plugin)
+##### error inside the hook (rules file removed from the scratch plugin copy)
+== hookerr | 3.42s
+Your message could not be sent: This message was held back by the privacy gate and was not sent to the model (privacy_high_cloud_denied). Nothing was changed. (blocked by gate-plugin)
+##### gateway still running after the blocks
+2
+3848777     340 openclaw-gatewa
+##### hook timings (ms, from the log)
+deny privacy_high_cloud_denied 3 ms
+allow privacy_low 4 ms
+deny medium_not_low_sensitivity 2 ms
+deny privacy_high_cloud_denied 2 ms
+allow privacy_low 2 ms
+deny privacy_high_cloud_denied 1 ms
+deny privacy_high_cloud_denied 1 ms
+##### real exception inside the hook (decide() replaced by a function that throws; scratch copy only)
+Request timed out before a response was generated. Please try again, or increase `agents.defaults.timeoutSeconds` in your config.
+88.713384612s
+tail: cannot open '/gate-log.jsonl' for reading: No such file or directory
+##### real exception inside the hook (decide() replaced by one that throws; scratch copy only)
+Your message could not be sent: This message was held back by the privacy gate and was not sent to the model (gate_plugin_error). Nothing was changed. (blocked by gate-plugin)
+11.072275125s
+{"time":"2026-11-04T09:23:09.911Z","error":"hook_error_blocked"}

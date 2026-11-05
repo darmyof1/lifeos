@@ -1,0 +1,2976 @@
+[
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "high cloud",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "local",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "local_destination",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "local_destination"
+  },
+  "name": "high local",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "local",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "critical",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "critical complexity high privacy cloud",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "critical",
+   "destination": "cloud",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "medium",
+    "privacy_used": "medium",
+    "reason": "medium_low_sensitivity",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "medium",
+   "reason": "medium_low_sensitivity"
+  },
+  "name": "medium low sensitivity",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "medium",
+   "request_id": "r-1",
+   "sensitivity": "low"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "medium",
+    "privacy_used": "medium",
+    "reason": "medium_not_low_sensitivity",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "medium",
+   "reason": "medium_not_low_sensitivity"
+  },
+  "name": "medium no sensitivity",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "medium",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "medium",
+    "privacy_used": "medium",
+    "reason": "medium_not_low_sensitivity",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "medium",
+   "reason": "medium_not_low_sensitivity"
+  },
+  "name": "medium high sensitivity",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "medium",
+   "request_id": "r-1",
+   "sensitivity": "high"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": true,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "privacy_low",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "low",
+   "reason": "privacy_low"
+  },
+  "name": "low cloud",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "local",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "local_destination",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "low",
+   "reason": "local_destination"
+  },
+  "name": "low local",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "local",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "privacy_missing_or_unknown_treated_as_high",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_missing_or_unknown_treated_as_high"
+  },
+  "name": "privacy null",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": null,
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "privacy_missing_or_unknown_treated_as_high",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_missing_or_unknown_treated_as_high"
+  },
+  "name": "privacy absent",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "invalid",
+    "privacy_used": "high",
+    "reason": "privacy_missing_or_unknown_treated_as_high",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_missing_or_unknown_treated_as_high"
+  },
+  "name": "privacy unknown",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "secret",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "invalid",
+    "privacy_used": "high",
+    "reason": "privacy_missing_or_unknown_treated_as_high",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_missing_or_unknown_treated_as_high"
+  },
+  "name": "privacy unsure",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "unsure",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "invalid",
+    "privacy_used": "high",
+    "reason": "privacy_missing_or_unknown_treated_as_high",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_missing_or_unknown_treated_as_high"
+  },
+  "name": "privacy number",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": 3,
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "privacy capitals and spaces",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": " HIGH ",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "slack",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "slack high",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "slack",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "slack",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "privacy_missing_or_unknown_treated_as_high",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_missing_or_unknown_treated_as_high"
+  },
+  "name": "slack missing level",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "slack",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": null,
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "slack",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "medium",
+    "privacy_used": "medium",
+    "reason": "medium_not_low_sensitivity",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "medium",
+   "reason": "medium_not_low_sensitivity"
+  },
+  "name": "slack medium",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "slack",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "medium",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": true,
+   "ciso_notice": null,
+   "log": {
+    "channel": "other",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "privacy_low",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "low",
+   "reason": "privacy_low"
+  },
+  "name": "odd channel",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "some-private-channel",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": true,
+   "ciso_notice": null,
+   "log": {
+    "channel": "absent",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "privacy_low",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "low",
+   "reason": "privacy_low"
+  },
+  "name": "channel absent",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "unknown",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "complexity unknown",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "trivial",
+   "destination": "cloud",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "unknown",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "complexity absent",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "destination": "cloud",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_without_confirmation",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_without_confirmation"
+  },
+  "name": "override no confirmation",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_without_confirmation",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_without_confirmation"
+  },
+  "name": "override empty confirmation",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {},
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_without_confirmation",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_without_confirmation"
+  },
+  "name": "override by COO",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "COO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_without_confirmation",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_without_confirmation"
+  },
+  "name": "override confirmed string",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": "true",
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_without_confirmation",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_without_confirmation"
+  },
+  "name": "override confirmed 1",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": 1,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_without_confirmation",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_without_confirmation"
+  },
+  "name": "override no id",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_without_confirmation",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_without_confirmation"
+  },
+  "name": "override id blank",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "   ",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "override flag string",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": "yes",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "confirmation without flag",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": {
+    "kind": "privacy_override",
+    "request_hash": "a5fa777a3dc67268",
+    "required": true,
+    "to": "CISO"
+   },
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": true,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmed_by_ceo",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmed_by_ceo"
+  },
+  "name": "override valid",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": {
+    "kind": "privacy_override",
+    "request_hash": "a5fa777a3dc67268",
+    "required": true,
+    "to": "CISO"
+   },
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": true,
+    "override_requested": true,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "override_confirmed_by_ceo",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmed_by_ceo"
+  },
+  "name": "override valid missing level",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": null,
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "medium",
+    "privacy_used": "medium",
+    "reason": "medium_not_low_sensitivity",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "medium",
+   "reason": "medium_not_low_sensitivity"
+  },
+  "name": "override on medium",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "medium",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_not_for_this_request",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_not_for_this_request"
+  },
+  "name": "override other request",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "d9298a10d1b07358"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_not_for_this_request",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_not_for_this_request"
+  },
+  "name": "override no request hash",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_not_for_this_request",
+    "request_hash": "211fc184341de0bd"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_not_for_this_request"
+  },
+  "name": "override second request",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-2"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": {
+    "kind": "privacy_override",
+    "request_hash": "a5fa777a3dc67268",
+    "required": true,
+    "to": "CISO"
+   },
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": true,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmed_by_ceo",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmed_by_ceo"
+  },
+  "name": "override age 0",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1800000000,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": {
+    "kind": "privacy_override",
+    "request_hash": "a5fa777a3dc67268",
+    "required": true,
+    "to": "CISO"
+   },
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": true,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmed_by_ceo",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmed_by_ceo"
+  },
+  "name": "override age 599",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999401,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": {
+    "kind": "privacy_override",
+    "request_hash": "a5fa777a3dc67268",
+    "required": true,
+    "to": "CISO"
+   },
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": true,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmed_by_ceo",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmed_by_ceo"
+  },
+  "name": "override age 600",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999400,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override age 601",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999399,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override age 3600",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799996400,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override age -1",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1800000001,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override age -600",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1800000600,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override now null",
+  "now": null,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override no time",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override bad time 'yesterday'",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": "yesterday",
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override bad time '2026-11-04 08:00:00'",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": "2026-11-04 08:00:00",
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override bad time ''",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": "",
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override bad time None",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": null,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override bad time True",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": true,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override bad time []",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": [],
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override bad time {}",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": {},
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override now string bad",
+  "now": "soon",
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": 1799999940,
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": false,
+   "ciso_notice": {
+    "kind": "privacy_override",
+    "request_hash": "a5fa777a3dc67268",
+    "required": true,
+    "to": "CISO"
+   },
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": true,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmed_by_ceo",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmed_by_ceo"
+  },
+  "name": "override iso ok",
+  "now": "2027-01-15T08:00:00Z",
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": "2027-01-15T07:55:00Z",
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override iso too old",
+  "now": "2027-01-15T08:10:01Z",
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": "2027-01-15T07:55:00Z",
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": true,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "override_confirmation_expired",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "override_confirmation_expired"
+  },
+  "name": "override iso bad date",
+  "now": "2027-02-28T08:00:00Z",
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "confirmation": {
+    "confirmation_id": "c-1",
+    "confirmed": true,
+    "confirmed_at": "2027-02-30T07:55:00Z",
+    "confirmed_by": "CEO",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "destination": "cloud",
+   "override": true,
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "invalid",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "malformed_request",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "malformed_request"
+  },
+  "name": "destination missing",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": null,
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "invalid",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "malformed_request",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "malformed_request"
+  },
+  "name": "destination unknown",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "mars",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "invalid",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "malformed_request",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "malformed_request"
+  },
+  "name": "destination absent",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": true,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "privacy_low",
+    "request_hash": "e3b0c44298fc1c14"
+   },
+   "privacy_used": "low",
+   "reason": "privacy_low"
+  },
+  "name": "request id absent",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low"
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": true,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "privacy_low",
+    "request_hash": "7902699be42c8a8e"
+   },
+   "privacy_used": "low",
+   "reason": "privacy_low"
+  },
+  "name": "request id number",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": 7
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": true,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "privacy_low",
+    "request_hash": "3cbc87c7681f34db"
+   },
+   "privacy_used": "low",
+   "reason": "privacy_low"
+  },
+  "name": "request id bool",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": true
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": true,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "privacy_low",
+    "request_hash": "e3b0c44298fc1c14"
+   },
+   "privacy_used": "low",
+   "reason": "privacy_low"
+  },
+  "name": "request id null",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": null
+  }
+ },
+ {
+  "expect": {
+   "allow": true,
+   "budget_gate": true,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "allow",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "low",
+    "reason": "privacy_low",
+    "request_hash": "e3b0c44298fc1c14"
+   },
+   "privacy_used": "low",
+   "reason": "privacy_low"
+  },
+  "name": "request id object",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": {
+    "a": 1
+   }
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "absent",
+    "complexity": "unknown",
+    "decision": "deny",
+    "destination": "invalid",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "malformed_request",
+    "request_hash": "e3b0c44298fc1c14"
+   },
+   "privacy_used": "high",
+   "reason": "malformed_request"
+  },
+  "name": "not a dict None",
+  "now": 1800000000,
+  "policy": "real",
+  "request": null
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "absent",
+    "complexity": "unknown",
+    "decision": "deny",
+    "destination": "invalid",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "malformed_request",
+    "request_hash": "e3b0c44298fc1c14"
+   },
+   "privacy_used": "high",
+   "reason": "malformed_request"
+  },
+  "name": "not a dict 'cloud'",
+  "now": 1800000000,
+  "policy": "real",
+  "request": "cloud"
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "absent",
+    "complexity": "unknown",
+    "decision": "deny",
+    "destination": "invalid",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "malformed_request",
+    "request_hash": "e3b0c44298fc1c14"
+   },
+   "privacy_used": "high",
+   "reason": "malformed_request"
+  },
+  "name": "not a dict 5",
+  "now": 1800000000,
+  "policy": "real",
+  "request": 5
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "absent",
+    "complexity": "unknown",
+    "decision": "deny",
+    "destination": "invalid",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "malformed_request",
+    "request_hash": "e3b0c44298fc1c14"
+   },
+   "privacy_used": "high",
+   "reason": "malformed_request"
+  },
+  "name": "not a dict 'list'",
+  "now": 1800000000,
+  "policy": "real",
+  "request": []
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "absent",
+    "complexity": "unknown",
+    "decision": "deny",
+    "destination": "invalid",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "absent",
+    "privacy_used": "high",
+    "reason": "malformed_request",
+    "request_hash": "e3b0c44298fc1c14"
+   },
+   "privacy_used": "high",
+   "reason": "malformed_request"
+  },
+  "name": "not a dict 'list'",
+  "now": 1800000000,
+  "policy": "real",
+  "request": [
+   {
+    "channel": "cli",
+    "complexity": "low",
+    "destination": "cloud",
+    "privacy": "low",
+    "request_id": "r-1"
+   }
+  ]
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "extra text fields are ignored",
+  "now": 1800000000,
+  "policy": "real",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "high",
+   "prompt": "private prompt",
+   "request_id": "r-1",
+   "text": "private text"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy missing file",
+  "now": 1800000000,
+  "policy": "missing",
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy empty",
+  "now": 1800000000,
+  "policy": {
+   "text": ""
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy garbage",
+  "now": 1800000000,
+  "policy": {
+   "text": "not yaml at all"
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy no colon line",
+  "now": 1800000000,
+  "policy": {
+   "text": "a: b\n  c\n"
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy tab",
+  "now": 1800000000,
+  "policy": {
+   "text": "gate:\n\thigh:\n"
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy weakened: cloud: denied",
+  "now": 1800000000,
+  "policy": {
+   "replace": [
+    "cloud: denied",
+    "cloud: allowed"
+   ]
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy weakened: precedence: privacy_wins",
+  "now": 1800000000,
+  "policy": {
+   "replace": [
+    "precedence: privacy_wins",
+    "precedence: complexity_wins"
+   ]
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy weakened: low_sensitivity_only",
+  "now": 1800000000,
+  "policy": {
+   "replace": [
+    "low_sensitivity_only",
+    "anything"
+   ]
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy weakened: model_calls: gate_applies",
+  "now": 1800000000,
+  "policy": {
+   "replace": [
+    "model_calls: gate_applies",
+    "model_calls: exempt"
+   ]
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy weakened: runs_before_gate: true",
+  "now": 1800000000,
+  "policy": {
+   "replace": [
+    "runs_before_gate: true",
+    "runs_before_gate: false"
+   ]
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy missing section",
+  "now": 1800000000,
+  "policy": {
+   "replace": [
+    "channels:",
+    "chans:"
+   ]
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "low",
+    "privacy_used": "high",
+    "reason": "policy_unreadable",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "policy_unreadable"
+  },
+  "name": "policy duplicate key",
+  "now": 1800000000,
+  "policy": {
+   "text": "# contracts/policy/privacy.yaml\n# Status: draft. Code exists but is NOT wired: src/lifeos/router/gate.py with tests/unit/test_gate.py (APR-0112); nothing calls it yet, so nothing is enforced. Approvals: APR-0001, APR-0007, APR-0045.\nschema_version: \"1.0\"\nstatus: draft\nprecedence: privacy_wins            # APR-0007: critical complexity never unlocks cloud for high privacy\ngate:\n  high:\n    cloud: denied\n    override: \"--override-privacy with explicit CEO confirmation; logged; CISO notified\"\n  medium:\n    cloud: low_sensitivity_only\n  low:\n    cloud: allowed\n    budget_gate: true\ntriage:\n  runs_before_gate: true\n  model_alias: triage               # APR-0001: local only\nchannels:\n  slack:                            # APR-0045: exemption until the in-house app exists\n    data: private_allowed\n    condition: private channels only, as the CEO described them\n    model_calls: gate_applies       # APR-0007: the exemption does not reach cloud models\n    until: in_house_app_built\n\nprecedence: privacy_wins\n"
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "low",
+   "request_id": "r-1"
+  }
+ },
+ {
+  "expect": {
+   "allow": false,
+   "budget_gate": false,
+   "ciso_notice": null,
+   "log": {
+    "channel": "cli",
+    "complexity": "low",
+    "decision": "deny",
+    "destination": "cloud",
+    "event": "privacy_gate",
+    "override_confirmed": false,
+    "override_requested": false,
+    "privacy_in": "high",
+    "privacy_used": "high",
+    "reason": "privacy_high_cloud_denied",
+    "request_hash": "a5fa777a3dc67268"
+   },
+   "privacy_used": "high",
+   "reason": "privacy_high_cloud_denied"
+  },
+  "name": "policy quoted values",
+  "now": 1800000000,
+  "policy": {
+   "replace": [
+    "precedence: privacy_wins",
+    "precedence: \"privacy_wins\""
+   ]
+  },
+  "request": {
+   "channel": "cli",
+   "complexity": "low",
+   "destination": "cloud",
+   "privacy": "high",
+   "request_id": "r-1"
+  }
+ }
+]
