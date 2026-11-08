@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-130.sh",
+  "generated_by": "fix-131.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1460,6 +1460,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-11-08-claude-code-report-24.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
@@ -1661,6 +1665,70 @@
     },
     {
       "path": "ops/loop3-h23-2026-11-04/live-hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/crontab-after-d3.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/crontab-diff-final.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/crontab-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/crontab-final.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/d2-commits.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/d2-plaintext-check.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/d2-run.log",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/d2-tree.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/d3-commits.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/d3-cron.log",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/d3-run.log",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/d3-tree.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/final-run.log",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/health-final.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop4-h24-2026-11-08/validator.txt",
       "status": "draft"
     },
     {

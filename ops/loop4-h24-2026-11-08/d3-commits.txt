@@ -1,0 +1,3 @@
+5ebb9c6 2026-11-08 06:00:02 -0400 backup lifeos-backup-20261108-0600.tar.gpg
+7fe9a4f 2026-11-08 05:55:01 -0400 backup lifeos-backup-20261108-0555.tar.gpg
+5d28150 2026-11-08 05:50:17 -0400 backup lifeos-backup-20261108-0550.tar.gpg

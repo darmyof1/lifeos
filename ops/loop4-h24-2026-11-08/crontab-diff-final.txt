@@ -1,0 +1,2 @@
+26a27
+> 15 6 * * 0 bash /home/ubuntu/lifeos-ro/scripts/ops/backup-run.sh --execute >> /home/ubuntu/loop1/backups/cron.log 2>&1 # lifeos-backup-weekly

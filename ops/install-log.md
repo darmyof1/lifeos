@@ -455,3 +455,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-08 - Handover 24 patch applied (fix-130)
 - Repo only. On the VM (by Claude Code): one real backup, two cron-fired backups by a temporary line, then the line removed (crontab identical). The weekly line is not installed yet.
+
+## 2026-11-08 - Handover 24 recorded (fix-131)
+- On the VM (by Claude Code): backup key (public only), deploy key and backup.env in ~/loop1, one real backup, two cron-fired backups by a temporary line (removed), weekly cron line installed. First backup key discarded (exposed in chat) before any backup. No agent, config, plugin or gateway change.
