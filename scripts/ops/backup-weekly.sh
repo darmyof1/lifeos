@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # backup-weekly.sh - weekly encrypted backup of the four agent workspaces and a token-free copy of the OpenClaw config (APR-0113).
 #   backup-weekly.sh              dry run: prints what --execute would do, changes nothing
-#   backup-weekly.sh --execute    makes ~/loop1/backups/lifeos-backup-YYYYMMDD.tar.gpg and a .sha256 line, keeps the last 4
+#   backup-weekly.sh --execute    makes ~/loop1/backups/lifeos-backup-YYYYMMDD-HHMM.tar.gpg and a .sha256 line, keeps the last 4
 # Encrypts to a PUBLIC key only (fingerprint in ~/loop1/backup-key-fingerprint). The private key and any passphrase never live on this VM:
 # the script refuses to run if the matching secret key is in this keyring. Prints no secrets. Deletes nothing but its own old backups
 # (lifeos-backup-*.tar.gpg and their .sha256) and its own temp folder. No cron line is installed by this script.
@@ -12,7 +12,7 @@ L="$HOME/loop1"
 WS="$L/workspaces"; CFG="$L/state/openclaw.json"; FPR_FILE="$L/backup-key-fingerprint"; KEYFILE="$L/backup-public-key.asc"
 OUT="$L/backups"; KEEP=4
 AGENTS="coo cho cos cfo"
-DATE="${BK_DATE:-$(date +%Y%m%d)}"
+DATE="${BK_DATE:-$(date +%Y%m%d-%H%M)}"
 say() { echo "$*"; }
 die() { say "STOP: $*"; exit 1; }
 
@@ -65,6 +65,9 @@ PY
 ( cd "$TMP/src" && find . -type f -print0 | sort -z | xargs -0 sha256sum > "$TMP/files.sha256" ) || die "file list failed"
 ( cd "$TMP/src" && cp "$TMP/files.sha256" ./FILES.sha256 && tar cf "$TMP/backup.tar" . ) || die "tar failed"
 NAME="lifeos-backup-$DATE.tar.gpg"
+# a second run in the same minute must not overwrite the first: add the seconds
+[ -e "$OUT/$NAME" ] && NAME="lifeos-backup-$DATE$(date +%S).tar.gpg"
+[ -e "$OUT/$NAME" ] && die "an archive with that name already exists. Nothing done."
 ( umask 077; gpg --batch --yes --trust-model always --recipient "$FPR" --encrypt -o "$OUT/$NAME" "$TMP/backup.tar" ) >/dev/null 2>&1 || die "encryption failed"
 chmod 600 "$OUT/$NAME"
 ( cd "$OUT" && sha256sum "$NAME" > "$NAME.sha256" ) && chmod 600 "$OUT/$NAME.sha256"

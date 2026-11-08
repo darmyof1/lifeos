@@ -192,6 +192,52 @@ class BackupTests(unittest.TestCase):
         self.assertEqual(rc, 0, out)
         self.decrypt("lifeos-backup-20261101.tar.gpg")
 
+    def test_default_name_has_date_and_time(self):
+        import re
+        self.put_key()
+        env = {k: v for k, v in self.env.items() if k != "BK_DATE"}
+        r = sh(["bash", SCRIPT, "--execute"], env)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        names = [f for f in os.listdir(self.backups) if f.endswith(".tar.gpg")]
+        self.assertEqual(len(names), 1)
+        self.assertTrue(re.match(r"^lifeos-backup-\d{8}-\d{4}\.tar\.gpg$", names[0]), names)
+
+    def test_two_runs_in_the_same_minute_do_not_collide(self):
+        self.put_key()
+        self.assertEqual(self.run_bk("--execute", date="20261105-0600")[0], 0)
+        first = os.path.join(self.backups, "lifeos-backup-20261105-0600.tar.gpg")
+        with open(first, "rb") as fh:
+            before = fh.read()
+        self.assertEqual(self.run_bk("--execute", date="20261105-0600")[0], 0)
+        names = sorted(f for f in os.listdir(self.backups) if f.endswith(".tar.gpg"))
+        self.assertEqual(len(names), 2, names)
+        with open(first, "rb") as fh:
+            self.assertEqual(fh.read(), before)
+
+    def test_old_date_only_names_still_count_for_keep_four(self):
+        self.put_key()
+        for d in ("20261001", "20261008", "20261015", "20261022", "20261029-0600", "20261105-0600"):
+            self.assertEqual(self.run_bk("--execute", date=d)[0], 0)
+        names = sorted(f for f in os.listdir(self.backups) if f.endswith(".tar.gpg"))
+        self.assertEqual(len(names), 4, names)
+        self.assertEqual(names[-1], "lifeos-backup-20261105-0600.tar.gpg")
+
+    def test_manifest_inside_the_archive_lists_every_file_but_itself(self):
+        self.put_key()
+        self.run_bk("--execute")
+        dest = self.decrypt("lifeos-backup-20261101.tar.gpg")
+        listed = set()
+        with open(os.path.join(dest, "FILES.sha256")) as fh:
+            for line in fh:
+                listed.add(line.rstrip("\n").split("  ", 1)[1])
+        real = set()
+        for base, _d, files in os.walk(dest):
+            for n in files:
+                p = "./" + os.path.relpath(os.path.join(base, n), dest)
+                if p != "./FILES.sha256":
+                    real.add(p)
+        self.assertEqual(listed, real)
+
     def test_unknown_option_is_refused(self):
         rc, out = self.run_bk("--force")
         self.assertEqual(rc, 2)

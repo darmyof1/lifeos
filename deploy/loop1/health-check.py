@@ -8,6 +8,7 @@ Each check prints PASS, WARN, FAIL or INFO, with the incident it would have caug
 Exit code 1 if any check FAILs. The script never reads or prints a key or a gateway token.
 """
 import datetime
+import glob
 import hashlib
 import json
 import os
@@ -312,6 +313,18 @@ def cron_ledger_status(cron_lines):
     return "FAIL", "calendar cron line missing"
 
 
+def backup_age_status(newest_mtime, now, max_days=8):
+    # Loop 4 (APR-0117): the newest local backup archive is younger than max_days. INFO while no backup exists yet.
+    if newest_mtime is None:
+        return "INFO", "no backup archive yet"
+    age = (now - newest_mtime) / 86400.0
+    if age < 0:
+        return "WARN", "newest backup is dated in the future (check the clock)"
+    if age < max_days:
+        return "PASS", "newest backup is {:.1f} days old".format(age)
+    return "WARN", "newest backup is {:.1f} days old (limit {} days)".format(age, max_days)
+
+
 def plugin_inspect_status(text):
     # APR-0107: the CEO ledger plugin is enabled and has no capabilities (hook-only)
     t = (text or "").lower()
@@ -324,6 +337,9 @@ def plugin_inspect_status(text):
     return "WARN", "plugin shape changed"
 
 
+_bk = sorted(glob.glob(os.path.join(os.path.expanduser("~"), "loop1", "backups", "lifeos-backup-*.tar.gpg")), key=os.path.getmtime)
+st, det = backup_age_status(os.path.getmtime(_bk[-1]) if _bk else None, time.time())
+rec(st, "newest backup is younger than 8 days", det, "weekly backup not running (APR-0117)")
 st, det = cron_ledger_status(lines)
 rec(st, "calendar cron line requires the CEO ledger (both ledgers)", det, "delete gate switched off (APR-0108)")
 rc_pl, out_pl = run(["openclaw", "plugins", "inspect", "ceo-ledger"])

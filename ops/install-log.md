@@ -452,3 +452,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-05 - APR-0116, APR-0117 (fix-129)
 - Repo only: two approvals recorded, Loop 4 scope and handover 24 added, README status updated. Nothing installed or changed on the VM by this entry.
+
+## 2026-11-08 - Handover 24 patch applied (fix-130)
+- Repo only. On the VM (by Claude Code): one real backup, two cron-fired backups by a temporary line, then the line removed (crontab identical). The weekly line is not installed yet.

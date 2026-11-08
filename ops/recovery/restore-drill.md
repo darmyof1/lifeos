@@ -2,6 +2,8 @@
 
 Status: draft, drilled once on 2026-11-01 with a copy of the four agent workspaces and a token-free copy of the config (APR-0112). Based on SPK-07 (research/spikes/SPK-07-gpg-restore-drill.md): an encrypted archive restores from its passphrase alone, and a wrong passphrase fails with no output.
 
+Backup and restore of the encrypted archives (Loop 4, APR-0117): see ops/recovery/backup-and-restore.md. Its `restore-backup.sh` checks every file against the manifest before you put anything back.
+
 ## What is backed up today (facts from the VM, read-only look)
 | Thing | Backed up? | How |
 |---|---|---|

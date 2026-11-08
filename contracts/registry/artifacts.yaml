@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-129.sh",
+  "generated_by": "fix-130.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1732,7 +1732,7 @@
       "status": "planned"
     },
     {
-      "path": "ops/recovery/backup-weekly.md",
+      "path": "ops/recovery/backup-and-restore.md",
       "status": "draft"
     },
     {
@@ -3760,6 +3760,14 @@
       "status": "planned"
     },
     {
+      "path": "scripts/ops/backup-push.sh",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/ops/backup-run.sh",
+      "status": "draft"
+    },
+    {
       "path": "scripts/ops/backup-weekly.sh",
       "status": "draft"
     },
@@ -3773,6 +3781,10 @@
     },
     {
       "path": "scripts/ops/kill-switch.sh",
+      "status": "draft"
+    },
+    {
+      "path": "scripts/ops/restore-backup.sh",
       "status": "draft"
     },
     {
@@ -4200,7 +4212,15 @@
       "status": "draft"
     },
     {
+      "path": "tests/unit/backup_fixture.py",
+      "status": "draft"
+    },
+    {
       "path": "tests/unit/test_agent_files_rebuild.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_backup_push.py",
       "status": "draft"
     },
     {
@@ -4241,6 +4261,10 @@
     },
     {
       "path": "tests/unit/test_gcal_sync_cron.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_health_check_backup_line.py",
       "status": "draft"
     },
     {
@@ -4309,6 +4333,10 @@
     },
     {
       "path": "tests/unit/test_prefilter.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_restore_backup.py",
       "status": "draft"
     }
   ]
