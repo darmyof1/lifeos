@@ -1336,3 +1336,18 @@ Meaning:
 Closes: none (P-45 opened)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop4/; scripts/ops/backup-weekly.sh; scripts/ops/backup-push.sh; scripts/ops/backup-run.sh; scripts/ops/restore-backup.sh; deploy/loop1/health-check.py; ops/recovery/; decisions/PENDING.md (P-45)
+
+## APR-0118 - Loop 4 closed
+Status: approved
+Decided by: CEO
+Your answer: "close loop 4" (2026-11-08 06:36)
+Evidence: deploy/loop4/LOOP4-CLOSE-RECORD.md (signed by this entry); ops/handover-2026-11-08-claude-code-report-24.md; ops/loop4-h24-2026-11-08/; restore on the CEO's Mac: 259 files, 0 mismatches, 14 s
+Meaning:
+- Loop 4 is closed. The close record is signed by this entry. P-45 is closed.
+- The weekly backup line (Sundays 06:15 AST) stays installed and keeps running. Two chores carry over: replace the installed health-check.py with the repo copy, and the CEO deletes the Mac's read-only deploy key in the backup repository.
+- Nothing is stopped on the VM. Synthetic data and the Google TEST calendar only. No real data and no calendar switch without a new loop and a new APR.
+- The parked items in the close record (calendar privacy toggle, gate wiring and the others) are not scheduled; each needs its own APR. The toggle is the requirement recorded in APR-0116.
+- The repo stays public (APR-0114). The four-agent design is unchanged.
+Closes: P-45; Loop 4
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop4/LOOP4-CLOSE-RECORD.md; decisions/PENDING.md
