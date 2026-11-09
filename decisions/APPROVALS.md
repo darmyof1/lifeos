@@ -1351,3 +1351,19 @@ Meaning:
 Closes: P-45; Loop 4
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop4/LOOP4-CLOSE-RECORD.md; decisions/PENDING.md
+
+## APR-0119 - Loop 5: calendar privacy toggle, privacy gate in shadow mode, real-calendar setting (not authorized)
+Status: approved
+Decided by: CEO
+Your answer: "i dont care about the real calendarm, the one we created is goo for testing it works and that it what i need, so make the changes you propose, but dont test it with reauthorization yet. now let's goo to the next loop 5 include the real calnedar switch but not authorization for now.." (2026-11-08 19:54), after "1. Calendar privacy toggle ... I approve this" and "can we use a cloud model to prove the loop" (19:35)
+Evidence: deploy/loop5/LOOP5-SCOPE.md; deploy/loop5/handover-25-claude-code-vm.md; APR-0116 (the requirement); deploy/loop4/LOOP4-CLOSE-RECORD.md
+Meaning:
+- Loop 5 builds, on synthetic data and the Google TEST calendar: (1) the calendar privacy toggle (privacy_display busy or full, in contracts/policy/calendar.yaml, reconciling events already in Google); (2) the privacy gate in SHADOW mode, installed live: it labels every model turn and logs what it would block, never blocks, fails open; enforcing it is a separate later decision; (3) a calendar_target setting (test or real) whose real side refuses to run until a real calendar ID and Google permission exist.
+- The toggle changes how Google shows entries marked privacy=high; with full, Google holds the real titles, which the CEO accepts (APR-0116). It does not change what the agents or the cloud model see. The default stays busy; the "never" wording in APR-0079, APR-0086 and APR-0088 describes that default, which the toggle can lift.
+- The real calendar is NOT authorized, NOT touched and NOT tested. No real calendar ID, token or Google permission is created in this loop. Switching to the real calendar needs a separate yes and its own entry.
+- This entry approves these live changes only: installing the gate plugin in shadow mode (with the config key it needs and a gateway restart outside 03:30 to 05:10 AST if needed), replacing the installed health-check.py with the repo copy, and the temporary pause of the calendar cron line as the suites do it. No crontab line is added, no agent instruction changes, the CEO ledger plugin and the delete gate are unchanged.
+- The gate runs on the cloud model; a local model or GPU instance is not needed and not part of this loop.
+- Still parked: enforcing the gate, other chiefs, isolation, second-human test, CFO difference, COO session compaction. The four-agent design is unchanged.
+Closes: none (P-46 opened)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop5/; contracts/policy/calendar.yaml; scripts/gcal/; deploy/loop3/gate-plugin/; scripts/ops/gate-shadow-report.py; deploy/loop1/health-check.py; ops/calendar-switch.md; decisions/PENDING.md (P-46)
