@@ -11,7 +11,7 @@ google_content:
   high_privacy_title: "busy"         # APR-0032, option a
 # APR-0116, APR-0119. The two lines below are read by scripts/gcal/gcal_sync.py from the repo copy of this file.
 # Change a value by editing the line, pushing, and the VM pulling (no restart needed; the next 5-minute run applies it).
-privacy_display: full                # busy (default, safe): entries marked privacy=high show in Google as "busy".
+privacy_display: busy                # busy (default, safe): entries marked privacy=high show in Google as "busy".
                                      # full: they show with the real title. Events already in Google are changed on the next run, in
                                      # either direction (never recreated). Any other, missing or unreadable value means busy.
 calendar_target: test                # test (default): the job writes to GCAL_CALENDAR (the Google TEST calendar).
