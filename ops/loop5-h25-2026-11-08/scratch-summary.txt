@@ -1,0 +1,4 @@
+scratch test of the gate plugin in shadow mode (own state folder, own port 18999, no Slack, no cron)
+4 agent turns (coo cho cos cfo): all answered, would_block logged for 3 of 4 (cho high, cos medium, cfo high), none blocked
+forced error (classify throws, scratch copy only): turn answered, log line hook_error_failed_open
+log folder mode 700, file mode 600, no text in the log

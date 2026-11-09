@@ -1,0 +1,13 @@
+real ID set in the environment: 0
+before: journal sha 2e9a97090090aa35  calendar listing hash 155a23582e2d0051
+--- run with calendar_target real, no real ID, option: '--dry-run'
+error: calendar_target is real but GCAL_CALENDAR_REAL is not set; the real calendar is not set up. Nothing was read or written
+exit: 4
+--- run with calendar_target real, no real ID, option: 'none'
+error: calendar_target is real but GCAL_CALENDAR_REAL is not set; the real calendar is not set up. Nothing was read or written
+exit: 4
+after:  journal sha 2e9a97090090aa35  calendar listing hash 155a23582e2d0051
+--- normal policy (calendar_target test), dry run then check
+dry run: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display busy)
+exit: 0
+after normal dry run: journal sha 2e9a97090090aa35  calendar listing hash 155a23582e2d0051

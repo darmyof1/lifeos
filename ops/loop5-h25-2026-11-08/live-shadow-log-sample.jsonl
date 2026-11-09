@@ -1,0 +1,4 @@
+{"time":"2026-11-09T01:09:12.238Z","mode":"shadow","agent":"coo","channel_kind":"suite","trigger_kind":"human","label":"medium","would_block":true,"reason":"medium_not_low_sensitivity","text_hash":"b3cf137c4daa61be","ms":4}
+{"time":"2026-11-09T01:09:17.973Z","mode":"shadow","agent":"cho","channel_kind":"suite","trigger_kind":"human","label":"high","would_block":true,"reason":"privacy_high_cloud_denied","text_hash":"4434273a9b58eaad","ms":1}
+{"time":"2026-11-09T01:09:22.461Z","mode":"shadow","agent":"cos","channel_kind":"suite","trigger_kind":"human","label":"medium","would_block":true,"reason":"medium_not_low_sensitivity","text_hash":"88f192493de46256","ms":2}
+{"time":"2026-11-09T01:09:26.714Z","mode":"shadow","agent":"cfo","channel_kind":"suite","trigger_kind":"human","label":"high","would_block":true,"reason":"privacy_high_cloud_denied","text_hash":"4bd4233237b9a995","ms":1}

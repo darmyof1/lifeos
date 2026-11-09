@@ -24,7 +24,11 @@ Only title, start and end go to Google (APR-0032). Personal events are never tou
 move or delete mandated, single, timed events.
 
 Usage (run with the gcalcli Python, which has the Google libraries; see guides/calendar-sync-job.md):
-  gcal_sync.py --calendar <calendar-id> [--dry-run] [--allow-deletes] [--journal PATH] [--state-dir DIR]
+  gcal_sync.py [--calendar <calendar-id>] [--dry-run] [--allow-deletes] [--journal PATH] [--state-dir DIR]
+               [--policy PATH] [--privacy-display busy|full]
+Calendar (APR-0119): --calendar wins; else calendar_target in the policy file picks the setting: test -> GCAL_CALENDAR,
+real -> GCAL_CALENDAR_REAL (unset: the job refuses before any Google call). Display of privacy=high entries: privacy_display
+in the policy file (busy default, or full: real title plus the hidden key); a change is applied to events already in Google.
   gcal_sync.py --test-alert          send one test message to the alert channel and stop
 Alert target (never committed): LIFEOS_ALERT_TARGET (for example channel:C0123456789) and LIFEOS_ALERT_ACCOUNT (default: default).
 Exit codes: 0 done, 2 usage, 3 paused (login revoked), 4 could not start (login file, libraries, journal).
@@ -52,6 +56,55 @@ SYNC_BY = "sync"
 DEFAULT_JOURNAL = "~/loop1/workspaces/cos/state/calendar-journal.md"
 DEFAULT_STATE_DIR = "~/loop1/gcal-sync"
 PAUSE_FILE = "PAUSED-login-revoked"
+DEFAULT_POLICY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "contracts", "policy", "calendar.yaml")
+DISPLAY_MODES = ("busy", "full")
+TARGETS = ("test", "real")
+MAX_RECONCILE = 50              # events checked per run for a display-mode change (one Google read each)
+
+
+def policy_value(path, key):
+    """The value of a top-level  key: value  line of the policy file (comments and quotes stripped), or None when the file
+    or the key is missing. A tiny reader on purpose: the sync Python has no YAML library."""
+    try:
+        with open(os.path.expanduser(path), encoding="utf-8") as fh:
+            for raw in fh:
+                if raw.startswith(key + ":"):
+                    v = raw.split(":", 1)[1].split("#", 1)[0].strip().strip("\"'").strip()
+                    return v
+    except (OSError, UnicodeDecodeError):
+        return None
+    return None
+
+
+def display_mode(policy, override=None, alert=None):
+    """APR-0119: busy or full. The command-line value wins; else the policy line. Missing, unknown or unreadable: busy, one alert."""
+    value = override if override is not None else policy_value(policy, "privacy_display")
+    if value in DISPLAY_MODES:
+        return value
+    if alert is not None:
+        alert("privacy_display unreadable, using busy")
+    return "busy"
+
+
+def calendar_target(policy):
+    """APR-0119: test (default, also when the key or file is missing) or real. Any other value is returned as is, so the caller refuses."""
+    value = policy_value(policy, "calendar_target")
+    return "test" if value is None or value == "" else value
+
+
+def resolve_calendar(policy, env, explicit=None):
+    """(calendar id, error text). --calendar wins. Target test uses GCAL_CALENDAR; real uses GCAL_CALENDAR_REAL, and with no value
+    there the job refuses before any Google call. An unknown target refuses too."""
+    if explicit:
+        return explicit, ""
+    target = calendar_target(policy)
+    if target == "test":
+        cal = env.get("GCAL_CALENDAR", "")
+        return (cal, "") if cal else ("", "--calendar is required (or set GCAL_CALENDAR; calendar_target is test)")
+    if target == "real":
+        cal = env.get("GCAL_CALENDAR_REAL", "")
+        return (cal, "") if cal else ("", "calendar_target is real but GCAL_CALENDAR_REAL is not set; the real calendar is not set up. Nothing was read or written")
+    return "", "calendar_target has an unknown value; use test or real. Nothing done"
 
 
 class Entry:
@@ -357,19 +410,24 @@ def same_times(event, start, end):
         return False
 
 
-def push_busy_entry(service, calendar, e, hint, entries, tz, dry_run):
-    """A high-privacy entry: Google gets the title busy and a hidden key, never the mandated title (APR-0079)."""
+def push_busy_entry(service, calendar, e, hint, entries, tz, dry_run, mode="busy"):
+    """A high-privacy entry: in busy mode Google gets the title busy and a hidden key, never the mandated title (APR-0079).
+    In full mode (APR-0119) it gets the mandated title and the same hidden key."""
     start, end, minutes = entry_times(e, tz)
     start_text = start.replace(tzinfo=None).isoformat(timespec="minutes")
     key = e.event
     if not key:
         raise Conflict("a high-privacy entry needs an event ID")
-    found = gb.find_busy(service, calendar, key, start.date(), tz)
+    found = gb.find_keyed(service, calendar, key, start.date(), tz) if mode == "full" else gb.find_busy(service, calendar, key, start.date(), tz)
     if len(found) > 1:
         raise Conflict("more than one busy event in Google has this key")
     if len(found) == 1:
         if same_times(found[0], start, end):
-            return "already in Google (busy)", found[0]["id"]
+            try:
+                shown = gb.set_display(service, calendar, found[0]["id"], key, e.name, mode, dry_run)
+            except gc.CalendarError as exc:
+                raise Conflict(str(exc)[:160])
+            return ("already in Google (%s)" % mode) if shown == "unchanged" else shown, found[0]["id"]
         raise Conflict("a busy event with this key exists in Google at another time")
     # The earlier Google event of this entry: through a move the old name, otherwise the same name marked high later.
     old = last_pushed(entries, hint.name if hint is not None else e.name, e.lineno)
@@ -380,20 +438,30 @@ def push_busy_entry(service, calendar, e, hint, entries, tz, dry_run):
         except gc.CalendarError:
             event = None
         if event is not None:
-            if gb.is_busy_event(event):
+            if mode == "busy" and gb.is_busy_event(event):
                 r = gb.move_busy(service, calendar, old_id, key, start_text, minutes, tz, dry_run)
                 return "moved (busy)", r["id"]
-            # Raising privacy: the normal event becomes a busy event (APR-0086). A personal event is refused (conflict).
+            if gb.key_of(event):  # a keyed event (busy or full title): move it and set the title for the mode
+                r = gb.move_keyed(service, calendar, old_id, key, e.name, mode, start_text, minutes, tz, dry_run)
+                return "moved (%s)" % mode, r["id"]
+            # Raising privacy: the normal event becomes a busy event (APR-0086), or in full mode keeps its title and gets the key.
+            # A personal event is refused (conflict).
+            if mode == "full":
+                r = gb.mark_full(service, calendar, old_id, key, e.name, start_text, minutes, tz, dry_run)
+                return "marked (full)", r["id"]
             r = gb.make_busy(service, calendar, old_id, key, start_text, minutes, tz, dry_run)
             return "made busy", r["id"]
+    if mode == "full":
+        r = gb.create_full(service, calendar, key, e.name, start.date(), start_text, minutes, tz, dry_run)
+        return "created (full)", r["id"]
     r = gb.create_busy(service, calendar, key, start.date(), start_text, minutes, tz, dry_run)
     return "created (busy)", r["id"]
 
 
-def push_entry(service, calendar, e, hint, tz, dry_run, entries=()):
+def push_entry(service, calendar, e, hint, tz, dry_run, entries=(), mode="busy"):
     """Make Google match this entry. Returns (action, google_id). Raises Conflict or any Google error."""
     if high_for_entry(entries, e):
-        return push_busy_entry(service, calendar, e, hint, entries, tz, dry_run)
+        return push_busy_entry(service, calendar, e, hint, entries, tz, dry_run, mode)
     start, end, minutes = entry_times(e, tz)
     start_text = start.replace(tzinfo=None).isoformat(timespec="minutes")
     found = gc.find_events(service, calendar, e.name, tz)
@@ -504,6 +572,41 @@ class RunLock:
             self.fh.close()
 
 
+# ---------------------------------------------------------------- display-mode reconcile (APR-0119)
+
+def reconcile_display(service, calendar, entries, tz, dry_run, mode, out, counts):
+    """When the display mode differs from what Google shows for a live privacy=high entry, fix it in the same run: busy to full sets
+    the real title from the journal name, full to busy blanks it. Only events carrying the entry's hidden key; never recreated;
+    no journal line (the journal keeps the real name in both modes). Newest entries first, MAX_RECONCILE reads per run.
+    Raises on a revoked login so the caller pauses."""
+    todo, _ = latest_by_name(entries)
+    checked = 0
+    for e in reversed(todo):
+        if e.status != "pushed" or not is_high_privacy(entries, e.name) or not e.event:
+            continue
+        if "deleted" in e.detail or e.detail.strip() == "already gone":
+            continue
+        gid = detail_value(e.detail, "google")
+        if not gid:
+            continue
+        if checked >= MAX_RECONCILE:
+            out("stop   %d events checked for the display mode; the rest waits for the next run" % checked)
+            break
+        checked += 1
+        try:
+            shown = gb.set_display(service, calendar, gid, e.event, e.name, mode, dry_run)
+        except gc.CalendarError:
+            continue  # gone, or not carrying this key: not touched
+        except Exception as exc:
+            if is_token_revoked(exc):
+                raise TokenRevoked(str(exc))
+            out("failed %s: display mode check: %s" % (e.name, clean("%s: %s" % (type(exc).__name__, exc), 160)))
+            continue
+        if shown != "unchanged":
+            counts["reconciled"] += 1
+            out("%s %s: %s %s" % ("would" if dry_run else "done ", e.name, shown, gid))
+
+
 # ---------------------------------------------------------------- one run
 
 def pause_run(state_dir, alert, name, dry_run, out, exc, counts):
@@ -516,9 +619,9 @@ def pause_run(state_dir, alert, name, dry_run, out, exc, counts):
 
 
 def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run=False, allow_deletes=False,
-         max_per_run=MAX_PER_RUN, out=print, ceo_ledger=None, now=None):
-    """Process the journal once. Returns (exit code, counts)."""
-    counts = {"pushed": 0, "conflict": 0, "failed": 0, "final": 0, "deleted": 0, "skipped": 0}
+         max_per_run=MAX_PER_RUN, out=print, ceo_ledger=None, now=None, mode="busy"):
+    """Process the journal once. Returns (exit code, counts). mode is the privacy display: busy or full (APR-0119)."""
+    counts = {"pushed": 0, "conflict": 0, "failed": 0, "final": 0, "deleted": 0, "skipped": 0, "reconciled": 0}
     if os.path.exists(pause_path(state_dir)):
         out("paused: the Google login was revoked (%s). Log in again, then remove it." % pause_path(state_dir))
         return 3, counts
@@ -568,7 +671,7 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
                 if not dry_run and ceo_ledger:
                     mark_event_closed(state_dir, e.event, now)
             else:
-                action, gid = push_entry(service, calendar, e, moved_hint(entries, e), tz, dry_run, entries)
+                action, gid = push_entry(service, calendar, e, moved_hint(entries, e), tz, dry_run, entries, mode)
                 detail = "google=" + gid + ("; privacy=high" if high_for_entry(entries, e) else "")
                 counts["pushed"] += 1
             out("%s %s: %s %s" % ("would" if dry_run else "done ", e.name, action, gid))
@@ -597,6 +700,13 @@ def sync(service, calendar, journal, state_dir, alert, tz=gc.DEFAULT_TZ, dry_run
                 if n >= MAX_ATTEMPTS:
                     alert("LifeOS calendar sync: %s failed %d times and will not be retried (run %s, event %s). "
                           "CEO: please check." % (e.name, n, e.run, e.event))
+    try:
+        with open(path, encoding="utf-8") as fh:
+            reconcile_display(service, calendar, parse_journal(fh.read()), tz, dry_run, mode, out, counts)
+    except TokenRevoked as exc:
+        return pause_run(state_dir, alert, "display mode check", dry_run, out, exc, counts)
+    except OSError:
+        pass
     return 0, counts
 
 
@@ -612,7 +722,11 @@ def main(argv=None, service=None, alert_runner=None):
                    help="run a delete only if a ledger (JSON lines, outside the agent workspaces) holds a CEO entry for it (APR-0100, APR-0102); "
                         "give the option once per ledger file (scenario ledger, Slack ledger)")
     p.add_argument("--max-per-run", type=int, default=MAX_PER_RUN)
+    p.add_argument("--policy", default=DEFAULT_POLICY, help="the calendar policy file (default: contracts/policy/calendar.yaml of this repo copy)")
+    p.add_argument("--privacy-display", choices=DISPLAY_MODES, default=None,
+                   help="busy or full; overrides privacy_display in the policy file (tests)")
     p.add_argument("--test-alert", action="store_true", help="send one test message to the alert channel and stop")
+    p.set_defaults(calendar=None)  # the calendar comes from --calendar or from calendar_target in the policy (APR-0119)
     args = p.parse_args(argv)
 
     alert = make_alerter(args.state_dir, os.environ.get("LIFEOS_ALERT_TARGET", ""),
@@ -620,9 +734,11 @@ def main(argv=None, service=None, alert_runner=None):
     if args.test_alert:
         print("alert: " + alert("LifeOS calendar sync: test alert. If you can read this, alerts reach this channel."))
         return 0
-    if not args.calendar:
-        print("error: --calendar is required (or set GCAL_CALENDAR)", file=sys.stderr)
-        return 2
+    calendar, problem = resolve_calendar(args.policy, os.environ, args.calendar)
+    if problem:
+        print("error: " + problem, file=sys.stderr)
+        return 2 if problem.startswith("--calendar is required") else 4
+    args.calendar = calendar
     if os.path.exists(pause_path(args.state_dir)):
         print("paused: the Google login was revoked (%s). Log in again, then remove it." % pause_path(args.state_dir))
         return 3
@@ -643,11 +759,12 @@ def main(argv=None, service=None, alert_runner=None):
                 return 3
             print("error: " + str(exc), file=sys.stderr)
             return 4
+        mode = display_mode(args.policy, args.privacy_display, alert)
         code, counts = sync(service, args.calendar, args.journal, args.state_dir, alert, args.tz, args.dry_run,
-                            args.allow_deletes, args.max_per_run, ceo_ledger=args.require_ceo_ledger)
-    print("%s: pushed %d, conflict %d, failed %d (final %d), deleted %d, skipped %d" % (
+                            args.allow_deletes, args.max_per_run, ceo_ledger=args.require_ceo_ledger, mode=mode)
+    print("%s: pushed %d, conflict %d, failed %d (final %d), deleted %d, skipped %d, reconciled %d (display %s)" % (
         "dry run" if args.dry_run else "summary", counts["pushed"], counts["conflict"], counts["failed"],
-        counts["final"], counts["deleted"], counts["skipped"]))
+        counts["final"], counts["deleted"], counts["skipped"], counts["reconciled"], mode))
     return code
 
 

@@ -9,6 +9,14 @@ google_content:
   stored_fields: [title, start, end]
   kept_local: [details, location, attendees, health notes, family notes]
   high_privacy_title: "busy"         # APR-0032, option a
+# APR-0116, APR-0119. The two lines below are read by scripts/gcal/gcal_sync.py from the repo copy of this file.
+# Change a value by editing the line, pushing, and the VM pulling (no restart needed; the next 5-minute run applies it).
+privacy_display: busy                # busy (default, safe): entries marked privacy=high show in Google as "busy".
+                                     # full: they show with the real title. Events already in Google are changed on the next run, in
+                                     # either direction (never recreated). Any other, missing or unreadable value means busy.
+calendar_target: test                # test (default): the job writes to GCAL_CALENDAR (the Google TEST calendar).
+                                     # real: the job writes to GCAL_CALENDAR_REAL; with no real ID set it refuses and writes nothing.
+                                     # NOT AUTHORIZED: real stays off until a separate APR (ops/calendar-switch.md).
 naming:                              # APR-0034 (interpretation: APR-0035, meanings APR-0037)
   format: "<DOMAIN> - <Title> - <MMDDYYYY>-<NNNN>"
   example: "CHO - Doctor Appointment - 10202026-0001"

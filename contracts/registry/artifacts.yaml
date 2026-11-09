@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-133.sh",
+  "generated_by": "fix-134.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1332,6 +1332,10 @@
       "status": "planned"
     },
     {
+      "path": "ops/calendar-switch.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/cfo-send-list-diff-2026-10-26.txt",
       "status": "draft"
     },
@@ -1473,6 +1477,10 @@
     },
     {
       "path": "ops/handover-2026-11-08-claude-code-report-24.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-08-claude-code-report-25.md",
       "status": "draft"
     },
     {
@@ -1741,6 +1749,98 @@
     },
     {
       "path": "ops/loop4-h24-2026-11-08/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/ceo-ledger-hashes-after-full.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/ceo-ledger-hashes-before-full.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/ceo-ledger-hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/config-sha-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/crontab-after-toggle.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/crontab-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/crontab-final-diff.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/gate-node-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/health-installed-now.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/health-projected-after-pull.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/journal-numstat-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/live-shadow-log-sample.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/live-shadow-report.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/real-target-refusal.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/run-costs.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/scratch-shadow-log.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/scratch-shadow-report.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/scratch-summary.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/toggle-proof-output.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/toggle-proof.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/toggle-sync.log",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop5-h25-2026-11-08/validator.txt",
       "status": "draft"
     },
     {
@@ -3856,6 +3956,10 @@
       "status": "planned"
     },
     {
+      "path": "scripts/ops/gate-shadow-report.py",
+      "status": "draft"
+    },
+    {
       "path": "scripts/ops/graceful-shutdown.sh",
       "status": "planned"
     },
@@ -4332,6 +4436,10 @@
       "status": "draft"
     },
     {
+      "path": "tests/unit/test_gate_shadow_report.py",
+      "status": "draft"
+    },
+    {
       "path": "tests/unit/test_gcal_scripts.py",
       "status": "draft"
     },
@@ -4349,6 +4457,10 @@
     },
     {
       "path": "tests/unit/test_health_check_ledger_lines.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_health_check_loop5.py",
       "status": "draft"
     },
     {

@@ -1,0 +1,6 @@
+4a94b4f637a371da  /home/ubuntu/loop1/ceo-ledger/scenario-ledger.jsonl
+3f63bbfe06c4de04  /home/ubuntu/loop1/ceo-ledger/slack-ledger.jsonl
+ee4e490ab5108b30  extensions/ceo-ledger/index.js
+767ca80faa71b970  extensions/ceo-ledger/ledger.js
+a97a8993eb9d3bd9  extensions/ceo-ledger/openclaw.plugin.json
+1b98f60e4fbff9cc  extensions/ceo-ledger/package.json

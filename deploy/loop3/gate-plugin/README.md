@@ -1,6 +1,14 @@
-# gate-plugin (design and test only, APR-0113)
+# gate-plugin (APR-0113, shadow mode APR-0119)
 
-Status: built and tested on a scratch folder. NOT installed in the live system. Do not wire it without a CEO approval.
+Status: installed live in SHADOW mode only (APR-0119, Loop 5). Enforce mode is built and tested but NOT installed and NOT approved.
+
+Modes (plugin config `plugins.entries.gate-plugin.config.mode`; default and any unknown value: shadow)
+- shadow: never blocks. Every turn passes. The prefilter and the gate run exactly as in enforce, and the answer is logged as `would_block` with its reason code. Fails OPEN: an error inside the hook is logged (`hook_error_failed_open`) and the turn goes on.
+- enforce: as built in Loop 3. Blocks when the gate denies. Fails closed.
+- Shadow log: `<OpenClaw state folder>/gate-shadow/gate-log.jsonl` (folder 700, file 600; live: `~/loop1/state/gate-shadow/gate-log.jsonl`). OpenClaw runs the plugin from a temporary staged copy, so the plugin folder is no place for a log that must last.
+- Shadow log line (one per turn): `time, mode, agent, channel_kind (slack, main, cron, agent-to-agent, suite), trigger_kind (human, internal), label, would_block, reason, text_hash (16 hex), ms`. Never the text.
+- Report: `python3 scripts/ops/gate-shadow-report.py [LOG]` (counts by label, would-block by agent, channel kind and trigger kind, per day, first and last time; no text, no hash).
+- Rollback (live): `openclaw plugins disable gate-plugin` then `openclaw config unset plugins.entries.gate-plugin` (this removes the plugin entry with its hooks.allowConversationAccess and config.mode keys), then restart the gateway outside 03:30 to 05:10 AST if the hot reload does not drop it. Check with `openclaw plugins inspect gate-plugin` (not found) and the health check.
 
 What it does: before every agent run (`before_agent_run`) it labels the turn with a rules-based prefilter, treats the destination as cloud, asks the privacy gate (a line-by-line port of `src/lifeos/router/gate.py`) and either passes the turn or blocks it with a plain message. Any error blocks (fail closed). It never changes the text, never calls a model and never touches the network.
 

@@ -1,0 +1,61 @@
+--- before
+  v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+  psgu4ufts0cib0jt2e68ml2b14	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+  ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+  u5hu1cvtppfs9vna4qtqvbro2c	2026-10-30T07:00:00-04:00	busy
+  other events: 0
+=== STEP 1 (mode busy)  21:06:23
+done  CHO - Workout - 10302026-0001: made busy u5hu1cvtppfs9vna4qtqvbro2c
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0
+=== 2026-11-08 21:06:24 exit 0
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display busy)
+  journal lines: 11   numstat: 5	0	state/calendar-journal.md
+  v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+  psgu4ufts0cib0jt2e68ml2b14	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+  ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+  u5hu1cvtppfs9vna4qtqvbro2c	2026-10-30T07:00:00-04:00	busy
+  other events: 0
+=== STEP 2 (mode full)  21:06:25
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display busy)
+=== 2026-11-08 21:06:26 exit 0
+done  CHO - Workout - 10302026-0001: retitled (full) u5hu1cvtppfs9vna4qtqvbro2c
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 1 (display full)
+  journal lines: 11   numstat: 5	0	state/calendar-journal.md
+  v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+  psgu4ufts0cib0jt2e68ml2b14	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+  ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+  u5hu1cvtppfs9vna4qtqvbro2c	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+  other events: 0
+=== STEP 2b (mode full)  21:06:26
+done  CHO - Workout - 10302026-0001: retitled (full) u5hu1cvtppfs9vna4qtqvbro2c
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 1 (display full)
+=== 2026-11-08 21:06:27 exit 0
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display full)
+  journal lines: 11   numstat: 5	0	state/calendar-journal.md
+  v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+  psgu4ufts0cib0jt2e68ml2b14	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+  ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+  u5hu1cvtppfs9vna4qtqvbro2c	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+  other events: 0
+=== STEP 3 (mode busy)  21:06:28
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display full)
+=== 2026-11-08 21:06:29 exit 0
+done  CHO - Workout - 10302026-0001: blanked (busy) u5hu1cvtppfs9vna4qtqvbro2c
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 1 (display busy)
+  journal lines: 11   numstat: 5	0	state/calendar-journal.md
+  v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+  psgu4ufts0cib0jt2e68ml2b14	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+  ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+  u5hu1cvtppfs9vna4qtqvbro2c	2026-10-30T07:00:00-04:00	busy
+  other events: 0
+=== STEP 3b (mode busy)  21:06:30
+done  CHO - Workout - 10302026-0001: blanked (busy) u5hu1cvtppfs9vna4qtqvbro2c
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 1 (display busy)
+=== 2026-11-08 21:06:30 exit 0
+summary: pushed 0, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display busy)
+  journal lines: 11   numstat: 5	0	state/calendar-journal.md
+  v2err3l29fgtk81pcfhkihstp8	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+  psgu4ufts0cib0jt2e68ml2b14	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+  ntu5j2tkkcdkrkrucfked1854o	2026-10-29T09:00:00-04:00	busy
+  u5hu1cvtppfs9vna4qtqvbro2c	2026-10-30T07:00:00-04:00	busy
+  other events: 0

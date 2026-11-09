@@ -337,11 +337,52 @@ def plugin_inspect_status(text):
     return "WARN", "plugin shape changed"
 
 
+def gate_plugin_status(inspect_text, mode):
+    # Loop 5 (APR-0119): the privacy gate plugin is loaded and in shadow mode. FAIL if missing or not enabled, WARN in enforce
+    # (it would block turns) or when the mode is neither shadow nor enforce.
+    t = (inspect_text or "").lower()
+    if not t.strip() or "not found" in t:
+        return "FAIL", "gate plugin missing"
+    if "status: enabled" not in t and "status: loaded" not in t:
+        return "FAIL", "gate plugin not enabled"
+    m = "shadow" if mode in (None, "") else str(mode)
+    if m == "shadow":
+        return "PASS", "loaded, mode shadow (blocks nothing)"
+    if m == "enforce":
+        return "WARN", "loaded, mode ENFORCE: it blocks turns"
+    return "WARN", "loaded, mode value not understood: " + m[:20]
+
+
+def policy_value_status(value, allowed):
+    # Loop 5 (APR-0119): INFO line for a value read from the repo policy copy; WARN when it is not one of the allowed words.
+    if value in allowed:
+        return "INFO", value
+    return "WARN", "'{}' is not one of {} (the job falls back to its safe side)".format(str(value)[:20], "/".join(allowed))
+
+
+def policy_line(path, key):
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for raw in fh:
+                if raw.startswith(key + ":"):
+                    return raw.split(":", 1)[1].split("#", 1)[0].strip().strip("\"'").strip()
+    except OSError:
+        return None
+    return None
+
+
 _bk = sorted(glob.glob(os.path.join(os.path.expanduser("~"), "loop1", "backups", "lifeos-backup-*.tar.gpg")), key=os.path.getmtime)
 st, det = backup_age_status(os.path.getmtime(_bk[-1]) if _bk else None, time.time())
 rec(st, "newest backup is younger than 8 days", det, "weekly backup not running (APR-0117)")
 st, det = cron_ledger_status(lines)
 rec(st, "calendar cron line requires the CEO ledger (both ledgers)", det, "delete gate switched off (APR-0108)")
+rc_gp, out_gp = run(["openclaw", "plugins", "inspect", "gate-plugin"])
+st, det = gate_plugin_status(out_gp, cfg("plugins.entries.gate-plugin.config.mode")) if rc_gp == 0 else ("FAIL", "gate plugin inspect failed")
+rec(st, "privacy gate plugin loaded in shadow mode", det, "gate plugin missing or enforcing (APR-0119)")
+_policy = os.path.join(HOME, "lifeos-ro", "contracts", "policy", "calendar.yaml")
+for _k, _allowed in (("calendar_target", ("test", "real")), ("privacy_display", ("busy", "full"))):
+    st, det = policy_value_status(policy_line(_policy, _k), _allowed)
+    rec(st, "calendar policy: " + _k, det, "unknown value in contracts/policy/calendar.yaml (APR-0119)")
 rc_pl, out_pl = run(["openclaw", "plugins", "inspect", "ceo-ledger"])
 st, det = plugin_inspect_status(out_pl) if rc_pl == 0 else ("FAIL", "plugin inspect failed")
 rec(st, "CEO ledger plugin loaded and hook-only", det, "ledger plugin missing or changed (APR-0107)")

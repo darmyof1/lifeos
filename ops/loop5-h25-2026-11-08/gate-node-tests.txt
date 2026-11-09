@@ -1,0 +1,26 @@
+✔ the JS gate gives the stored answer for every case in the shared table (19.950552ms)
+✔ the policy and the rules file in the plugin folder are byte-identical copies of the repo files (0.480003ms)
+✔ the JS prefilter gives the stored label for every sentence in the prefilter table (20.282554ms)
+✔ a high turn is blocked, a low turn passes, a missing prompt is blocked (3.242139ms)
+✔ medium turns are blocked too (no sensitivity label is given), CHO and CFO turns are always blocked (1.593489ms)
+✔ an error inside the hook blocks (policy unreadable, rules unreadable) (1.397768ms)
+✔ the log has labels, reason codes and a hash only, never the text (1.389808ms)
+✔ an unwritable log never changes the decision and never throws (1.825371ms)
+✔ the block message is plain and carries only the reason code (0.246121ms)
+✔ the plugin entry registers only before_agent_run (needs the OpenClaw package on this VM) (0.644044ms)
+✔ manifest and package: hook-only shape, no extra config (0.412162ms)
+✔ shadow is the default mode; only the exact word enforce enforces (1.469968ms)
+✔ shadow never blocks, not for high, not for a missing prompt, not for a bad policy or rules file (20.154833ms)
+✔ shadow fails open when the prefilter, the clock or the context throws, and logs the error (1.919851ms)
+✔ parity: shadow's would_block equals enforce's decision for the same input; enforce still blocks (75.197783ms)
+✔ shadow log line: the agreed fields only, no text, mode 600, one line per turn (1.309528ms)
+✔ turn kinds: slack, main, cron, agent-to-agent, suite; human or internal (0.291162ms)
+✔ the plugin entry's hook returns pass in shadow and the gate's answer in enforce (1.653609ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 408.207414

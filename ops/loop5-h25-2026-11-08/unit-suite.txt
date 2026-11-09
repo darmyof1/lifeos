@@ -1,0 +1,24 @@
+Exception ignored in: <_io.FileIO name='/home/ubuntu/work25/deploy/loop1/health-check.py' mode='rb' closefd=True>
+Traceback (most recent call last):
+  File "/home/ubuntu/work25/tests/unit/test_health_check_ledger_lines.py", line 15, in extract
+    tree = ast.parse(open(path).read())
+                     ^^^^^^^^^^^^^^^^^
+ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/ubuntu/work25/deploy/loop1/health-check.py' mode='r' encoding='UTF-8'>
+Exception ignored in: <_io.FileIO name='/home/ubuntu/work25/deploy/loop2/vm/daily-reset-report.py' mode='rb' closefd=True>
+Traceback (most recent call last):
+  File "/home/ubuntu/work25/tests/unit/test_health_check_ledger_lines.py", line 15, in extract
+    tree = ast.parse(open(path).read())
+                     ^^^^^^^^^^^^^^^^^
+ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/ubuntu/work25/deploy/loop2/vm/daily-reset-report.py' mode='r' encoding='UTF-8'>
+.................................................................................................cannot read the log: FileNotFoundError
+.................................................Exception ignored in: <ssl.SSLSocket fd=3, family=2, type=1, proto=6, laddr=('x.x.x.x', 42958), raddr=('x.x.x.x', 443)>
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/googleapiclient/_helpers.py", line 134, in positional_wrapper
+    return wrapped(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+ResourceWarning: unclosed <ssl.SSLSocket fd=3, family=2, type=1, proto=6, laddr=('x.x.x.x', 42958), raddr=('x.x.x.x', 443)>
+.......................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 457 tests in 28.144s
+
+OK

@@ -1024,5 +1024,257 @@ class PlainApprovalTests(Base):
         self.assertNotIn("x2", self.svc.store)
 
 
+class PrivacyDisplayTests(Base):
+    """APR-0119: privacy_display busy or full for privacy=high entries; a mode change is applied to events already in Google."""
+    HP = "privacy=high"
+    KEY = "r1-cho-01"
+
+    def hp_entry(self, status="written", **kw):
+        return jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", status, detail=kw.pop("detail", self.HP), **kw)
+
+    def keyed(self):
+        return [e for e in self.svc.store.values() if (e.get("extendedProperties") or {}).get("private", {}).get("lifeos_event")]
+
+    def test_default_mode_is_busy(self):
+        self.write(self.hp_entry())
+        self.go()
+        (ev,) = self.keyed()
+        self.assertEqual(ev["summary"], "busy")
+        self.assertEqual(gs.display_mode("/no/such/file", None), "busy")
+
+    def test_full_creates_with_the_real_title_and_the_hidden_key(self):
+        self.write(self.hp_entry())
+        before = self.text()
+        code, counts, _ = self.go(mode="full")
+        self.assertEqual((code, counts["pushed"]), (0, 1))
+        (call,) = [c for c in self.svc.calls if c[0] == "insert"]
+        body = call[1]["body"]
+        self.assertEqual(body["summary"], N1)
+        self.assertEqual(body["extendedProperties"], {"private": {"lifeos_event": self.KEY}})
+        self.assertEqual(sorted(body), ["end", "extendedProperties", "start", "summary", "transparency"])
+        (line,) = self.new_lines(before)
+        self.assertTrue(line.endswith("| sync | google=new1; privacy=high"), line)  # the journal line is the same in both modes
+
+    def test_busy_to_full_retitles_the_same_event(self):
+        self.write(self.hp_entry())
+        self.go()
+        text, ids = self.text(), set(self.svc.store)
+        self.svc.calls.clear()
+        _, counts, out = self.go(mode="full")
+        self.assertEqual(self.svc.store["new1"]["summary"], N1)
+        self.assertEqual([c[0] for c in self.svc.writes()], ["patch"])
+        self.assertEqual(set(self.svc.store), ids)          # no event created or removed
+        self.assertEqual(self.text(), text)                  # the journal is unchanged
+        self.assertEqual(counts["reconciled"], 1)
+        self.assertIn("retitled (full)", out)
+
+    def test_full_to_busy_blanks_the_same_event(self):
+        self.write(self.hp_entry())
+        self.go(mode="full")
+        self.svc.store["new1"]["description"] = "secret plan"
+        text, ids = self.text(), set(self.svc.store)
+        self.svc.calls.clear()
+        _, counts, out = self.go(mode="busy")
+        ev = self.svc.store["new1"]
+        self.assertEqual((ev["summary"], ev["description"], ev["location"]), ("busy", "", ""))
+        self.assertNotIn("Workout", repr({k: v for k, v in ev.items() if k != "id"}))
+        self.assertEqual([c[0] for c in self.svc.writes()], ["patch"])
+        self.assertEqual((set(self.svc.store), self.text()), (ids, text))
+        self.assertEqual(counts["reconciled"], 1)
+        self.assertIn("blanked (busy)", out)
+
+    def test_two_runs_in_a_row_change_nothing_the_second_time(self):
+        self.write(self.hp_entry())
+        for first, second in (("busy", "full"), ("full", "busy"), ("busy", "busy"), ("full", "full")):
+            self.svc.store.clear()
+            self.write(self.hp_entry())
+            self.go(mode=first)
+            self.go(mode=second)
+            text, writes = self.text(), len(self.svc.writes())
+            self.go(mode=second)
+            self.assertEqual((self.text(), len(self.svc.writes())), (text, writes), (first, second))
+
+    def test_move_works_in_both_modes(self):
+        for mode in ("busy", "full"):
+            self.svc.store.clear()
+            self.svc.counter = 0
+            title = "busy" if mode == "busy" else N1
+            self.svc.add("e1", title, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00",
+                         extendedProperties={"private": {"lifeos_event": self.KEY}})
+            self.write(
+                self.hp_entry("pushed", by="sync", detail="google=e1; privacy=high"),
+                jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02", detail=self.HP),
+                jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02", detail=self.HP))
+            self.svc.calls.clear()
+            _, counts, _ = self.go(mode=mode)
+            self.assertEqual((counts["conflict"], counts["pushed"]), (0, 1), mode)
+            ev = self.svc.store["e1"]
+            self.assertEqual(ev["summary"], "busy" if mode == "busy" else "CHO - Workout - 10292026-0001", mode)
+            self.assertTrue(ev["start"]["dateTime"].startswith("2026-10-29T07:00"), mode)
+            self.assertEqual(ev["extendedProperties"], {"private": {"lifeos_event": "r2-cho-02"}})
+            self.assertEqual([c[0] for c in self.svc.writes()], ["patch"], mode)
+            self.assertEqual(len(self.svc.store), 1, mode)
+
+    def test_a_move_after_a_mode_change_retitles_and_moves(self):
+        # the event is still busy in Google, the mode is now full, and the entry moves: one patch gives the new title and time
+        self.svc.add("e1", "busy", "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00",
+                     extendedProperties={"private": {"lifeos_event": self.KEY}})
+        self.write(
+            self.hp_entry("pushed", by="sync", detail="google=e1; privacy=high"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "moved", run="r2", event="r2-cho-02", detail=self.HP),
+            jl("CHO - Workout - 10292026-0001", "2026-10-29 07:00", "2026-10-29 08:00", "written", run="r2", event="r2-cho-02", detail=self.HP))
+        self.go(mode="full")
+        self.assertEqual(self.svc.store["e1"]["summary"], "CHO - Workout - 10292026-0001")
+        self.assertEqual(len(self.svc.store), 4)  # the three seed events plus e1: nothing created
+
+    def test_a_normal_event_gets_the_key_in_full_mode_and_keeps_its_title(self):
+        self.svc.add("p1", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00")
+        self.write(
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "pushed", by="sync", detail="google=p1"),
+            jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", run="r2", event="r2-cho-03", detail=self.HP))
+        self.assertEqual(self.go(mode="full")[1]["conflict"], 0)
+        ev = self.svc.store["p1"]
+        self.assertEqual(ev["summary"], N1)
+        self.assertEqual(ev["extendedProperties"], {"private": {"lifeos_event": "r2-cho-03"}})
+        self.assertEqual(len(self.svc.store), 4)  # the three seed events plus this one: nothing created
+
+    def test_delete_needs_approval_and_works_in_both_modes(self):
+        for mode in ("busy", "full"):
+            self.svc.store.clear()
+            title = "busy" if mode == "busy" else N1
+            self.svc.add("e1", title, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00",
+                         extendedProperties={"private": {"lifeos_event": self.KEY}})
+            push = self.hp_entry("pushed", by="sync", detail="google=e1; privacy=high", event=self.KEY)
+            pend = jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "delete-pending-approval", run="r3", event="r3-cho-01")
+            dele = jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "deleted", run="r3", event="r3-cho-01")
+            self.write(push, dele)
+            self.go(mode=mode, allow_deletes=True)   # no pending line: refused
+            self.assertIn("e1", self.svc.store, mode)
+            self.write(push, pend, dele)
+            self.go(mode=mode)                        # flag off: refused
+            self.assertIn("e1", self.svc.store, mode)
+            _, counts, _ = self.go(mode=mode, allow_deletes=True)
+            self.assertEqual(counts["deleted"], 1, mode)
+            self.assertNotIn("e1", self.svc.store, mode)
+
+    def test_an_event_without_the_key_is_never_touched(self):
+        for mode in ("busy", "full"):
+            self.svc.store.clear()
+            self.svc.add("n1", N1, "2026-10-28T07:00:00-04:00", "2026-10-28T08:00:00-04:00", description="mine")
+            self.svc.add("n2", "busy", "2026-10-28T09:00:00-04:00", "2026-10-28T10:00:00-04:00")
+            self.svc.add("n3", "busy", "2026-10-28T11:00:00-04:00", "2026-10-28T12:00:00-04:00",
+                         extendedProperties={"private": {"lifeos_event": "someone-else"}})
+            for gid in ("n1", "n2", "n3"):
+                self.write(self.hp_entry("pushed", by="sync", detail="google=%s; privacy=high" % gid))
+                before = {k: dict(v) for k, v in self.svc.store.items()}
+                self.svc.calls.clear()
+                self.go(mode=mode)
+                self.assertEqual(self.svc.writes(), [], (mode, gid))
+                self.assertEqual(self.svc.store, before, (mode, gid))
+
+    def test_unknown_or_missing_value_falls_back_to_busy_with_one_alert(self):
+        alerts = []
+        p = os.path.join(self.tmp, "policy.yaml")
+        for text in ("privacy_display: loud\n", "privacy_display:\n", "schema_version: 1\n"):
+            with open(p, "w") as fh:
+                fh.write(text)
+            alerts.clear()
+            self.assertEqual(gs.display_mode(p, None, alerts.append), "busy", text)
+            self.assertEqual(alerts, ["privacy_display unreadable, using busy"], text)
+        alerts.clear()
+        self.assertEqual(gs.display_mode(os.path.join(self.tmp, "missing.yaml"), None, alerts.append), "busy")
+        self.assertEqual(alerts, ["privacy_display unreadable, using busy"])
+        with open(p, "w") as fh:
+            fh.write('privacy_display: "full"   # comment\n')
+        alerts.clear()
+        self.assertEqual(gs.display_mode(p, None, alerts.append), "full")
+        self.assertEqual(gs.display_mode(p, "busy", alerts.append), "busy")  # the command line wins
+        self.assertEqual(alerts, [])
+
+    def test_the_repo_policy_file_says_busy_and_test(self):
+        self.assertEqual(gs.policy_value(gs.DEFAULT_POLICY, "privacy_display"), "busy")
+        self.assertEqual(gs.policy_value(gs.DEFAULT_POLICY, "calendar_target"), "test")
+
+
+class PolicyAndTargetTests(Base):
+    """APR-0119: main reads privacy_display and calendar_target from the policy file; the real calendar only refuses."""
+
+    def policy(self, **kv):
+        p = os.path.join(self.tmp, "policy.yaml")
+        with open(p, "w") as fh:
+            fh.write("".join("%s: %s\n" % (k, v) for k, v in kv.items()))
+        return p
+
+    def main(self, argv, env=None):
+        out = io.StringIO()
+        old = dict(os.environ)
+        for k in ("LIFEOS_ALERT_TARGET", "GCAL_CALENDAR", "GCAL_CALENDAR_REAL"):
+            os.environ.pop(k, None)
+        os.environ.update(env or {})
+        try:
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(out):
+                code = gs.main(["--journal", self.journal, "--state-dir", self.state] + argv, service=self.svc)
+        finally:
+            os.environ.clear()
+            os.environ.update(old)
+        return code, out.getvalue()
+
+    def test_target_test_uses_gcal_calendar(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written"))
+        code, out = self.main(["--policy", self.policy(calendar_target="test")], {"GCAL_CALENDAR": CAL})
+        self.assertEqual(code, 0, out)
+        self.assertIn("pushed 1", out)
+
+    def test_missing_target_key_means_test(self):
+        self.assertEqual(gs.calendar_target(self.policy(privacy_display="busy")), "test")
+        self.assertEqual(gs.calendar_target("/no/such/file"), "test")
+
+    def test_target_real_without_an_id_refuses_and_changes_nothing(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written"))
+        before = self.text()
+        for env in ({}, {"GCAL_CALENDAR": CAL}, {"GCAL_CALENDAR": CAL, "GCAL_CALENDAR_REAL": ""}):
+            for extra in ([], ["--dry-run"]):
+                self.svc.calls.clear()
+                code, out = self.main(["--policy", self.policy(calendar_target="real")] + extra, env)
+                self.assertEqual(code, 4, out)
+                self.assertIn("GCAL_CALENDAR_REAL is not set", out)
+                self.assertEqual(self.svc.calls, [])        # no Google call
+                self.assertEqual(self.text(), before)        # no journal line
+        self.assertFalse(os.path.exists(os.path.join(self.state, "run.lock")))
+
+    def test_target_real_with_an_id_uses_that_id(self):
+        self.assertEqual(gs.resolve_calendar(self.policy(calendar_target="real"), {"GCAL_CALENDAR_REAL": "REAL-ID-PLACEHOLDER", "GCAL_CALENDAR": "t"}),
+                         ("REAL-ID-PLACEHOLDER", ""))
+
+    def test_unknown_target_refuses(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written"))
+        code, out = self.main(["--policy", self.policy(calendar_target="prod")], {"GCAL_CALENDAR": CAL})
+        self.assertEqual(code, 4, out)
+        self.assertIn("unknown value", out)
+        self.assertEqual(self.svc.calls, [])
+
+    def test_calendar_option_still_overrides(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written"))
+        code, out = self.main(["--calendar", CAL, "--policy", self.policy(calendar_target="real")])
+        self.assertEqual(code, 0, out)
+
+    def test_main_reads_privacy_display_from_the_policy_and_the_option_overrides(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written", detail="privacy=high"))
+        code, out = self.main(["--policy", self.policy(privacy_display="full")], {"GCAL_CALENDAR": CAL})
+        self.assertEqual(code, 0, out)
+        self.assertIn("display full", out)
+        self.assertEqual(self.svc.store["new1"]["summary"], N1)
+        code, out = self.main(["--policy", self.policy(privacy_display="full"), "--privacy-display", "busy"], {"GCAL_CALENDAR": CAL})
+        self.assertIn("display busy", out)
+        self.assertEqual(self.svc.store["new1"]["summary"], "busy")
+
+    def test_main_alerts_once_when_the_value_is_unreadable(self):
+        self.write(jl(N1, "2026-10-28 07:00", "2026-10-28 08:00", "written"))
+        code, out = self.main(["--policy", self.policy(privacy_display="nope")], {"GCAL_CALENDAR": CAL})
+        self.assertIn("display busy", out)
+        with open(os.path.join(self.state, "alerts.log")) as fh:
+            self.assertEqual(fh.read().count("privacy_display unreadable, using busy"), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

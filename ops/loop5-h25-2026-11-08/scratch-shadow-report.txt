@@ -1,0 +1,28 @@
+PRIVACY GATE SHADOW REPORT (nothing was blocked; this is what enforce mode would have done)
+turns logged: 4   would block: 3   error lines: 1   damaged lines: 0
+first: 2026-11-09T01:01:30.479Z   last: 2026-11-09T01:03:24.857Z
+
+by label (what the prefilter said):
+  high                   2
+  low                    1
+  medium                 1
+
+by reason code:
+  privacy_high_cloud_denied     2
+  medium_not_low_sensitivity     1
+  privacy_low            1
+
+by agent:
+  cfo                    1   would block 1
+  cho                    1   would block 1
+  coo                    1   would block 0
+  cos                    1   would block 1
+
+by channel kind:
+  suite                  4   would block 3
+
+by trigger kind:
+  human                  4   would block 3
+
+per day (turns, would block):
+  2026-11-09     4     3

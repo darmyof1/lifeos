@@ -1,0 +1,5 @@
+{"time":"2026-11-09T01:01:30.479Z","mode":"shadow","agent":"coo","channel_kind":"suite","trigger_kind":"human","label":"low","would_block":false,"reason":"privacy_low","text_hash":"4e89c168ce0a6d48","ms":5}
+{"time":"2026-11-09T01:01:36.750Z","mode":"shadow","agent":"cho","channel_kind":"suite","trigger_kind":"human","label":"high","would_block":true,"reason":"privacy_high_cloud_denied","text_hash":"dd695a221ac348f3","ms":1}
+{"time":"2026-11-09T01:01:48.469Z","mode":"shadow","agent":"cos","channel_kind":"suite","trigger_kind":"human","label":"medium","would_block":true,"reason":"medium_not_low_sensitivity","text_hash":"48aaa82e98c6f8fb","ms":3}
+{"time":"2026-11-09T01:01:59.009Z","mode":"shadow","agent":"cfo","channel_kind":"suite","trigger_kind":"human","label":"high","would_block":true,"reason":"privacy_high_cloud_denied","text_hash":"30953f378bceb9d7","ms":1}
+{"time":"2026-11-09T01:03:24.857Z","mode":"shadow","error":"hook_error_failed_open"}

@@ -1,0 +1,6 @@
+loop5-tog-001: total 0.0104 USD (coo 0.0036, cho 0.0027, cos 0.0041)
+loop5-gate-001-coo: total 0.0011 USD (coo 0.0011)
+loop5-gate-001-cho: total 0.0011 USD (cho 0.0011)
+loop5-gate-001-cos: total 0.0012 USD (cos 0.0012)
+loop5-gate-001-cfo: total 0.0010 USD (cfo 0.0010)
+scratch-gateway turns (8, own gateway, cloud model): not measured by the tool; same short prompts, each well under 0.005 USD
