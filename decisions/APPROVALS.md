@@ -1367,3 +1367,20 @@ Meaning:
 Closes: none (P-46 opened)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop5/; contracts/policy/calendar.yaml; scripts/gcal/; deploy/loop3/gate-plugin/; scripts/ops/gate-shadow-report.py; deploy/loop1/health-check.py; ops/calendar-switch.md; decisions/PENDING.md (P-46)
+
+## APR-0120 - Loop 5 closed
+Status: approved
+Decided by: CEO
+Your answer: "close Loop 5" (2026-11-08 22:57)
+Evidence: deploy/loop5/LOOP5-CLOSE-RECORD.md (signed by this entry); ops/handover-2026-11-08-claude-code-report-25.md; ops/loop5-h25-2026-11-08/
+Meaning:
+- Loop 5 is closed. The close record is signed by this entry. P-46 is closed.
+- The gate plugin stays installed in shadow mode (labels and logs only, blocks nothing). Enforcing it needs a new APR after the CEO has seen real numbers.
+- calendar_target stays test and privacy_display stays busy until the CEO edits the line, pushes, and the VM pulls. The real calendar is not authorized: switching to it needs a separate yes and its own entry.
+- Nothing is stopped on the VM. Synthetic data and the Google TEST calendar only.
+- Carried over: read the shadow report after a few days; the gateway token exposure (rotation is the CEO's call); stray file ~/lifeos-ro/0; the Mac deploy key lifeos-mac-restore; first weekly backup 2026-11-15.
+- The repo stays public (APR-0114). The four-agent design is unchanged.
+Closes: P-46; Loop 5
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop5/LOOP5-CLOSE-RECORD.md; decisions/PENDING.md
+

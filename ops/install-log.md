@@ -467,3 +467,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-08 - Handover 25 (Loop 5) applied (fix-134)
 - Live on the VM during handover 25: gate plugin installed in SHADOW mode (no gateway restart; log in ~/loop1/state/gate-shadow/), installed health-check.py replaced with the repo copy. Calendar privacy toggle and calendar_target code are in the repo patch (the live cron uses them after the VM pulls). Real calendar NOT touched. Evidence: ops/loop5-h25-2026-11-08/ (IP addresses in the test output redacted).
+
+## 2026-11-08 - Loop 5 closed (fix-135)
+- Repo only: close record and APR-0120. Nothing changed on the VM.
