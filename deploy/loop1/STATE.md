@@ -77,3 +77,4 @@ Installed 2026-10-29 at ~/loop1/state/extensions/ceo-ledger (hook-only, observe-
 - Loop 5 CLOSED 2026-11-08 (APR-0120). Gate plugin keeps running in shadow mode; calendar_target test; privacy_display busy. Synthetic data and the Google TEST calendar only.
 - Loop 6 (APR-0121) approved 2026-11-09: CFO send list to COO only; COO morning compaction at 05:25 AST. Second-human test and real-calendar work dropped by the CEO. Handover 26 prepared, not yet run.
 - Loop 6 (APR-0121, APR-0122), 2026-11-09, handover 26 done: COO morning compaction line installed (05:25 AST daily, script from the repo after the pull); CFO send list stays coo and cos (Item 1 withdrawn, earlier note was wrong); health check PASS 77. Not closed yet (needs the CEO's word).
+- Loop 6 CLOSED 2026-11-09 (APR-0123). COO compaction runs daily 05:25 AST; CFO keeps coo and cos. Synthetic data and the Google TEST calendar only.

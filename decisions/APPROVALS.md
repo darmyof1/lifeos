@@ -1411,3 +1411,17 @@ Closes: the parked item "CFO send-list difference"
 Changeable: yes. A change is a new APR entry.
 Applies to: decisions/PENDING.md (P-47); deploy/loop6/LOOP6-SCOPE.md (Item 1 withdrawn)
 
+## APR-0123 - Loop 6 closed
+Status: approved
+Decided by: CEO
+Your answer: "close Loop 6, cron is. cron and you proved it manually. i don't think is needed to test at 5 am." (2026-11-09 21:04); the CEO also pushed and pulled fix-137 as asked
+Evidence: deploy/loop6/LOOP6-CLOSE-RECORD.md (signed by this entry); ops/handover-2026-11-09-claude-code-report-26.md; ops/loop6-h26-2026-11-09/
+Meaning:
+- Loop 6 is closed. The close record is signed by this entry. P-47 is closed. Item 1 (CFO COO only) was withdrawn by APR-0122.
+- The daily 05:25 AST COO compaction stays installed and keeps running. The first scheduled run was not waited for: the CEO accepted the manual run and the cron-fired proof. Reading the log after the first run is a carried chore, not a blocker.
+- Nothing is stopped on the VM. Synthetic data and the Google TEST calendar only.
+- The repo stays public (APR-0114). The four-agent design is unchanged.
+Closes: P-47; Loop 6
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop6/LOOP6-CLOSE-RECORD.md; decisions/PENDING.md
+
