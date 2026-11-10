@@ -75,7 +75,11 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("turns logged: 0", out)
         self.assertIn("(none)", out)
-        self.assertEqual(gsr.main([os.path.join(self.tmp, "nope.jsonl")]), 1)
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            self.assertEqual(gsr.main([os.path.join(self.tmp, "nope.jsonl")]), 1)
+        # The message is expected (and now captured here, not printed in the test run).
+        self.assertIn("cannot read the log: FileNotFoundError", err.getvalue())
 
     def test_the_script_only_reads(self):
         with open(os.path.join(HERE, "..", "..", "scripts", "ops", "gate-shadow-report.py")) as fh:

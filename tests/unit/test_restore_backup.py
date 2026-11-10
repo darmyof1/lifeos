@@ -2,6 +2,9 @@
 import os, shutil, tarfile, tempfile, unittest
 from backup_fixture import HAVE, Keys, Home, sh, OPS
 
+# Python 3.12+ asks for an explicit tar extraction filter (3.14 makes "data" the default); older Pythons do not know the argument.
+EXTRACT_ARGS = {"filter": "data"} if hasattr(tarfile, "data_filter") else {}
+
 
 def read(p):
     with open(p) as fh:
@@ -55,7 +58,7 @@ class RestoreTests(unittest.TestCase):
         x = os.path.join(self.tmp, "x")
         os.mkdir(x)
         with tarfile.open(plain) as t:
-            t.extractall(x)
+            t.extractall(x, **EXTRACT_ARGS)
         with open(os.path.join(x, "coo", "AGENTS.md"), "a") as fh:
             fh.write("X")
         bad = os.path.join(self.tmp, "bad.tar")
@@ -75,7 +78,7 @@ class RestoreTests(unittest.TestCase):
         x = os.path.join(self.tmp, "x")
         os.mkdir(x)
         with tarfile.open(plain) as t:
-            t.extractall(x)
+            t.extractall(x, **EXTRACT_ARGS)
         with open(os.path.join(x, "extra.txt"), "w") as fh:
             fh.write("not in the manifest")
         bad = os.path.join(self.tmp, "bad.tar")

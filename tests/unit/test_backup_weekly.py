@@ -1,6 +1,9 @@
 """Tests for scripts/ops/backup-weekly.sh (APR-0113) with throwaway keys in temp GnuPG homes. No real key, no real data."""
 import hashlib, json, os, shutil, stat, subprocess, tarfile, tempfile, unittest
 
+# Python 3.12+ asks for an explicit tar extraction filter (3.14 makes "data" the default); older Pythons do not know the argument.
+EXTRACT_ARGS = {"filter": "data"} if hasattr(tarfile, "data_filter") else {}
+
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SCRIPT = os.path.join(ROOT, "scripts", "ops", "backup-weekly.sh")
 SECRET = "tok-test-secret-value-98765"
@@ -75,7 +78,7 @@ class BackupTests(unittest.TestCase):
         shutil.rmtree(dest, ignore_errors=True)
         os.mkdir(dest)
         with tarfile.open(out) as t:
-            t.extractall(dest)
+            t.extractall(dest, **EXTRACT_ARGS)
         return dest
 
     def test_missing_key_file_refuses(self):
