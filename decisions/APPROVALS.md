@@ -1453,3 +1453,16 @@ Closes: the parked D2 and overlap gaps (retired); none else
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop7/handover-28-claude-code-vm.md; deploy/loop3/vm/reg-criteria.py; deploy/loop1/health-check.py; decisions/PENDING.md (P-48)
 
+## APR-0126 - Loop 7: approve the CFO and CLO wording; finish P-36
+Status: approved
+Decided by: CEO
+Your answer: "P-36, is this something i need to do manually? if not, instruct claude to finish the job. I approve: `loop7-part3-wording-draft.md`. 'approved as written'" (2026-11-10 04:24)
+Evidence: deploy/loop7/part3-wording-approved.md (the wording, word for word); ops/session-reset-options.md; deploy/loop7/handover-29-claude-code-vm.md
+Meaning:
+- The wording in deploy/loop7/part3-wording-approved.md is APPROVED as written: (A) the CFO instruction set v1.11 (the send-list line becomes "COO and CoS", plus the Investments section: contributions, growth, balance, state/investments.md, no money movement, no advice, no price lookups, no account data) and (B) a new CLO (Chief Lifestyle Officer, instruction set v1.0: TV shows and lifestyle items, state/lifestyle.md, may send to the COO and CoS, no web). The defaults stand: CFO calendar entries stay privacy high; the CLO asks for calendar entries only when the CEO asks. Synthetic data only.
+- Nothing is installed by this entry. Installing the CFO v1.11 and creating the CLO (new Slack channel and app, config entry with fs.workspaceOnly true, health-check lines, scenario tests) is handover 30; the CEO will be asked for the Slack steps one at a time. Any change to this wording is a new APR.
+- P-36: the CEO does not do it by hand. Handover 29 finds the cause in a scratch copy and, only if the cause is confirmed, installs a morning compaction for the CHO, CoS and CFO channel sessions like the COO's (three cron lines at 05:30, 05:35, 05:40 AST, rollback: delete the lines). If the cause is not confirmed it changes nothing live.
+Closes: none (P-36 stays open until handover 29 is read)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop7/part3-wording-approved.md; deploy/loop7/handover-29-claude-code-vm.md; agent-files/department/cfo/AGENTS.md and agent-files/department/clo/ (handover 30); scripts/ops/agent-compact.sh (handover 29, if confirmed); decisions/PENDING.md (P-48)
+

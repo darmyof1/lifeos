@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-143.sh",
+  "generated_by": "fix-144.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1217,6 +1217,14 @@
     },
     {
       "path": "deploy/loop7/handover-28-claude-code-vm.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop7/handover-29-claude-code-vm.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop7/part3-wording-approved.md",
       "status": "draft"
     },
     {
