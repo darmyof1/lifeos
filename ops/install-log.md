@@ -485,3 +485,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-10 - Handover 27 (Loop 7 parts 1 and 2) recorded (fix-140)
 - No live change on the VM. Docs added: SPK-03 results, isolation options note. The suite prep removed the CEO's dentist test entry (his yes) and the leftover 10/29 busy event was deleted (his yes, per the report). Evidence: ops/loop7-h27-2026-11-10/.
+
+## 2026-11-10 - APR-0125 (fix-142)
+- Repo only: approval recorded, handover 28 added. Nothing installed or changed on the VM by this entry.

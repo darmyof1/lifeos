@@ -1439,3 +1439,17 @@ Closes: none (P-48 opened)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop7/; research/spikes/SPK-03-agent-isolation.md; ops/isolation-options.md; decisions/PENDING.md (P-48)
 
+## APR-0125 - Loop 7 answers: retire the D2 and overlap gaps, find why the 04:00 reset does not show, isolation recommendation approved
+Status: approved
+Decided by: CEO
+Your answer: "A. Retire the D2 and overlap gaps. Approved" "B. find why isn't happening." "C. approved your recommendations: I'd do nothing now beyond the CLO carrying workspaceOnly: true. A small health-check line that warns if that setting ever changes is also free." (2026-11-10 01:15). On the leftover: "There isn't any appointment in 10/29 i think there was a busy one there before and now its gone."
+Evidence: ops/handover-2026-11-10-claude-code-report-27.md; ops/isolation-options.md; ops/loop7-h27-2026-11-10/; deploy/loop7/handover-28-claude-code-vm.md
+Meaning:
+- The held D2 requested-by gap and the overlap 08:00-slot gap are RETIRED: neither reproduced in 15 of 15 runs each (handover 20 and handover 27); the new suite FAILs were a wording heuristic and an outdated busy check. The two checks are fixed in tooling only (handover 28, Part 3), with a re-score that must show only the intended changes. No agent instruction changes.
+- P-36 is investigated, not fixed: handover 28 finds out why the daily 04:00 reset does not show in the CHO, CoS and CFO channel sessions (read-only look, then a scratch test), and reports options. Applying any option needs a new APR.
+- Isolation: no live change and no Docker. fs.workspaceOnly true stays on the CHO, CoS and CFO; the new CLO carries it from day one; a health-check line warns if it ever changes (handover 28, Part 2). The installed health-check.py is replaced with the repo copy at the end of handover 28 (the only live change in it).
+- The CEO confirmed his dentist test entry could go and the old 10/29 busy event is gone.
+Closes: the parked D2 and overlap gaps (retired); none else
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop7/handover-28-claude-code-vm.md; deploy/loop3/vm/reg-criteria.py; deploy/loop1/health-check.py; decisions/PENDING.md (P-48)
+

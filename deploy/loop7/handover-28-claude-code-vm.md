@@ -1,0 +1,32 @@
+# Handover 28 to Claude Code on the LifeOS VM (Loop 7: why the 04:00 reset does not show, health-check guard, two stale suite checks)
+
+Same Claude Code as handovers 1 to 27. The CEO approved this under APR-0125 (Loop 7 is APR-0124, scope in deploy/loop7/LOOP7-SCOPE.md). Pull first: `cd ~/lifeos-ro && git pull -q` (expect "APR-0125 ..." near the top; if not, stop and tell the CEO). Work in a scratch copy (`rm -rf ~/work28 && cp -a ~/lifeos-ro ~/work28`). Return ONE patch `~/handover/handover28.patch` (git add -A; git diff --cached --binary; no commit, no push; exclude contracts/registry/artifacts.yaml), `~/handover/REPORT-28.md`, and everything as `~/handover-28.tar.gz` (report and patch inside; raw evidence in ~/handover/h28/ ONLY, do not re-pack old files from ~/handover).
+
+## How to talk to the CEO
+One step at a time; say which machine; exact text; what he should see. Never ask him to print, paste or send a private key, token or password; never print the gateway token.
+
+## Hard limits
+1. Live changes allowed, only these: (a) the pull; (b) the installed ~/loop1/health-check.py replaced with the repo copy at the very end (backup first, sha256 equal). Nothing else: no config key, no crontab line, no agent instruction, no plugin, no gateway restart, no Docker. The P-36 test runs on a SCRATCH state folder and port, deleted afterwards.
+2. Synthetic data and the Google TEST calendar only.
+3. No secrets, Slack IDs, tokens, calendar ID, VM address, IPs or account names in ~/handover or the repo. Straight quotes only in repo files. Cited APR numbers must exist.
+4. TIME WINDOW: no agent message, compaction or gateway restart between 03:30 and 05:10 AST; not across 05:25 (daily COO compaction) either. Agent runs end by 02:30 AST unless the CEO is present. Cost under 0.05 USD per run, 1 USD per day. Never reuse a run ID. One live gateway.
+5. Final state: gateway one process; crontab and config equal to their starting copies; ledger plugin and gate plugin hashes unchanged; calendar at the seed; health check PASS 77 or better (plus the new line), WARN 0, FAIL 0.
+
+## Part 1. Why the daily 04:00 reset does not show in the CHO, CoS and CFO channel sessions (P-36)
+Facts from handover 27 (ops/handover-2026-11-10-claude-code-report-27.md, ops/loop7-h27-2026-11-10/p36-reset-markers.txt): config `session.reset` is daily at hour 4; the CHO, CoS and CFO channel sessions each carry ONE reset marker (10-29 evening) and 9 to 10 days of messages with none after; the main sessions of the CHO and CoS do get new IDs; the 05:00 reports say "reset pending (normal)".
+a. Read only: all `session` keys in the live config (print only those keys, never the whole file): reset mode, atHour, idleMinutes, any resetByType / resetByChannel / per-agent override. Find the OpenClaw 2026.10.5 docs or source for session reset (look in the install folder: docs, schema, the reset code) and state in plain words: which session types does the daily reset apply to, and does a Slack channel session count? Quote the doc or code lines (file and line) as evidence.
+b. Why did a marker appear on 10-29 evening? Check the gateway log around 10-29 20:12 to 20:19 AST (handover 18 installed the ledger plugin by hot reload then; handover 19 and 20 followed). Say what happened, with the log lines (no message text).
+c. Scratch test, own state folder and port, no Slack, no cron, cloud model, new run IDs: two agents' sessions, one with a main-style key and one with a Slack-channel-style key (`agent:<id>:slack:channel:<test id>`), reset daily with atHour set to the next full hour. Send one message to each before the boundary, wait until after it, send one more to each. Record whether each session gets a marker or a new ID. Repeat with the live config's exact `session` block copied in. Delete the scratch folder after.
+d. Plain verdict and 2 to 3 options for the CEO (for example: a config key that makes channel sessions reset, a compaction job like the COO's, or leave it), each with cost and risk and whether it needs a live change. Do not apply any.
+
+## Part 2. Health-check guard for the isolation setting (APR-0125)
+`deploy/loop1/health-check.py`: a line "file tools of the CHO, CoS and CFO are confined to their workspace": PASS when `fs.workspaceOnly` is true for each of the three agents that have file tools (read from the live config); FAIL when false or missing; PASS also for an agent with no file tools. Tests in the existing style (a PASS, a FAIL for each agent, a COO without tools). Replace the installed copy at the end (rule 1b).
+
+## Part 3. Two stale checks in the regression suite (tooling only, no instruction change)
+`deploy/loop3/vm/reg-criteria.py`. Handover 27 found: (1) the D2 check "reply makes no false Google claim (heuristic)" fired 4 of 10 times when the COO wrote that the CoS "appended a deleted line" (a journal line, accurate); (2) the overlap check "Google shows busy at 10-28 08:00" cannot pass now that `privacy_display` is full, because Google shows the real title.
+a. Narrow the D2 heuristic so a journal-line statement ("appended a deleted line", "journal") is not a Google claim, but a reply that says the event WAS deleted from Google or the calendar before the job ran, or says Google is already updated, still fails. Add unit tests with both kinds of sentence (use the four real replies in ops/loop7-h27-2026-11-10/regression/ as positive cases for "accurate" and write at least three made-up false claims as negative cases).
+b. Make the overlap check accept either "busy" or the entry's real title, depending on the privacy_display value read from the policy file of the run (full: real title; busy: "busy"). Keep the check failing if no event exists at 08:00.
+c. Re-score with the existing rescore tool: the 20 runs of handover 27 and the earlier regression runs (loop3-reg-001 to 003 and handover 20's ten). Show a table old verdict vs new verdict. Only the intended changes may appear; any other change means stop and report.
+
+## Report (REPORT-28.md) and package
+Per part: done, files, tests, evidence in ~/handover/h28/ (config session keys, doc/code quotes, log lines, scratch test table, re-score table, health check output). Plain verdicts. End state per rule 5. Secrets scan before packaging. `tar czf ~/handover-28.tar.gz -C ~ handover` (only report, patch and h28/ inside ~/handover for this package: move old files out of the way first, and do not delete them).
