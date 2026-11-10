@@ -9,6 +9,7 @@ A personal operating system run by a team of AI agents (chiefs) for one person, 
 - Loop 4 (backup and recovery: encrypted weekly backup to a private repository, restore proven on another machine) closed: APR-0118, deploy/loop4/LOOP4-CLOSE-RECORD.md. No real personal data is used until a separate approval.
 - Loop 5 (calendar privacy toggle, privacy gate in shadow mode, a real-calendar setting that is not authorized) closed: APR-0120, deploy/loop5/LOOP5-CLOSE-RECORD.md. The privacy gate runs in shadow mode (blocks nothing); the real calendar is not authorized.
 - Loop 6 (hardening: COO morning compaction at 05:25 AST daily; the CFO send list stays coo and cos) closed: APR-0123, deploy/loop6/LOOP6-CLOSE-RECORD.md.
+- Loop 7 (isolation measure, reliability watch, then a widened CFO for investments and a new CLO for lifestyle) approved: APR-0124, deploy/loop7/LOOP7-SCOPE.md.
 
 ## Where to start
 - decisions/APPROVALS.md: every decision, in the CEO's words (append-only).

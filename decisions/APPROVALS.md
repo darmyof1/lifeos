@@ -1425,3 +1425,17 @@ Closes: P-47; Loop 6
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop6/LOOP6-CLOSE-RECORD.md; decisions/PENDING.md
 
+## APR-0124 - Loop 7: isolation, reliability watch, then two more chiefs (CFO investments, CLO lifestyle)
+Status: approved
+Decided by: CEO
+Your answer: "1, 3, 4" (2026-11-09 21:23, choosing other chiefs, isolation and the reliability watch), then: "cfo, finance management like how much money i invest in an investment funds, and keeping track of how much is growing both from my cotinueing cash or by the interests., clo, lifestye things for example keeing track of my tv shows." (21:27)
+Evidence: deploy/loop7/LOOP7-SCOPE.md; deploy/loop7/handover-27-claude-code-vm.md; research/spikes/SPK-03-agent-isolation.md; deploy/loop6/LOOP6-CLOSE-RECORD.md
+Meaning:
+- Loop 7 has three parts, in this order: (1) isolation, measured first on a scratch copy (can one agent read another's files, what the four live agents can reach) with an options note, no live change, no Docker install; (2) a reliability watch (ten more runs each of the held D2 and overlap gaps, a read of the reset reports for P-36), no live change; (3) two more chiefs: the CFO widened to investment tracking (money put into investment funds, and its growth from added cash and from interest) and a new CLO for lifestyle (for example the TV shows he follows).
+- Handover 27 does parts 1 and 2 and changes nothing live. Part 3 is handover 28 and starts only after part 1 is read; each agent instruction (CFO widening, the CLO's new instructions, a new Slack app, workspace, config entry and allowed-send list) is shown to the CEO in its exact wording and needs his yes as a new APR before it is installed.
+- Synthetic data only. Finance and lifestyle data are not real until a separate loop and APR; the privacy gate is still in shadow mode, so what a new chief handles goes to the cloud model.
+- Not in this loop: enforcing the gate, real data, a local model, installing Docker. Dropped by the CEO, not offered: second-human test, real-calendar work.
+Closes: none (P-48 opened)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop7/; research/spikes/SPK-03-agent-isolation.md; ops/isolation-options.md; decisions/PENDING.md (P-48)
+
