@@ -279,6 +279,7 @@ rec("INFO", "OpenAI spend", "not automated: check usage page for life-os key ($5
 
 # 7b. Loop 2 (APR-0078, APR-0086, APR-0089 to APR-0091). Read-only: no model calls, no changes.
 import re
+import calendar
 import time
 rc, out = run(["pgrep", "-af", "openclaw.*gateway"])
 gw = [l for l in out.splitlines() if (" gateway run" in l or "openclaw-gateway" in l or " gateway --port" in l) and "bash -c" not in l and "pgrep" not in l]
@@ -323,6 +324,33 @@ def backup_age_status(newest_mtime, now, max_days=8):
     if age < max_days:
         return "PASS", "newest backup is {:.1f} days old".format(age)
     return "WARN", "newest backup is {:.1f} days old (limit {} days)".format(age, max_days)
+
+
+def compact_log_status(lines, now):
+    # Loop 6 (APR-0121): the newest COO compaction run (execute mode; compacted, nothing to compact, or skipped by its own rule) is younger
+    # than 36 hours. INFO before the first run, WARN when the newest run is older or ended in an error or a refusal.
+    # Log line: "YYYY-MM-DD HH:MM:SS AST mode=execute result=<result> ..." (AST is UTC-4 all year).
+    best = None
+    for raw in lines:
+        parts = raw.split()
+        if len(parts) < 5 or parts[2] != "AST" or parts[3] != "mode=execute" or not parts[4].startswith("result="):
+            continue
+        try:
+            t = calendar.timegm(time.strptime(parts[0] + " " + parts[1], "%Y-%m-%d %H:%M:%S")) + 4 * 3600
+        except ValueError:
+            continue
+        if best is None or t >= best[0]:
+            best = (t, parts[4][7:])
+    if best is None:
+        return "INFO", "no COO compaction run yet (first one is due at 05:25 AST)"
+    age = (now - best[0]) / 3600.0
+    if age < 0:
+        return "WARN", "newest COO compaction run is dated in the future (check the clock)"
+    if best[1] not in ("compacted", "no-compaction-needed", "skipped"):
+        return "WARN", "newest COO compaction run ended with '{}' {:.1f} hours ago".format(best[1][:20], age)
+    if age < 36:
+        return "PASS", "newest COO compaction run: {} {:.1f} hours ago".format(best[1], age)
+    return "WARN", "newest COO compaction run is {:.1f} hours old (limit 36)".format(age)
 
 
 def plugin_inspect_status(text):
@@ -383,6 +411,13 @@ _policy = os.path.join(HOME, "lifeos-ro", "contracts", "policy", "calendar.yaml"
 for _k, _allowed in (("calendar_target", ("test", "real")), ("privacy_display", ("busy", "full"))):
     st, det = policy_value_status(policy_line(_policy, _k), _allowed)
     rec(st, "calendar policy: " + _k, det, "unknown value in contracts/policy/calendar.yaml (APR-0119)")
+try:
+    with open(os.path.join(STATE, "coo-compact.log"), encoding="utf-8") as _fh:
+        _cl = _fh.read().splitlines()
+except OSError:
+    _cl = []
+st, det = compact_log_status(_cl, time.time())
+rec(st, "COO morning compaction ran in the last 36 hours", det, "05:25 compaction not running (APR-0121)")
 rc_pl, out_pl = run(["openclaw", "plugins", "inspect", "ceo-ledger"])
 st, det = plugin_inspect_status(out_pl) if rc_pl == 0 else ("FAIL", "plugin inspect failed")
 rec(st, "CEO ledger plugin loaded and hook-only", det, "ledger plugin missing or changed (APR-0107)")

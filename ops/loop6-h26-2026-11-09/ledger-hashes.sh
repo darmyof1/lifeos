@@ -1,0 +1,1 @@
+cd ~/loop1 && sha256sum ceo-ledger/scenario-ledger.jsonl ceo-ledger/slack-ledger.jsonl state/extensions/ceo-ledger/index.js state/extensions/ceo-ledger/ledger.js state/extensions/ceo-ledger/openclaw.plugin.json state/extensions/ceo-ledger/package.json | sed -E 's#/home/ubuntu#~#'

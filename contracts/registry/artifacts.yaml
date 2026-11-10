@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-136.sh",
+  "generated_by": "fix-137.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1356,6 +1356,10 @@
       "status": "planned"
     },
     {
+      "path": "ops/coo-compaction.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/cost-and-budget.md",
       "status": "planned"
     },
@@ -1493,6 +1497,10 @@
     },
     {
       "path": "ops/handover-2026-11-08-claude-code-report-25.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-09-claude-code-report-26.md",
       "status": "draft"
     },
     {
@@ -1853,6 +1861,86 @@
     },
     {
       "path": "ops/loop5-h25-2026-11-08/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/compact-log-after-cron-proof.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/compact-log-before-cron-proof.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/compact-log-dryrun.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/compact-log-final.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/compact-log-manual.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/config-sha.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/coo-001-cost.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/coo-001-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/coo-001-trajectory-check.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/coo-compact-cron-output.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/crontab-diff.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/crontab-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/crontab-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/health-installed-now.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/journal-hash-before-coo001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/ledger-hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/ledger-hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/ledger-hashes.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop6-h26-2026-11-09/validator.txt",
       "status": "draft"
     },
     {
@@ -3968,6 +4056,10 @@
       "status": "planned"
     },
     {
+      "path": "scripts/ops/coo-compact.sh",
+      "status": "draft"
+    },
+    {
       "path": "scripts/ops/gate-shadow-report.py",
       "status": "draft"
     },
@@ -4432,6 +4524,10 @@
       "status": "draft"
     },
     {
+      "path": "tests/unit/test_coo_compact.py",
+      "status": "draft"
+    },
+    {
       "path": "tests/unit/test_daily_reset_report.py",
       "status": "draft"
     },
@@ -4473,6 +4569,10 @@
     },
     {
       "path": "tests/unit/test_health_check_loop5.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_health_check_loop6.py",
       "status": "draft"
     },
     {

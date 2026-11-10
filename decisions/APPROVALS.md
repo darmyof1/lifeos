@@ -1398,3 +1398,16 @@ Closes: none (P-47 opened)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop6/; scripts/ops/coo-compact.sh; deploy/loop1/health-check.py; the crontab on the VM (one line); the CFO send setting; decisions/PENDING.md (P-47)
 
+## APR-0122 - Loop 6 correction: the CFO send list stays COO and CoS (Item 1 withdrawn)
+Status: approved
+Decided by: CEO
+Your answer: option A, relayed from the Claude Code chat on 2026-11-09 20:14 and 20:49: "A. Skip Item 1. The CFO keeps ["coo","cos"]. Do Items 2 and 3 only."
+Evidence: ops/handover-2026-11-09-claude-code-report-26.md (why Item 1 was skipped); agent-files/department/cfo/AGENTS.md line 29 (APR-0044, APR-0092: calendar entries go straight to the CoS); ops/cfo-send-list-diff-2026-10-26.txt
+Meaning:
+- The CFO's live send list stays ["coo","cos"]. The note in the Loop 3 close record and in APR-0121 that the CFO instructions list only the COO was wrong: instruction v1.10 sends calendar entries from the CFO straight to the CoS, and its privacy rule (APR-0086) needs that handoff. The "CFO send-list difference" is a documentation error, not a gap. It is closed; nothing is changed on the VM.
+- APR-0121 stands for the rest: the COO morning compaction (scripts/ops/coo-compact.sh, one cron line at 05:25 AST, installed live in handover 26) and the health-check lines. Its "COO only" wording is withdrawn.
+- Nothing else changes. The four-agent design, the shadow gate and the delete gate are unchanged.
+Closes: the parked item "CFO send-list difference"
+Changeable: yes. A change is a new APR entry.
+Applies to: decisions/PENDING.md (P-47); deploy/loop6/LOOP6-SCOPE.md (Item 1 withdrawn)
+

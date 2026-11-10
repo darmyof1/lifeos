@@ -1,0 +1,6 @@
+4a94b4f637a371dae28a564c7b370438b55df9ba07e722398d512b34966defcf  ceo-ledger/scenario-ledger.jsonl
+6c61a8902fafad5a226daac4ae488bc5833276e5aeca830f0e479cdd8bda79b7  ceo-ledger/slack-ledger.jsonl
+ee4e490ab5108b30ebcf94c0b5f2c7e0470740a27e009abb55490915682b8f80  state/extensions/ceo-ledger/index.js
+767ca80faa71b970fed1ef3d7097f9185870ed1a60ae3c08eca48d8966560722  state/extensions/ceo-ledger/ledger.js
+a97a8993eb9d3bd92a83b3d9f1d490685f3d6b8cad7fad6282b61e80c0044795  state/extensions/ceo-ledger/openclaw.plugin.json
+1b98f60e4fbff9ccb12d92c6c7862e780681401cb10dfcda8aaa44ec03adc5f0  state/extensions/ceo-ledger/package.json

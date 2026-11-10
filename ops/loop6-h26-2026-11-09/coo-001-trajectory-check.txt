@@ -1,0 +1,2 @@
+events since run start: 49
+events with a sessions_send to the CoS since run start: 4

@@ -1,0 +1,2 @@
+2026-11-09 20:23:57 AST mode=dry-run result=would-compact size=15289; nothing changed
+2026-11-09 20:24:23 AST mode=execute result=compacted size_before=15289 size_after=0

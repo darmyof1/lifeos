@@ -473,3 +473,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-09 - APR-0121 (fix-136)
 - Repo only: approval recorded, Loop 6 scope and handover 26 added. Nothing installed or changed on the VM by this entry.
+
+## 2026-11-09 - Handover 26 (Loop 6) applied (fix-137)
+- Live on the VM during handover 26: one crontab line added (lifeos-coo-compact, 25 5 * * *); installed health-check.py replaced with the repo copy. The script runs from the repo after the VM pulls. CFO config unchanged. Evidence: ops/loop6-h26-2026-11-09/.

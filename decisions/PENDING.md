@@ -103,3 +103,5 @@ Loop 5 CLOSED 2026-11-08 (APR-0120): P-46 closed. Carried: read the shadow repor
 
 ## P-47 - Loop 6: hardening, CFO send list and COO morning compaction (APR-0121)
 Scope: deploy/loop6/LOOP6-SCOPE.md. Handover 26 (prepared, not yet run). Steps: CFO send key set to COO only; scripts/ops/coo-compact.sh plus one cron line at 05:25 AST daily; two health-check lines. Dropped by the CEO (not parked): second-human test, real-calendar work. First real 05:25 run is read afterwards.
+
+Handover 26 (2026-11-09) result: done except Item 1, withdrawn by APR-0122 (CFO keeps coo and cos; the earlier note was wrong). COO morning compaction INSTALLED: scripts/ops/coo-compact.sh (16 tests), cron line 25 5 * * * marked lifeos-coo-compact (first real run Tuesday 2026-11-10 05:25 AST, after the patch is pulled on the VM), manual run and a cron-fired proof worked, COO answered correctly after compaction (loop6-coo-001, 0.0043 USD). Health check PASS 77, WARN 0, FAIL 0, new line for the last compaction. Report ops/handover-2026-11-09-claude-code-report-26.md. Waiting for the CEO to close Loop 6.

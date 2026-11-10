@@ -1,0 +1,1 @@
+coo-compact: compacted (size_before=26640 size_after=unknown kept_lines=1)

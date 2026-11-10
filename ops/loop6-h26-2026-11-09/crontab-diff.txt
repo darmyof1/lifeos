@@ -1,0 +1,2 @@
+27a28
+> 25 5 * * * bash $HOME/lifeos-ro/scripts/ops/coo-compact.sh --execute >> $HOME/loop1/state/coo-compact.cron.log 2>&1 # lifeos-coo-compact
