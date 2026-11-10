@@ -1,0 +1,7 @@
+Live CHO/CoS/CFO channel sessions: user-message source kinds (counts only, no text), read from read-only database copies
+cho
+   ('to-10-29', None, 'channel-user:vN:N') 2
+cos
+   ('to-10-29', None, 'channel-user:vN:N') 2
+cfo
+   ('to-10-29', None, 'channel-user:vN:N') 2

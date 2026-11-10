@@ -1,0 +1,27 @@
+Live CHO/CoS/CFO channel sessions: event counts by type and role (no text), from read-only database copies; days after 10-29 vs up to 10-29
+cho
+   ('after-10-29', 'message', 'assistant') 31
+   ('to-10-29', 'custom', None) 5
+   ('to-10-29', 'custom_message', None) 2
+   ('to-10-29', 'message', 'assistant') 152
+   ('to-10-29', 'message', 'user') 2
+   ('to-10-29', 'reset', None) 1
+   ('to-10-29', 'session', None) 1
+   ('to-10-29', 'thinking_level_change', None) 1
+cos
+   ('after-10-29', 'message', 'assistant') 66
+   ('to-10-29', 'custom', None) 5
+   ('to-10-29', 'custom_message', None) 2
+   ('to-10-29', 'message', 'assistant') 235
+   ('to-10-29', 'message', 'user') 2
+   ('to-10-29', 'reset', None) 1
+   ('to-10-29', 'session', None) 1
+   ('to-10-29', 'thinking_level_change', None) 1
+cfo
+   ('to-10-29', 'custom', None) 5
+   ('to-10-29', 'custom_message', None) 2
+   ('to-10-29', 'message', 'assistant') 20
+   ('to-10-29', 'message', 'user') 2
+   ('to-10-29', 'reset', None) 1
+   ('to-10-29', 'session', None) 1
+   ('to-10-29', 'thinking_level_change', None) 1

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-144.sh",
+  "generated_by": "fix-145.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1540,6 +1540,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-11-10-claude-code-report-29.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
@@ -2660,6 +2664,142 @@
       "status": "draft"
     },
     {
+      "path": "ops/loop7-h29-2026-11-10/crontab-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/health-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/part2-prepared-not-in-patch/agent-compact.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/part2-prepared-not-in-patch/coo-compact.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/part2-prepared-not-in-patch/health-check-and-test.diff",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/part2-prepared-not-in-patch/test_agent_compact.py",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/plugin-hashes-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/after-done.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/after-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/after.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/ask.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/chat-q3-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/chat-q3-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/chat.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/direct-p1-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/direct-p1-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/direct-q1-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/direct-q1-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/live-channel-event-kinds.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/live-channel-user-message-sources.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/q2-create.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/q3-create.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/scratch-config-sanitized.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/scratch-session-windows-and-markers.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/send-p2-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/send-p2-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/send-q2-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/send-q2-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/send-q2-before2.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/sessions-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/sessions-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/reset-test/snap.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h29-2026-11-10/validator.txt",
+      "status": "draft"
+    },
+    {
       "path": "ops/maintenance-schedule.md",
       "status": "planned"
     },
@@ -2673,6 +2813,10 @@
     },
     {
       "path": "ops/openclaw-update-policy.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p36-channel-session-reset-finding.md",
       "status": "draft"
     },
     {

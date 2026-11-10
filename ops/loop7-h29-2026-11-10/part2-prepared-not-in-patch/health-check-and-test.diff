@@ -1,0 +1,80 @@
+diff --git a/deploy/loop1/health-check.py b/deploy/loop1/health-check.py
+index 40a3450..590649a 100644
+--- a/deploy/loop1/health-check.py
++++ b/deploy/loop1/health-check.py
+@@ -357,7 +357,7 @@ def backup_age_status(newest_mtime, now, max_days=8):
+     return "WARN", "newest backup is {:.1f} days old (limit {} days)".format(age, max_days)
+ 
+ 
+-def compact_log_status(lines, now):
++def compact_log_status(lines, now, who="COO", due="05:25"):
+     # Loop 6 (APR-0121): the newest COO compaction run (execute mode; compacted, nothing to compact, or skipped by its own rule) is younger
+     # than 36 hours. INFO before the first run, WARN when the newest run is older or ended in an error or a refusal.
+     # Log line: "YYYY-MM-DD HH:MM:SS AST mode=execute result=<result> ..." (AST is UTC-4 all year).
+@@ -373,15 +373,15 @@ def compact_log_status(lines, now):
+         if best is None or t >= best[0]:
+             best = (t, parts[4][7:])
+     if best is None:
+-        return "INFO", "no COO compaction run yet (first one is due at 05:25 AST)"
++        return "INFO", "no {} compaction run yet (first one is due at {} AST)".format(who, due)
+     age = (now - best[0]) / 3600.0
+     if age < 0:
+-        return "WARN", "newest COO compaction run is dated in the future (check the clock)"
++        return "WARN", "newest {} compaction run is dated in the future (check the clock)".format(who)
+     if best[1] not in ("compacted", "no-compaction-needed", "skipped"):
+-        return "WARN", "newest COO compaction run ended with '{}' {:.1f} hours ago".format(best[1][:20], age)
++        return "WARN", "newest {} compaction run ended with '{}' {:.1f} hours ago".format(who, best[1][:20], age)
+     if age < 36:
+-        return "PASS", "newest COO compaction run: {} {:.1f} hours ago".format(best[1], age)
+-    return "WARN", "newest COO compaction run is {:.1f} hours old (limit 36)".format(age)
++        return "PASS", "newest {} compaction run: {} {:.1f} hours ago".format(who, best[1], age)
++    return "WARN", "newest {} compaction run is {:.1f} hours old (limit 36)".format(who, age)
+ 
+ 
+ def plugin_inspect_status(text):
+@@ -449,6 +449,14 @@ except OSError:
+     _cl = []
+ st, det = compact_log_status(_cl, time.time())
+ rec(st, "COO morning compaction ran in the last 36 hours", det, "05:25 compaction not running (APR-0121)")
++for _ag, _due in (("cho", "05:30"), ("cos", "05:35"), ("cfo", "05:40")):
++    try:
++        with open(os.path.join(STATE, _ag + "-compact.log"), encoding="utf-8") as _fh:
++            _cl = _fh.read().splitlines()
++    except OSError:
++        _cl = []
++    st, det = compact_log_status(_cl, time.time(), _ag.upper(), _due)
++    rec(st, "newest " + _ag + " compaction younger than 36 hours", det, _due + " compaction not running (APR-0126)")
+ rc_pl, out_pl = run(["openclaw", "plugins", "inspect", "ceo-ledger"])
+ st, det = plugin_inspect_status(out_pl) if rc_pl == 0 else ("FAIL", "plugin inspect failed")
+ rec(st, "CEO ledger plugin loaded and hook-only", det, "ledger plugin missing or changed (APR-0107)")
+diff --git a/tests/unit/test_health_check_loop6.py b/tests/unit/test_health_check_loop6.py
+index 9e373fe..eb24f58 100644
+--- a/tests/unit/test_health_check_loop6.py
++++ b/tests/unit/test_health_check_loop6.py
+@@ -79,5 +79,26 @@ class FileHasTheLines(unittest.TestCase):
+         self.assertIn("COO morning compaction ran in the last 36 hours", text)
+ 
+ 
++class AgentNameInLine(unittest.TestCase):
++    """Loop 7 (APR-0126): the same function serves the CHO, CoS and CFO lines; the default stays the COO."""
++    def test_default_text_is_unchanged_for_the_coo(self):
++        st, det = status([], NOW)
++        self.assertEqual((st, det), ("INFO", "no COO compaction run yet (first one is due at 05:25 AST)"))
++
++    def test_other_agent_names_and_due_times(self):
++        st, det = status([], NOW, "CHO", "05:30")
++        self.assertEqual(st, "INFO")
++        self.assertIn("CHO", det); self.assertIn("05:30", det)
++        for who in ("CHO", "COS", "CFO"):
++            self.assertEqual(status([line("2026-11-10 05:30:01", "compacted") + " agent=x"], NOW + 3600, who)[0], "PASS")
++            self.assertEqual(status([line("2026-11-08 05:30:01", "compacted")], NOW, who)[0], "WARN")
++            self.assertEqual(status([line("2026-11-10 05:30:01", "error")], NOW + 3600, who)[0], "WARN")
++            self.assertIn(who, status([line("2026-11-08 05:30:01", "compacted")], NOW, who)[1])
++
++    def test_new_log_lines_with_agent_at_the_end_still_parse(self):
++        st, det = status([line("2026-11-10 05:25:01", "compacted") + " agent=coo"], NOW + 60)
++        self.assertEqual(st, "PASS")
++
++
+ if __name__ == "__main__":
+     unittest.main()

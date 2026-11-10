@@ -1,0 +1,2 @@
+I'm your new assistant. What would you like to call me?
+exit 0

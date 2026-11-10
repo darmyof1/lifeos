@@ -1,0 +1,2 @@
+FAIL  tracked file not in registry: ops/p36-channel-session-reset-finding.md
+1 blocking failure(s), 1 warning(s)

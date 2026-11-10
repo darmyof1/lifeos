@@ -1,0 +1,203 @@
+{
+ "agents": {
+  "defaults": {
+   "model": {
+    "primary": "openai/gpt-6-luna"
+   },
+   "utilityModel": "openai/gpt-6-luna",
+   "systemAgent": {
+    "agentId": "main"
+   },
+   "heartbeat": {
+    "agentId": "main"
+   },
+   "subagents": {
+    "maxSpawnDepth": 1,
+    "maxChildrenPerAgent": 2,
+    "runTimeoutSeconds": 120
+   },
+   "models": {
+    "openai/gpt-6-luna": {
+     "agentRuntime": {
+      "id": "openclaw"
+     }
+    }
+   }
+  },
+  "ownership": "explicit",
+  "entries": {
+   "main": {
+    "workspace": "~/scratch29/ws-main",
+    "agentDir": "~/scratch29/state/agents/main/agent"
+   },
+   "p1": {
+    "name": "reset-p1",
+    "workspace": "~/scratch29/ws-p1",
+    "agentDir": "~/scratch29/state/agents/p1/agent",
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   },
+   "q1": {
+    "name": "reset-q1",
+    "workspace": "~/scratch29/ws-q1",
+    "agentDir": "~/scratch29/state/agents/q1/agent",
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   },
+   "p2": {
+    "name": "reset-p2",
+    "workspace": "~/scratch29/ws-p2",
+    "agentDir": "~/scratch29/state/agents/p2/agent",
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   },
+   "q2": {
+    "name": "reset-q2",
+    "workspace": "~/scratch29/ws-q2",
+    "agentDir": "~/scratch29/state/agents/q2/agent",
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   },
+   "r": {
+    "name": "reset-r",
+    "workspace": "~/scratch29/ws-r",
+    "agentDir": "~/scratch29/state/agents/r/agent",
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "agentToAgent": {
+      "send": [
+       "p2",
+       "q2"
+      ]
+     }
+    }
+   },
+   "q3": {
+    "name": "reset-q3",
+    "workspace": "~/scratch29/ws-q3",
+    "agentDir": "~/scratch29/state/agents/q3/agent",
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   }
+  }
+ },
+ "tools": {
+  "profile": "messaging",
+  "agentToAgent": {
+   "enabled": true,
+   "allow": [
+    "r",
+    "p2",
+    "q2"
+   ]
+  },
+  "sessions": {
+   "visibility": "agent"
+  }
+ },
+ "plugins": {
+  "entries": {
+   "anthropic": {
+    "config": {
+     "sessionCatalog": {
+      "enabled": false
+     }
+    }
+   },
+   "codex": {
+    "config": {
+     "sessionCatalog": {
+      "enabled": false
+     }
+    }
+   },
+   "memory-core": {
+    "config": {
+     "dreaming": {
+      "enabled": false
+     }
+    },
+    "enabled": true
+   },
+   "openai": {
+    "enabled": true
+   }
+  }
+ },
+ "meta": {
+  "migrations": {
+   "modelPolicyAllowlist": true,
+   "utilityModelSeparation": true
+  },
+  "lastTouchedVersion": "2026.10.5"
+ },
+ "talk": {
+  "agentId": "main"
+ },
+ "gateway": {
+  "mode": "local",
+  "port": 19930,
+  "bind": "loopback",
+  "auth": {
+   "mode": "token",
+   "token": "<redacted>"
+  }
+ },
+ "session": {
+  "reset": {
+   "mode": "daily",
+   "atHour": 15
+  }
+ },
+ "memory": {
+  "search": {
+   "enabled": false
+  }
+ },
+ "commands": {}
+}

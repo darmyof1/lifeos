@@ -1,0 +1,2 @@
+It came back: OK. I'm your new assistant—what would you like to call me?
+exit 0
