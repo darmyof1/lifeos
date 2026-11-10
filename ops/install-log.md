@@ -470,3 +470,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-08 - Loop 5 closed (fix-135)
 - Repo only: close record and APR-0120. Nothing changed on the VM.
+
+## 2026-11-09 - APR-0121 (fix-136)
+- Repo only: approval recorded, Loop 6 scope and handover 26 added. Nothing installed or changed on the VM by this entry.

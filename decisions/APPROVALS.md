@@ -1384,3 +1384,17 @@ Closes: P-46; Loop 5
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop5/LOOP5-CLOSE-RECORD.md; decisions/PENDING.md
 
+## APR-0121 - Loop 6: hardening (CFO send list COO only, COO morning compaction); two ideas dropped
+Status: approved
+Decided by: CEO
+Your answer: "1 is ok, but there wont be a second human at all in this project, remove that idea from your memory, also forget about the real calendar all together you keep mentioning it, leave that alone." (2026-11-09 01:24), then "COO only" for the CFO send list and "Yes, 05:25 daily" for the COO compaction (same time)
+Evidence: deploy/loop6/LOOP6-SCOPE.md; deploy/loop6/handover-26-claude-code-vm.md; decisions/PENDING.md (P-47); deploy/loop5/LOOP5-CLOSE-RECORD.md
+Meaning:
+- Loop 6 hardens the four agents on synthetic data and the Google TEST calendar: (1) the CFO's live send setting is tightened to the COO only, as its written instructions already say (no instruction text change); (2) one new cron line runs a compaction of the COO's Slack channel session every day at 05:25 AST (after the 05:00 report, outside 03:30 to 05:10), skipping if the COO is in use or a request is waiting. Rollback: set the CFO key back, delete the cron line.
+- This entry approves these live changes only: the one CFO config key, the one cron line (plus a temporary one for the proof), the replaced health-check.py, and the temporary pause of the calendar cron line as the suites do it. No agent instruction changes; the ledger plugin, the gate plugin (shadow mode) and the delete gate are unchanged.
+- DROPPED by the CEO, not parked: a second-human test (there is no second human in this project; no test, identity or approval design may assume one) and any real-calendar work (authorizing, switching, testing, proposing). The built calendar_target setting stays as it is and is left alone. Neither idea is raised again unless the CEO raises it.
+- Still parked (each needs its own APR): enforcing the privacy gate, other chiefs, isolation, real data, the local-model box, P-36 watch, the held D2 and overlap gaps.
+Closes: none (P-47 opened)
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop6/; scripts/ops/coo-compact.sh; deploy/loop1/health-check.py; the crontab on the VM (one line); the CFO send setting; decisions/PENDING.md (P-47)
+

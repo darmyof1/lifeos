@@ -1191,8 +1191,9 @@ class PrivacyDisplayTests(Base):
         self.assertEqual(gs.display_mode(p, "busy", alerts.append), "busy")  # the command line wins
         self.assertEqual(alerts, [])
 
-    def test_the_repo_policy_file_says_busy_and_test(self):
-        self.assertEqual(gs.policy_value(gs.DEFAULT_POLICY, "privacy_display"), "busy")
+    def test_the_repo_policy_file_has_allowed_values(self):
+        # The CEO flips privacy_display between busy and full by editing the file (APR-0116, APR-0119): either value is fine.
+        self.assertIn(gs.policy_value(gs.DEFAULT_POLICY, "privacy_display"), ("busy", "full"))
         self.assertEqual(gs.policy_value(gs.DEFAULT_POLICY, "calendar_target"), "test")
 
 
