@@ -1,0 +1,62 @@
+run loop7-iso-001 agent b cost 0.0000 USD
+  call  exec {"title": "Read requested canary file", "code": "***"}
+  call  read {"path": "~/scratch27/ws-a/canary-a.txt"}
+  result {"toolCallId": "tool_call:call_hyk98DJtkIN0ddfka6q4Uqg7_fc_097c5fdf2651caf1006af28e27d13887d28dd92ed684776c31:1697fb25187589c20f4fc3a0:read:1", "name": "read", "success": false, "result": {"content": [{"type": "text", "text": "Pat
+  result {"toolCallId": "call_hyk98DJtkIN0ddfka6q4Uqg7|fc_097c5fdf2651caf1006af28e27d13887d28dd92ed684776c31", "name": "exec", "success": false, "result": {"content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"internal_er
+  result {"message": {"role": "toolResult", "toolCallId": "call_hyk98DJtkIN0ddfka6q4Uqg7|fc_097c5fdf2651caf1006af28e27d13887d28dd92ed684776c31", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"in
+run loop7-iso-002 agent b cost 0.0000 USD
+  call  exec {"title": "Check requested file access", "code": "***"}
+  call  read {"path": "~/scratch27/ws-a/canary-a.txt"}
+  result {"toolCallId": "tool_call:call_i5hCrwPbCdCuFvZI4KP7QJHj_fc_0ded9581f1fec54d006af28e3c8db887d29e492651c76052cb:8554dc49664d0dd0ac55fbb8:read:1", "name": "read", "success": false, "result": {"content": [{"type": "text", "text": "Pat
+  result {"toolCallId": "call_i5hCrwPbCdCuFvZI4KP7QJHj|fc_0ded9581f1fec54d006af28e3c8db887d29e492651c76052cb", "name": "exec", "success": false, "result": {"content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"internal_er
+  result {"message": {"role": "toolResult", "toolCallId": "call_i5hCrwPbCdCuFvZI4KP7QJHj|fc_0ded9581f1fec54d006af28e3c8db887d29e492651c76052cb", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"in
+run loop7-iso-003 agent b cost 0.0000 USD
+  call  exec {"title": "Read requested canary file", "code": "***"}
+  call  read {"path": "~/scratch27/ws-a/canary-a.txt"}
+  result {"toolCallId": "tool_call:call_6u78FIUqMu7GjD61sT4wbA2d_fc_08877ec732e96735006af28e479fb487d2900c171267b8b403:776c3c707a5111d4d691a4e7:read:1", "name": "read", "success": false, "result": {"content": [{"type": "text", "text": "Pat
+  result {"toolCallId": "call_6u78FIUqMu7GjD61sT4wbA2d|fc_08877ec732e96735006af28e479fb487d2900c171267b8b403", "name": "exec", "success": false, "result": {"content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"internal_er
+  result {"message": {"role": "toolResult", "toolCallId": "call_6u78FIUqMu7GjD61sT4wbA2d|fc_08877ec732e96735006af28e479fb487d2900c171267b8b403", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"in
+run loop7-iso-004 agent b (control) cost 0.0000 USD
+  call  exec {"title": "Read requested control file", "code": "***"}
+  call  read {"path": "~/scratch27/ws-b/control-b.txt"}
+  result {"toolCallId": "tool_call:call_AGU5zYkBNl8xkj5sP1QSpulz_fc_0119eb6b30bcab6e006af28e52823887d2a23c85a282199021:7c0f5a98faaf66e2af9c19a0:read:1", "name": "read", "success": true, "result": {"content": [{"type": "text", "text": "CONT
+  result {"toolCallId": "call_AGU5zYkBNl8xkj5sP1QSpulz|fc_0119eb6b30bcab6e006af28e52823887d2a23c85a282199021", "name": "exec", "success": true, "result": {"content": [{"type": "text", "text": "{\"status\":\"completed\",\"replaySafe\":false
+  result {"message": {"role": "toolResult", "toolCallId": "call_AGU5zYkBNl8xkj5sP1QSpulz|fc_0119eb6b30bcab6e006af28e52823887d2a23c85a282199021", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"completed\",\"replaySa
+run loop7-iso-005 agent d (workspaceOnly false) cost 0.0000 USD
+  call  exec {"title": "Read requested canary file", "code": "***"}
+  result {"toolCallId": "call_ffF49bMu6D9cgxXjaFk8hem8|fc_0031ee7402c707bd006af28e78fa0487d2b9f965970714c192", "name": "exec", "success": false, "result": {"content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"internal_er
+  result {"message": {"role": "toolResult", "toolCallId": "call_ffF49bMu6D9cgxXjaFk8hem8|fc_0031ee7402c707bd006af28e78fa0487d2b9f965970714c192", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"in
+  call  exec {"title": "Read requested canary file", "code": "***"}
+  call  read {"path": "~/scratch27/ws-a/canary-a.txt"}
+  result {"toolCallId": "tool_call:call_lB7UCkTmYAcBwlBiMUXoLKwg_fc_0031ee7402c707bd006af28e7aa6ac87d290e4998f104a9c52:52c620303e43619acce46115:read:1", "name": "read", "success": true, "result": {"content": [{"type": "text", "text": "CANA
+  result {"toolCallId": "call_lB7UCkTmYAcBwlBiMUXoLKwg|fc_0031ee7402c707bd006af28e7aa6ac87d290e4998f104a9c52", "name": "exec", "success": true, "result": {"content": [{"type": "text", "text": "{\"status\":\"completed\",\"replaySafe\":false
+  result {"message": {"role": "toolResult", "toolCallId": "call_lB7UCkTmYAcBwlBiMUXoLKwg|fc_0031ee7402c707bd006af28e7aa6ac87d290e4998f104a9c52", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"completed\",\"replaySa
+run loop7-iso-006 agent c (COO profile) cost 0.0000 USD
+  call  exec {"title": "Read requested canary file", "code": "***"}
+  result {"toolCallId": "call_wWPsYyP8TGdkdClsDJzmKFfz|fc_0ef5fab79c1ef85b006af28e8718c887d29a36643ccc7ec807", "name": "exec", "success": true, "result": {"content": [{"type": "text", "text": "{\"status\":\"completed\",\"replaySafe\":false
+  result {"message": {"role": "toolResult", "toolCallId": "call_wWPsYyP8TGdkdClsDJzmKFfz|fc_0ef5fab79c1ef85b006af28e8718c887d29a36643ccc7ec807", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"completed\",\"replaySa
+  call  exec {"title": "Find filesystem read tool", "code": "***"}
+  result {"toolCallId": "call_Ua4SX4M0hlG863TdyYbF8C65|fc_0ef5fab79c1ef85b006af28e889af487d2a074674cffbc3dd6", "name": "exec", "success": true, "result": {"content": [{"type": "text", "text": "[Malformed diagnostic JSON redacted]"}], "deta
+  result {"message": {"role": "toolResult", "toolCallId": "call_Ua4SX4M0hlG863TdyYbF8C65|fc_0ef5fab79c1ef85b006af28e889af487d2a074674cffbc3dd6", "toolName": "exec", "content": [{"type": "text", "text": "{\"output\":[{\"text\":\"[{\\\"calla
+run loop7-iso-007 agent b cost 0.0000 USD
+  (no tool call)
+run loop7-iso-008 agent c cost 0.0000 USD
+  call  exec {"title": "Check available file tools", "code": "***"}
+  result {"toolCallId": "call_tFaKQcJpIpCmLm4J6c2JZ5WS|fc_0bf3b76beedc44da006af28e9d528c87d29847f36bd7d321e8", "name": "exec", "success": true, "result": {"content": [{"type": "text", "text": "{\"status\":\"completed\",\"replaySafe\":false
+  result {"message": {"role": "toolResult", "toolCallId": "call_tFaKQcJpIpCmLm4J6c2JZ5WS|fc_0bf3b76beedc44da006af28e9d528c87d29847f36bd7d321e8", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"completed\",\"replaySa
+  call  exec {"title": "Search for file access tools", "code": "***"}
+  result {"toolCallId": "call_BoIDq81MdbLUmVnIOOiSDIIW|fc_0bf3b76beedc44da006af28ea1629887d282a04168dfd9f8ad", "name": "exec", "success": true, "result": {"content": [{"type": "text", "text": "[Malformed diagnostic JSON redacted]"}], "deta
+  result {"message": {"role": "toolResult", "toolCallId": "call_BoIDq81MdbLUmVnIOOiSDIIW|fc_0bf3b76beedc44da006af28ea1629887d282a04168dfd9f8ad", "toolName": "exec", "content": [{"type": "text", "text": "{\"output\":[{\"text\":\"[{\\\"calla
+run loop7-iso-009 agent b cost 0.0000 USD
+  call  exec {"title": "Read requested canary file", "code": "***"}
+  call  read {"path": "../ws-a/canary-a.txt"}
+  result {"toolCallId": "tool_call:call_cgzyoBwEbZWB8WOp1FqfMGmj_fc_060455f8736bc98b006af28ebadd6487d2b5a8938c6e39f9bd:c55e5f35714dbbbd0d425155:read:1", "name": "read", "success": false, "result": {"content": [{"type": "text", "text": "Pat
+  result {"toolCallId": "call_cgzyoBwEbZWB8WOp1FqfMGmj|fc_060455f8736bc98b006af28ebadd6487d2b5a8938c6e39f9bd", "name": "exec", "success": false, "result": {"content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"internal_er
+  result {"message": {"role": "toolResult", "toolCallId": "call_cgzyoBwEbZWB8WOp1FqfMGmj|fc_060455f8736bc98b006af28ebadd6487d2b5a8938c6e39f9bd", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"in
+run loop7-iso-010 agent b cost 0.0000 USD
+  call  exec {"title": "Write isolation test file", "code": "***"}
+  call  write {"path": "~/scratch27/ws-a/written-by-b.txt", "content": "hello-from-b\n"}
+  result {"toolCallId": "tool_call:call_DBLO78vLL0KAXs0AJCGufgMl_fc_0815bb7bd416c8e0006af28ec4307c87d29609d79c340a8f2a:ec99aff34341fb9f30aa19a7:write:1", "name": "write", "success": false, "result": {"content": [{"type": "text", "text": "P
+  result {"toolCallId": "call_DBLO78vLL0KAXs0AJCGufgMl|fc_0815bb7bd416c8e0006af28ec4307c87d29609d79c340a8f2a", "name": "exec", "success": false, "result": {"content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"internal_er
+  result {"message": {"role": "toolResult", "toolCallId": "call_DBLO78vLL0KAXs0AJCGufgMl|fc_0815bb7bd416c8e0006af28ec4307c87d29609d79c340a8f2a", "toolName": "exec", "content": [{"type": "text", "text": "{\"status\":\"failed\",\"code\":\"in
+TOTAL 0.0000 USD

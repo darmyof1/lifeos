@@ -1,0 +1,11 @@
+/properties/agents/properties/defaults/properties/sandbox/properties/mode {"anyOf": [{"type": "string", "const": "off"}, {"type": "string", "const": "non-main"}, {"type": "string", "const": "all"}]}
+/properties/agents/properties/defaults/properties/sandbox/properties/workspaceAccess {"anyOf": [{"type": "string", "const": "none"}, {"type": "string", "const": "ro"}, {"type": "string", "const": "rw"}]}
+/properties/agents/properties/entries/additionalProperties/properties/sandbox/properties/mode {"anyOf": [{"type": "string", "const": "off"}, {"type": "string", "const": "non-main"}, {"type": "string", "const": "all"}]}
+/properties/agents/properties/entries/additionalProperties/properties/sandbox/properties/workspaceAccess {"anyOf": [{"type": "string", "const": "none"}, {"type": "string", "const": "ro"}, {"type": "string", "const": "rw"}]}
+/properties/agents/properties/entries/additionalProperties/properties/tools/properties/exec/properties/applyPatch/properties/workspaceOnly {"type": "boolean"}
+/properties/agents/properties/entries/additionalProperties/properties/tools/properties/fs/properties/workspaceOnly {"type": "boolean"}
+/properties/tools/properties/exec/properties/applyPatch/properties/workspaceOnly {"type": "boolean", "title": "apply_patch Workspace-Only", "description": "Restrict apply_patch paths to the workspace directory (default: true). Set false to a
+/properties/tools/properties/fs/properties/workspaceOnly {"type": "boolean", "title": "Workspace-only FS tools", "description": "Restrict filesystem tools (read/write/edit/apply_patch) to the workspace directory (defa
+Restrict filesystem tools (read/write/edit/apply_patch) to the workspace directory (default: false).
+Restrict apply_patch paths to the workspace directory (default: true). Set false to allow writing outside the workspace (dangerous).
+['host', 'mode', 'security', 'ask', 'node', 'pathPrepend', 'safeBins', 'strictInlineEval', 'commandHighlighting', 'grantExpiryDays', 'safeBinTrustedDirs', 'safeBinProfiles', 'reviewer', 'backgroundMs', 'approvalRunningNoticeMs']

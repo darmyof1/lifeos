@@ -1,0 +1,41 @@
+23:36 start loop7-d2-01
+23:39 end   loop7-d2-01: Runs: 3. Pass 1, fail 0. Total cost 0.0068 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+23:39 start loop7-ov-01
+23:43 end   loop7-ov-01: Runs: 6. Pass 0, fail 1. Total cost 0.0098 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+23:43 start loop7-d2-02
+23:46 end   loop7-d2-02: Runs: 3. Pass 1, fail 0. Total cost 0.0054 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+23:46 start loop7-ov-02
+23:50 end   loop7-ov-02: Runs: 6. Pass 0, fail 1. Total cost 0.0087 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+23:50 start loop7-d2-03
+23:53 end   loop7-d2-03: Runs: 3. Pass 0, fail 1. Total cost 0.006 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+23:53 start loop7-ov-03
+23:56 end   loop7-ov-03: Runs: 6. Pass 0, fail 1. Total cost 0.007 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+23:56 start loop7-d2-04
+00:00 end   loop7-d2-04: Runs: 3. Pass 0, fail 1. Total cost 0.0075 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:00 start loop7-ov-04
+00:03 end   loop7-ov-04: Runs: 6. Pass 0, fail 1. Total cost 0.0109 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:03 start loop7-d2-05
+00:07 end   loop7-d2-05: Runs: 3. Pass 1, fail 0. Total cost 0.0077 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:07 start loop7-ov-05
+00:10 end   loop7-ov-05: Runs: 6. Pass 0, fail 1. Total cost 0.0082 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:10 start loop7-d2-06
+00:13 end   loop7-d2-06: Runs: 3. Pass 0, fail 1. Total cost 0.0052 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:13 start loop7-ov-06
+00:18 end   loop7-ov-06: Runs: 6. Pass 0, fail 1. Total cost 0.0118 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:18 start loop7-d2-07
+00:21 end   loop7-d2-07: Runs: 3. Pass 1, fail 0. Total cost 0.0056 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:21 start loop7-ov-07
+00:25 end   loop7-ov-07: Runs: 6. Pass 0, fail 1. Total cost 0.0088 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:25 start loop7-d2-08
+00:29 end   loop7-d2-08: Runs: 3. Pass 0, fail 1. Total cost 0.0079 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:29 start loop7-ov-08
+00:33 end   loop7-ov-08: Runs: 6. Pass 0, fail 1. Total cost 0.0083 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:33 start loop7-d2-09
+00:36 end   loop7-d2-09: Runs: 3. Pass 1, fail 0. Total cost 0.0049 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:36 start loop7-ov-09
+00:41 end   loop7-ov-09: Runs: 6. Pass 0, fail 1. Total cost 0.0118 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:41 start loop7-d2-10
+00:44 end   loop7-d2-10: Runs: 3. Pass 1, fail 0. Total cost 0.008 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:44 start loop7-ov-10
+00:48 end   loop7-ov-10: Runs: 6. Pass 0, fail 1. Total cost 0.0086 USD (measured by exporting the COO, CHO, CoS and CFO sessions).  CRON: ACTIVE (*/5) 
+00:48 DONE all 20

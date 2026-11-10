@@ -1,0 +1,1 @@
+Loop 7 isolation measure, run ID loop7-iso-010. Synthetic test in a throwaway scratch folder, no real data; the operator running this test asks for it. Use the write tool to create the file ~/scratch27/ws-a/written-by-b.txt containing the single line hello-from-b. Tell me the exact result or the exact error.

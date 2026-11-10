@@ -1,0 +1,93 @@
+=== coo
+Effective sandbox:
+  agentId: coo
+  sessionKey: agent:coo:main
+  mainSessionKey: agent:coo:main
+  runtime: direct
+  mode: off scope: agent
+  workspaceAccess: none workspaceRoot: ~/loop1/state/sandboxes
+  effectiveHostWorkspaceRoot: ~/loop1/workspaces/coo
+  backend: docker runtimeWorkdir: ~/loop1/workspaces/coo workspaceSource: direct
+
+Sandbox tool policy:
+  allow (default): exec, process, read, ls, write, edit, apply_patch, view_image, sessions_list, sessions_history, sessions_search, sessions_send, sessions_spawn, sessions_yield, subagents, session_status
+  deny  (default): browser, canvas, computer, mobile_ui, nodes, automations, gateway, feishu, googlechat, nostr, buzz, msteams, mattermost, nextcloud-talk, matrix, raft, a2a, line, zalo, clickclack, x, zalouser, sms, synology-chat, tlon, discord, imessage, irc, reef, signal, slack, telegram, twitch, whatsapp
+
+Elevated:
+  enabled: true
+  channel: (unknown)
+  allowedByConfig: false
+
+Fix-it:
+  - tools.sandbox.tools.allow
+  - tools.sandbox.tools.alsoAllow
+  - tools.sandbox.tools.deny
+  - agents.entries.*.tools.sandbox.tools.allow
+  - agents.entries.*.tools.sandbox.tools.alsoAllow
+  - agents.entries.*.tools.sandbox.tools.deny
+  - tools.elevated.enabled
+
+Docs: https://docs.openclaw.ai/sandbox
+
+=== cho
+Effective sandbox:
+  agentId: cho
+  sessionKey: agent:cho:main
+  mainSessionKey: agent:cho:main
+  runtime: direct
+  mode: off scope: agent
+  workspaceAccess: none workspaceRoot: ~/loop1/state/sandboxes
+  effectiveHostWorkspaceRoot: ~/loop1/workspaces/cho
+  backend: docker runtimeWorkdir: ~/loop1/workspaces/cho workspaceSource: direct
+
+Sandbox tool policy:
+  allow (default): exec, process, read, ls, write, edit, apply_patch, view_image, sessions_list, sessions_history, sessions_search, sessions_send, sessions_spawn, sessions_yield, subagents, session_status
+  deny  (default): browser, canvas, computer, mobile_ui, nodes, automations, gateway, feishu, googlechat, nostr, buzz, msteams, mattermost, nextcloud-talk, matrix, raft, a2a, line, zalo, clickclack, x, zalouser, sms, synology-chat, tlon, discord, imessage, irc, reef, signal, slack, telegram, twitch, whatsapp
+
+Elevated:
+  enabled: true
+  channel: (unknown)
+  allowedByConfig: false
+
+Fix-it:
+  - tools.sandbox.tools.allow
+  - tools.sandbox.tools.alsoAllow
+  - tools.sandbox.tools.deny
+  - agents.entries.*.tools.sandbox.tools.allow
+  - agents.entries.*.tools.sandbox.tools.alsoAllow
+  - agents.entries.*.tools.sandbox.tools.deny
+  - tools.elevated.enabled
+
+Docs: https://docs.openclaw.ai/sandbox
+
+=== cos
+Effective sandbox:
+  agentId: cos
+  sessionKey: agent:cos:main
+  mainSessionKey: agent:cos:main
+  runtime: direct
+  mode: off scope: agent
+  workspaceAccess: none workspaceRoot: ~/loop1/state/sandboxes
+  effectiveHostWorkspaceRoot: ~/loop1/workspaces/cos
+  backend: docker runtimeWorkdir: ~/loop1/workspaces/cos workspaceSource: direct
+
+Sandbox tool policy:
+  allow (default): exec, process, read, ls, write, edit, apply_patch, view_image, sessions_list, sessions_history, sessions_search, sessions_send, sessions_spawn, sessions_yield, subagents, session_status
+  deny  (default): browser, canvas, computer, mobile_ui, nodes, automations, gateway, feishu, googlechat, nostr, buzz, msteams, mattermost, nextcloud-talk, matrix, raft, a2a, line, zalo, clickclack, x, zalouser, sms, synology-chat, tlon, discord, imessage, irc, reef, signal, slack, telegram, twitch, whatsapp
+
+Elevated:
+  enabled: true
+  channel: (unknown)
+  allowedByConfig: false
+
+Fix-it:
+  - tools.sandbox.tools.allow
+  - tools.sandbox.tools.alsoAllow
+  - tools.sandbox.tools.deny
+  - agents.entries.*.tools.sandbox.tools.allow
+  - agents.entries.*.tools.sandbox.tools.alsoAllow
+  - agents.entries.*.tools.sandbox.tools.deny
+  - tools.elevated.enabled
+
+Docs: https://docs.openclaw.ai/sandbox
+

@@ -1,0 +1,24 @@
+agents.defaults (keys) = ["heartbeat", "model", "models", "subagents", "systemAgent", "utilityModel"]
+agents.defaults.subagents = {"maxChildrenPerAgent": 2, "maxSpawnDepth": 1, "runTimeoutSeconds": 120}
+tools (top) = {"agentToAgent": {"allow": ["coo", "cho", "cos", "cfo"], "enabled": true}, "profile": "messaging", "sessions": {"visibility": "agent"}}
+entries type dict
+--- coo
+ workspace = "~/loop1/workspaces/coo"
+ sandbox = "<unset>"
+ tools = {"agentToAgent": {"send": ["cho", "cos", "cfo"]}}
+ other keys = ["agentDir", "identity", "model", "name"]
+--- cho
+ workspace = "~/loop1/workspaces/cho"
+ sandbox = "<unset>"
+ tools = {"agentToAgent": {"send": ["coo", "cos"]}, "alsoAllow": ["read", "write", "edit"], "fs": {"workspaceOnly": true}}
+ other keys = ["agentDir", "identity", "model", "name"]
+--- cos
+ workspace = "~/loop1/workspaces/cos"
+ sandbox = "<unset>"
+ tools = {"agentToAgent": {"send": ["coo", "cho"]}, "alsoAllow": ["read", "write", "edit"], "fs": {"workspaceOnly": true}}
+ other keys = ["agentDir", "identity", "model", "name"]
+--- cfo
+ workspace = "~/loop1/workspaces/cfo"
+ sandbox = "<unset>"
+ tools = {"agentToAgent": {"send": ["coo", "cos"]}, "alsoAllow": ["read", "write", "edit"], "fs": {"workspaceOnly": true}}
+ other keys = ["agentDir", "identity", "model", "name"]

@@ -1,0 +1,7 @@
+I couldn't retrieve the file.
+
+- **Code Mode (`exec`)**: ran a tool inventory; it completed and showed no filesystem-read, shell, edit, or patch tool.
+- **Tool search**: found no file-access tool. It returned unrelated tools; no file contents or read error were produced.
+- **Shell, `apply_patch`, and edit**: not available to try.
+
+I'm your new assistant—what would you like to call me?

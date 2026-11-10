@@ -1,0 +1,53 @@
+== loop7-ov-06-06  overlap  2026-11-10 00:14 AST
+-- prep
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: No compaction needed for session agent:cho:main. 
+compact cos: No compaction needed for session agent:cos:main. 
+compact cfo: No compaction needed for session agent:cfo:main. 
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop7-ov-06-06 now, then: scenario-run.sh check loop7-ov-06-06
+-- reply of the agent (first message)
+   Changed: The appointment was not added; CHO recorded a conflict with the 07:00–08:00 workout.  
+   Who changed it: CHO; the nearest available slot is 08:00–09:00 AST, but needs your confirmation.  
+   Event IDs: loop7-ov-06-06-cho-01 (conflict).
+-- reply (second message)
+   Changed: CHO added the dentist appointment for 2026-10-28, 08:00–09:00 AST, to the calendar journal; the conflict record remains.  
+   Changed by: CHO.  
+   Event IDs: loop7-ov-06-06-cho-02 (appointment); loop7-ov-06-06-cho-01 (conflict).
+-- journal lines for loop7-ov-06-06 (verbatim)
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop7-ov-06-06 | loop7-ov-06-06-cho-01 | CHO | reason=overlaps CHO - Workout - 10282026-0001; privacy=high
+CHO - Dentist Appointment - 10282026-0003 | 2026-10-28 08:00 | 2026-10-28 09:00 | written | loop7-ov-06-06 | loop7-ov-06-06-cho-02 | CHO | privacy=high
+CHO - Dentist Appointment - 10282026-0003 | 2026-10-28 08:00 | 2026-10-28 09:00 | pushed | loop7-ov-06-06 | loop7-ov-06-06-cho-02 | sync | google=<id>; privacy=high
+-- check output
+numstat: 5	0	state/calendar-journal.md
+CHO - Dentist Appointment - 10282026-0002 | 2026-10-28 07:30 | 2026-10-28 08:30 | conflict | loop7-ov-06-06 | loop7-ov-06-06-cho-01 | CHO | reason=overlaps CHO - Workout - 10282026
+PASS  CHO sent to the CoS  (2 call(s))
+PASS  first CHO call uses mode followup  (mode=followup)
+PASS  first CHO call does not set watch
+PASS  first CHO call has timeoutSeconds 120  (timeoutSeconds=120)
+PASS  first CHO call returned ok (a reply)  (status=ok)
+PASS  CoS sent nothing to the CHO  (0 call(s))
+PASS  no SESSION_WORK_START_CHANGED in any sessions_send result  (0 result(s))
+Result: all checks passed
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display full)
+done  CHO - Dentist Appointment - 10282026-0003: created (full) <id>
+summary: pushed 1, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display full)
+numstat after the job: 6	0	state/calendar-journal.md
+-- Google after the job
+<id>	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+<id>	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+<id>	2026-10-28T08:00:00-04:00	CHO - Dentist Appointment - 10282026-0003
+<id>	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+-- criteria
+PASS numstat before the job has no removed lines (5 0)
+PASS numstat after the job has no removed lines (6 0)
+PASS journal header unchanged (7 columns)
+PASS one conflict line with reason=overlaps
+PASS no written line before the slot was accepted (conflict line first)
+PASS the nearest free slot (08:00) was offered
+PASS after accepting: exactly one written line at 08:00 on 10-28
+FAIL Google shows busy at 10-28 08:00 (job created the event)
+PASS sessions_send checker: all checks passed
+-- cost: loop7-ov-06-06: total 0.0118 USD (coo 0.0057, cho 0.0026, cos 0.0035, cfo 0.0000)
+-- metrics (wall 111s): {"run": "loop7-ov-06-06", "agents": {"coo": {"input": 253, "output": 2004, "cacheRead": 188701, "cacheWrite": 22290, "cost": 0.0057, "turns": 11, "tool_calls": 24, "first_turn_tokens": 8829, "instr_bytes": 8592}, "cho": {"input": 654, "output": 2442, "cacheRead": 71185, "cacheWrite": 4673, "cost": 0.00258, "turns": 6, "tool_calls": 12, "first_turn_tokens": 10374, "instr_bytes": 5030}, "cos": {"input": 816, "output": 2875, "cacheRead": 110253, "cacheWrite": 7254, "cost": 0.00353, "turns": 8, "tool_calls": 19, "first_turn_tokens": 11259, "instr_bytes": 8795}}, "total": {"input": 1723, "output": 7321, "cacheRead": 370139, "cacheWrite": 34217, "cost": 0.01181, "turns": 25, "tool_calls": 55, "first_turn_tokens": 30462, "instr_bytes": 22417}}
+RESULT loop7-ov-06-06 FAIL (8 pass, 1 fail)

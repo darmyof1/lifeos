@@ -1,0 +1,199 @@
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openai/gpt-6-luna"
+      },
+      "utilityModel": "openai/gpt-6-luna",
+      "systemAgent": {
+        "agentId": "main"
+      },
+      "heartbeat": {
+        "agentId": "main"
+      },
+      "subagents": {
+        "maxSpawnDepth": 1,
+        "maxChildrenPerAgent": 2,
+        "runTimeoutSeconds": 120
+      },
+      "models": {
+        "openai/gpt-6-luna": {
+          "agentRuntime": {
+            "id": "openclaw"
+          }
+        }
+      }
+    },
+    "ownership": "explicit",
+    "entries": {
+      "a": {
+        "name": "canary-a",
+        "workspace": "~/scratch27/ws-a",
+        "agentDir": "~/scratch27/state/agents/a/agent",
+        "identity": {
+          "name": "Canary A",
+          "emoji": "x"
+        },
+        "model": "openai/gpt-6-luna",
+        "tools": {
+          "fs": {
+            "workspaceOnly": true
+          },
+          "alsoAllow": [
+            "read",
+            "write",
+            "edit"
+          ]
+        }
+      },
+      "b": {
+        "name": "canary-b",
+        "workspace": "~/scratch27/ws-b",
+        "agentDir": "~/scratch27/state/agents/b/agent",
+        "identity": {
+          "name": "Canary B",
+          "emoji": "x"
+        },
+        "model": "openai/gpt-6-luna",
+        "tools": {
+          "fs": {
+            "workspaceOnly": true
+          },
+          "alsoAllow": [
+            "read",
+            "write",
+            "edit"
+          ]
+        }
+      },
+      "main": {
+        "workspace": "~/scratch27/ws-main",
+        "agentDir": "~/scratch27/state/agents/main/agent"
+      },
+      "d": {
+        "name": "canary-d",
+        "workspace": "~/scratch27/ws-d",
+        "agentDir": "~/scratch27/state/agents/d/agent",
+        "identity": {
+          "name": "Canary B",
+          "emoji": "x"
+        },
+        "model": "openai/gpt-6-luna",
+        "tools": {
+          "fs": {
+            "workspaceOnly": false
+          },
+          "alsoAllow": [
+            "read",
+            "write",
+            "edit"
+          ]
+        }
+      },
+      "c": {
+        "name": "canary-c",
+        "workspace": "~/scratch27/ws-c",
+        "agentDir": "~/scratch27/state/agents/c/agent",
+        "identity": {
+          "name": "Canary B",
+          "emoji": "x"
+        },
+        "model": "openai/gpt-6-luna",
+        "tools": {}
+      },
+      "e": {
+        "name": "canary-e",
+        "workspace": "~/scratch27/ws-e",
+        "agentDir": "~/scratch27/state/agents/e/agent",
+        "identity": {
+          "name": "Canary B",
+          "emoji": "x"
+        },
+        "model": "openai/gpt-6-luna",
+        "tools": {
+          "fs": {
+            "workspaceOnly": true
+          },
+          "alsoAllow": [
+            "read",
+            "write",
+            "edit"
+          ]
+        },
+        "sandbox": {
+          "mode": "all"
+        }
+      }
+    }
+  },
+  "tools": {
+    "profile": "messaging",
+    "agentToAgent": {
+      "enabled": false,
+      "allow": []
+    },
+    "sessions": {
+      "visibility": "agent"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "anthropic": {
+        "config": {
+          "sessionCatalog": {
+            "enabled": false
+          }
+        }
+      },
+      "codex": {
+        "config": {
+          "sessionCatalog": {
+            "enabled": false
+          }
+        }
+      },
+      "memory-core": {
+        "config": {
+          "dreaming": {
+            "enabled": false
+          }
+        },
+        "enabled": true
+      },
+      "openai": {
+        "enabled": true
+      }
+    }
+  },
+  "meta": {
+    "migrations": {
+      "modelPolicyAllowlist": true,
+      "utilityModelSeparation": true
+    },
+    "lastTouchedVersion": "2026.10.5"
+  },
+  "talk": {
+    "agentId": "main"
+  },
+  "gateway": {
+    "mode": "local",
+    "port": 19927,
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "<redacted>"
+    }
+  },
+  "session": {
+    "reset": {
+      "mode": "daily",
+      "atHour": 4
+    }
+  },
+  "memory": {
+    "search": {
+      "enabled": false
+    }
+  },
+  "commands": {}
+}

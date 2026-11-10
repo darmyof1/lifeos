@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-139.sh",
+  "generated_by": "fix-140.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1516,6 +1516,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-11-10-claude-code-report-27.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
@@ -1577,6 +1581,10 @@
     },
     {
       "path": "ops/install-log.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/isolation-options.md",
       "status": "draft"
     },
     {
@@ -1953,6 +1961,554 @@
     },
     {
       "path": "ops/loop6-h26-2026-11-09/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/ask.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/costs.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-001-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-002-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-003-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-004-control-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-005-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-006-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-007-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-008-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-009-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/iso-010-reply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-003.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-004-control.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-005.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-006.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-007.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-008.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-009.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/prompt-iso-010.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/scratch-config-sanitized.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/tool-calls-and-cost.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-001-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-002-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-003-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-004-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-005-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-006-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-007-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-008-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-009-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/canary/trajectories/iso-010-tools.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/config-schema-isolation-keys.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/config-sha-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/crontab-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/crontab-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/driver.log",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/google-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/health-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/journal-before-prep.md.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/journal-numstat-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/leftover-delete.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/live-agent-config.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/live-effective-tools.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/p36-reset-markers.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/part2-summary.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/plugin-hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/plugin-hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/plugin-hashes.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/prep-loop7-prep-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-01.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-01/loop7-d2-01-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-01/loop7-d2-01-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-02.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-02/loop7-d2-02-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-02/loop7-d2-02-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-03.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-03/loop7-d2-03-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-03/loop7-d2-03-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-04.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-04/loop7-d2-04-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-04/loop7-d2-04-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-05.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-05/loop7-d2-05-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-05/loop7-d2-05-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-06.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-06/loop7-d2-06-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-06/loop7-d2-06-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-07.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-07/loop7-d2-07-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-07/loop7-d2-07-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-08.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-08/loop7-d2-08-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-08/loop7-d2-08-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-09.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-09/loop7-d2-09-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-09/loop7-d2-09-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-10.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-10/loop7-d2-10-03.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-d2-10/loop7-d2-10-03.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-01.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-01/loop7-ov-01-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-01/loop7-ov-01-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-02.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-02/loop7-ov-02-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-02/loop7-ov-02-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-03.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-03/loop7-ov-03-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-03/loop7-ov-03-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-04.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-04/loop7-ov-04-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-04/loop7-ov-04-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-05.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-05/loop7-ov-05-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-05/loop7-ov-05-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-06.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-06/loop7-ov-06-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-06/loop7-ov-06-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-07.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-07/loop7-ov-07-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-07/loop7-ov-07-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-08.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-08/loop7-ov-08-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-08/loop7-ov-08-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-09.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-09/loop7-ov-09-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-09/loop7-ov-09-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-10.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-10/loop7-ov-10-06.metrics.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/regression/loop7-ov-10/loop7-ov-10-06.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/sandbox-explain-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/sandbox-explain-scratch-mode-all.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/sandbox-explain-scratch.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-01.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-02.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-03.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-04.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-05.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-06.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-07.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-08.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-09.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-d2-10.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-01.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-02.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-03.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-04.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-05.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-06.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-07.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-08.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-09.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/suite-loop7-ov-10.out",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h27-2026-11-10/validator.txt",
       "status": "draft"
     },
     {

@@ -1,0 +1,3 @@
+Error: Path escapes sandbox root (~/scratch27/ws-b): ../ws-a/canary-a.txt. Use a relative path under `.openclaw/tmp/` inside the workspace for scratch/temp/meta files that file tools need to read or write later.
+
+I'm your new assistant. My vibe is calm, practical, and curious 🪶. What would you like to call me?

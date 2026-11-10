@@ -1,0 +1,18 @@
+coo tools: ['[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', 'ask_user', 'conversations_list', 'conversations_send', 'conversations_turn', 'gateway', 'intent', 'message']
+coo provider-visible: ['T', '[', ']', 'a', 'c', 'd', 'e', 'n', 'r', 't', 'u']
+coo tool calls in loop6-coo-001:
+   {"toolCallId": "call_oza3UMa9NAkgBotmsWAtQq6b|fc_0c431af5c811ea9d006af2648d9ebc87d296b1708e6c65f37c", "name": "exec", "arguments": {"title": "Find CoS conversation", "code": "[Malfo\u2026ted]"}, "assi
+   {"toolCallId": "call_oza3UMa9NAkgBotmsWAtQq6b|fc_0c431af5c811ea9d006af2648d9ebc87d296b1708e6c65f37c", "name": "exec", "args": {"title": "Find CoS conversation", "code": "***"}}
+   {"toolCallId": "tool_call:call_oza3UMa9NAkgBotmsWAtQq6b_fc_0c431af5c811ea9d006af2648d9ebc87d296b1708e6c65f37c:aa4902a1ef2e4cf9cd4885e3:sessions_list:1", "name": "sessions_list", "args": {"includeLastM
+   {"toolCallId": "call_4mhySU8qiqiZRbe37YNmvvO3|fc_0c431af5c811ea9d006af264908a0887d2a088bc5276688b65", "name": "exec", "arguments": {"title": "Ask CoS for calendar entry", "awaitResults": true, "code":
+   {"toolCallId": "call_4mhySU8qiqiZRbe37YNmvvO3|fc_0c431af5c811ea9d006af264908a0887d2a088bc5276688b65", "name": "exec", "args": {"title": "Ask CoS for calendar entry", "awaitResults": true, "code": "***
+   {"toolCallId": "tool_call:call_4mhySU8qiqiZRbe37YNmvvO3_fc_0c431af5c811ea9d006af264908a0887d2a088bc5276688b65:eae416398ff0dbb8accb9b15:sessions_send:1", "name": "sessions_send", "args": {"agentId": "c
+   {"toolCallId": "call_CHnf5Ku8FQlTvKi77keAvLgQ|fc_0c431af5c811ea9d006af26492911087d28248522efba3dcea", "name": "exec", "arguments": {"title": "Send CoS journal lookup", "awaitResults": true, "code": "[
+   {"toolCallId": "call_CHnf5Ku8FQlTvKi77keAvLgQ|fc_0c431af5c811ea9d006af26492911087d28248522efba3dcea", "name": "exec", "args": {"title": "Send CoS journal lookup", "awaitResults": true, "code": "***"}}
+   {"toolCallId": "tool_call:call_CHnf5Ku8FQlTvKi77keAvLgQ_fc_0c431af5c811ea9d006af26492911087d28248522efba3dcea:4d604ee4fec48def28b35221:sessions_send:1", "name": "sessions_send", "args": {"agentId": "c
+cho tools: ['[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', 'apply_patch', 'ask_user', 'conversations_list', 'conversations_send', 'conversations_turn', 'edit', 'gateway', 'intent']
+cho provider-visible: ['T', '[', ']', 'a', 'c', 'd', 'e', 'n', 'r', 't', 'u']
+cos tools: ['[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', 'apply_patch', 'ask_user', 'conversations_list', 'conversations_send', 'conversations_turn', 'edit', 'gateway', 'intent']
+cos provider-visible: ['T', '[', ']', 'a', 'c', 'd', 'e', 'n', 'r', 't', 'u']
+cfo tools: ['[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', '[Truncated]', 'apply_patch', 'ask_user', 'conversations_list', 'conversations_send', 'conversations_turn', 'edit', 'gateway', 'intent']
+cfo provider-visible: ['T', '[', ']', 'a', 'c', 'd', 'e', 'n', 'r', 't', 'u']

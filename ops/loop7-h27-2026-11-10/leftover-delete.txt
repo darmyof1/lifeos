@@ -1,0 +1,4 @@
+deleted	<id>	busy	approval: CEO, handover 27, 2026-11-09 (leftover busy event on 10-29)
+2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001

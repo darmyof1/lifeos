@@ -1,0 +1,12 @@
+Effective sandbox:
+  agentId: e
+  sessionKey: agent:e:main
+  mainSessionKey: agent:e:main
+  runtime: sandboxed
+  mode: all scope: agent
+  workspaceAccess: none workspaceRoot: ~/scratch27/state/sandboxes
+  effectiveHostWorkspaceRoot: ~/scratch27/state/sandboxes/workspace-f886f95f6511b7a6a12808007f76b485
+  backend: docker runtimeWorkdir: /workspace workspaceSource: sandbox
+  workspaceMounts:
+docker: not installed
+podman: not installed

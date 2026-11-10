@@ -1,0 +1,24 @@
+Effective sandbox:
+  agentId: a
+  sessionKey: agent:a:main
+  mainSessionKey: agent:a:main
+  runtime: direct
+  mode: off scope: agent
+  workspaceAccess: none workspaceRoot: ~/scratch27/state/sandboxes
+  effectiveHostWorkspaceRoot: ~/scratch27/ws-a
+  backend: docker runtimeWorkdir: ~/scratch27/ws-a workspaceSource: direct
+
+Sandbox tool policy:
+  allow (default): exec, process, read, ls, write, edit, apply_patch, view_image, sessions_list, sessions_history, sessions_search, sessions_send, sessions_spawn, sessions_yield, subagents, session_status
+Effective sandbox:
+  agentId: b
+  sessionKey: agent:b:main
+  mainSessionKey: agent:b:main
+  runtime: direct
+  mode: off scope: agent
+  workspaceAccess: none workspaceRoot: ~/scratch27/state/sandboxes
+  effectiveHostWorkspaceRoot: ~/scratch27/ws-b
+  backend: docker runtimeWorkdir: ~/scratch27/ws-b workspaceSource: direct
+
+Sandbox tool policy:
+  allow (default): exec, process, read, ls, write, edit, apply_patch, view_image, sessions_list, sessions_history, sessions_search, sessions_send, sessions_spawn, sessions_yield, subagents, session_status

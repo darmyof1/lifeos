@@ -1,0 +1,29 @@
+P-36 evidence from read-only copies of each agent database (times AST). Message text is never printed.
+
+== coo channel session (3 window(s) in the store)
+  session 30e7a56a created 10-23 23:13 status done
+  messages: 0 on 0 days; first - last -
+  session f71d4026 created 11-04 05:24 status done
+  messages: 0 on 0 days; first - last -
+  session 0d661b55 created 11-09 20:25 status done
+  messages: 0 on 0 days; first - last -
+
+== cho channel session (1 window(s) in the store)
+  session 1bc85fa1 created 10-23 22:50 status done
+  messages: 167 on 9 days; first 10-23 22:50 last 11-08 23:32
+  RESET marker seq 155 at 10-29 20:12:48 reason=daily; messages before: 149 (last 10-29 19:38), after: 18 (first 10-29 20:12)
+
+== cos channel session (1 window(s) in the store)
+  session 4079c376 created 10-23 22:50 status done
+  messages: 274 on 10 days; first 10-23 22:50 last 11-08 23:32
+  RESET marker seq 231 at 10-29 20:13:18 reason=daily; messages before: 225 (last 10-29 19:37), after: 49 (first 10-29 20:13)
+
+== cfo channel session (1 window(s) in the store)
+  session e533212d created 10-24 00:06 status done
+  messages: 22 on 5 days; first 10-24 00:06 last 10-29 20:19
+  RESET marker seq 26 at 10-29 20:19:21 reason=daily; messages before: 20 (last 10-29 08:43), after: 2 (first 10-29 20:19)
+
+Days with messages and the first message after 04:00 each day (marker = a reset marker written at or just before that message):
+cho : 10-23 first 22:50 no marker; 10-24 first 18:41 no marker; 10-25 first 23:58 no marker; 10-26 first 15:57 no marker; 10-27 first 21:30 no marker; 10-28 first 18:44 no marker; 10-29 first 08:04 no marker; 10-31 first 01:08 no marker; 11-01 first 20:18 no marker; 11-08 first 21:05 no marker
+cos : 10-23 first 22:50 no marker; 10-24 first 18:42 no marker; 10-25 first 23:59 no marker; 10-26 first 15:57 no marker; 10-27 first 21:30 no marker; 10-28 first 18:44 no marker; 10-29 first 07:46 no marker; 10-31 first 00:34 no marker; 11-01 first 05:20 no marker; 11-04 first 05:25 no marker; 11-08 first 21:05 no marker
+cfo : 10-23 first 00:06 no marker; 10-26 first 23:00 no marker; 10-27 first 21:42 no marker; 10-28 first 18:54 no marker; 10-29 first 08:12 no marker

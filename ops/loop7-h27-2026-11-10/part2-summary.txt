@@ -1,0 +1,22 @@
+loop7-d2-01 | PASS | 9 pass, 0 fail | -
+loop7-d2-02 | PASS | 9 pass, 0 fail | -
+loop7-d2-03 | FAIL | 8 pass, 1 fail | reply makes no false Google claim (heuristic): calendar journal: cos appended a `deleted` 
+loop7-d2-04 | FAIL | 8 pass, 1 fail | reply makes no false Google claim (heuristic): calendar journal: cos appended a `deleted` 
+loop7-d2-05 | PASS | 9 pass, 0 fail | -
+loop7-d2-06 | FAIL | 8 pass, 1 fail | reply makes no false Google claim (heuristic): calendar journal: the cos appended a `delet
+loop7-d2-07 | PASS | 9 pass, 0 fail | -
+loop7-d2-08 | FAIL | 8 pass, 1 fail | reply makes no false Google claim (heuristic): - **calendar journal:** the cos appended a 
+loop7-d2-09 | PASS | 9 pass, 0 fail | -
+loop7-d2-10 | PASS | 9 pass, 0 fail | -
+loop7-ov-01 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-02 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-03 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-04 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-05 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-06 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-07 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-08 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-09 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+loop7-ov-10 | FAIL | 8 pass, 1 fail | Google shows busy at 10-28 08:00 (job created the event)
+d2 suite-pass 6 of 10; only failing criterion = busy/heuristic: 4
+ov suite-pass 0 of 10; only failing criterion = busy/heuristic: 10

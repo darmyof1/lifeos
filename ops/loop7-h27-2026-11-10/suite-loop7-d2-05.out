@@ -1,0 +1,9 @@
+loop7-d2-05-03 PASS (9 pass, 0 fail) cost 0.0077
+-- closing reset
+other events: 0
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop7-d2-05-99-final now, then: scenario-run.sh check loop7-d2-05-99-final
+summary: /home/ubuntu/handover/regression/loop7-d2-05.md
+Runs: 3. Pass 1, fail 0. Total cost 0.0077 USD (measured by exporting the COO, CHO, CoS and CFO sessions).
+
+CRON: ACTIVE (*/5)

@@ -1,0 +1,11 @@
+loop7-iso-001 0.0017 USD
+loop7-iso-002 0.0018 USD
+loop7-iso-003 0.0019 USD
+loop7-iso-004 0.0017 USD
+loop7-iso-005 0.0019 USD
+loop7-iso-006 0.0022 USD
+loop7-iso-007 0.0017 USD
+loop7-iso-008 0.0026 USD
+loop7-iso-009 0.0018 USD
+loop7-iso-010 0.0018 USD
+total 0.0191 USD

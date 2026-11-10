@@ -1,0 +1,19 @@
+prep loop7-prep-001: gateway ok (1 process)
+deleted	<id>	busy	approval: CEO handover 4, 2026-10-26
+compact coo: No compaction needed for session agent:coo:main. 
+compact cho: Compacted session agent:cho:main (kept 1 lines). 
+compact cos: Compacted session agent:cos:main (kept 1 lines). 
+compact cfo: No compaction needed for session agent:cfo:main. 
+done  CHO - Workout - 10302026-0001: already in Google <id>
+summary: pushed 3, conflict 0, failed 0 (final 0), deleted 0, skipped 0, reconciled 0 (display full)
+<id>	2026-10-26T07:00:00-04:00	CHO - Workout - 10262026-0001
+<id>	2026-10-28T07:00:00-04:00	CHO - Workout - 10282026-0001
+<id>	2026-10-29T09:00:00-04:00	busy
+<id>	2026-10-30T07:00:00-04:00	CHO - Workout - 10302026-0001
+other events: 0
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop7-prep-001 now, then: scenario-run.sh check loop7-prep-001
+
+--- end (prep loop7-prep-001, exit status 0)
+CRON: PAUSED (line starts with #)
+CRON: stress-ng line kept

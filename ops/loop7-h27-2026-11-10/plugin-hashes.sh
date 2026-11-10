@@ -1,0 +1,1 @@
+cd ~/loop1 && sha256sum ceo-ledger/scenario-ledger.jsonl ceo-ledger/slack-ledger.jsonl state/extensions/ceo-ledger/*.js state/extensions/ceo-ledger/*.json state/extensions/gate-plugin/*.js state/extensions/gate-plugin/*.json 2>&1 | sed -E 's#/home/ubuntu#~#'

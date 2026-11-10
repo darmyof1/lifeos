@@ -1,0 +1,12 @@
+# Calendar journal - SYNTHETIC (Loop 1, APR-0054)
+Only the CoS writes here. One line per entry.
+
+name | start | end | status | run ID | event ID | requested by
+CHO - Workout - 10262026-0001 | 2026-10-26 07:00 | 2026-10-26 08:00 | written | seed | seed-1 | seed
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | written | seed | seed-2 | seed
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | written | seed | seed-3 | seed
+CHO - Workout - 10262026-0001 | 2026-10-26 07:00 | 2026-10-26 08:00 | pushed | seed | seed-1 | sync | google=<id>
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | pushed | seed | seed-2 | sync | google=<id>
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | seed | seed-3 | sync | google=<id>
+CHO - Dentist appointment - 11092026-0001 | 2026-11-09 10:00 | 2026-11-09 11:00 | written | loop3-dentist-20261108-01 | loop3-dentist-20261108-01-cho-01 | CHO | privacy=high
+CHO - Dentist appointment - 11092026-0001 | 2026-11-09 10:00 | 2026-11-09 11:00 | pushed | loop3-dentist-20261108-01 | loop3-dentist-20261108-01-cho-01 | sync | google=<id>; privacy=high
