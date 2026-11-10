@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-142.sh",
+  "generated_by": "fix-143.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1164,6 +1164,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop3/vm/rescore-criteria.py",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop3/vm/run-metrics.py",
       "status": "draft"
     },
@@ -1521,6 +1525,10 @@
     },
     {
       "path": "ops/handover-2026-11-10-claude-code-report-27.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-10-claude-code-report-28.md",
       "status": "draft"
     },
     {
@@ -2513,6 +2521,134 @@
     },
     {
       "path": "ops/loop7-h27-2026-11-10/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/config-compare.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/crontab-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/crontab-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/gateway-log-2026-10-29.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/google-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/health-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/health-installed-sha.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/live-sessions-started.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/plugin-hashes-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/rescore.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/after-done.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/after-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/after.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/ask.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/before-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/build.py",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/config-g1-sanitized.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/config-g2-sanitized.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/g1-p-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/g1-p-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/g1-q-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/g1-q-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/g2-p-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/g2-p-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/g2-q-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/g2-q-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/sessions-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/reset-test/sessions-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/session-keys-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/session-reset-doc-and-code-quotes.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h28-2026-11-10/validator.txt",
       "status": "draft"
     },
     {
@@ -3864,6 +4000,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/session-reset-options.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/structure-test/comparison/comparison.md",
       "status": "draft"
     },
@@ -5148,6 +5288,10 @@
       "status": "draft"
     },
     {
+      "path": "tests/unit/test_health_check_loop7.py",
+      "status": "draft"
+    },
+    {
       "path": "tests/unit/test_history_scan.py",
       "status": "draft"
     },
@@ -5209,6 +5353,10 @@
     },
     {
       "path": "tests/unit/test_prefilter.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_reg_criteria_loop7.py",
       "status": "draft"
     },
     {

@@ -1,0 +1,11 @@
+Live config, only the session-related keys (read only):
+session = {"reset": {"mode": "daily", "atHour": 4}}
+top-level keys containing 'session' or 'reset': ['session']
+agents.entries.main session/reset keys: none
+agents.entries.coo session/reset keys: none
+agents.entries.cho session/reset keys: none
+agents.entries.cos session/reset keys: none
+agents.entries.cfo session/reset keys: none
+agents.entries.solo session/reset keys: none
+tools.sessions = {"visibility": "agent"}
+session.resetByType / resetByChannel / idleMinutes present: none

@@ -1,0 +1,137 @@
+{
+ "agents": {
+  "defaults": {
+   "model": {
+    "primary": "openai/gpt-6-luna"
+   },
+   "utilityModel": "openai/gpt-6-luna",
+   "systemAgent": {
+    "agentId": "main"
+   },
+   "heartbeat": {
+    "agentId": "main"
+   },
+   "subagents": {
+    "maxSpawnDepth": 1,
+    "maxChildrenPerAgent": 2,
+    "runTimeoutSeconds": 120
+   },
+   "models": {
+    "openai/gpt-6-luna": {
+     "agentRuntime": {
+      "id": "openclaw"
+     }
+    }
+   }
+  },
+  "ownership": "explicit",
+  "entries": {
+   "main": {
+    "workspace": "~/scratch28/g2/ws-main",
+    "agentDir": "~/scratch28/g2/state/agents/main/agent"
+   },
+   "p": {
+    "name": "reset-p",
+    "workspace": "~/scratch28/g2/ws-p",
+    "agentDir": "~/scratch28/g2/state/agents/p/agent",
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   },
+   "q": {
+    "name": "reset-q",
+    "workspace": "~/scratch28/g2/ws-q",
+    "agentDir": "~/scratch28/g2/state/agents/q/agent",
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   }
+  }
+ },
+ "tools": {
+  "profile": "messaging",
+  "agentToAgent": {
+   "enabled": false,
+   "allow": []
+  },
+  "sessions": {
+   "visibility": "agent"
+  }
+ },
+ "plugins": {
+  "entries": {
+   "anthropic": {
+    "config": {
+     "sessionCatalog": {
+      "enabled": false
+     }
+    }
+   },
+   "codex": {
+    "config": {
+     "sessionCatalog": {
+      "enabled": false
+     }
+    }
+   },
+   "memory-core": {
+    "config": {
+     "dreaming": {
+      "enabled": false
+     }
+    },
+    "enabled": true
+   },
+   "openai": {
+    "enabled": true
+   }
+  }
+ },
+ "meta": {
+  "migrations": {
+   "modelPolicyAllowlist": true,
+   "utilityModelSeparation": true
+  },
+  "lastTouchedVersion": "2026.10.5"
+ },
+ "talk": {
+  "agentId": "main"
+ },
+ "gateway": {
+  "mode": "local",
+  "port": 19929,
+  "bind": "loopback",
+  "auth": {
+   "mode": "token",
+   "token": "<redacted>"
+  }
+ },
+ "session": {
+  "reset": {
+   "mode": "daily",
+   "atHour": 3
+  }
+ },
+ "memory": {
+  "search": {
+   "enabled": false
+  }
+ },
+ "commands": {}
+}

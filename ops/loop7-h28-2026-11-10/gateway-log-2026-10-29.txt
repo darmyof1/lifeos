@@ -1,0 +1,48 @@
+# Gateway log, 2026-10-29, AST (UTC-4), sanitized: Slack team/channel/user IDs replaced, agent message text not included
+# a) plugin install and hot reloads (no restart seen)
+2026-10-29T19:40:49.371-04:00 [reload] config change detected; evaluating reload (plugins.entries.ceo-ledger, plugins.installs.ceo-ledger)
+2026-10-29T19:40:50.049-04:00 [gateway] Plugin replacement applied: ceo-ledger
+2026-10-29T19:41:19.413-04:00 [reload] config hot reload applied (plugins.entries.ceo-ledger, plugins.installs.ceo-ledger)
+2026-10-29T19:41:19.448-04:00 [reload] config source revision 2 accepted (write)
+2026-10-29T19:41:20.093-04:00 [ws] ⇄ res ✓ plugins.install 33174ms bytes=788 conn=7764ce1d…e952 id=2:b2ed637a-e…8ba7
+2026-10-29T19:41:32.457-04:00 [reload] plugin metadata changed with identical config; applying plugin lifecycle
+2026-10-29T19:41:33.304-04:00 [gateway] Plugin replacement applied: ceo-ledger
+2026-10-29T19:42:01.642-04:00 [reload] config source revision 5 accepted (write)
+2026-10-29T19:42:01.922-04:00 [ws] ⇄ res ✓ plugins.setEnabled 31281ms bytes=971 conn=9aa4aa3f…3277 id=2:79057485-b…2841
+# b) lines around the marker times (inbound Slack messages and replies only; no message text)
+2026-10-29T20:12:02.049-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 75 chars)
+2026-10-29T20:12:10.942-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:12:48.491-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 75 chars)
+2026-10-29T20:12:51.367-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:13:17.607-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 75 chars)
+2026-10-29T20:13:20.681-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:13:49.836-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 75 chars)
+2026-10-29T20:13:52.310-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:13:55.070-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 75 chars)
+2026-10-29T20:13:58.691-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:14:28.675-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 49 chars)
+2026-10-29T20:14:33.400-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:14:48.386-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 56 chars)
+2026-10-29T20:14:50.910-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:16:21.916-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 64 chars)
+2026-10-29T20:16:27.939-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:19:20.836-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 75 chars)
+2026-10-29T20:19:24.671-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:20:50.162-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 63 chars)
+2026-10-29T20:20:56.710-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:22:29.561-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 64 chars)
+2026-10-29T20:22:33.113-04:00 [slack] delivered reply to channel:<id>
+2026-10-29T20:23:30.668-04:00 [slack] Inbound app_mention slack:<team>:channel:<id>:user:<uid> -> bot:<uid> (channel, 262 chars)
+# c) any gateway start between 10-23 and 10-29 (restart check)
+10:[gateway] startup phase: cli.command.config-ready starting total=4898.2ms
+55:[gateway] startup phase: cli.command.config-ready 2862.9ms total=7761.1ms start=4898.2ms
+282:[gateway] startup phase: cli.command.config-ready starting total=5260.6ms
+327:[gateway] startup phase: cli.command.config-ready 3051.0ms total=8311.5ms start=5260.6ms
+333:2026-10-26T19:59:10.597-04:00 [gateway] starting...
+341:2026-10-26T19:59:11.990-04:00 [gateway] spawn broker ready pid=3423497
+356:2026-10-26T19:59:17.759-04:00 [gateway] starting HTTP server...
+381:2026-10-26T19:59:35.323-04:00 [gateway] worker startup state: {"workerCount":7,"workerLifecycle":[{"script":"worker-native-lifecycle.worker.js","started":1,
+383:2026-10-26T19:59:35.384-04:00 [gateway] starting channels and sidecars...
+406:2026-10-26T20:00:06.469-04:00 [gateway] ready
+409:2026-10-26T20:00:06.485-04:00 [gateway] startup phase: ready 1.0ms total=65300.4ms
+417:2026-10-26T20:00:07.314-04:00 [gateway] startup phase: post-ready.startup-maintenance starting total=66128.5ms

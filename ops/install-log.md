@@ -488,3 +488,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-10 - APR-0125 (fix-142)
 - Repo only: approval recorded, handover 28 added. Nothing installed or changed on the VM by this entry.
+
+## 2026-11-10 - Handover 28 (Loop 7) recorded (fix-143)
+- Live on the VM during handover 28: the installed health-check.py replaced with the repo copy (new workspaceOnly line, PASS 78). Nothing else changed. Scratch gateways deleted. Evidence: ops/loop7-h28-2026-11-10/.

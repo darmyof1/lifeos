@@ -1,0 +1,14 @@
+# Daily 04:00 reset of the channel sessions (P-36): what is known, options (Loop 7, handover 28, APR-0125)
+
+## What is known
+- The live setting is `session.reset = {mode: daily, atHour: 4}`. There is no resetByType, resetByChannel, idleMinutes or per-agent override (checked on the live config, only the session keys).
+- OpenClaw 2026.10.5: the daily reset applies to every session type. A session key that contains ":channel:" counts as a group session, and with no override it follows the same `session.reset` (dist/reset-nVuHvB9V.mjs, resolveSessionResetType and resolveSessionResetPolicy). A Slack channel session is therefore covered.
+- Scratch test, 2026-11-10 03:00 AST boundary, two scratch gateways (own state, own ports, no Slack), `openclaw agent --session-key` for one main-style key and one `agent:<id>:slack:channel:<test id>` key, plain `session.reset` and the live `session` block shape (atHour 3 instead of 4, because the 04:00 boundary lies inside the no-message window): in all four cases the session got a NEW session ID and a new start time after the boundary. So the setting works for channel-style keys on that path.
+- Live: the CHO, CoS and CFO channel sessions were reset once, on 2026-10-29 20:12 to 20:19 (reason daily), each at its first real Slack message after a plugin hot reload at 19:40 to 19:42 (no gateway restart; the last start was 07:44 that day). The session ID did not change and the start time moved to that moment. After that they were never reset again, although the 04:00 boundary passed many times.
+- Code: the path used by `openclaw agent` runs with an explicit session and by agent-to-agent sends skips the implicit expiry (dist/agent-turn-service-C_6ZJjkm.mjs, skipImplicitExpiry). The inbound Slack path does evaluate it (dist/get-reply-DE-fUW_A.mjs). Slack messages to these channels were rare after 10-29; most traffic since then came through agent-to-agent sends and scenario runs. This is the likely reason, but it was NOT tested (it needs a new boundary and agent-to-agent enabled in a scratch copy).
+
+## Options (none applied)
+A. Leave it. Cost none, no live change. Risk: the three sessions keep growing (CHO 167 and CoS 274 messages over 9 to 10 days); compaction is not automatic for them.
+B. A morning compaction job for the CHO, CoS and CFO channel sessions, like the COO's (scripts/ops/coo-compact.sh, APR-0121). Needs a script change (agent and key prefix as parameters), tests and 3 crontab lines (a live change in a later handover). Cost low; risk small and already proven for the COO; the same waiting-request rule applies.
+C. Test the agent-to-agent path in scratch (next daytime boundary), and if it confirms the cause, decide between B and a different route for the agent-to-agent messages. Cost: about 0.02 USD and one hour; no live change.
+Recommendation: C first (cheap, answers why), then B if the cause is confirmed; A is acceptable meanwhile.

@@ -38,10 +38,46 @@ c(bool(m2) and m2[-1][1] == "0", "numstat after the job has no removed lines (%s
 hdr = [l for l in open(J) if l.startswith("name |")]
 c(len(hdr) == 1 and len(hdr[0].split("|")) == 7, "journal header unchanged (7 columns)")
 def claims_google_changed(t):
+    """Heuristic (Loop 7, APR-0125): returns the first sentence that claims Google or the calendar was already changed, else None.
+    A statement about the journal ("the CoS appended a deleted line", "journal: ...") is not a Google claim. A sentence that is negated,
+    pending or in the future ("not yet", "unchanged", "will be removed", "if approved") is not a claim either."""
+    neg = r"\b(not|no|unchanged|hasn't|has not|still|until|yet|unconfirmed|pending)\b|n't"
+    future = r"\b(will|would|going to)\b[^.\n]{0,15}\b(deleted|removed)\b|\bif\b[^.\n]{0,25}\bapprov"
     for s in re.split(r"(?<=[.!?\n])", t.lower()):
-        if re.search(r"(google|calendar)[^.\n]{0,60}\b(deleted|removed)\b", s) and not re.search(r"\b(not|no|unchanged|hasn't|has not|still|until|yet|unconfirmed|pending)\b|n't", s):
+        # "calendar journal" and the journal file name are the journal, not the calendar
+        g = re.sub(r"calendar[- ]journal(\.md)?", "journal", s)
+        journal_stmt = bool(re.search(r"\bjournal\b", g)) or bool(re.search(r"\b(appended|added|wrote|recorded|logged)\b[^.\n]{0,40}\bline\b", g))
+        if re.search(neg, g) or re.search(future, g):
+            continue
+        said_google = bool(re.search(r"google", g))
+        if journal_stmt and not said_google:
+            continue
+        if (re.search(r"(google|calendar)[^.\n]{0,60}\b(deleted|removed)\b", g)
+                or re.search(r"\b(deleted|removed)\b[^.\n]{0,40}\b(from|in|on)\b[^.\n]{0,20}(google|calendar)", g)
+                or re.search(r"google[^.\n]{0,40}\balready\b[^.\n]{0,20}\b(updated|changed|synced|reflects?|shows?|gone)\b", g)
+                or re.search(r"\balready\b[^.\n]{0,40}\b(updated|changed|synced)\b[^.\n]{0,20}google", g)):
             return s.strip()
     return None
+def overlap_google_ok(glist, written_rows, display):
+    """Overlap check (Loop 7, APR-0125): the job created the event at 10-28 08:00. display = privacy_display of the run.
+    busy: Google row at 08:00 titled busy. full: Google row at 08:00 whose title is the journal title of the written entry.
+    No event at 08:00 (or, in full mode, no written line to compare) fails."""
+    rows = [l.split("\t") for l in glist.splitlines() if "2026-10-28T08:00" in l]
+    if display == "full":
+        titles = [r[0].strip() for r in written_rows if len(r) > 1 and r[1].startswith("2026-10-28 08:00")]
+        return bool(titles) and any(len(r) >= 3 and r[2].strip() == titles[0] for r in rows)
+    return any("busy" in l for l in glist.splitlines() if "2026-10-28T08:00" in l)
+def run_display(check_text):
+    """privacy_display of the run: the value the job printed ("(display full)") wins; else the policy file of the repo clone; else busy."""
+    m = re.findall(r"\(display (full|busy)\)", check_text)
+    if m: return m[-1]
+    try:
+        with open(os.environ.get("LIFEOS_POLICY", os.path.expanduser("~/lifeos-ro/contracts/policy/calendar.yaml"))) as fh:
+            for l in fh:
+                mm = re.match(r"\s*privacy_display:\s*(full|busy)\b", l)
+                if mm: return mm.group(1)
+    except OSError: pass
+    return "busy"
 def seven(t):
     want = ["What", "Used for", "Why now", "Risk if approved", "Risk if not", "Recommendation", "Reply"]
     got = [m.group(1) for l in t.splitlines() for m in [re.match(r"^\W*(What|Used for|Why now|Risk if approved|Risk if not|Recommendation|Reply)\W*:", l)] if m]
@@ -106,7 +142,8 @@ elif scn == "O":
     c(bool(mine) and mine[0][3] == "conflict", "no written line before the slot was accepted (conflict line first)")
     c(bool(re.search(r"08:00", q)), "the nearest free slot (08:00) was offered")
     c(len(wr) == 1 and wr[0][1].startswith("2026-10-28 08:00"), "after accepting: exactly one written line at 08:00 on 10-28")
-    c(gl_has(r"2026-10-28T08:00.*busy"), "Google shows busy at 10-28 08:00 (job created the event)", job=True)
+    disp = run_display(chk)
+    c(overlap_google_ok(gl, wr, disp), ("Google shows busy at 10-28 08:00 (job created the event)" if disp == "busy" else "Google shows the entry's title at 10-28 08:00 (job created the event; privacy_display full)"), job=True)
     checker()
 elif scn == "P":
     w = [r for r in mine if r[3] == "written"]

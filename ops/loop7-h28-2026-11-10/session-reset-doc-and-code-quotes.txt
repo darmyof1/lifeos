@@ -1,0 +1,94 @@
+# Quotes from the OpenClaw 2026.10.5 install (docs and code); paths relative to the package folder
+
+## docs/concepts/session.md lines 172-183
+Sessions are reused until you reset them manually or opt into an automatic reset policy:
+
+- **No automatic reset** (default `mode: "none"`) - sessions keep the same
+  `sessionId`; compaction manages the active context as the conversation grows.
+- **Daily reset** (`mode: "daily"`) - opt into a new session at a configured local
+  hour (`session.reset.atHour`, default `4`, 0-23) on the gateway host. Daily
+  freshness is based on when the current `sessionId` started, not on later
+  metadata writes.
+- **Idle reset** (`mode: "idle"`) - opt into a new session after `session.reset.idleMinutes`
+  of inactivity. Idle freshness is based on the last real user/channel
+  interaction, so heartbeat, cron, and exec system events do not keep the
+  session alive.
+
+## docs/gateway/config-agents/sessions.md line 87-89
+- **`reset`**: primary reset policy. `none` disables automatic reset and is the default; compaction bounds active context instead. `daily` resets at `atHour` local time; `idle` resets after `idleMinutes`. When both configured, whichever expires first wins. `/new` and `/reset` remain available in every mode. Daily reset freshness uses the session row's `sessionStartedAt`; idle reset freshness uses `lastInteractionAt`. Background/system-event writes such as heartbeat, cron wakeups, exec notifications, and gateway bookkeeping can update `updatedAt`, but they do not keep daily/idle sessions fresh.
+  - **`resetByType`**: per-type overrides (`direct`, `group`, `thread`). Doctor migrates legacy `dm` entries to `direct`; the schema rejects `dm`.
+- **`resetByChannel`**: per-channel reset overrides keyed by provider/channel id. When the session's channel has a matching entry, it wins outright over `resetByType`/`reset` for that session. Use only when one channel needs reset behavior different from the type-level policy.
+
+## dist/reset-nVuHvB9V.mjs lines 17-24 (policy), 39-49 (freshness), 70-81 (type)
+function resolveSessionResetPolicy(params) {
+	const sessionCfg = params.sessionCfg;
+	const baseReset = params.resetOverride ?? sessionCfg?.reset;
+	const typeReset = params.resetOverride ? void 0 : sessionCfg?.resetByType?.[params.resetType];
+	const configured = Boolean(baseReset || typeReset);
+	const inheritedTypeMode = typeReset && baseReset?.mode !== "none" ? baseReset?.mode : void 0;
+	const mode = typeReset?.mode ?? inheritedTypeMode ?? (typeReset ? "daily" : void 0) ?? baseReset?.mode ?? (baseReset ? "daily" : DEFAULT_RESET_MODE);
+	const atHour = normalizeResetAtHour(typeReset?.atHour ?? baseReset?.atHour ?? DEFAULT_RESET_AT_HOUR);
+function evaluateSessionFreshness(params) {
+	if (params.updatedAt === 0) return { fresh: false };
+	if (params.policy.mode === "none") return { fresh: true };
+	const updatedAt = resolveTimestamp(params.updatedAt, params.now) ?? 0;
+	const sessionStartedAt = resolveTimestamp(params.sessionStartedAt, params.now) ?? updatedAt;
+	const lastInteractionAt = resolveTimestamp(params.lastInteractionAt, params.now) ?? sessionStartedAt;
+	const dailyResetAt = params.policy.mode === "daily" ? resolveDailyResetAtMs(params.now, params.policy.atHour) : void 0;
+	const idleExpiresAt = params.policy.idleMinutes != null && params.policy.idleMinutes > 0 ? lastInteractionAt + params.policy.idleMinutes * 6e4 : void 0;
+	const staleDaily = dailyResetAt != null && sessionStartedAt < dailyResetAt;
+	const staleIdle = idleExpiresAt != null && params.now > idleExpiresAt;
+	const staleReason = staleDaily && staleIdle ? (dailyResetAt ?? Number.POSITIVE_INFINITY) <= (idleExpiresAt ?? Number.POSITIVE_INFINITY) ? "daily" : "idle" : staleIdle ? "idle" : staleDaily ? "daily" : void 0;
+const GROUP_SESSION_MARKERS = [":group:", ":channel:"];
+/** Returns true when a session key is known to represent a thread. */
+function isThreadSessionKey(sessionKey) {
+	return Boolean(resolveLoadedSessionThreadInfo(sessionKey).threadId);
+}
+function resolveSessionResetType(params) {
+	if (params.isThread || isThreadSessionKey(params.sessionKey)) return "thread";
+	if (params.isGroup) return "group";
+	const normalized = normalizeLowercaseStringOrEmpty(params.sessionKey);
+	if (GROUP_SESSION_MARKERS.some((marker) => normalized.includes(marker))) return "group";
+	return "direct";
+}
+
+## dist/get-reply-DE-fUW_A.mjs lines 4753-4781 (inbound message path)
+	const resetType = resolveSessionResetType({
+		sessionKey,
+		isGroup,
+		isThread
+	});
+	const channelReset = resolveChannelResetConfig({
+		sessionCfg,
+		channel: groupResolution?.channel ?? ctx.OriginatingChannel ?? ctx.Surface ?? ctx.Provider
+	});
+	const resetPolicy = resolveSessionResetPolicy({
+		sessionCfg,
+		resetType,
+		resetOverride: channelReset
+	});
+	const canReuseExistingEntry = Boolean(entry?.sessionId) && typeof entry?.updatedAt === "number" && Number.isFinite(entry.updatedAt);
+	const expectedExistingSessionId = retargetedSession ? void 0 : params.expectedExistingSessionId?.trim() || void 0;
+	if (expectedExistingSessionId && entry?.sessionId !== expectedExistingSessionId) throw new Error(`session rebound for sessionKey: ${sessionKey}`);
+	const pinExpectedExistingSession = params.pinExpectedExistingSession === true && expectedExistingSessionId !== void 0;
+	const requestedSessionId = params.requestedSessionId?.trim() || void 0;
+	const reconnectResumeRequested = params.resumeRequestedSession === true && requestedSessionId !== void 0 && entry?.sessionId === requestedSessionId;
+	const skipImplicitExpiry = lockedModelSelection || hasProviderOwnedSession(entry) && resetPolicy.configured !== true;
+	const lifecycleTimestamps = initializationSnapshot.lifecycleTimestamps ?? await resolveSessionLifecycleTimestampsAsync({
+		entry,
+		...sessionTarget,
+		signal: params.signal
+	});
+	const entryFreshness = entry ? skipImplicitExpiry ? { fresh: true } : evaluateSessionFreshness({
+		updatedAt: entry.updatedAt,
+		sessionStartedAt: lifecycleTimestamps.sessionStartedAt,
+
+## dist/agent-turn-service-C_6ZJjkm.mjs line 634-641 (openclaw agent / sessions_send path)
+	const skipImplicitExpiry = params.expectedExistingSessionId !== void 0 || params.hasRestoredCronContinuation || params.freshEntry?.modelSelectionLocked === true || params.resetPolicy.configured !== true && hasProviderOwnedSession(params.freshEntry);
+	const freshness = params.freshEntry ? skipImplicitExpiry ? { fresh: true } : evaluateSessionFreshness({
+		updatedAt: params.freshEntry.updatedAt,
+		...lifecycleTimestamps,
+		now: params.now,
+		policy: params.resetPolicy
+	}) : void 0;
+	const requestedSessionMatchesEntry = Boolean(params.requestedSessionId && params.freshEntry?.sessionId?.trim() === params.requestedSessionId);

@@ -146,6 +146,37 @@ for a in AGENTS:
             "alsoAllow = " + repr(also) + ", workspaceOnly = " + repr(fs.get("workspaceOnly") if isinstance(fs, dict) else None),
             "agent cannot write its state, or can read outside its workspace")
 
+def workspace_confined_status(tools_by_agent):
+    """Loop 7 (APR-0125). tools_by_agent: {agent id: that agent's tools block (dict) or None}.
+    PASS when every agent that has file tools (read, write or edit in alsoAllow) has tools.fs.workspaceOnly true,
+    or has no file tools; FAIL when it is false or missing. An agent whose entry is missing counts as FAIL.
+    Returns (status, detail)."""
+    bad, parts = [], []
+    for a in sorted(tools_by_agent):
+        t = tools_by_agent[a]
+        if not isinstance(t, dict):
+            bad.append(a)
+            parts.append(a + ": no tools block")
+            continue
+        also = t.get("alsoAllow") or []
+        has_files = bool(set(also) & {"read", "write", "edit"})
+        fs = t.get("fs")
+        only = fs.get("workspaceOnly") if isinstance(fs, dict) else None
+        if not has_files:
+            parts.append(a + ": no file tools")
+        elif only is True:
+            parts.append(a + ": confined")
+        else:
+            bad.append(a)
+            parts.append(a + ": workspaceOnly = " + repr(only))
+    return ("FAIL" if bad else "PASS"), "; ".join(parts)
+
+
+_confine_status, _confine_detail = workspace_confined_status(
+    {a: cfg("agents.entries." + a + ".tools") for a in ("cho", "cos", "cfo")})
+rec(_confine_status, "file tools of the CHO, CoS and CFO are confined to their workspace", _confine_detail,
+    "agent can read or write outside its workspace (SPK-03, APR-0124)")
+
 # 5. Agents and workspaces
 agent_rows = js(["openclaw", "agents", "list", "--json"]) or []
 if isinstance(agent_rows, dict):
