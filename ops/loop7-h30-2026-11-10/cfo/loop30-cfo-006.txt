@@ -1,0 +1,5 @@
+# run loop30-cfo-006, agent cfo, started 2026-11-10T21:27:05-04:00
+# message: What is the price of fund Alpha today?
+---- reply ----
+I can't look up today's market price. My record shows Alpha's balance is **$102**: $100 contributed + $2 recorded growth. The record doesn't say how much of that growth came from added money versus interest.
+---- end (rc=0, 2026-11-10T21:27:14-04:00) ----

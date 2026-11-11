@@ -22,8 +22,8 @@ WS = os.path.join(HOME, "loop1", "workspaces")
 ENV = dict(os.environ, OPENCLAW_STATE_DIR=STATE, OPENCLAW_CONFIG_PATH=os.path.join(STATE, "openclaw.json"))
 PINNED = "2026.10.5"
 MODEL = "openai/gpt-6-luna"
-AGENTS = ["coo", "cho", "cos", "cfo"]
-SEND = {"coo": ["cfo", "cho", "cos"], "cho": ["coo", "cos"], "cos": ["cho", "coo"], "cfo": ["coo", "cos"]}
+AGENTS = ["coo", "cho", "cos", "cfo", "clo"]
+SEND = {"coo": ["cfo", "cho", "cos"], "cho": ["coo", "cos"], "cos": ["cho", "coo"], "cfo": ["coo", "cos"], "clo": ["coo", "cos"]}
 BANNER = ("OpenClaw ", "│", "◇", "Dry run", "Applied ")
 results = []
 
@@ -122,7 +122,7 @@ rec("PASS" if runtime == "openclaw" else "FAIL", "runtime pinned to openclaw for
 ata = cfg("tools.agentToAgent") or {}
 allow = ata.get("allow") if isinstance(ata, dict) else None
 rec("PASS" if isinstance(ata, dict) and ata.get("enabled") is True and sorted(allow or []) == sorted(AGENTS) else "FAIL",
-    "agent-to-agent enabled and limited to the four agents", "allow = " + repr(allow),
+    "agent-to-agent enabled and limited to the five agents", "allow = " + repr(allow),
     "agent pair outside the approved list")
 want("sessions visibility agent", "tools.sessions.visibility", "agent", "one agent reads another agent's transcript")
 sub = cfg("agents.defaults.subagents") or {}
@@ -173,8 +173,8 @@ def workspace_confined_status(tools_by_agent):
 
 
 _confine_status, _confine_detail = workspace_confined_status(
-    {a: cfg("agents.entries." + a + ".tools") for a in ("cho", "cos", "cfo")})
-rec(_confine_status, "file tools of the CHO, CoS and CFO are confined to their workspace", _confine_detail,
+    {a: cfg("agents.entries." + a + ".tools") for a in ("cho", "cos", "cfo", "clo")})
+rec(_confine_status, "file tools of the CHO, CoS, CFO and CLO are confined to their workspace", _confine_detail,
     "agent can read or write outside its workspace (SPK-03, APR-0124)")
 
 # 5. Agents and workspaces
@@ -197,22 +197,23 @@ for a in AGENTS:
     except OSError:
         text = ""
         problems.append("AGENTS.md missing")
-    if "instruction set v1.2" not in text:
-        problems.append("instructions older than v1.2")
+    _first = "v1.0" if a == "clo" else "v1.2"  # the CLO was created in Loop 7 at v1.0
+    if "instruction set " + _first not in text:
+        problems.append("instructions older than " + _first)
     rc, log = run(["git", "-C", w, "log", "-1", "--pretty=%s", "--", "AGENTS.md"])
-    if "Loop 1 instructions" not in log:
+    if "Loop 1 instructions" not in log and "Loop 7 instructions" not in log:
         problems.append("instruction commit missing")
     rec("PASS" if not problems else "FAIL", "workspace ready: " + a, "; ".join(problems) or "ok",
         "agent started without its instructions")
 
-for a in ["cos", "cho", "cfo"]:
+for a in ["cos", "cho", "cfo", "clo"]:
     n = git_deleted_lines(os.path.join(WS, a))
     rec("PASS" if n == 0 else "FAIL", "state append-only: " + a, str(n) + " line(s) removed from state/ since last commit",
         "journal edited in place (APR-0058)")
 
 # 6. Slack multi-account and channel configuration
 slack_accounts = cfg("channels.slack.accounts") or {}
-expected_slack = ["default", "cho", "cos", "cfo"]
+expected_slack = ["default", "cho", "cos", "cfo", "clo"]
 acc_ok = True
 users_ok = True
 acc_details = []
@@ -234,8 +235,8 @@ for s_acc in expected_slack:
                 users_ok = False
                 user_details.append(s_acc + " missing users")
 
-rec("PASS" if acc_ok else "FAIL", "slack accounts configured (4 accounts)",
-    "ok (default, cho, cos, cfo)" if acc_ok else "; ".join(acc_details),
+rec("PASS" if acc_ok else "FAIL", "slack accounts configured (5 accounts)",
+    "ok (default, cho, cos, cfo, clo)" if acc_ok else "; ".join(acc_details),
     "slack app configuration incomplete or not socket mode")
 rec("PASS" if users_ok else "FAIL", "slack channel users allowlists",
     "ok (explicit users list in all channels)" if users_ok else "; ".join(user_details),
@@ -246,13 +247,13 @@ if len(procs) == 1:
     s_accs = st_raw.get("channelAccounts", {}).get("slack", []) if isinstance(st_raw, dict) else []
     conn_map = {a.get("accountId"): (a.get("running") and a.get("connected")) for a in s_accs if isinstance(a, dict)}
     all_conn = all(conn_map.get(k) for k in expected_slack)
-    rec("PASS" if all_conn else "FAIL", "slack accounts connected (4 accounts)",
-        "4 connected" if all_conn else f"connected: {[k for k, v in conn_map.items() if v]}",
+    rec("PASS" if all_conn else "FAIL", "slack accounts connected (5 accounts)",
+        "5 connected" if all_conn else f"connected: {[k for k, v in conn_map.items() if v]}",
         "slack socket mode connection lost")
 elif not procs:
-    rec("WARN", "slack accounts connected (4 accounts)", "gateway stopped (fine offline; --live needs it running)")
+    rec("WARN", "slack accounts connected (5 accounts)", "gateway stopped (fine offline; --live needs it running)")
 else:
-    rec("WARN", "slack accounts connected (4 accounts)", str(len(procs)) + " gateways running")
+    rec("WARN", "slack accounts connected (5 accounts)", str(len(procs)) + " gateways running")
 
 # 7. Log scan for known error strings
 today = datetime.date.today().isoformat()
@@ -475,7 +476,7 @@ except OSError as e:
 rc, out = run(["git", "-C", os.path.join(WS, "cos"), "diff", "--numstat", "HEAD", "--", "state/calendar-journal.md"])
 rec("INFO", "journal vs committed seed (numstat added, removed)", out.strip() or "no change",
     "informational after a run: removed must be 0")
-for agent, ver in (("coo", "v1.10.7"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.10")):
+for agent, ver in (("coo", "v1.10.7"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.11"), ("clo", "v1.0")):
     try:
         has = ("instruction set " + ver) in open(os.path.join(WS, agent, "AGENTS.md"), encoding="utf-8").read()
     except OSError:
@@ -515,14 +516,14 @@ except OSError:
 
 # 7c. Parity: live agent files against the repo copies (APR-0097, P-43)
 import hashlib  # (kept; also imported near the top)
-_PAR = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo"}
+_PAR = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo", "clo": "department/clo"}
 _REPO = os.path.join(HOME, "lifeos-ro", "agent-files")
 def _sha(p):
     try:
         return hashlib.sha256(open(p, "rb").read()).hexdigest()
     except OSError:
         return None
-_CH_KEYS = {"COO": "operations-coo", "COS": "staff-cos", "CHO": "health-cho", "CFO": "finance-cfo"}
+_CH_KEYS = {"COO": "operations-coo", "COS": "staff-cos", "CHO": "health-cho", "CFO": "finance-cfo", "CLO": "lifestyle-clo"}
 def _channel_ids():
     ids = {}
     try:

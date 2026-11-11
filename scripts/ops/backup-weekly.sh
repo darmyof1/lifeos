@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# backup-weekly.sh - weekly encrypted backup of the four agent workspaces and a token-free copy of the OpenClaw config (APR-0113).
+# backup-weekly.sh - weekly encrypted backup of the five agent workspaces (COO, CHO, CoS, CFO, CLO) and a token-free copy of the OpenClaw config (APR-0113).
 #   backup-weekly.sh              dry run: prints what --execute would do, changes nothing
 #   backup-weekly.sh --execute    makes ~/loop1/backups/lifeos-backup-YYYYMMDD-HHMM.tar.gpg and a .sha256 line, keeps the last 4
 # Encrypts to a PUBLIC key only (fingerprint in ~/loop1/backup-key-fingerprint). The private key and any passphrase never live on this VM:
@@ -11,7 +11,7 @@ case "${1:-}" in "") ;; --execute) EXEC=1 ;; -h|--help) sed -n 2,7p "$0"; exit 0
 L="$HOME/loop1"
 WS="$L/workspaces"; CFG="$L/state/openclaw.json"; FPR_FILE="$L/backup-key-fingerprint"; KEYFILE="$L/backup-public-key.asc"
 OUT="$L/backups"; KEEP=4
-AGENTS="coo cho cos cfo"
+AGENTS="coo cho cos cfo clo"
 DATE="${BK_DATE:-$(date +%Y%m%d-%H%M)}"
 say() { echo "$*"; }
 die() { say "STOP: $*"; exit 1; }

@@ -1,0 +1,28 @@
+new or changed keys (values of Slack IDs masked, tokens are env references only):
+  + /agents/entries/clo/name = "clo"
+  + /agents/entries/clo/workspace = "~/loop1/workspaces/clo"
+  + /agents/entries/clo/agentDir = "~/loop1/state/agents/clo/agent"
+  + /agents/entries/clo/identity/name = "CLO"
+  + /agents/entries/clo/identity/emoji = ":clapper:"
+  + /agents/entries/clo/model = "openai/gpt-6-luna"
+  + /agents/entries/clo/tools/agentToAgent/send/0 = "coo"
+  + /agents/entries/clo/tools/agentToAgent/send/1 = "cos"
+  + /agents/entries/clo/tools/fs/workspaceOnly = true
+  + /agents/entries/clo/tools/alsoAllow/0 = "read"
+  + /agents/entries/clo/tools/alsoAllow/1 = "write"
+  + /agents/entries/clo/tools/alsoAllow/2 = "edit"
+  + /tools/agentToAgent/allow/4 = "clo"
+  + /channels/slack/accounts/clo/enabled = true
+  + /channels/slack/accounts/clo/mode = "socket"
+  + /channels/slack/accounts/clo/botToken/source = "env"
+  + /channels/slack/accounts/clo/botToken/provider = "default"
+  + /channels/slack/accounts/clo/botToken/id = "SLACK_BOT_TOKEN_CLO"
+  + /channels/slack/accounts/clo/appToken/source = "env"
+  + /channels/slack/accounts/clo/appToken/provider = "default"
+  + /channels/slack/accounts/clo/appToken/id = "SLACK_APP_TOKEN_CLO"
+  + /channels/slack/accounts/clo/channels/<SLACK-ID>/enabled = true
+  + /channels/slack/accounts/clo/channels/<SLACK-ID>/users/0 = <SLACK-ID>
+  + binding: {"match": {"channel": "slack", "peer": {"kind": "channel", "id": "<SLACK-ID>"}}, "agentId": "clo"}
+  + binding: {"type": "route", "agentId": "clo", "match": {"channel": "slack", "accountId": "clo"}}
+keys of the old config that differ in value at the same path (list shifts of the binding insert and the allow list excluded): 0
+written; backup at /home/ubuntu/loop1/state/openclaw.json.pre-clo

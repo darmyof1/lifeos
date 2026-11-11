@@ -13,7 +13,7 @@ identities:
     authenticates_with: [slack_user_account, password_manager]
     may_read: [slack_channels_of_the_four_agents, reports_in_handover_tarballs, repo_on_github]
     may_write: [slack_messages_with_mention, approvals_in_decisions]
-    may_send: [coo, cho, cos, cfo]
+    may_send: [coo, cho, cos, cfo, clo]
     may_approve: [delete, privacy_override, instruction_changes, installs]
     must_never: [paste_tokens_into_chat, share_the_slack_user_id_in_reports]
   coo:
@@ -52,6 +52,15 @@ identities:
     may_send: [coo, cos]
     may_approve: []
     must_never: [write_calendar_journal, delete_anything]
+  clo:
+    kind: agent
+    role: lifestyle_chief
+    authenticates_with: [slack_bot_token_clo_account, gateway_token]
+    may_read: [own_workspace]
+    may_write: [own_workspace_state_files]
+    may_send: [coo, cos]
+    may_approve: []
+    must_never: [write_calendar_journal, delete_anything, request_a_delete_as_the_ceo, look_anything_up_on_the_web]
   sync_job:
     kind: job
     role: calendar_push_job
@@ -122,10 +131,11 @@ files:
   gcal_sync_env: {path: "~/loop1/gcal-sync/env", mode: "600"}
 
 known_differences:
-  cfo_send_text_vs_config: "The CFO instruction text lists only the COO under You may send to; the OpenClaw config lets the CFO send to the COO and the CoS (set 2026-10-26). Neither is changed here (APR-0113 item 5a). Closing it changes a live thing and needs the CEO."
+  closed_cfo_send_text_vs_config: "Closed in instruction set v1.11 (APR-0126, APR-0127): the CFO text now lists the COO and the CoS, as the OpenClaw config has since 2026-10-26."
 
 channels:
   coo: "{{COO_CHANNEL_ID}}"
   cho: "{{CHO_CHANNEL_ID}}"
   cos: "{{COS_CHANNEL_ID}}"
   cfo: "{{CFO_CHANNEL_ID}}"
+  clo: "{{CLO_CHANNEL_ID}}"

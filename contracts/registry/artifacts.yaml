@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-146.sh",
+  "generated_by": "fix-147.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -197,11 +197,11 @@
     },
     {
       "path": "agent-files/department/clo/AGENTS.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/clo/IDENTITY.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/clo/MEMORY.md",
@@ -209,7 +209,7 @@
     },
     {
       "path": "agent-files/department/clo/SOUL.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/clo/TOOLS.md",
@@ -217,7 +217,7 @@
     },
     {
       "path": "agent-files/department/clo/USER.md",
-      "status": "planned"
+      "status": "draft"
     },
     {
       "path": "agent-files/department/cso/AGENTS.md",
@@ -884,6 +884,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop1/loop1-v111-upgrade.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop1/loop1-v13-upgrade.sh",
       "status": "draft"
     },
@@ -913,6 +917,10 @@
     },
     {
       "path": "deploy/loop1/loop1-v191-upgrade.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop1/loop7-clo-agent-files.sh",
       "status": "draft"
     },
     {
@@ -1212,6 +1220,14 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop7/clo-config-patch.py",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop7/clo-slack-manifest.json",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop7/handover-27-claude-code-vm.md",
       "status": "draft"
     },
@@ -1364,7 +1380,15 @@
       "status": "draft"
     },
     {
+      "path": "guides/slack-app-manifest-clo.json",
+      "status": "draft"
+    },
+    {
       "path": "guides/slack-multi-identity.md",
+      "status": "draft"
+    },
+    {
+      "path": "guides/slack-new-agent-app.md",
       "status": "draft"
     },
     {
@@ -1545,6 +1569,10 @@
     },
     {
       "path": "ops/handover-2026-11-10-claude-code-report-29.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-10-claude-code-report-30.md",
       "status": "draft"
     },
     {
@@ -2801,6 +2829,222 @@
     },
     {
       "path": "ops/loop7-h29-2026-11-10/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/backup-weekly-dry-run.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/calendar-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo-AGENTS-v110-to-v111.diff",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo-v111-apply-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo-v111-dry-run-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo-v111-second-run-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/budget-after-loop30-cfo-009.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/investments-after-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-003.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-004.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-005.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-006.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-007.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-008-journal-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-008-journal-lines.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-008.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/cfo/loop30-cfo-009.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo-workspace-create-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/batch1.done",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/batch2.done",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/cron.restored",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/journal-after-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/lifestyle-after-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-003.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-004.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-005.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-006.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-007.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-008.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-009.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-010.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-011.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/loop30-clo-012.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/clo/tool-calls-007-011-012.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/config-diff-new-keys-only.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/crontab-diff.txt",
+      "status": "planned"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/gateway-process-count-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/health-installed-sha.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/health-with-repo-copy-of-work30.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/plugin-hashes-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/plugin-hashes-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/scratch/cos-journal-line.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/scratch/lifestyle.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/scratch/scratch-config-sanitized.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/scripts/ask.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/scripts/clo-batch1.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/scripts/clo-batch2.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/slack-probe.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h30-2026-11-10/validator.txt",
       "status": "draft"
     },
     {
@@ -5389,6 +5633,10 @@
     },
     {
       "path": "tests/unit/test_check_sessions_send.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_clo_config_patch.py",
       "status": "draft"
     },
     {

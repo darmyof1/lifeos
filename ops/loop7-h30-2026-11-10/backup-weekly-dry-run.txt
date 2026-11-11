@@ -1,0 +1,5 @@
+public key file present: it will be imported (public part only)
+BACKUP (dry run)
+would copy: workspaces coo cho cos cfo clo and the config with token-like fields replaced by <redacted>
+would write: /home/ubuntu/loop1/backups/lifeos-backup-20261111-0001.tar.gpg and a .sha256 line; keep the last 4; encrypt to fingerprint ending ...043175EF
+Run with --execute to act.

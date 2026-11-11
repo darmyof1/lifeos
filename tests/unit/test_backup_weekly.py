@@ -41,7 +41,7 @@ class BackupTests(unittest.TestCase):
         self.gnupg = os.path.join(self.tmp, "gnupg")
         os.mkdir(self.gnupg, 0o700)
         os.makedirs(os.path.join(self.home, "loop1", "state"))
-        for a in ("coo", "cho", "cos", "cfo"):
+        for a in ("coo", "cho", "cos", "cfo", "clo"):
             d = os.path.join(self.home, "loop1", "workspaces", a, "state")
             os.makedirs(d)
             with open(os.path.join(d, "note.md"), "w") as fh:
@@ -124,7 +124,7 @@ class BackupTests(unittest.TestCase):
         name = "lifeos-backup-20261101.tar.gpg"
         self.assertTrue(os.path.exists(os.path.join(self.backups, name)))
         dest = self.decrypt(name)
-        for a in ("coo", "cho", "cos", "cfo"):
+        for a in ("coo", "cho", "cos", "cfo", "clo"):
             src = os.path.join(self.home, "loop1", "workspaces", a)
             for root, _, files in os.walk(src):
                 for f in files:
@@ -185,6 +185,20 @@ class BackupTests(unittest.TestCase):
         rc, out = self.run_bk("--execute")
         self.assertEqual(rc, 1)
         self.assertFalse(os.path.exists(self.backups))
+
+    def test_a_missing_clo_workspace_stops_before_anything_is_written(self):
+        self.put_key()
+        shutil.rmtree(os.path.join(self.home, "loop1", "workspaces", "clo"))
+        rc, out = self.run_bk("--execute")
+        self.assertEqual(rc, 1)
+        self.assertIn("clo", out)
+        self.assertFalse(os.path.exists(self.backups))
+
+    def test_dry_run_lists_the_clo_workspace(self):
+        self.put_key()
+        rc, out = self.run_bk()
+        self.assertEqual(rc, 0, out)
+        self.assertIn("coo cho cos cfo clo", out)
 
     def test_public_key_file_is_imported_when_present(self):
         with open(os.path.join(self.home, "loop1", "backup-public-key.asc"), "w") as fh:

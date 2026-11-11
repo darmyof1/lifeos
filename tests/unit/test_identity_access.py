@@ -2,7 +2,7 @@
 import ast, os, re, unittest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-AGENTS = ("coo", "cho", "cos", "cfo")
+AGENTS = ("coo", "cho", "cos", "cfo", "clo")
 
 
 def read(rel):
@@ -85,7 +85,7 @@ class IdentityAccessContract(unittest.TestCase):
 
     def test_shape(self):
         self.assertEqual(self.c["status"], "accepted")
-        want = {"ceo", "coo", "cho", "cos", "cfo", "sync_job", "ceo_ledger_plugin", "claude_code_vm", "repo_owner"}
+        want = {"ceo", "coo", "cho", "cos", "cfo", "clo", "sync_job", "ceo_ledger_plugin", "claude_code_vm", "repo_owner"}
         self.assertEqual(set(self.c["identities"]), want)
         for name, ident in self.c["identities"].items():
             for k in ("kind", "authenticates_with", "may_read", "may_write", "may_send", "may_approve", "must_never"):
@@ -103,11 +103,11 @@ class IdentityAccessContract(unittest.TestCase):
         self.assertEqual(sorted(self.c["identities"]["cfo"]["may_send"]), sorted(after))
 
     def test_agent_instruction_text_never_lists_more_than_the_contract(self):
-        par = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo"}
+        par = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo", "clo": "department/clo"}
         for a, d in par.items():
             m = re.search(r"## You may send to\n([^\n]+)", read("agent-files/%s/AGENTS.md" % d))
             self.assertIsNotNone(m, a)
-            names = [x.strip().lower() for x in re.sub(r"\(.*?\)", "", m.group(1)).replace(".", "").split(",") if x.strip()]
+            names = [x.strip().lower() for x in re.sub(r"\(.*?\)", "", m.group(1)).replace(".", "").replace(" and ", ",").split(",") if x.strip()]
             self.assertTrue(set(names) <= set(self.c["identities"][a]["may_send"]), "%s text %s" % (a, names))
 
     def test_only_the_cos_writes_the_journal_and_only_the_job_writes_google(self):
@@ -163,12 +163,12 @@ class IdentityAccessContract(unittest.TestCase):
         self.assertEqual(self.c["rules"]["privacy"]["wired"], "false")
         self.assertTrue(os.path.getsize(os.path.join(ROOT, self.c["rules"]["privacy"]["gate"])) > 0)
 
-    def test_the_known_cfo_difference_is_recorded_and_still_true(self):
-        self.assertIn("cfo_send_text_vs_config", self.c["known_differences"])
+    def test_the_cfo_text_and_config_now_agree(self):
+        self.assertNotIn("cfo_send_text_vs_config", self.c["known_differences"])
+        self.assertIn("closed_cfo_send_text_vs_config", self.c["known_differences"])
         m = re.search(r"## You may send to\n([^\n]+)", read("agent-files/department/cfo/AGENTS.md"))
-        text = {x.strip().lower() for x in re.sub(r"\(.*?\)", "", m.group(1)).replace(".", "").split(",") if x.strip()}
-        config = set(self.c["identities"]["cfo"]["may_send"])
-        self.assertTrue(text < config, "if the text and the config now agree, remove the known difference")
+        text = {x.strip().lower() for x in re.sub(r"\(.*?\)", "", m.group(1)).replace(".", "").replace(" and ", ",").split(",") if x.strip()}
+        self.assertEqual(text, set(self.c["identities"]["cfo"]["may_send"]))
 
     def test_the_parser_rejects_a_duplicate_key(self):
         with self.assertRaises(ValueError):

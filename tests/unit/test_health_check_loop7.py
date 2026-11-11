@@ -73,5 +73,29 @@ class ConfinedLine(unittest.TestCase):
         self.assertEqual(status(d)[0], "PASS")
 
 
+class CloKnown(unittest.TestCase):
+    """Part 3 (APR-0127): the health check knows the CLO. Source-level checks, because the file runs on import."""
+    src = open(HC).read()
+
+    def test_clo_false_or_missing_fails(self):
+        for bad in (tools(False), tools(), None):
+            d = dict(good(), clo=bad)
+            self.assertEqual(status(d)[0], "FAIL", bad)
+        self.assertEqual(status(dict(good(), clo=tools(True)))[0], "PASS")
+
+    def test_clo_is_in_every_list(self):
+        for needle in ('AGENTS = ["coo", "cho", "cos", "cfo", "clo"]',
+                       '"clo": ["coo", "cos"]}',
+                       'for a in ("cho", "cos", "cfo", "clo")})',
+                       'expected_slack = ["default", "cho", "cos", "cfo", "clo"]',
+                       '("cfo", "v1.11"), ("clo", "v1.0")',
+                       '"clo": "department/clo"',
+                       '"CLO": "lifestyle-clo"'):
+            self.assertIn(needle, self.src)
+
+    def test_cfo_is_expected_on_v111_not_v110(self):
+        self.assertNotIn('("cfo", "v1.10")', self.src)
+
+
 if __name__ == "__main__":
     unittest.main()

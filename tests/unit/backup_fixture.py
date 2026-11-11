@@ -37,7 +37,7 @@ class Home:
         self.home = os.path.join(tmp, "home")
         self.gnupg = os.path.join(tmp, "gnupg")
         os.mkdir(self.gnupg, 0o700)
-        for a in ("coo", "cho", "cos", "cfo"):
+        for a in ("coo", "cho", "cos", "cfo", "clo"):
             d = os.path.join(self.home, "loop1", "workspaces", a, "state")
             os.makedirs(d)
             with open(os.path.join(d, "note.md"), "w") as fh:

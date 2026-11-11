@@ -1,0 +1,5 @@
+# run loop30-cfo-003, agent cfo, started 2026-11-10T21:26:28-04:00
+# message: How much is in fund Alpha and how much of the growth came from my own money?
+---- reply ----
+Fund Alpha has **$102**: **$100 contributed + $2 growth = $102**. Of the **$2 growth**, **$0** was added as new money and **$2** was recorded as growth (interest or returns).
+---- end (rc=0, 2026-11-10T21:26:41-04:00) ----

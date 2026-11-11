@@ -1,0 +1,2 @@
+clo: v1.0 created
+Done. Start the gateway again: systemctl --user start openclaw-loop1-gateway

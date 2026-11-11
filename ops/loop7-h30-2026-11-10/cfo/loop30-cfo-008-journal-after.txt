@@ -1,0 +1,11 @@
+# Calendar journal - SYNTHETIC (Loop 1, APR-0054)
+Only the CoS writes here. One line per entry.
+
+name | start | end | status | run ID | event ID | requested by
+CHO - Workout - 10262026-0001 | 2026-10-26 07:00 | 2026-10-26 08:00 | written | seed | seed-1 | seed
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | written | seed | seed-2 | seed
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | written | seed | seed-3 | seed
+CHO - Workout - 10262026-0001 | 2026-10-26 07:00 | 2026-10-26 08:00 | pushed | seed | seed-1 | sync | google=v2err3l29fgtk81pcfhkihstp8
+CHO - Workout - 10282026-0001 | 2026-10-28 07:00 | 2026-10-28 08:00 | pushed | seed | seed-2 | sync | google=psgu4ufts0cib0jt2e68ml2b14
+CHO - Workout - 10302026-0001 | 2026-10-30 07:00 | 2026-10-30 08:00 | pushed | seed | seed-3 | sync | google=ok4eeput161p77joks61hcep2s
+CFO - Monthly contribution to fund Alpha - 11202026-0001 | 2026-11-20 09:00 | 2026-11-20 09:30 | written | loop30-cfo-008 | loop30-cfo-008-cfo-01 | CFO | privacy=high

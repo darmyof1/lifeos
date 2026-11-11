@@ -1,4 +1,4 @@
-"""Rebuild the four agents' instruction files from the repo scripts in a temporary HOME (placeholder channel IDs, a stub pgrep)
+"""Rebuild the five agents' instruction files from the repo scripts in a temporary HOME (placeholder channel IDs, a stub pgrep)
 and check that every file under agent-files/ is byte for byte what the scripts produce (APR-0097, APR-0098)."""
 import os
 import shutil
@@ -11,10 +11,11 @@ DEPLOY = os.path.join(ROOT, "deploy", "loop1")
 SCRIPTS = ["loop1-agent-files.sh", "loop1-v13-upgrade.sh", "loop1-v14-upgrade.sh", "loop1-v15-upgrade.sh",
            "loop1-v16-upgrade.sh", "loop1-v17-upgrade.sh", "loop1-v18-upgrade.sh", "loop1-v19-upgrade.sh",
            "loop1-v191-upgrade.sh", "loop1-v110-upgrade.sh", "loop1-v1101-upgrade.sh", "loop1-v1102-upgrade.sh",
-           "loop1-v1103-upgrade.sh", "loop1-v1104-upgrade.sh", "loop1-v1105-upgrade.sh", "loop1-v1106-upgrade.sh", "loop1-v1107-upgrade.sh"]
-PATHS = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo"}
+           "loop1-v1103-upgrade.sh", "loop1-v1104-upgrade.sh", "loop1-v1105-upgrade.sh", "loop1-v1106-upgrade.sh", "loop1-v1107-upgrade.sh",
+           "loop1-v111-upgrade.sh", "loop7-clo-agent-files.sh"]
+PATHS = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo", "clo": "department/clo"}
 FILES = ("AGENTS.md", "SOUL.md", "IDENTITY.md", "USER.md")
-ENV = "staff-cos={{COS_CHANNEL_ID}}\noperations-coo={{COO_CHANNEL_ID}}\nhealth-cho={{CHO_CHANNEL_ID}}\nfinance-cfo={{CFO_CHANNEL_ID}}\n"
+ENV = "staff-cos={{COS_CHANNEL_ID}}\noperations-coo={{COO_CHANNEL_ID}}\nhealth-cho={{CHO_CHANNEL_ID}}\nfinance-cfo={{CFO_CHANNEL_ID}}\nlifestyle-clo={{CLO_CHANNEL_ID}}\n"
 
 
 @unittest.skipUnless(shutil.which("bash") and shutil.which("git"), "needs bash and git")
@@ -59,11 +60,47 @@ class AgentFilesRebuild(unittest.TestCase):
                     self.assertTrue(repo, "repo copy is empty")
                     self.assertEqual(repo, built)
 
+    def test_clo_workspace_is_its_own_repo_with_the_state_header_and_a_version(self):
+        clo = os.path.join(self.w, "clo")
+        with open(os.path.join(clo, "AGENTS.md")) as fh:
+            self.assertIn("instruction set v1.0", fh.read())
+        with open(os.path.join(clo, "state", "lifestyle.md")) as fh:
+            self.assertEqual(len(fh.read().strip().splitlines()), 1)
+        r = subprocess.run(["git", "-C", clo, "log", "--oneline"], capture_output=True, text=True)
+        self.assertEqual(len(r.stdout.strip().splitlines()), 1)
+
+    def test_cfo_is_on_v111_and_may_send_to_the_cos(self):
+        with open(os.path.join(self.w, "cfo", "AGENTS.md")) as fh:
+            t = fh.read()
+        self.assertIn("instruction set v1.11", t)
+        self.assertIn("COO and CoS. (ADR-0018, APR-0092)", t)
+        self.assertEqual(t.count("\nCOO. (ADR-0018)\n"), 0)
+        self.assertEqual(t.count("## Investments"), 1)
+
+    def test_v111_second_run_changes_nothing_and_v110_is_required(self):
+        env = dict(os.environ, HOME=self.home, PATH=self.bin + os.pathsep + os.environ["PATH"])
+        path = os.path.join(self.w, "cfo", "AGENTS.md")
+        with open(path, "rb") as fh:
+            before = fh.read()
+        r = subprocess.run(["bash", os.path.join(DEPLOY, "loop1-v111-upgrade.sh")], env=env, capture_output=True, text=True)
+        self.assertIn("already v1.11", r.stdout)
+        with open(path, "rb") as fh:
+            self.assertEqual(fh.read(), before)
+        old = os.path.join(self.tmp, "old")
+        os.makedirs(os.path.join(old, "cfo"))
+        with open(os.path.join(old, "cfo", "AGENTS.md"), "w") as fh:
+            fh.write("COO. (ADR-0018)\ninstruction set v1.9\n")
+        r = subprocess.run(["bash", os.path.join(DEPLOY, "loop1-v111-upgrade.sh")], env=dict(env, LOOP1_WORKSPACES=old),
+                           capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("not on v1.10", r.stdout)
+
+
     def test_no_real_channel_id_in_the_repo_copies(self):
         for a, d in PATHS.items():
             with open(os.path.join(ROOT, "agent-files", d, "AGENTS.md"), "rb") as fh:
                 data = fh.read()
-            for tag in (b"{{COS_CHANNEL_ID}}", b"{{CHO_CHANNEL_ID}}", b"{{CFO_CHANNEL_ID}}"):
+            for tag in (b"{{COS_CHANNEL_ID}}", b"{{CHO_CHANNEL_ID}}", b"{{CFO_CHANNEL_ID}}", b"{{CLO_CHANNEL_ID}}"):
                 self.assertLessEqual(data.count(tag), 1)
             self.assertNotRegex(data.decode(), r"\b[CG][0-9A-Z]{9,}\b")
 

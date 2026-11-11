@@ -1,0 +1,6 @@
+# Budget - SYNTHETIC (Loop 1)
+- Weekly groceries: 165 USD
+
+## Change log
+(run ID | event ID | old | new | reason)
+loop30-cfo-009 | loop30-cfo-009-cfo-01 | 150 USD | 165 USD | CHO changed diet plan to 2,600 kcal/day

@@ -1,0 +1,5 @@
+# run loop30-clo-005, agent clo, started 2026-11-10T23:50:54-04:00
+# message: What am I watching and what is next?
+---- reply ----
+You're not currently watching a show. **Show Two** is planned next; no season/episode or date was provided.
+---- end (rc=0, 2026-11-10T23:51:03-04:00) ----

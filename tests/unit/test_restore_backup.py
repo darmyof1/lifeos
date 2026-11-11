@@ -42,7 +42,7 @@ class RestoreTests(unittest.TestCase):
         rc, out = self.restore(self.archive, target)
         self.assertEqual(rc, 0, out)
         self.assertIn("mismatches: 0", out)
-        self.assertIn("files: 9", out)  # 4 x AGENTS.md + 4 x note.md + openclaw.json
+        self.assertIn("files: 11", out)  # 5 x AGENTS.md + 5 x note.md + openclaw.json
         self.assertIn("elapsed seconds:", out)
         self.assertEqual(read(os.path.join(target, "cho", "state", "note.md")), "synthetic note for cho\n")
 
