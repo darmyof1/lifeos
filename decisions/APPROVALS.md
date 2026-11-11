@@ -1466,3 +1466,17 @@ Closes: none (P-36 stays open until handover 29 is read)
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop7/part3-wording-approved.md; deploy/loop7/handover-29-claude-code-vm.md; agent-files/department/cfo/AGENTS.md and agent-files/department/clo/ (handover 30); scripts/ops/agent-compact.sh (handover 29, if confirmed); decisions/PENDING.md (P-48)
 
+## APR-0127 - Loop 7 part 3: install the CFO v1.11 and create the CLO (handover 30); Slack tokens may be pasted to Claude Code
+Status: approved
+Decided by: CEO
+Your answer: "go" (2026-11-10 20:43), and, asked how the CLO's two Slack tokens should reach the VM: "i don't mind puttin the token in claude"
+Evidence: deploy/loop7/part3-wording-approved.md (APR-0126); deploy/loop7/handover-30-claude-code-vm.md; ops/isolation-options.md; decisions/APPROVALS.md APR-0062 (one Slack app per agent), APR-0063 (any agent may be addressed)
+Meaning:
+- Handover 30 installs the CFO instruction set v1.11 and creates the CLO exactly as worded in APR-0126, on synthetic data only. Live changes it may make: the CFO instruction file (gateway stopped and started), the new CLO agent (workspace, config entry with fs.workspaceOnly true and allowed-send list COO and CoS, Slack account and binding, channel allowlist, a line in slack-channels.env, two lines in slack.env), and the installed health-check.py. The weekly backup, kill switch and restore scripts learn the CLO. The COO, CHO and CoS instructions and config, the crontab and both plugins are unchanged.
+- The CEO talks to the CLO in its own Slack channel (APR-0063); the COO is not told about the CLO in this loop. Routing the COO to the CLO is a later, separate wording and APR if the CEO wants it.
+- Tokens: the CEO accepts pasting the CLO's two Slack tokens (bot and app-level) into the Claude Code chat on the VM. Claude Code writes them only to ~/loop1/slack.env (mode 600), never prints them, never puts them in the package or the repo. The CEO understands a token pasted in a chat stays in that chat's history; rotating it in Slack is the remedy. Private keys, passwords and every other secret still never go through chat.
+- Not in this entry: enforcing the privacy gate, real data, new instruction wording, the morning compaction for the CHO, CoS and CFO (left uninstalled; prepared in ops/loop7-h29-2026-11-10/).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop7/handover-30-claude-code-vm.md; agent-files/department/cfo/ and agent-files/department/clo/; deploy/loop1/health-check.py; scripts/ops/backup-weekly.sh, kill-switch.sh, restore-backup.sh; decisions/PENDING.md (P-48)
+

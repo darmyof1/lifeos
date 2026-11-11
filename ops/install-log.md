@@ -497,3 +497,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-10 - Handover 29 (Loop 7) recorded (fix-145)
 - Nothing changed on the VM in handover 29 except the pull. P-36 finding and the prepared (not installed) morning-compaction work are in the repo as evidence. Evidence: ops/loop7-h29-2026-11-10/.
+
+## 2026-11-10 - APR-0127 (fix-146)
+- Repo only: approval recorded, handover 30 added. Nothing installed or changed on the VM by this entry.
