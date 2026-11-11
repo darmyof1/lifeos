@@ -503,3 +503,6 @@ Evidence: research/spikes/SPK-05-cli-adapters.md
 
 ## 2026-11-11 - Handover 30 (Loop 7 part 3) recorded (fix-147)
 - Live on the VM during handover 30: CFO instruction set v1.11 installed; the CLO created (workspace, config entry with fs.workspaceOnly true, Slack account, channel allowlist, two bindings, env lines; clo added to the global agent-to-agent allow list); installed health-check.py replaced. Crontab paused twice for the calendar tests and restored (CEO approved). New guide: guides/slack-new-agent-app.md. Evidence: ops/loop7-h30-2026-11-10/.
+
+## 2026-11-11 - APR-0128 (fix-148)
+- Repo only: approval recorded, approved wording stored, handover 31 added. Nothing installed or changed on the VM by this entry.

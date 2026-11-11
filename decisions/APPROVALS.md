@@ -1480,3 +1480,17 @@ Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop7/handover-30-claude-code-vm.md; agent-files/department/cfo/ and agent-files/department/clo/; deploy/loop1/health-check.py; scripts/ops/backup-weekly.sh, kill-switch.sh, restore-backup.sh; decisions/PENDING.md (P-48)
 
+## APR-0128 - Loop 7: the COO routes lifestyle requests to the CLO; CLO v1.1 (handover 31)
+Status: approved
+Decided by: CEO
+Your answer: "approve as writen" (2026-11-11 00:47), after the test at 00:40 in the COO channel: "I'm watching the walking dead, season 5 episode 3 on netflix, log it, and give me a synopsis of that episode. also make an appointment to watch the episode 4 at 4:00 am" and the COO sent it to the CHO ("why he send the tast to cho is incorrect, it should be CLO")
+Evidence: deploy/loop7/routing-wording-approved.md (the wording, word for word); deploy/loop7/handover-31-claude-code-vm.md; ops/handover-2026-11-10-claude-code-report-30.md
+Meaning:
+- The wording in deploy/loop7/routing-wording-approved.md is APPROVED as written: (A) COO instruction set v1.10.8 (send list adds CLO, a table row CLO for TV shows and lifestyle items, and a rule: lifestyle requests go to the CLO, never to the CHO, the COO tells the CEO only what the CLO confirms) and (B) CLO instruction set v1.1 (the CFO-style handoff call to the CoS with its own event IDs, ask the CEO for a date it cannot look up, a short synopsis from memory marked as possibly wrong). The COO now routes lifestyle requests; this replaces the earlier choice that the COO was not told about the CLO (APR-0127) and follows APR-0063 (the COO is the normal door).
+- Live changes handover 31 may make: those two instruction files (gateway stopped and started), one config key ("clo" in the COO's allowed-send list, plus the minimum the receiving side needs, shown to the CEO first), the temporary pause of the calendar cron line for the tests that write a calendar line, and the installed health-check.py. The CHO, CoS and CFO files and config, the crontab and the plugins are unchanged.
+- Loop 7 is NOT closed; it closes on the CEO's word after this works for him.
+- The 00:40 test left nothing in the journal or the CHO state (checked read-only 00:45).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop7/routing-wording-approved.md; deploy/loop7/handover-31-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; agent-files/department/clo/AGENTS.md; decisions/PENDING.md (P-48)
+
