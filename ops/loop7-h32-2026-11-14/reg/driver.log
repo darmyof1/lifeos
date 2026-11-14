@@ -1,0 +1,16 @@
+loop32-reg-001-01 FAIL (9 pass, 1 fail) cost 0.0065
+loop32-reg-001-02 PASS (7 pass, 0 fail) cost 0.0045
+loop32-reg-001-03 FAIL (8 pass, 1 fail) cost 0.0053
+loop32-reg-001-04 PASS (7 pass, 0 fail) cost 0.0020
+loop32-reg-001-05 FAIL (6 pass, 1 fail) cost 0.0044
+loop32-reg-001-06 FAIL (8 pass, 1 fail) cost 0.0070
+loop32-reg-001-07 FAIL (6 pass, 1 fail) cost 0.0059
+-- closing reset
+deleted	dv3jlc2vn1aupdq8s03i5sdo6s	busy	approval: CEO handover 9, 2026-10-27
+other events: 0
+numstat after seed (expect 3 0): 3	0	state/calendar-journal.md
+READY: post/run scenario loop32-reg-001-99-final now, then: scenario-run.sh check loop32-reg-001-99-final
+summary: ~/handover/h32/reg/loop32-reg-001.md
+Runs: 1 2 3 4 5 6 7. Pass 2, fail 5. Total cost 0.0356 USD (measured by exporting the COO, CHO, CoS and CFO sessions).
+
+CRON: ACTIVE (*/5)

@@ -1,0 +1,2 @@
+2
+1 gateway process (main pid) plus its own worker child processes; the earlier count of 2 included my own shell

@@ -1,0 +1,5 @@
+# session loop32-coo-002, agent coo, sent 2026-11-14 16:54:37 AST
+# command: openclaw agent --agent coo --session-id loop32-coo-002 --timeout 285 -m "<REAL-SHOW>"
+---- reply ----
+What would you like me to do with *<REAL-SHOW>*—log it, schedule it, or something else?
+---- end (rc=0, vm clock 2026-11-14 16:54:45 AST) ----

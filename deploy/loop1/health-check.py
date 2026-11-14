@@ -476,7 +476,7 @@ except OSError as e:
 rc, out = run(["git", "-C", os.path.join(WS, "cos"), "diff", "--numstat", "HEAD", "--", "state/calendar-journal.md"])
 rec("INFO", "journal vs committed seed (numstat added, removed)", out.strip() or "no change",
     "informational after a run: removed must be 0")
-for agent, ver in (("coo", "v1.10.8"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.11"), ("clo", "v1.1")):
+for agent, ver in (("coo", "v1.10.9"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.11"), ("clo", "v1.1")):
     try:
         has = ("instruction set " + ver) in open(os.path.join(WS, agent, "AGENTS.md"), encoding="utf-8").read()
     except OSError:

@@ -1,0 +1,28 @@
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').
+# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+0 */6 * * * /usr/bin/stress-ng --cpu 1 --cpu-load 25 --vm 1 --vm-bytes 5G --vm-keep --network 2 --network-ops 1000 --timeout 30m --metrics-brief > /dev/null 2>&1
+*/5 * * * * LIFEOS_SYNC_ARGS="--require-ceo-ledger $HOME/loop1/ceo-ledger/scenario-ledger.jsonl --require-ceo-ledger $HOME/loop1/ceo-ledger/slack-ledger.jsonl" bash $HOME/lifeos-ro/scripts/gcal/gcal_sync_cron.sh
+0 5 * * * bash $HOME/loop1/daily-reset-report.sh >> $HOME/loop1/reset-check/cron.out 2>&1
+15 6 * * 0 bash ~/lifeos-ro/scripts/ops/backup-run.sh --execute >> ~/loop1/backups/cron.log 2>&1 # lifeos-backup-weekly
+25 5 * * * bash $HOME/lifeos-ro/scripts/ops/coo-compact.sh --execute >> $HOME/loop1/state/coo-compact.cron.log 2>&1 # lifeos-coo-compact

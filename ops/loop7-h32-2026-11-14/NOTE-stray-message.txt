@@ -1,0 +1,1 @@
+Stray message: at 16:54 AST I sent the single letter x to the COO in session loop32-coo-002b by mistake (a pipeline slip, not a test). Its reply file was deleted by me. Nothing was written: the CLO state file and the CoS journal are unchanged by it.

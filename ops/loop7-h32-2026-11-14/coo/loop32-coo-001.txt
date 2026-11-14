@@ -1,0 +1,5 @@
+# session loop32-coo-001, agent coo, sent 2026-11-14 16:54:00 AST
+# command: openclaw agent --agent coo --session-id loop32-coo-001 --timeout 285 -m "Add a new show to my list: Show Three, watching season 1 episode 1."
+---- reply ----
+The CLO confirmed Show Three was added to your list as watching, season 1 episode 1. Event ID: `coo-20261114-1654-clo-01`. Run ID: `coo-20261114-1654`.
+---- end (rc=0, vm clock 2026-11-14 16:54:32 AST) ----

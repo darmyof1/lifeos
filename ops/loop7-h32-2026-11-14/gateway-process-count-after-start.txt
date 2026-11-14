@@ -1,0 +1,5 @@
+3
+116405 /usr/bin/node --max-old-space-size=8192 ~/.npm-globa
+116563 /bin/bash -c source ~/.claude/shell-snapshots/snapsh
+116851 /bin/bash -c source ~/.claude/shell-snapshots/snapsh
+one node gateway process (pid 116405); the other two lines are my own shell commands matching the pattern
