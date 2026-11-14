@@ -1,0 +1,7 @@
+# Lifestyle - SYNTHETIC (Loop 7). Append only: one line per change, never edit an old line.
+2026-11-10 — Show One | watching | S1E3 | next episode date: not provided | run ID: loop30-clo-001 | event ID: loop30-clo-001-clo-01
+2026-11-10 — Show One | watching | S1E5 | next episode date: not provided | run ID: loop30-clo-002 | event ID: loop30-clo-002-clo-01
+2026-11-10 — Show Two | planned | season/episode: not provided | next episode date: not provided | run ID: loop30-clo-003 | event ID: loop30-clo-003-clo-01
+2026-11-10 — Show One | finished | season/episode: not provided | next episode date: not provided | run ID: loop30-clo-004 | event ID: loop30-clo-004-clo-01
+2026-11-10 — Show Two | planned | season/episode: season 2, episode not provided | next episode date: 2026-12-01 20:00 AST | run ID: loop30-clo-008 | event ID: loop30-clo-008-clo-01
+2026-11-14 — Show One | watching | S5E3 | next episode date: 2026-11-15 04:00 AST | run ID: loop31-coo-001 | event ID: loop31-coo-001-clo-01

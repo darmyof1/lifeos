@@ -1,0 +1,209 @@
+{
+ "agents": {
+  "defaults": {
+   "model": {
+    "primary": "openai/gpt-6-luna"
+   },
+   "utilityModel": "openai/gpt-6-luna",
+   "systemAgent": {
+    "agentId": "main"
+   },
+   "heartbeat": {
+    "agentId": "main"
+   },
+   "subagents": {
+    "maxSpawnDepth": 1,
+    "maxChildrenPerAgent": 2,
+    "runTimeoutSeconds": 120
+   },
+   "models": {
+    "openai/gpt-6-luna": {
+     "agentRuntime": {
+      "id": "openclaw"
+     }
+    }
+   }
+  },
+  "ownership": "explicit",
+  "entries": {
+   "main": {
+    "workspace": "~/scratch31/wsg/main",
+    "agentDir": "~/scratch31/gw/agents/main/agent"
+   },
+   "coo": {
+    "name": "coo",
+    "workspace": "~/scratch31/wsg/coo",
+    "agentDir": "~/scratch31/gw/agents/coo/agent",
+    "identity": {
+     "name": "COO",
+     "emoji": ":compass:"
+    },
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "agentToAgent": {
+      "send": [
+       "cho",
+       "cos",
+       "cfo",
+       "clo"
+      ]
+     }
+    }
+   },
+   "cho": {
+    "name": "cho",
+    "workspace": "~/scratch31/wsg/cho",
+    "agentDir": "~/scratch31/gw/agents/cho/agent",
+    "identity": {
+     "name": "CHO",
+     "emoji": ":stethoscope:"
+    },
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "agentToAgent": {
+      "send": [
+       "coo",
+       "cos"
+      ]
+     },
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   },
+   "cos": {
+    "name": "cos",
+    "workspace": "~/scratch31/wsg/cos",
+    "agentDir": "~/scratch31/gw/agents/cos/agent",
+    "identity": {
+     "name": "CoS",
+     "emoji": ":spiral_calendar_pad:"
+    },
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "agentToAgent": {
+      "send": [
+       "coo",
+       "cho"
+      ]
+     },
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   },
+   "clo": {
+    "name": "clo",
+    "workspace": "~/scratch31/wsg/clo",
+    "agentDir": "~/scratch31/gw/agents/clo/agent",
+    "identity": {
+     "name": "CLO",
+     "emoji": ":clapper:"
+    },
+    "model": "openai/gpt-6-luna",
+    "tools": {
+     "agentToAgent": {
+      "send": [
+       "coo",
+       "cos"
+      ]
+     },
+     "fs": {
+      "workspaceOnly": true
+     },
+     "alsoAllow": [
+      "read",
+      "write",
+      "edit"
+     ]
+    }
+   }
+  }
+ },
+ "tools": {
+  "profile": "messaging",
+  "agentToAgent": {
+   "enabled": true,
+   "allow": [
+    "coo",
+    "cho",
+    "cos",
+    "cfo",
+    "clo"
+   ]
+  },
+  "sessions": {
+   "visibility": "agent"
+  }
+ },
+ "meta": {
+  "migrations": {
+   "modelPolicyAllowlist": true,
+   "utilityModelSeparation": true
+  },
+  "lastTouchedVersion": "2026.10.5"
+ },
+ "talk": {
+  "agentId": "main"
+ },
+ "session": {
+  "reset": {
+   "mode": "daily",
+   "atHour": 4
+  }
+ },
+ "memory": {
+  "search": {
+   "enabled": false
+  }
+ },
+ "commands": {},
+ "plugins": {
+  "entries": {
+   "anthropic": {
+    "config": {
+     "sessionCatalog": {
+      "enabled": false
+     }
+    }
+   },
+   "codex": {
+    "config": {
+     "sessionCatalog": {
+      "enabled": false
+     }
+    }
+   },
+   "memory-core": {
+    "config": {
+     "dreaming": {
+      "enabled": false
+     }
+    },
+    "enabled": true
+   },
+   "openai": {
+    "enabled": true
+   }
+  }
+ },
+ "gateway": {
+  "mode": "local",
+  "port": 19932,
+  "bind": "loopback",
+  "auth": {
+   "mode": "token",
+   "token": "<redacted>"
+  }
+ }
+}

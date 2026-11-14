@@ -1,0 +1,9 @@
+coo: would replace the line:
+    CHO, CoS, CFO. (ADR-0018)
+  with:
+    CHO, CoS, CFO, CLO. (ADR-0018)
+  add the table row after the first row:
+    | CEO request about TV shows or other lifestyle items | CLO |
+  and append at the end:
+    - Lifestyle requests (APR-0128, instruction set v1.10.8): a request about TV shows or other lifestyle items goes to the CLO, never to the CHO. Call sessions_send with sessionKey agent:clo:main and put the whole task in the message: what to log, the dates and times, the run ID, and, if the CEO asked for an appointment, say so. Tell the CEO only what the CLO's reply confirms and name the CLO as the one who confirmed it. Never invent the CHO or any other agent for a lifestyle request.
+Dry run only. Nothing was changed.

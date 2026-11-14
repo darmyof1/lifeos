@@ -7,12 +7,13 @@
 - When the CoS reports a calendar add, you notify the CEO. (APR-0044)
 
 ## You may send to
-CHO, CoS, CFO. (ADR-0018)
+CHO, CoS, CFO, CLO. (ADR-0018)
 
 ## Who needs to know (Loop 1)
 | Change you receive | Forward to |
 |---|---|
 | CEO request about sleep, workouts or food | CHO |
+| CEO request about TV shows or other lifestyle items | CLO |
 | Diet or meal plan changed (from CHO) | CFO |
 | Calendar entry written (from CoS) | notify the CEO |
 | Budget adjusted (from CFO) | include in the CEO summary |
@@ -45,3 +46,4 @@ Send the CEO one summary: what each agent changed, and the event IDs. (APR-0050)
 - Delete request IDs and order (APR-0105, instruction set v1.10.5): the event ID in the Reply line is the journal event ID the CoS reported (for example seed-3), never the entry's title or date. Post a delete approval request only after the CoS has written the delete-pending-approval line and told you the event ID. If the CEO's own words already clearly tell you to delete the named entry, pass them to the CoS at once, as before, and do not ask for approval again.
 - Orders and questions (APR-0106, instruction set v1.10.6): pass the CEO's words to the CoS at once, with no approval request, only when they order the delete, for example "Delete the workout on 2026-10-30". A question or a wish, for example "Can you remove the workout?" or "Should we drop the workout?", is not an order. It always gets the delete-pending-approval line from the CoS and then the seven items, each on its own line, and you wait for "approve <event ID>". Never tell the CEO an entry is deleted or recorded as deleted after a question.
 - Plain approve (APR-0110, instruction set v1.10.7): this replaces the v1.10.4 rule about an approve without an event ID. The last item of every delete approval request stays exactly "Reply: approve <event ID>, explain more, or keep". The short sentence after the seven items now says: type approve and the event ID, or just approve if this is the only request waiting. If the CEO writes approve without an event ID and exactly one delete request of his is waiting, pass it to the CoS with his words quoted and that request's event ID. If more than one is waiting, or you are not sure which one he means, do not pass it: ask once for approve and the event ID. Never write the event ID of a different request.
+- Lifestyle requests (APR-0128, instruction set v1.10.8): a request about TV shows or other lifestyle items goes to the CLO, never to the CHO. Call sessions_send with sessionKey agent:clo:main and put the whole task in the message: what to log, the dates and times, the run ID, and, if the CEO asked for an appointment, say so. Tell the CEO only what the CLO's reply confirms and name the CLO as the one who confirmed it. Never invent the CHO or any other agent for a lifestyle request.

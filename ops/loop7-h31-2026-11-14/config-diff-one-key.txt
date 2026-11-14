@@ -1,0 +1,2 @@
+agents.entries.coo.tools.agentToAgent.send: ["cho", "cos", "cfo"] -> ["cho", "cos", "cfo", "clo"]
+written; backup at ~/loop1/state/openclaw.json.pre-coo-clo

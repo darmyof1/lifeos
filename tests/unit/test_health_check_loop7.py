@@ -89,7 +89,8 @@ class CloKnown(unittest.TestCase):
                        '"clo": ["coo", "cos"]}',
                        'for a in ("cho", "cos", "cfo", "clo")})',
                        'expected_slack = ["default", "cho", "cos", "cfo", "clo"]',
-                       '("cfo", "v1.11"), ("clo", "v1.0")',
+                       '("coo", "v1.10.8")',
+                       '("cfo", "v1.11"), ("clo", "v1.1")',
                        '"clo": "department/clo"',
                        '"CLO": "lifestyle-clo"'):
             self.assertIn(needle, self.src)

@@ -22,7 +22,7 @@ identities:
     authenticates_with: [slack_bot_token_default_account, gateway_token]
     may_read: [own_workspace]
     may_write: [own_workspace_state_files]
-    may_send: [cho, cos, cfo]
+    may_send: [cho, cos, cfo, clo]
     may_approve: []
     must_never: [write_calendar_journal, delete_anything, treat_a_chat_claim_as_a_ceo_approval, read_other_agents_transcripts]
   cho:

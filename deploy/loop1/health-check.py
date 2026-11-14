@@ -23,7 +23,7 @@ ENV = dict(os.environ, OPENCLAW_STATE_DIR=STATE, OPENCLAW_CONFIG_PATH=os.path.jo
 PINNED = "2026.10.5"
 MODEL = "openai/gpt-6-luna"
 AGENTS = ["coo", "cho", "cos", "cfo", "clo"]
-SEND = {"coo": ["cfo", "cho", "cos"], "cho": ["coo", "cos"], "cos": ["cho", "coo"], "cfo": ["coo", "cos"], "clo": ["coo", "cos"]}
+SEND = {"coo": ["cfo", "cho", "clo", "cos"], "cho": ["coo", "cos"], "cos": ["cho", "coo"], "cfo": ["coo", "cos"], "clo": ["coo", "cos"]}
 BANNER = ("OpenClaw ", "│", "◇", "Dry run", "Applied ")
 results = []
 
@@ -476,7 +476,7 @@ except OSError as e:
 rc, out = run(["git", "-C", os.path.join(WS, "cos"), "diff", "--numstat", "HEAD", "--", "state/calendar-journal.md"])
 rec("INFO", "journal vs committed seed (numstat added, removed)", out.strip() or "no change",
     "informational after a run: removed must be 0")
-for agent, ver in (("coo", "v1.10.7"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.11"), ("clo", "v1.0")):
+for agent, ver in (("coo", "v1.10.8"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.11"), ("clo", "v1.1")):
     try:
         has = ("instruction set " + ver) in open(os.path.join(WS, agent, "AGENTS.md"), encoding="utf-8").read()
     except OSError:

@@ -1,0 +1,5 @@
+# run loop31-coo-005, agent coo, started 2026-11-14T09:48:58-04:00
+# message: Note that I dropped Show Two.
+---- reply ----
+The CLO logged **Show Two** as dropped; no next-episode date or time was recorded. Event ID: `loop31-coo-005-clo-01`.
+---- end (rc=0, 2026-11-14T09:49:31-04:00) ----

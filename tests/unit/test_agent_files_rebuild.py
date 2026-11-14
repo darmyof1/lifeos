@@ -12,7 +12,7 @@ SCRIPTS = ["loop1-agent-files.sh", "loop1-v13-upgrade.sh", "loop1-v14-upgrade.sh
            "loop1-v16-upgrade.sh", "loop1-v17-upgrade.sh", "loop1-v18-upgrade.sh", "loop1-v19-upgrade.sh",
            "loop1-v191-upgrade.sh", "loop1-v110-upgrade.sh", "loop1-v1101-upgrade.sh", "loop1-v1102-upgrade.sh",
            "loop1-v1103-upgrade.sh", "loop1-v1104-upgrade.sh", "loop1-v1105-upgrade.sh", "loop1-v1106-upgrade.sh", "loop1-v1107-upgrade.sh",
-           "loop1-v111-upgrade.sh", "loop7-clo-agent-files.sh"]
+           "loop1-v111-upgrade.sh", "loop7-clo-agent-files.sh", "loop1-v1108-upgrade.sh", "loop1-v11-clo-upgrade.sh"]
 PATHS = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo", "clo": "department/clo"}
 FILES = ("AGENTS.md", "SOUL.md", "IDENTITY.md", "USER.md")
 ENV = "staff-cos={{COS_CHANNEL_ID}}\noperations-coo={{COO_CHANNEL_ID}}\nhealth-cho={{CHO_CHANNEL_ID}}\nfinance-cfo={{CFO_CHANNEL_ID}}\nlifestyle-clo={{CLO_CHANNEL_ID}}\n"
@@ -67,7 +67,7 @@ class AgentFilesRebuild(unittest.TestCase):
         with open(os.path.join(clo, "state", "lifestyle.md")) as fh:
             self.assertEqual(len(fh.read().strip().splitlines()), 1)
         r = subprocess.run(["git", "-C", clo, "log", "--oneline"], capture_output=True, text=True)
-        self.assertEqual(len(r.stdout.strip().splitlines()), 1)
+        self.assertEqual(len(r.stdout.strip().splitlines()), 2)  # created at v1.0, then v1.1 (APR-0128)
 
     def test_cfo_is_on_v111_and_may_send_to_the_cos(self):
         with open(os.path.join(self.w, "cfo", "AGENTS.md")) as fh:
@@ -95,6 +95,39 @@ class AgentFilesRebuild(unittest.TestCase):
         self.assertNotEqual(r.returncode, 0)
         self.assertIn("not on v1.10", r.stdout)
 
+
+    def test_coo_v1108_and_clo_v11_routing(self):
+        with open(os.path.join(self.w, "coo", "AGENTS.md")) as fh:
+            coo = fh.read()
+        self.assertIn("instruction set v1.10.8", coo)
+        self.assertIn("\nCHO, CoS, CFO, CLO. (ADR-0018)\n", coo)
+        self.assertEqual(coo.count("| CLO |"), 1)
+        self.assertIn("sessionKey agent:clo:main", coo)
+        self.assertIn("never to the CHO", coo)
+        with open(os.path.join(self.w, "clo", "AGENTS.md")) as fh:
+            clo = fh.read()
+        self.assertIn("APR-0128, instruction set v1.1)", clo)
+        self.assertIn("sessionKey agent:cos:main", clo)
+        self.assertIn("ask him for the date", clo)
+        self.assertIn("from memory and may be wrong", clo)
+        self.assertEqual(clo.count("premiere night, or"), 1)
+
+    def test_v1108_and_v11_second_run_change_nothing_and_need_the_previous_version(self):
+        env = dict(os.environ, HOME=self.home, PATH=self.bin + os.pathsep + os.environ["PATH"])
+        for script, agent, word in (("loop1-v1108-upgrade.sh", "coo", "already v1.10.8"), ("loop1-v11-clo-upgrade.sh", "clo", "already v1.1")):
+            path = os.path.join(self.w, agent, "AGENTS.md")
+            with open(path, "rb") as fh:
+                before = fh.read()
+            r = subprocess.run(["bash", os.path.join(DEPLOY, script)], env=env, capture_output=True, text=True)
+            self.assertIn(word, r.stdout)
+            with open(path, "rb") as fh:
+                self.assertEqual(fh.read(), before)
+            old = os.path.join(self.tmp, "old-" + agent)
+            os.makedirs(os.path.join(old, agent))
+            with open(os.path.join(old, agent, "AGENTS.md"), "w") as fh:
+                fh.write("instruction set v1.2\n")
+            r = subprocess.run(["bash", os.path.join(DEPLOY, script)], env=dict(env, LOOP1_WORKSPACES=old), capture_output=True, text=True)
+            self.assertNotEqual(r.returncode, 0)
 
     def test_no_real_channel_id_in_the_repo_copies(self):
         for a, d in PATHS.items():

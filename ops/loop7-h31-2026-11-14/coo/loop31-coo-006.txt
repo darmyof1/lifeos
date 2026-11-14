@@ -1,0 +1,5 @@
+# run loop31-coo-006, agent coo, started 2026-11-14T09:49:31-04:00
+# message: What shows am I following right now?
+---- reply ----
+The CLO confirmed you're currently following **Show One** (season 5, episode 3). **Show Three** is planned, and **Show Two** is marked dropped.
+---- end (rc=0, 2026-11-14T09:49:51-04:00) ----

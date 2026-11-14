@@ -1,0 +1,5 @@
+# run loop31-clo-003, agent clo, started 2026-11-14T09:48:30-04:00
+# message: When does Show Two season 2 come back?
+---- reply ----
+I can't look up when Show Two season 2 returns; tell me the date and I'll record it.
+---- end (rc=0, 2026-11-14T09:48:35-04:00) ----
