@@ -14,6 +14,7 @@ import sys
 import tempfile
 import types
 import unittest
+import warnings
 from unittest import mock
 from zoneinfo import ZoneInfo
 
@@ -612,14 +613,24 @@ class DummyCreds:
         pass
 
 
+def _import_google():
+    """Import the Google client. The system google-auth on Ubuntu imports pkg_resources, which warns
+    "pkg_resources is deprecated" (a warning inside the library, not in our code). Only that one message is
+    ignored while importing, so python -X dev -W error stays clean and every other warning still fails the run."""
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message="pkg_resources is deprecated", category=DeprecationWarning)
+        from google.oauth2.credentials import Credentials
+        from googleapiclient.discovery import build
+        from googleapiclient.http import HttpRequest
+    return Credentials, build, HttpRequest
+
+
 @unittest.skipUnless(importlib.util.find_spec("googleapiclient"), "Google libraries not installed")
 class RequestShapeTests(unittest.TestCase):
     """With the real Google client, check the requests the functions build (nothing is sent)."""
 
     def test_requests(self):
-        from google.oauth2.credentials import Credentials
-        from googleapiclient.discovery import build
-        from googleapiclient.http import HttpRequest
+        Credentials, build, HttpRequest = _import_google()
 
         service = build("calendar", "v3", credentials=Credentials(token="not-a-real-token"), cache_discovery=False)
         event = {"id": "ev1", "summary": TITLE, "start": {"dateTime": "2026-10-26T07:00:00-04:00"},
