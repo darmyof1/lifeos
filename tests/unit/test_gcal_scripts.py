@@ -614,11 +614,13 @@ class DummyCreds:
 
 
 def _import_google():
-    """Import the Google client. The system google-auth on Ubuntu imports pkg_resources, which warns
-    "pkg_resources is deprecated" (a warning inside the library, not in our code). Only that one message is
-    ignored while importing, so python -X dev -W error stays clean and every other warning still fails the run."""
+    """Import the Google client. The system google-auth on Ubuntu imports pkg_resources, which warns more than
+    once while it loads ("pkg_resources is deprecated", "Deprecated call to pkg_resources.declare_namespace").
+    These are warnings inside the libraries, not in our code. Only DeprecationWarnings whose text names
+    pkg_resources are ignored, and only during these imports, so python -X dev -W error stays clean and every
+    other warning still fails the run."""
     with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", message="pkg_resources is deprecated", category=DeprecationWarning)
+        warnings.filterwarnings("ignore", message=r".*pkg_resources", category=DeprecationWarning)
         from google.oauth2.credentials import Credentials
         from googleapiclient.discovery import build
         from googleapiclient.http import HttpRequest
