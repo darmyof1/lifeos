@@ -1494,3 +1494,17 @@ Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop7/routing-wording-approved.md; deploy/loop7/handover-31-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; agent-files/department/clo/AGENTS.md; decisions/PENDING.md (P-48)
 
+
+## APR-0129 - Loop 7: the COO builds its own run ID; COO v1.10.9 (handover 32)
+Status: approved
+Decided by: CEO
+Your answer: "approved as written, AST is fine" (2026-11-14 11:01), after the COO used a stray word you typed at 05:50 AM, and later "MPBLACK26", as run IDs (the CEO had asked: "yes draft it handover 32")
+Evidence: deploy/loop7/runid-wording-approved.md (the wording, word for word); deploy/loop7/handover-32-claude-code-vm.md; ops/handover-2026-11-14-claude-code-report-31.md
+Meaning:
+- The wording in deploy/loop7/runid-wording-approved.md is APPROVED as written: COO instruction set v1.10.9, one new rule. When the CEO's message does not state a run ID, the COO builds coo-<YYYYMMDD>-<HHMM> in AST from the date and time it received the message; a run ID is stated only when the message says "run ID" followed by the ID; the COO never uses a word, name or code from messages or history as a run ID; one run ID for every agent messaged about the request, named in the answer.
+- Live changes handover 32 may make: the COO instruction file (gateway stopped and started) and the installed health-check.py. No config key, no CLO, CHO, CoS or CFO change, no crontab change, no plugin change. If the COO cannot see the correct date and time in a scratch test, the handover stops before any live change and reports.
+- The two odd lines already in the CLO state file are not edited (append-only).
+- Loop 7 is NOT closed; it closes on the CEO's word.
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop7/runid-wording-approved.md; deploy/loop7/handover-32-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; decisions/PENDING.md (P-48)
