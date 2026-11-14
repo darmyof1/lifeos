@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-149.sh",
+  "generated_by": "fix-150.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -4954,6 +4954,10 @@
     {
       "path": "research/README.md",
       "status": "planned"
+    },
+    {
+      "path": "research/architecture-review-2026-11-14.md",
+      "status": "draft"
     },
     {
       "path": "research/cost-analysis.md",
