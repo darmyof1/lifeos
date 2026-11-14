@@ -8,6 +8,23 @@ import contextlib
 import tempfile
 import unittest
 
+
+# Files are closed with "with" so Python 3.12+ and later versions print no ResourceWarning (works on every Python 3).
+def _write_json(path, data):
+    with open(path, "w") as f:
+        json.dump(data, f)
+
+
+def _write_text(path, text):
+    with open(path, "w") as f:
+        f.write(text)
+
+
+def _read_json(path):
+    with open(path) as f:
+        return json.load(f)
+
+
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 spec = importlib.util.spec_from_file_location("clo_patch", os.path.join(ROOT, "deploy", "loop7", "clo-config-patch.py"))
 mod = importlib.util.module_from_spec(spec)
@@ -61,16 +78,16 @@ class Patch(unittest.TestCase):
     def test_run_writes_backup_masks_ids_and_is_idempotent(self):
         with tempfile.TemporaryDirectory() as d:
             cfgp, envp = os.path.join(d, "c.json"), os.path.join(d, "ch.env")
-            json.dump(base(), open(cfgp, "w"))
-            open(envp, "w").write("lifestyle-clo=" + CID + "\n")
+            _write_json(cfgp, base())
+            _write_text(envp, "lifestyle-clo=" + CID + "\n")
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
                 rc = mod.main([cfgp, "--slack", "--channels-env", envp, "--workspace", "/w/clo", "--agent-dir", "/a/clo"])
             self.assertEqual(rc, 0)
             self.assertNotIn(CID, buf.getvalue())
             self.assertNotIn(UID, buf.getvalue())
-            self.assertEqual(json.load(open(cfgp + ".pre-clo")), base())
-            self.assertIn("clo", json.load(open(cfgp))["agents"]["entries"])
+            self.assertEqual(_read_json(cfgp + ".pre-clo"), base())
+            self.assertIn("clo", _read_json(cfgp)["agents"]["entries"])
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
                 self.assertEqual(mod.main([cfgp, "--slack", "--channels-env", envp]), 0)
@@ -79,8 +96,8 @@ class Patch(unittest.TestCase):
     def test_missing_channel_line_stops(self):
         with tempfile.TemporaryDirectory() as d:
             cfgp, envp = os.path.join(d, "c.json"), os.path.join(d, "ch.env")
-            json.dump(base(), open(cfgp, "w"))
-            open(envp, "w").write("finance-cfo=C0CFOCFOCFO\n")
+            _write_json(cfgp, base())
+            _write_text(envp, "finance-cfo=C0CFOCFOCFO\n")
             with contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(mod.main([cfgp, "--slack", "--channels-env", envp]), 1)
             self.assertFalse(os.path.exists(cfgp + ".pre-clo"))

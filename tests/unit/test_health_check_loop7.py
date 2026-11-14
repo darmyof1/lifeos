@@ -75,7 +75,8 @@ class ConfinedLine(unittest.TestCase):
 
 class CloKnown(unittest.TestCase):
     """Part 3 (APR-0127): the health check knows the CLO. Source-level checks, because the file runs on import."""
-    src = open(HC).read()
+    with open(HC) as fh:
+        src = fh.read()
 
     def test_clo_false_or_missing_fails(self):
         for bad in (tools(False), tools(), None):

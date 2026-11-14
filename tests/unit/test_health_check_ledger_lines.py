@@ -12,7 +12,8 @@ RR = os.path.join(ROOT, "deploy", "loop2", "vm", "daily-reset-report.py")
 
 
 def extract(path, names):
-    tree = ast.parse(open(path).read())
+    with open(path) as fh:
+        tree = ast.parse(fh.read())
     body = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name in names]
     ns = {}
     exec(compile(ast.Module(body=body, type_ignores=[]), path, "exec"), ns)
