@@ -5,6 +5,7 @@ Run from the repo root:
 """
 import contextlib
 import datetime
+import functools
 import importlib.util
 import io
 import os
@@ -613,26 +614,31 @@ class DummyCreds:
         pass
 
 
-def _import_google():
-    """Import the Google client. The system google-auth on Ubuntu imports pkg_resources, which warns more than
-    once while it loads ("pkg_resources is deprecated", "Deprecated call to pkg_resources.declare_namespace").
-    These are warnings inside the libraries, not in our code. Only DeprecationWarnings whose text names
-    pkg_resources are ignored, and only during these imports, so python -X dev -W error stays clean and every
-    other warning still fails the run."""
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", message=r".*pkg_resources", category=DeprecationWarning)
-        from google.oauth2.credentials import Credentials
-        from googleapiclient.discovery import build
-        from googleapiclient.http import HttpRequest
-    return Credentials, build, HttpRequest
+def _ignore_google_library_warnings(test):
+    """The system Google libraries on Ubuntu raise deprecation warnings of their own while they load and build
+    a client (pkg_resources is deprecated, pkg_resources.declare_namespace, ssl.PROTOCOL_TLS). These are not in our
+    code. During this one test, DeprecationWarnings raised from inside those libraries are ignored; a warning
+    raised from our code, or any other kind of warning, still fails python -X dev -W error."""
+    @functools.wraps(test)
+    def wrapper(*args, **kwargs):
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=DeprecationWarning,
+                                    module=r"(pkg_resources|httplib2|google_auth_httplib2|googleapiclient|google)(\.|$)")
+            warnings.filterwarnings("ignore", category=DeprecationWarning, message=r".*pkg_resources")
+            warnings.filterwarnings("ignore", category=DeprecationWarning, message=r".*ssl\.PROTOCOL_TLS")
+            return test(*args, **kwargs)
+    return wrapper
 
 
 @unittest.skipUnless(importlib.util.find_spec("googleapiclient"), "Google libraries not installed")
 class RequestShapeTests(unittest.TestCase):
     """With the real Google client, check the requests the functions build (nothing is sent)."""
 
+    @_ignore_google_library_warnings
     def test_requests(self):
-        Credentials, build, HttpRequest = _import_google()
+        from google.oauth2.credentials import Credentials
+        from googleapiclient.discovery import build
+        from googleapiclient.http import HttpRequest
 
         service = build("calendar", "v3", credentials=Credentials(token="not-a-real-token"), cache_discovery=False)
         event = {"id": "ev1", "summary": TITLE, "start": {"dateTime": "2026-10-26T07:00:00-04:00"},
