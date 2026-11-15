@@ -5,8 +5,6 @@ Run from the repo root:
 """
 import contextlib
 import datetime
-import functools
-import importlib.util
 import io
 import os
 import pickle
@@ -15,7 +13,6 @@ import sys
 import tempfile
 import types
 import unittest
-import warnings
 from unittest import mock
 from zoneinfo import ZoneInfo
 
@@ -614,71 +611,67 @@ class DummyCreds:
         pass
 
 
-def _ignore_google_library_warnings(test):
-    """The system Google libraries on Ubuntu raise deprecation warnings of their own while they load and build
-    a client (pkg_resources is deprecated, pkg_resources.declare_namespace, ssl.PROTOCOL_TLS). These are not in our
-    code. During this one test, DeprecationWarnings raised from inside those libraries are ignored; a warning
-    raised from our code, or any other kind of warning, still fails python -X dev -W error."""
-    @functools.wraps(test)
-    def wrapper(*args, **kwargs):
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", category=DeprecationWarning,
-                                    module=r"(pkg_resources|httplib2|google_auth_httplib2|googleapiclient|google)(\.|$)")
-            warnings.filterwarnings("ignore", category=DeprecationWarning, message=r".*pkg_resources")
-            warnings.filterwarnings("ignore", category=DeprecationWarning, message=r".*ssl\.PROTOCOL_TLS")
-            return test(*args, **kwargs)
-    return wrapper
+class RecordingService:
+    """A hand-made calendar service that records every call and sends nothing. The live runs (seed events,
+    regression suites, the cron job) already prove the requests work against real Google; this checks that a code
+    change does not alter the arguments the functions pass. It needs no Google libraries and no network."""
+
+    def __init__(self, queue):
+        self.queue = queue
+        self.calls = []
+
+    def events(self):
+        def make(name):
+            def call(**kwargs):
+                self.calls.append((name, kwargs))
+
+                def execute():
+                    item = self.queue.pop(0)
+                    if isinstance(item, Exception):
+                        raise item
+                    return item
+                return types.SimpleNamespace(execute=execute)
+            return call
+        return types.SimpleNamespace(**{n: make(n) for n in ("list", "get", "insert", "patch", "delete")})
 
 
-@unittest.skipUnless(importlib.util.find_spec("googleapiclient"), "Google libraries not installed")
-class RequestShapeTests(unittest.TestCase):
-    """With the real Google client, check the requests the functions build (nothing is sent)."""
-
-    @_ignore_google_library_warnings
-    def test_requests(self):
-        from google.oauth2.credentials import Credentials
-        from googleapiclient.discovery import build
-        from googleapiclient.http import HttpRequest
-
-        service = build("calendar", "v3", credentials=Credentials(token="not-a-real-token"), cache_discovery=False)
+class RequestArgumentTests(unittest.TestCase):
+    def test_arguments(self):
         event = {"id": "ev1", "summary": TITLE, "start": {"dateTime": "2026-10-26T07:00:00-04:00"},
                  "end": {"dateTime": "2026-10-26T07:30:00-04:00"}}
-        queue, seen = [], []
+        queue = [{"items": []}]
+        svc = RecordingService(queue)
 
-        def fake_execute(self, http=None, num_retries=0):
-            seen.append((self.method, self.uri, self.body))
-            item = queue.pop(0)
-            if isinstance(item, Exception):
-                raise item
-            return item
+        gc.list_events(svc, "calendar-under-test", datetime.date(2026, 10, 25), datetime.date(2026, 10, 27), TZ)
+        name, kw = svc.calls[-1]
+        self.assertEqual(name, "list")
+        self.assertEqual(kw["calendarId"], "calendar-under-test")
+        self.assertIs(kw["singleEvents"], True)
+        self.assertEqual(kw["orderBy"], "startTime")
+        self.assertEqual(kw["timeMin"], "2026-10-25T00:00:00-04:00")
+        self.assertEqual(kw["timeMax"], "2026-10-27T00:00:00-04:00")
 
-        with mock.patch.object(HttpRequest, "execute", fake_execute):
-            queue[:] = [{"items": []}]
-            gc.list_events(service, "calendar-under-test", datetime.date(2026, 10, 25), datetime.date(2026, 10, 27), TZ)
-            m, uri, body = seen[-1]
-            self.assertEqual(m, "GET")
-            for part in ("/calendars/calendar-under-test/events?", "singleEvents=true", "orderBy=startTime",
-                         "timeMin=2026-10-25T00%3A00%3A00-04%3A00", "timeMax=2026-10-27T00%3A00%3A00-04%3A00"):
-                self.assertIn(part, uri)
+        svc.calls.clear()
+        queue[:] = [{"items": []}, {"id": "new1"}]
+        gc.create_event(svc, "calendar-under-test", "COS - Test - 10272026-0001", "2026-10-27T09:00", 30, TZ)
+        self.assertEqual([c[0] for c in svc.calls], ["list", "insert"])
+        insert_kw = svc.calls[1][1]
+        self.assertEqual(insert_kw["calendarId"], "calendar-under-test")
+        self.assertEqual(insert_kw["body"]["summary"], "COS - Test - 10272026-0001")
 
-            seen.clear()
-            queue[:] = [{"items": []}, {"id": "new1"}]
-            gc.create_event(service, "calendar-under-test", "COS - Test - 10272026-0001", "2026-10-27T09:00", 30, TZ)
-            self.assertEqual([s[0] for s in seen], ["GET", "POST"])
-            self.assertTrue(seen[1][1].split("?")[0].endswith("/calendars/calendar-under-test/events"))
-            self.assertIn('"summary": "COS - Test - 10272026-0001"', seen[1][2])
+        svc.calls.clear()
+        queue[:] = [dict(event), dict(event)]
+        gc.move_event(svc, "calendar-under-test", "ev1", "2026-10-26T08:00", tz=TZ)
+        self.assertEqual([c[0] for c in svc.calls], ["get", "patch"])
+        self.assertEqual(svc.calls[1][1]["eventId"], "ev1")
+        self.assertEqual(svc.calls[1][1]["calendarId"], "calendar-under-test")
 
-            seen.clear()
-            queue[:] = [dict(event), dict(event)]
-            gc.move_event(service, "calendar-under-test", "ev1", "2026-10-26T08:00", tz=TZ)
-            self.assertEqual([s[0] for s in seen], ["GET", "PATCH"])
-            self.assertTrue(seen[1][1].split("?")[0].endswith("/events/ev1"))
-
-            seen.clear()
-            queue[:] = [dict(event), "", FakeHttpError(410)]
-            gc.delete_event(service, "calendar-under-test", "ev1", TITLE, True, "Slack")
-            self.assertEqual([s[0] for s in seen], ["GET", "DELETE", "GET"])
-            self.assertTrue(seen[1][1].split("?")[0].endswith("/events/ev1"))
+        svc.calls.clear()
+        queue[:] = [dict(event), "", FakeHttpError(410)]
+        gc.delete_event(svc, "calendar-under-test", "ev1", TITLE, True, "Slack")
+        self.assertEqual([c[0] for c in svc.calls], ["get", "delete", "get"])
+        self.assertEqual(svc.calls[1][1]["eventId"], "ev1")
+        self.assertEqual(svc.calls[1][1]["calendarId"], "calendar-under-test")
 
 
 if __name__ == "__main__":
