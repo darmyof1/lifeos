@@ -1508,3 +1508,17 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop7/runid-wording-approved.md; deploy/loop7/handover-32-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; decisions/PENDING.md (P-48)
+
+## APR-0130 - Loop 7 closed
+Status: approved
+Decided by: CEO
+Your answer: "close loop 7" and "no rotation necesary" (2026-11-14 21:53), after the CEO pushed the fixes through fix-158
+Evidence: deploy/loop7/LOOP7-CLOSE-RECORD.md (signed by this entry); ops/handover-2026-11-14-claude-code-report-32.md; ops/handover-2026-11-14-claude-code-report-31.md; ops/loop7-h32-2026-11-14/
+Meaning:
+- Loop 7 is closed. The close record is signed by this entry. P-48 is closed.
+- Tokens: the CEO decided that rotating the gateway token and the two CLO Slack tokens is not necessary. The advice in research/architecture-review-2026-11-14.md to rotate them is noted and not taken. Tokens are still never printed or put in the repo.
+- Nothing is stopped on the VM. Synthetic data and the Google TEST calendar only.
+- The repo stays public (APR-0114). The five-agent design is unchanged; no decision is made on the architecture review (P-49).
+Closes: P-48; Loop 7
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop7/LOOP7-CLOSE-RECORD.md; decisions/PENDING.md
