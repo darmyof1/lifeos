@@ -140,3 +140,5 @@ Loop 7 CLOSED 2026-11-14 (APR-0130): P-48 closed. Close record deploy/loop7/LOOP
 
 ## P-49 - Fable architecture review (2026-11-14): decision pending
 The CEO filed an independent review for later: research/architecture-review-2026-11-14.md. It recommends collapsing the five agents into one agent with typed tools, and measuring success on real requests (18 of 20 in a week). Nothing is decided and nothing is approved; the five-agent design stays as it is. When the CEO is ready: decide whether to test a single-agent version, or run the next real Slack requests on the current design and score them first.
+
+Real-request log started 2026-11-15 (ops/real-request-log.md): the CEO's real Slack requests scored pass, partial or fail, as evidence for P-49. Informal; no decision.
