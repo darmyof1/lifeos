@@ -12,7 +12,7 @@ SCRIPTS = ["loop1-agent-files.sh", "loop1-v13-upgrade.sh", "loop1-v14-upgrade.sh
            "loop1-v16-upgrade.sh", "loop1-v17-upgrade.sh", "loop1-v18-upgrade.sh", "loop1-v19-upgrade.sh",
            "loop1-v191-upgrade.sh", "loop1-v110-upgrade.sh", "loop1-v1101-upgrade.sh", "loop1-v1102-upgrade.sh",
            "loop1-v1103-upgrade.sh", "loop1-v1104-upgrade.sh", "loop1-v1105-upgrade.sh", "loop1-v1106-upgrade.sh", "loop1-v1107-upgrade.sh",
-           "loop1-v111-upgrade.sh", "loop7-clo-agent-files.sh", "loop1-v1108-upgrade.sh", "loop1-v11-clo-upgrade.sh", "loop1-v1109-upgrade.sh"]
+           "loop1-v111-upgrade.sh", "loop7-clo-agent-files.sh", "loop1-v1108-upgrade.sh", "loop1-v11-clo-upgrade.sh", "loop1-v1109-upgrade.sh", "loop1-v11010-upgrade.sh"]
 PATHS = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo", "clo": "department/clo"}
 FILES = ("AGENTS.md", "SOUL.md", "IDENTITY.md", "USER.md")
 ENV = "staff-cos={{COS_CHANNEL_ID}}\noperations-coo={{COO_CHANNEL_ID}}\nhealth-cho={{CHO_CHANNEL_ID}}\nfinance-cfo={{CFO_CHANNEL_ID}}\nlifestyle-clo={{CLO_CHANNEL_ID}}\n"
@@ -118,11 +118,20 @@ class AgentFilesRebuild(unittest.TestCase):
         self.assertEqual(coo.count("instruction set v1.10.9"), 1)
         self.assertIn("coo-<YYYYMMDD>-<HHMM>", coo)
         self.assertIn("Never use a word, name or code from the CEO's messages", coo)
-        self.assertTrue(coo.rstrip("\n").split("\n")[-1].startswith("- Run IDs (instruction set v1.10.9)"))
+        self.assertEqual([l for l in coo.split("\n") if l.startswith("- Run IDs (instruction set v1.10.9)")].__len__(), 1)
+
+    def test_coo_v11010_status_rule(self):
+        with open(os.path.join(self.w, "coo", "AGENTS.md")) as fh:
+            coo = fh.read()
+        self.assertEqual(coo.count("instruction set v1.10.10"), 1)
+        self.assertIn("do not answer from your own memory", coo)
+        self.assertIn("Do not give file paths", coo)
+        self.assertTrue(coo.rstrip("\n").split("\n")[-1].startswith("- Status questions (instruction set v1.10.10)"))
+        self.assertIn("instruction set v1.10.9", coo)
 
     def test_v1108_and_v11_second_run_change_nothing_and_need_the_previous_version(self):
         env = dict(os.environ, HOME=self.home, PATH=self.bin + os.pathsep + os.environ["PATH"])
-        for script, agent, word in (("loop1-v1108-upgrade.sh", "coo", "already v1.10.8"), ("loop1-v11-clo-upgrade.sh", "clo", "already v1.1"), ("loop1-v1109-upgrade.sh", "coo", "already v1.10.9")):
+        for script, agent, word in (("loop1-v1108-upgrade.sh", "coo", "already v1.10.8"), ("loop1-v11-clo-upgrade.sh", "clo", "already v1.1"), ("loop1-v1109-upgrade.sh", "coo", "already v1.10.9"), ("loop1-v11010-upgrade.sh", "coo", "already v1.10.10")):
             path = os.path.join(self.w, agent, "AGENTS.md")
             with open(path, "rb") as fh:
                 before = fh.read()

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-163.sh",
+  "generated_by": "fix-164.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -832,6 +832,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/after-loop7/coo-status-wording-v11011-draft.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/after-loop7/handover-33-claude-code-vm.md",
       "status": "draft"
     },
@@ -873,6 +877,10 @@
     },
     {
       "path": "deploy/loop1/loop1-v1101-upgrade.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop1/loop1-v11010-upgrade.sh",
       "status": "draft"
     },
     {
@@ -1633,6 +1641,10 @@
     },
     {
       "path": "ops/handover-2026-11-14-claude-code-report-32.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-17-claude-code-report-33.md",
       "status": "draft"
     },
     {
@@ -3561,6 +3573,114 @@
     },
     {
       "path": "ops/loop7-h32-2026-11-14/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo-AGENTS-v1109-to-v11010.diff",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo-v11010-apply-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo-v11010-dry-run-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo-v11010-second-run-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo/loop33-coo-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo/loop33-coo-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo/loop33-coo-003.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo/loop33-coo-004.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo/loop33-coo-005.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo/loop33-coo-006.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/coo/loop33-coo-007.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/gateway-process-count-after-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/health-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/health-installed-sha.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/plugin-hashes-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/plugin-hashes-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/scratch/RESULT.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/scratch/loop33-scratch-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/scratch/loop33-scratch-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/scripts/ask-bare.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/scripts/ask-prefixed.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/scripts/scratch-ask.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/slack-probe.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/state-counts-after-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/state-counts-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h33-2026-11-17/validator.txt",
       "status": "draft"
     },
     {

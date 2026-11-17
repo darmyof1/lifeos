@@ -1,0 +1,5 @@
+# run loop33-coo-006, agent coo, started 2026-11-17T17:05:53-04:00
+# message: Add a new show to my list: Show Three, planned.
+---- reply ----
+The CLO confirmed Show Three was added to your list as planned; season, episode, and date were left unspecified. Event ID: `loop33-coo-006-clo-01`. Run ID: `loop33-coo-006`.
+---- end (rc=0, 2026-11-17T17:06:13-04:00) ----

@@ -1,0 +1,7 @@
+clo/state/lifestyle.md lines=21 sha=a0158fb540320590
+clo/state/vehicle-maintenance-schema.md lines=21 sha=3d5173be73c2bf69
+cfo/state/budget.md lines=8 sha=31ff174ba28b1c61
+cfo/state/investments.md lines=4 sha=fa8130b276a741fd
+cho/state/health-plan.md lines=12 sha=b584dbe9f62efaa2
+cos/state/calendar-journal.md lines=29 sha=f62f1923900f980c
+google events (2026-10-01..2027-03-31): 9
