@@ -1536,3 +1536,18 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: scripts/gcal/gcal_sync_cron.sh; tests/unit/test_gcal_sync_cron.py; guides/calendar-sync-job.md
+
+## APR-0132 - The COO answers status questions by asking the agent; COO v1.10.10 (handover 33)
+Status: approved
+Decided by: CEO
+Your answer: "ok lets go with option 1, then we will build the code written log later." (2026-11-17 16:47). Option 1 was: the drafted wording now, then the code-written routing log. The CEO had asked why the COO could not recall an item routed in another session and wanted a shared note instead of asking an agent each time.
+Evidence: deploy/after-loop7/coo-status-wording-approved.md (the wording, word for word); deploy/after-loop7/handover-33-claude-code-vm.md; ops/real-request-log.md (row 8)
+Meaning:
+- The wording in deploy/after-loop7/coo-status-wording-approved.md is APPROVED as written: COO instruction set v1.10.10, one new rule. When the CEO asks what he last told an agent, what an agent did, or whether something was logged, the COO does not answer from its own memory: it sends that agent one question and relays the answer with the agent's name and the run ID, gives no file paths, and says so if the agent cannot answer.
+- Live changes handover 33 may make: the COO instruction file (gateway stopped and started) and the installed health-check.py. No config key, no other agent, no crontab or plugin change. Tests use synthetic items only and never touch the CEO's real entries; the regression suite is not run.
+- The code-written routing log (a plugin that logs agent-to-agent sends, with the COO reading it) is wanted later. It is NOT approved here: it needs a read-only check that OpenClaw lets a plugin see those sends, then its own APR (a COO read-only file tool is a config change).
+- Slack thread replies without a mention are not part of this entry (P-50, item 2).
+- Loop 7 stays closed. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/after-loop7/coo-status-wording-approved.md; deploy/after-loop7/handover-33-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; decisions/PENDING.md (P-50)

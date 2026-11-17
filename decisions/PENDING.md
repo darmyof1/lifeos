@@ -145,3 +145,8 @@ Real-request log started 2026-11-15 (ops/real-request-log.md): the CEO's real Sl
 
 ## P-50 - Two COO behaviours seen in real use (2026-11-17)
 (1) The COO answers a status question from its own session memory and missed an item routed in another session: wording draft deploy/after-loop7/coo-status-wording-draft.md (COO v1.10.10) waits for the CEO's approval. (2) The agents answer in Slack only when mentioned, also inside a thread: the CEO asked for thread replies without a mention; the Slack setting that controls this is read first by Claude Code (read-only), and a change replaces the mention rule noted in APR-0063 and guides/slack-new-agent-app.md, so it needs its own APR. Nothing decided. The phone notification on calendar pushes was approved separately (APR-0131).
+
+## P-51 - Code-written routing log (2026-11-17)
+The CEO wants, after APR-0132, a log written by code (not by agents) of agent-to-agent sends: time, run ID, from, to, a neutral one-line type, no amounts or details. The COO would read it with a read-only file tool inside its own workspace. Steps: (1) read-only check that an OpenClaw plugin can see those sends; (2) design and APR (COO tool change); (3) handover. Not approved, not started.
+
+APR-0132 (2026-11-17): COO v1.10.10 status wording approved as written; handover 33 prepared (real data is in the workspaces now: tests synthetic only, no reset, no raw copies of real items).
