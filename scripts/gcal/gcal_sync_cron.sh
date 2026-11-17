@@ -9,7 +9,11 @@
 #   GCAL_ALLOW_DELETES=1                   (optional, APR-0092: approved deletes reach Google. Set it only after the
 #                                          delete gate passes. The job still deletes only a LifeOS event with a
 #                                          delete-pending-approval line and a deleted line with the same event ID.)
-# Options for tests: LIFEOS_SYNC_STATE (state folder), LIFEOS_SYNC_PY (Python to use), LIFEOS_SYNC_ARGS (extra options).
+#   WIREPUSHER_ID=<your WirePusher ID>     (optional: a phone notification when a run pushed or deleted at least one
+#                                          event. The message holds counts only, never an event title. The ID stays in
+#                                          this file, never in the repo, never in the log.)
+# Options for tests: LIFEOS_SYNC_STATE (state folder), LIFEOS_SYNC_PY (Python to use), LIFEOS_SYNC_ARGS (extra options),
+#   LIFEOS_CURL (curl to use).
 # Exit code is the job's: 0 done, 3 paused (login revoked), 4 could not start.
 set -u
 STATE="${LIFEOS_SYNC_STATE:-$HOME/loop1/gcal-sync}"
@@ -44,6 +48,23 @@ CODE=$?
   echo "=== $(date '+%Y-%m-%d %H:%M:%S') exit $CODE"
   cat "$OUT"
 } >>"$LOG"
+# Phone notification (optional). Only when this run changed Google. A failed notification is logged with its HTTP
+# code only and never changes the exit code of the job.
+if [ -n "${WIREPUSHER_ID:-}" ]; then
+  SUMMARY="$(grep -E '^summary: pushed [0-9]+' "$OUT" | tail -n 1)"
+  PUSHED="$(printf '%s' "$SUMMARY" | sed -n 's/^summary: pushed \([0-9]*\),.*/\1/p')"
+  DELETED="$(printf '%s' "$SUMMARY" | sed -n 's/.*deleted \([0-9]*\),.*/\1/p')"
+  PUSHED="${PUSHED:-0}"
+  DELETED="${DELETED:-0}"
+  if [ $((PUSHED + DELETED)) -gt 0 ]; then
+    MSG="Calendar pushed to Google: $PUSHED pushed, $DELETED deleted."
+    HTTP="$("${LIFEOS_CURL:-curl}" -sS -G --max-time 10 -o /dev/null -w '%{http_code}' \
+      --data-urlencode "id=$WIREPUSHER_ID" --data-urlencode "title=LifeOS calendar" \
+      --data-urlencode "message=$MSG" --data-urlencode "type=calendar" \
+      "https://wirepusher.com/send" 2>/dev/null)" || HTTP="${HTTP:-error}"
+    echo "notify: WirePusher HTTP ${HTTP:-error}" >>"$LOG"
+  fi
+fi
 if [ "$(wc -l <"$LOG")" -gt 2000 ]; then
   tail -n 1500 "$LOG" >"$LOG.tmp" && mv "$LOG.tmp" "$LOG"
 fi

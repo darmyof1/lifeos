@@ -1522,3 +1522,17 @@ Meaning:
 Closes: P-48; Loop 7
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop7/LOOP7-CLOSE-RECORD.md; decisions/PENDING.md
+
+## APR-0131 - The calendar push job sends a phone notification (WirePusher)
+Status: approved
+Decided by: CEO
+Your answer: "can you tell me if when the cal get pushed to the google calendar i can get a notification ... maybe we can put it in the script that pushes the calendar to google, maybe a curl? where is that file located? find it and put its full path here and let's have it trigger this url." (2026-11-17 15:08)
+Evidence: scripts/gcal/gcal_sync_cron.sh; tests/unit/test_gcal_sync_cron.py; guides/calendar-sync-job.md
+Meaning:
+- The cron wrapper scripts/gcal/gcal_sync_cron.sh may send one WirePusher notification when a run pushed or deleted at least one event. The message holds counts only, never an event title or detail.
+- The WirePusher ID is a setting in ~/loop1/gcal-sync/env on the VM (WIREPUSHER_ID), never in the repo, never in the log. Without the setting nothing is sent.
+- A failed notification is logged by HTTP code only and does not change the job's exit code. No agent instruction, config, plugin or crontab changes.
+- Synthetic data and the Google TEST calendar rule are unchanged.
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/gcal/gcal_sync_cron.sh; tests/unit/test_gcal_sync_cron.py; guides/calendar-sync-job.md

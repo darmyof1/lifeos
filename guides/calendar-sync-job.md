@@ -65,6 +65,14 @@ Expected: `alert: sent` and the message in the COO channel. Every alert is also 
 ## Alerts need the gateway
 `openclaw message send` goes through the gateway, which runs in terminal T1 (`source ~/loop1/env.sh; set -a; source ~/loop1/slack.env; source ~/loop1/openai.env; set +a; openclaw gateway run`). Every other shell, and the cron wrapper, loads `~/loop1/env.sh` first. If the gateway is not running, the alert fails with `Channel is unavailable: slack` and is written to `alerts.log` only (seen 2026-10-26 14:12, when T1 was down). The job itself does not depend on the gateway.
 
+## Phone notification (WirePusher, optional)
+The cron wrapper can send one phone notification when a run pushed or deleted at least one event (APR-0131).
+- Turn it on: add one line `WIREPUSHER_ID=<your WirePusher ID>` to `~/loop1/gcal-sync/env` (HUMAN, mode 600, never in the repo, never in a report). Remove the line to turn it off.
+- What it sends: the title "LifeOS calendar" and counts only, for example "Calendar pushed to Google: 2 pushed, 0 deleted." No event title, no time, no detail. WirePusher is a third-party service, so keep it that way.
+- When: only when the run's summary shows pushed or deleted above 0. A quiet run (nothing to push) sends nothing.
+- If it fails: the log gets one line `notify: WirePusher HTTP <code>` (the ID is never logged) and the job's exit code does not change. The calendar push never waits on the notification (10 second limit).
+- Check: `grep notify ~/loop1/gcal-sync/sync.log | tail`.
+
 ## High-privacy events (busy)
 APR-0032: a high-privacy event shows in Google as busy. A journal line with `privacy=high` in its detail column (8th column) is pushed as an event titled `busy` with the time shown as busy and one hidden field that holds the journal's event ID. The mandated title never goes to Google for it. The job finds the event again by the hidden key, never by title. The mark is remembered from the job's `pushed` line and follows a move, so a forgotten mark on the new line cannot put a mandated title into Google. The CoS writes the mark from instruction set v1.9 (APR-0086): when the chief marks the entry, for every CHO and CFO entry (health and finance are high by default), or when the CEO asks. Raising privacy is supported: if the earlier Google event of the entry (through a move, or the same name marked later) is a normal one, the job turns it into a busy event (`made busy`: title busy, description and place cleared, hidden key set). The other direction, busy to normal, is not supported (APR-0086). A busy event is deleted with `gcal_delete.py --id <Google ID> --busy-key <journal event ID> --ceo-approved --approval-note ...` (no --title).
 

@@ -93,5 +93,99 @@ class Cron(unittest.TestCase):
         self.assertIn("exit 0", self.log())
 
 
+@unittest.skipUnless(shutil.which("bash"), "needs bash")
+class Notify(unittest.TestCase):
+    """The optional WirePusher notification: counts only, only when Google changed, never breaks the job."""
+    SUMMARY = "summary: pushed %d, conflict 0, failed 0 (final 0), deleted %d, skipped 0, reconciled 0 (display full)"
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self.home = os.path.join(self.tmp, "home")
+        self.state = os.path.join(self.home, "loop1", "gcal-sync")
+        os.makedirs(self.state)
+        self.py = os.path.join(self.tmp, "fakepy")
+        self.curl = os.path.join(self.tmp, "fakecurl")
+        self.calls = os.path.join(self.tmp, "curl-calls.txt")
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def stub(self, pushed, deleted=0, code=0):
+        with open(self.py, "w") as fh:
+            fh.write('#!/bin/sh\necho "%s"\nexit %d\n' % (self.SUMMARY % (pushed, deleted), code))
+        os.chmod(self.py, 0o755)
+
+    def fake_curl(self, http="200", code=0):
+        with open(self.curl, "w") as fh:
+            fh.write('#!/bin/sh\necho "$@" >>"%s"\nprintf "%s"\nexit %d\n' % (self.calls, http, code))
+        os.chmod(self.curl, 0o755)
+
+    def settings(self, with_id=True):
+        with open(os.path.join(self.state, "env"), "w") as fh:
+            fh.write("GCAL_CALENDAR=cal-from-env\n")
+            if with_id:
+                fh.write("WIREPUSHER_ID=secret-id-123\n")
+
+    def run_cron(self):
+        env = dict(os.environ, HOME=self.home, LIFEOS_SYNC_PY=self.py, LIFEOS_CURL=self.curl)
+        return subprocess.run(["bash", SCRIPT], capture_output=True, text=True, env=env)
+
+    def log(self):
+        with open(os.path.join(self.state, "sync.log")) as fh:
+            return fh.read()
+
+    def sent(self):
+        if not os.path.exists(self.calls):
+            return []
+        with open(self.calls) as fh:
+            return fh.read().splitlines()
+
+    def test_no_id_no_notification(self):
+        self.stub(2)
+        self.fake_curl()
+        self.settings(with_id=False)
+        self.assertEqual(self.run_cron().returncode, 0)
+        self.assertEqual(self.sent(), [])
+
+    def test_nothing_changed_no_notification(self):
+        self.stub(0, 0)
+        self.fake_curl()
+        self.settings()
+        self.assertEqual(self.run_cron().returncode, 0)
+        self.assertEqual(self.sent(), [])
+
+    def test_pushed_events_send_one_notification_with_counts_only(self):
+        self.stub(2, 1)
+        self.fake_curl()
+        self.settings()
+        self.assertEqual(self.run_cron().returncode, 0)
+        sent = self.sent()
+        self.assertEqual(len(sent), 1)
+        self.assertIn("https://wirepusher.com/send", sent[0])
+        self.assertIn("message=Calendar pushed to Google: 2 pushed, 1 deleted.", sent[0])
+        self.assertIn("id=secret-id-123", sent[0])
+        self.assertIn("notify: WirePusher HTTP 200", self.log())
+
+    def test_the_id_never_reaches_the_log(self):
+        self.stub(1)
+        self.fake_curl()
+        self.settings()
+        self.run_cron()
+        self.assertNotIn("secret-id-123", self.log())
+
+    def test_a_failed_notification_does_not_change_the_exit_code(self):
+        self.stub(1, 0, code=0)
+        self.fake_curl(http="000", code=7)
+        self.settings()
+        self.assertEqual(self.run_cron().returncode, 0)
+        self.assertIn("notify: WirePusher HTTP 000", self.log())
+
+    def test_the_job_exit_code_is_kept_when_it_notifies(self):
+        self.stub(1, 0, code=3)
+        self.fake_curl()
+        self.settings()
+        self.assertEqual(self.run_cron().returncode, 3)
+
+
 if __name__ == "__main__":
     unittest.main()
