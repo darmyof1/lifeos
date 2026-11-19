@@ -159,3 +159,5 @@ Handover 34 (2026-11-19) result: done and live. COO v1.10.11 installed (COO inst
 
 ## P-52 - COO morning compaction fails (2026-11-19)
 The 05:25 compaction needs exactly one COO channel session and finds two since a Slack thread session exists (first used 2026-11-17). It logged an error twice and the health check shows WARN 1. Options for the CEO: (a) change scripts/ops/coo-compact.sh to ignore thread sessions (it already selects keys that start with agent:coo:slack:channel:, so the thread key needs an explicit exclusion); (b) leave it. Needs the CEO's decision and an APR; nothing is changed. Also open: the exact text of the CFO session-change error was not recovered (log rotated); a new occurrence would settle it.
+
+P-52 update (2026-11-19): draft with options A (ignore thread sessions, recommended), B (compact them too), C (leave it) is in deploy/after-loop7/coo-compaction-threads-draft.md and waits for the CEO's answer. Nothing is changed on the VM.

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-166.sh",
+  "generated_by": "fix-167.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -822,6 +822,10 @@
     {
       "path": "deploy/README.md",
       "status": "planned"
+    },
+    {
+      "path": "deploy/after-loop7/coo-compaction-threads-draft.md",
+      "status": "draft"
     },
     {
       "path": "deploy/after-loop7/coo-status-wording-approved.md",

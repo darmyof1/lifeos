@@ -21,11 +21,13 @@ Status: a working note. NOT a decision and NOT the adopted metrics (those stay i
 | 8 | 2026-11-15 15:24 | Ask the COO what the CEO last told the CLO | question | COO | fail | Cause found (read-only check 2026-11-16): the CLO's purchase reached the COO's main session (agent:coo:main) and was relayed to the CFO there, but the CEO's question was answered in the COO's Slack channel session, which had not seen it. Two sessions, no shared memory between them |
 | 9 | 2026-11-17 17:12 | Ask the COO what the CEO last told the CFO (after COO v1.10.10) | question | COO, CFO | fail | The COO asked the CFO, named it and gave a run ID, no path, but the CFO answered from its main session, which does not hold what the CEO typed in the CFO's own Slack channel; the answer was wrong for the CEO. Same two-session problem one layer down (handover 33) |
 | 10 | 2026-11-19 15:56 | Ask the COO what the CEO last told the CFO (after COO v1.10.11) | question | COO, CFO | pass (limited) | The COO asked the CFO, named it, gave a run ID, no path or file name, and named the last entry of the CFO file. That entry was a synthetic test item by then, so the older real item was not tested. A synthetic item typed directly to the CFO was found in a fresh COO session (handover 34, test 5) |
+| 11 | 2026-11-19 17:21 | Ask the COO what the CEO last told the CHO, then what the last question to the CHO was | question | COO, CHO | partial | First answer gave the CHO's last logged change (a workout move), which is what the v1.10.11 rule asks for; the CEO meant his last question, which is not a logged item. After he said so, the COO asked again and the CHO named the right question. A question is not a logged entry, so the rule cannot find it by design |
 
 ## Count so far
-10 requests: pass 8 (rows 1 to 7 and 10), fail 2 (rows 8 and 9). About 20 requests would be a fair read.
+11 requests: pass 8 (rows 1 to 7 and 10), partial 1 (row 11), fail 2 (rows 8 and 9). About 20 requests would be a fair read.
 
 ## Follow-ups seen
+- Row 11: say "last question" or "last thing I asked" when that is meant; the status rule looks for what was logged. Whether to widen it is the CEO's call and needs an APR.
 - Row 10: v1.10.11 is live and the direct-to-agent case passes in a synthetic test. Ask the question again about a real item the CEO typed in an agent's own channel to settle it.
 - WirePusher: the CEO confirmed on 2026-11-19 that the phone notification works.
 - Row 9: a second wording (COO v1.10.11, ask the agent to read its own state files) is drafted in deploy/after-loop7/coo-status-wording-v11011-draft.md and waits for the CEO. The code-written routing log (P-51) is the deterministic fix.
