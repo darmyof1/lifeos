@@ -2,7 +2,7 @@
 # coo-compact.sh - compact the COO's Slack channel session (Loop 6, APR-0121; measure in APR-0116 handover 23 report).
 #
 # Same command and session as handover 23: openclaw sessions compact "<COO Slack channel session key>" --agent coo --max-lines 1
-# The session key is found at run time (the one key that starts with agent:coo:slack:channel:), so no Slack ID is stored here.
+# The session key is found at run time (the one key that starts with agent:coo:slack:channel: and has no :thread: in it; Slack thread sessions are ignored, APR-0134), so no Slack ID is stored here.
 #
 # Usage: coo-compact.sh            dry run (default): says what it would do, changes nothing
 #        coo-compact.sh --execute  compacts
@@ -61,7 +61,7 @@ parse() {  # prints: <count> <key> <lastMs> <tokens>   (key and numbers only; th
 import json, sys
 try:
     d = json.loads(sys.stdin.read())
-    rows = [s for s in d.get("sessions", []) if str(s.get("key", "")).startswith("agent:coo:slack:channel:")]
+    rows = [s for s in d.get("sessions", []) if str(s.get("key", "")).startswith("agent:coo:slack:channel:") and ":thread:" not in str(s.get("key", ""))]
 except Exception:
     print("0 - 0 unknown"); sys.exit()
 if len(rows) != 1:

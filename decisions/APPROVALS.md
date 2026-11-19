@@ -1565,3 +1565,16 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/after-loop7/coo-status-wording-v11011-approved.md; deploy/after-loop7/handover-34-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; decisions/PENDING.md (P-50)
+
+## APR-0134 - COO morning compaction ignores Slack thread sessions (option A, handover 35)
+Status: approved
+Decided by: CEO
+Your answer: "A" (2026-11-19 17:37), to the P-52 draft with options A, B and C
+Evidence: deploy/after-loop7/coo-compaction-threads-approved.md; deploy/after-loop7/handover-35-claude-code-vm.md; ops/handover-2026-11-19-claude-code-report-34.md (the error and the health WARN)
+Meaning:
+- Option A: scripts/ops/coo-compact.sh treats as the COO channel session only the key that starts with agent:coo:slack:channel: and does not contain :thread:. Thread sessions are not compacted. All other rules of APR-0121 stay (window, 10-minute skip, waiting-request skip, one log line, no message text). Two real channel sessions are still an error.
+- Live change handover 35 may make: replace the installed coo-compact.sh with the repo copy. No crontab, config, plugin, agent file or gateway change. The proof is the next 05:25 AST cron run; nothing is compacted by hand.
+- Options B and C are not chosen. Loop 7 stays closed; the repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: scripts/ops/coo-compact.sh; tests/unit/test_coo_compact.py; deploy/after-loop7/coo-compaction-threads-approved.md; deploy/after-loop7/handover-35-claude-code-vm.md; decisions/PENDING.md (P-52)

@@ -178,6 +178,24 @@ class CompactTests(unittest.TestCase):
         self.assertEqual(rc, 3, out)
         self.assertEqual(self.calls(), [])
 
+    def test_thread_session_is_ignored(self):
+        self.set_sessions(NOW_MS - 120 * MIN, 15000, extra=[{"key": KEY + ":thread:1.2", "updatedAt": NOW_MS, "lastInteractionAt": NOW_MS, "totalTokens": 99}])
+        rc, out = self.run_script("--execute")
+        self.assertEqual(rc, 0, out)
+        calls = self.calls()
+        self.assertEqual(len(calls), 1)
+        self.assertIn(KEY, calls[0])
+        self.assertNotIn(":thread:", calls[0])
+        self.assertIn("result=compacted", self.log_lines()[0])
+
+    def test_thread_session_alone_is_no_channel_session(self):
+        with open(os.path.join(self.dir, "sessions.json"), "w") as fh:
+            fh.write(json.dumps({"sessions": [{"key": KEY + ":thread:1.2", "updatedAt": 1, "totalTokens": 1}]}))
+        rc, out = self.run_script("--execute")
+        self.assertEqual(rc, 3, out)
+        self.assertIn("found: 0", self.log_lines()[0])
+        self.assertEqual(self.calls(), [])
+
     def test_failed_compact_is_an_error_and_is_logged(self):
         with open(os.path.join(self.dir, "compact-output.txt"), "w") as fh:
             fh.write("Error: gateway not reachable for channel:ABC123\n")
