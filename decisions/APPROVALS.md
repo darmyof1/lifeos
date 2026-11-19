@@ -1551,3 +1551,17 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/after-loop7/coo-status-wording-approved.md; deploy/after-loop7/handover-33-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; decisions/PENDING.md (P-50)
+
+## APR-0133 - COO status questions: the agent reads its own state files; COO v1.10.11 (handover 34)
+Status: approved
+Decided by: CEO
+Your answer: "approved as written" (2026-11-18 20:40), about the second wording drafted after the COO's answer to the CEO's real question of 2026-11-17 17:12 was wrong
+Evidence: deploy/after-loop7/coo-status-wording-v11011-approved.md (the wording, word for word); deploy/after-loop7/handover-34-claude-code-vm.md; ops/handover-2026-11-17-claude-code-report-33.md; ops/real-request-log.md (row 9)
+Meaning:
+- The wording in deploy/after-loop7/coo-status-wording-v11011-approved.md is APPROVED as written: COO instruction set v1.10.11 replaces the v1.10.10 status rule. For a status question the COO sends the agent one question telling it to read the last entries in its own state files and say what was last logged for the CEO, with the date, and never to answer from conversation memory; the COO relays the answer naming the agent and the run ID, says so if nothing is found, and never writes a file path or file name.
+- Live changes handover 34 may make: the COO instruction file (gateway stopped and started) and the installed health-check.py. No config key, no other agent, no crontab or plugin change. Tests use synthetic items only and never touch the CEO's real entries; the regression suite is not run. A read-only look at the "session-change error" in the gateway log is part of the handover; nothing is changed for it.
+- This is still a behaviour rule and can be ignored by an agent. The code-written routing log (P-51) stays planned and is not approved here.
+- Loop 7 stays closed. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/after-loop7/coo-status-wording-v11011-approved.md; deploy/after-loop7/handover-34-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; decisions/PENDING.md (P-50)

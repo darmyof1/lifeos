@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-164.sh",
+  "generated_by": "fix-165.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -832,11 +832,19 @@
       "status": "draft"
     },
     {
+      "path": "deploy/after-loop7/coo-status-wording-v11011-approved.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/after-loop7/coo-status-wording-v11011-draft.md",
       "status": "draft"
     },
     {
       "path": "deploy/after-loop7/handover-33-claude-code-vm.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/after-loop7/handover-34-claude-code-vm.md",
       "status": "draft"
     },
     {
