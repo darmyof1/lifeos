@@ -1,0 +1,6 @@
+clo/state/lifestyle.md lines=25 sha=78c337c9d5e99ab9
+clo/state/vehicle-maintenance-schema.md lines=21 sha=3d5173be73c2bf69
+cfo/state/budget.md lines=11 sha=417f064d6931520b
+cfo/state/investments.md lines=4 sha=fa8130b276a741fd
+cho/state/health-plan.md lines=12 sha=b584dbe9f62efaa2
+cos/state/calendar-journal.md lines=31 sha=d67f7d87f62ffdf6

@@ -89,7 +89,7 @@ class CloKnown(unittest.TestCase):
                        '"clo": ["coo", "cos"]}',
                        'for a in ("cho", "cos", "cfo", "clo")})',
                        'expected_slack = ["default", "cho", "cos", "cfo", "clo"]',
-                       '("coo", "v1.10.10")',
+                       '("coo", "v1.10.11")',
                        '("cfo", "v1.11"), ("clo", "v1.1")',
                        '"clo": "department/clo"',
                        '"CLO": "lifestyle-clo"'):

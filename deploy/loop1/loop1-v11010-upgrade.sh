@@ -17,7 +17,7 @@ F="$W/coo/AGENTS.md"
 RULE='- Status questions (instruction set v1.10.10): you cannot see what the CEO says to another agent directly, and you may not remember what other agents routed through you in another session. When the CEO asks what he last told an agent, what an agent did, or whether something was logged, do not answer from your own memory. Send that agent one question: what did the CEO last ask you and what did you do, in one or two sentences. Relay its answer, naming the agent and the run ID. If the agent cannot answer, say so. Do not give file paths; say which agent holds the record and that the CEO can ask it directly.'
 
 [ -f "$F" ] || { echo "$F missing. Stop."; exit 1; }
-if grep -q 'instruction set v1.10.10' "$F"; then echo "coo: already v1.10.10, skipped"; exit 0; fi
+if grep -q 'instruction set v1.10.1[01]' "$F"; then echo "coo: already v1.10.10 or later, skipped"; exit 0; fi
 grep -q 'instruction set v1.10.9' "$F" || { echo "coo is not on v1.10.9. Run the earlier upgrades first. Stop."; exit 1; }
 if [ "$DRY" = 1 ]; then
   echo "coo: would append at the end:"; printf '    %s\n' "$RULE"

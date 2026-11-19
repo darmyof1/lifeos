@@ -1,0 +1,6 @@
+cfo configured True connected True
+cho configured True connected True
+clo configured True connected True
+cos configured True connected True
+default configured True connected True
+5

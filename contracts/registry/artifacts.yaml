@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-165.sh",
+  "generated_by": "fix-166.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -892,6 +892,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop1/loop1-v11011-upgrade.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop1/loop1-v1102-upgrade.sh",
       "status": "draft"
     },
@@ -1653,6 +1657,10 @@
     },
     {
       "path": "ops/handover-2026-11-17-claude-code-report-33.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-19-claude-code-report-34.md",
       "status": "draft"
     },
     {
@@ -3689,6 +3697,126 @@
     },
     {
       "path": "ops/loop7-h33-2026-11-17/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo-AGENTS-v11010-to-v11011.diff",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo-v11011-apply-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo-v11011-dry-run-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo-v11011-second-run-live.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-cfo-direct-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-coo-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-coo-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-coo-003.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-coo-004.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-coo-005.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-coo-006.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-coo-007.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/coo/loop34-coo-008.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/gateway-process-count-after-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/google-count-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/health-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/health-installed-sha.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/plugin-hashes-end.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/plugin-hashes-start.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/scratch/RESULT.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/scratch/loop34-scratch-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/scratch/loop34-scratch-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/scripts/ask-bare.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/scripts/ask-prefixed.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/scripts/scratch-ask.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/slack-probe.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/state-counts-after-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/state-counts-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/unit-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop7-h34-2026-11-19/validator.txt",
       "status": "draft"
     },
     {
