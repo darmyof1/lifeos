@@ -1,0 +1,9 @@
+✔ AST month boundary: 03:30 UTC on the 1st is still the previous month (0.918365ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132.402643

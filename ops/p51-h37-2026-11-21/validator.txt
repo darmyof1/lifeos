@@ -1,0 +1,2 @@
+fatal: not a git repository (or any of the parent directories): .git
+python3: can't open file '/scripts/verify/validate_repo.py': [Errno 2] No such file or directory

@@ -1,0 +1,1 @@
+I couldn't find a send log in my `state` folder: the common `send-log`/`send_log` filename variants weren't present. So I can't reliably report the last line's time, agents, or run ID.

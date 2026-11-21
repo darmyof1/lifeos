@@ -1,0 +1,4 @@
+The CLO confirmed **Show Six-C** was added to your lifestyle list. No reminder was set.
+
+Event ID: `coo-20261121-0128-clo-01`  
+Run ID: `coo-20261121-0128`

@@ -1,0 +1,15 @@
+plugin.id "send-log"
+plugin.enabled true
+plugin.status "loaded"
+plugin.toolNames []
+plugin.hookNames []
+plugin.services []
+plugin.commands []
+plugin.httpRoutes 0
+plugin.hookCount 2
+shape "hook-only"
+capabilityMode "none"
+typedHooks [{"name": "after_tool_call"}, {"name": "message_received"}]
+tools []
+commands []
+services []

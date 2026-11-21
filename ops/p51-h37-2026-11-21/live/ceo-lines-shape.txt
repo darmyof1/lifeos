@@ -1,0 +1,2 @@
+After "@COO ping" (1:40 AM) and "@CFO ping" (1:42 AM): live log 5 lines (header + 2 send + 1 send + ...); ceo-message lines: coo channel 1, cfo channel 1; each ends with an 8-hex hash, no text. CEO ledger 64 -> 66.
+A message without @mention ("ping") produced no hook at all (not delivered by Slack mention rules); neither plugin saw it.

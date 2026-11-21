@@ -1,0 +1,1 @@
+The CFO confirmed logging the Test Item Six purchase for 8.00 on 2026-11-21, with no reminder. It was written to the budget record; currency was unspecified. Event ID: `coo-20261121-0128-cfo-01`. Run ID: `coo-20261121-0128`.

@@ -465,6 +465,24 @@ for _f in _PL_FILES:
     if _a != _b:
         _pl_bad.append(_f + " differs")
 rec("PASS" if not _pl_bad else "FAIL", "CEO ledger plugin files equal the repo copy", "; ".join(_pl_bad) or "4 files equal", "plugin changed without the repo")
+rc_sl, out_sl = run(["openclaw", "plugins", "inspect", "send-log"])
+st, det = plugin_inspect_status(out_sl) if rc_sl == 0 else ("FAIL", "plugin inspect failed")
+rec(st, "plugin send-log enabled, hook-only", det, "send-log plugin missing or changed (APR-0136)")
+_sl_bad = []
+for _f in _PL_FILES + ("log.js",):
+    if _f == "ledger.js":
+        continue
+    try:
+        _a = hashlib.sha256(open(os.path.join(STATE, "extensions", "send-log", _f), "rb").read()).hexdigest()
+        _b = hashlib.sha256(open(os.path.join(HOME, "lifeos-ro", "deploy", "after-loop7", "send-log-plugin", _f), "rb").read()).hexdigest()
+    except OSError:
+        _sl_bad.append(_f + " unreadable")
+        continue
+    if _a != _b:
+        _sl_bad.append(_f + " differs")
+rec("PASS" if not _sl_bad else "FAIL", "send-log plugin files equal the repo copy", "; ".join(_sl_bad) or "4 files equal", "plugin changed without the repo")
+_sl_conv = cfg("plugins.entries.send-log.hooks")
+rec("PASS" if _sl_conv in (None, "") else "FAIL", "send-log plugin has no conversation access", "no hooks key" if _sl_conv in (None, "") else "hooks key present", "send-log must not read conversations (APR-0136)")
 journal = os.path.join(WS, "cos", "state", "calendar-journal.md")
 HEADER = "name | start | end | status | run ID | event ID | requested by"
 try:

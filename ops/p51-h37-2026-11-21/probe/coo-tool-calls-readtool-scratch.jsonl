@@ -1,0 +1,67 @@
+{"tool": "sessions_send", "err": false, "paramsShape": {"sessionKey": "str(14)", "timeoutSeconds": "number", "message": "str(194)"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(27)", "awaitResults": "boolean", "code": "str(296)", "command": "str(296)"}}
+{"tool": "read", "err": true, "paramsShape": {"path": "str(48)"}}
+{"tool": "exec", "err": true, "paramsShape": {"title": "str(27)", "code": "str(232)", "command": "str(232)"}}
+{"tool": "read", "err": true, "paramsShape": {"path": "str(22)"}}
+{"tool": "exec", "err": true, "paramsShape": {"title": "str(26)", "code": "str(63)", "command": "str(63)"}}
+{"tool": "read", "err": true, "paramsShape": {"path": "str(1)"}}
+{"tool": "exec", "err": true, "paramsShape": {"title": "str(16)", "code": "str(58)", "command": "str(58)"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(25)", "code": "str(90)", "command": "str(90)"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(25)", "code": "str(101)", "command": "str(101)"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(25)", "code": "str(49)", "command": "str(49)"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(17)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(20)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(21)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(11)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(14)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(27)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(30)", "optional": "boolean"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(24)", "code": "str(332)", "command": "str(332)"}}
+{"tool": "read", "err": true, "paramsShape": {"path": "str(5)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(6)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(6)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(4)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(17)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(20)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(16)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(14)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(21)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(28)", "optional": "boolean"}}
+{"tool": "exec", "err": true, "paramsShape": {"title": "str(26)", "code": "str(380)", "command": "str(380)"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(14)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(14)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(17)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(17)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(19)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(19)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(20)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(20)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(15)", "optional": "boolean"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(19)", "code": "str(414)", "command": "str(414)"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(27)", "code": "str(98)", "command": "str(98)"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(21)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(21)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(18)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(19)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(19)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(19)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(19)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(21)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(19)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(17)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(21)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(12)", "optional": "boolean"}}
+{"tool": "read", "err": false, "paramsShape": {"path": "str(15)", "optional": "boolean"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(32)", "code": "str(533)", "command": "str(533)"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(21)", "code": "str(76)", "command": "str(76)"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(21)", "code": "str(44)", "command": "str(44)"}}
+{"tool": "exec", "err": false, "paramsShape": {"title": "str(28)", "code": "str(80)", "command": "str(80)"}}

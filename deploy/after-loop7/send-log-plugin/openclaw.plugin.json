@@ -1,0 +1,13 @@
+{
+  "id": "send-log",
+  "name": "Send log",
+  "description": "Observe-only: appends one metadata line (no message text) for each agent-to-agent sessions_send and for each CEO message in an agent's Slack channel. Changes, blocks and replies to nothing.",
+  "categories": ["other"],
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false
+  }
+}

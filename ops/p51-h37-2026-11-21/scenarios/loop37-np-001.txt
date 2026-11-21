@@ -1,0 +1,3 @@
+CFO confirmed Test Item Five was logged for **USD 7.00** on **2026-11-21** in the budget record; no reminder was set, and the budget limit was unchanged. Event ID: **coo-20261121-0111-cfo-01**.
+
+**Failure (run ID: coo-20261121-0111):** the CFO Slack channel was unavailable, so the required channel note wasn't posted.

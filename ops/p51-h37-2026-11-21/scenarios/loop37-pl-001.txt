@@ -1,0 +1,3 @@
+CFO confirmed the purchase was logged: **Test Item Five — $7.00, 2026-11-21**, no reminder. Event ID: `coo-20261121-0112-cfo-01`.
+
+**Failure:** The required Slack post could not be delivered because the Slack channel is unavailable. Run ID: `coo-20261121-0112`.

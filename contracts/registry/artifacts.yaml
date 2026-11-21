@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-172.sh",
+  "generated_by": "fix-173.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -848,6 +848,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/after-loop7/coo-status-wording-v11012-draft.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/after-loop7/handover-33-claude-code-vm.md",
       "status": "draft"
     },
@@ -873,6 +877,30 @@
     },
     {
       "path": "deploy/after-loop7/p51-send-log-design-draft.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/after-loop7/send-log-plugin/design.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/after-loop7/send-log-plugin/index.js",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/after-loop7/send-log-plugin/log.js",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/after-loop7/send-log-plugin/openclaw.plugin.json",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/after-loop7/send-log-plugin/package.json",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/after-loop7/send-log-plugin/tests/log.test.js",
       "status": "draft"
     },
     {
@@ -1693,6 +1721,10 @@
     },
     {
       "path": "ops/handover-2026-11-20-claude-code-report-36.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-21-claude-code-report-37.md",
       "status": "draft"
     },
     {
@@ -3917,6 +3949,162 @@
     },
     {
       "path": "ops/p51-h36-2026-11-20/scenarios/loop36-coo-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/crontab-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/google-lines-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/gw-pid-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/gw-pid-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/health-after-install-workcopy.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/health-after-install.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/ledger-count-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/live/ceo-lines-shape.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/live/counts.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/live/loop37-live-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/live/loop37-live-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/node-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/plugin-inspect-send-log.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/probe/coo-tool-calls-readtool-scratch.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-cr-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-cr-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-cr-003.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-cr-004.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-cr-005.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-cr-006.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-cr-007.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-cr-008.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-np-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-pl-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-pl-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scenarios/loop37-pl-004.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scratch-lines/send-log-coo-read-scenario.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scratch-lines/send-log-plugin-scenarios.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scripts/gw.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/scripts/mk-scratch.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/slack-probe.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/startup-with-plugin-last.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/startup-without-plugin.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/state-counts-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/state-counts-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/strict-suite.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h37-2026-11-21/validator.txt",
       "status": "draft"
     },
     {
@@ -6633,6 +6821,10 @@
     },
     {
       "path": "tests/unit/test_restore_backup.py",
+      "status": "draft"
+    },
+    {
+      "path": "tests/unit/test_send_log_plugin.py",
       "status": "draft"
     }
   ]
