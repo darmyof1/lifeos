@@ -1578,3 +1578,17 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: scripts/ops/coo-compact.sh; tests/unit/test_coo_compact.py; deploy/after-loop7/coo-compaction-threads-approved.md; deploy/after-loop7/handover-35-claude-code-vm.md; decisions/PENDING.md (P-52)
+
+## APR-0135 - P-51 goes ahead, step 1 only: a read-only check of what a plugin can see (handover 36)
+Status: approved
+Decided by: CEO
+Your answer: "lets go ahead and implement p-51" (2026-11-20 22:36)
+Evidence: decisions/PENDING.md (P-51); research/project-status-and-next-steps-2026-11-20.md; deploy/after-loop7/handover-36-claude-code-vm.md; deploy/loop3/ceo-plugin/design.md (the existing hook-only plugin)
+Meaning:
+- P-51 (a code-written log of agent-to-agent sends, with no message content) is started. The agreed path has three steps: (1) a read-only check of what an OpenClaw plugin can see; (2) a design and an approval entry that names the COO tool change; (3) a handover that builds and installs it. This entry opens step 1 only.
+- Handover 36 may do step 1: read the OpenClaw documentation and plugin SDK, and run a throwaway observe-only probe in a scratch gateway with synthetic data. The probe never writes message text. No live change: no config, plugin, crontab, agent file or gateway restart. Real entries are never read or copied.
+- Steps 2 and 3 are NOT approved here. The read-only file tool for the COO, the live plugin and the new log need a new APR entry after the report of handover 36, with the exact design.
+- Loop 8 is not approved or started by this entry. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/after-loop7/handover-36-claude-code-vm.md; decisions/PENDING.md (P-51)

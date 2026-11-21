@@ -163,3 +163,5 @@ The 05:25 compaction needs exactly one COO channel session and finds two since a
 P-52 update (2026-11-19): draft with options A (ignore thread sessions, recommended), B (compact them too), C (leave it) is in deploy/after-loop7/coo-compaction-threads-draft.md and waits for the CEO's answer. Nothing is changed on the VM.
 
 APR-0134 (2026-11-19): P-52 option A approved (the compaction script ignores Slack thread sessions); handover 35 prepared; proof is the next 05:25 AST run.
+
+APR-0135 (2026-11-20): P-51 started, step 1 only (read-only check and a scratch probe, handover 36). Steps 2 and 3 (design, COO read-only tool, live plugin) need a new APR after the report.
