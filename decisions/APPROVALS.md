@@ -1606,3 +1606,18 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/after-loop7/p51-send-log-design-approved.md; deploy/after-loop7/handover-37-claude-code-vm.md; decisions/PENDING.md (P-51)
+
+## APR-0137 - COO status questions, third wording: read the send log first; COO v1.10.12 and the COO read tool (handover 38)
+Status: approved
+Decided by: CEO
+Your answer: "approved as written" (2026-11-21 01:51), about the COO v1.10.12 wording drafted after handover 37
+Evidence: deploy/after-loop7/coo-status-wording-v11012-approved.md (the wording, word for word); deploy/after-loop7/handover-38-claude-code-vm.md; ops/handover-2026-11-21-claude-code-report-37.md; ops/p51-h37-2026-11-21/
+Meaning:
+- The wording in deploy/after-loop7/coo-status-wording-v11012-approved.md is APPROVED as written: COO instruction set v1.10.12 replaces the v1.10.11 status rule in place. For a status question the COO first reads the current month's send log in its own state folder, then sends the agent the one question of v1.10.11 (read your own state files and say what was last logged for the CEO), relays the answer with the agent, date and run ID, and never writes a file path or file name.
+- The COO read tool is installed live with this handover, as staged in APR-0136: tools.alsoAllow read and tools.fs.workspaceOnly true for the COO only; no write, edit or exec tool is added.
+- Live changes handover 38 may make: the COO instruction file, those two COO config keys, one gateway restart, and the installed health-check.py. No other agent, no crontab, no plugin file change. Tests use synthetic items only and never touch the CEO's real entries; the regression suite is not run.
+- This is still a behaviour rule and can be ignored by an agent. The log holds no message text, so what was said still comes from the agent. P-50 item 2 (replies in a thread without a mention) is not part of this entry.
+- Loop 7 stays closed and Loop 8 is not started by this entry. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/after-loop7/coo-status-wording-v11012-approved.md; deploy/after-loop7/handover-38-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; decisions/PENDING.md (P-50, P-51)
