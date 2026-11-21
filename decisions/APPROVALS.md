@@ -1634,3 +1634,31 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop1/health-check.py; tests/unit/test_health_check_loop7.py; deploy/after-loop7/health-coo-warn-approved.md; deploy/after-loop7/handover-39-claude-code-vm.md
+
+## APR-0139 - P-50 item 2: thread follow-ups without an @mention, option A; step 1 only (handover 40)
+Status: approved
+Decided by: CEO
+Your answer: "P-50: A" (2026-11-21 17:10), to the P-50 item 2 draft with options A, B and C
+Evidence: deploy/after-loop7/p50-thread-replies-approved.md; deploy/after-loop7/handover-40-claude-code-vm.md; decisions/PENDING.md (P-50)
+Meaning:
+- Intent: once an agent has replied in a thread, your next messages in that thread need no @mention; a new top-level channel message still needs one; all five agents behave the same. Options B and C are not chosen.
+- This entry opens step 1 only: handover 40 reads the documentation, the live values of the mention and thread keys (values only, never tokens or IDs), and gateway log counts, and reports whether option A can be reached by configuration alone. No live change: no config edit, no restart.
+- The configuration change itself replaces the mention rule of APR-0063 for threads and needs its own APR after the report, with the exact keys, the live check you will do and the rollback. If option A cannot be reached by configuration alone, we report it and stop.
+- Loop 7 stays closed. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/after-loop7/p50-thread-replies-approved.md; deploy/after-loop7/handover-40-claude-code-vm.md; decisions/PENDING.md (P-50)
+
+## APR-0140 - Loop 8 "make growth cheap": scope approved as written
+Status: approved
+Decided by: CEO
+Your answer: "Loop 8: approved as written" (2026-11-21 17:10), to the Loop 8 scope draft
+Evidence: deploy/loop8/loop8-scope-approved.md (the scope, word for word); research/project-status-and-next-steps-2026-11-20.md; deploy/loop8/definition-of-done-draft.md
+Meaning:
+- Loop 8 is open with the scope in deploy/loop8/loop8-scope-approved.md: (1) a definition of done; (2) one generic topic rule for the CHO, CFO and CLO; (3) proof with synthetic topics, then your real topics typed in Slack and scored in the request log; (4) a written chief recipe in design/agent-lifecycle.md; (5) a review at 20 scored requests that revisits P-49 with numbers.
+- Not in Loop 8: new chiefs, helper bots, trimming the five system chiefs (Loop 9), wiring the privacy gate (Loop 9), a real Google calendar, a single-agent migration, and any change to routing, the delete gate, the send log or the plugins.
+- Each piece that changes an instruction or config (the topic rule wording, its live install) needs its own APR and a numbered handover. The definition of done needs your approval of its own text. Real data rules stay: synthetic tests first, no reset, no regression suite, nothing real copied into the repo.
+- P-49 (Fable's single-agent option) stays open and is reviewed at step 5. P-50 item 2 is decided separately (APR-0139).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop8/loop8-scope-approved.md; deploy/loop8/definition-of-done-draft.md; decisions/PENDING.md (P-54)
