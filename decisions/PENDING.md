@@ -179,3 +179,8 @@ Handover 38 (2026-11-21) result: done and live. COO v1.10.12 and the COO read to
 APR-0138 (2026-11-21): health WARN option A approved (the COO tools-policy log line is ignored for agent coo only); handover 39 prepared (health-check.py only, a repeat of the nothing-exists test with an invented topic, a read-only look at the stray file ~/lifeos-ro/0).
 
 Handover 39 (2026-11-21) result: done and live. The health check ignores the COO tools-policy log line only (installed health-check.py, no restart); health PASS 89, WARN 0, FAIL 0, parity equal. The nothing-exists test repeated with an invented topic passed (plain 'nothing found', no path; cost about 0.003 USD per run). The stray file ~/lifeos-ro/0 is 24 bytes, untracked, from 2026-10-26; content not read; the CEO decides what to do with it.
+
+P-50 item 2 (2026-11-21): draft with options A (thread follow-ups only, recommended), B (no mention in an agent's own channel), C (leave) is in deploy/after-loop7/p50-thread-replies-draft.md and waits for the CEO; approval would start only a read-only look at the Slack settings.
+
+## P-54 - Loop 8: make growth cheap (2026-11-21)
+Draft scope (definition of done, one generic topic rule for CHO, CFO and CLO, proof with synthetic then real topics, a written chief recipe, a review at 20 scored requests) is in deploy/loop8/loop8-scope-draft.md and waits for the CEO. Nothing is started.

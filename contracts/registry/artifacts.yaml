@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-177.sh",
+  "generated_by": "fix-178.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -892,6 +892,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/after-loop7/p50-thread-replies-draft.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/after-loop7/p51-send-log-design-approved.md",
       "status": "draft"
     },
@@ -1397,6 +1401,10 @@
     },
     {
       "path": "deploy/loop7/runid-wording-draft.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop8/loop8-scope-draft.md",
       "status": "draft"
     },
     {
