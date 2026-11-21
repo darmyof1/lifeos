@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-176.sh",
+  "generated_by": "fix-177.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1756,6 +1756,10 @@
       "status": "draft"
     },
     {
+      "path": "ops/handover-2026-11-21-claude-code-report-39.md",
+      "status": "draft"
+    },
+    {
       "path": "ops/health-check-output-2026-10-27-b.txt",
       "status": "draft"
     },
@@ -1801,6 +1805,54 @@
     },
     {
       "path": "ops/health-check-proposal-2026-11-01.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/gw-pid-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/gw-pid-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/health-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/new-tests.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/run-cost.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/scenarios/boat-reply.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/sha-equal.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/stray-file-facts.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/strict-suite-tail.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/health-h39-2026-11-21/validator-tail.txt",
       "status": "draft"
     },
     {

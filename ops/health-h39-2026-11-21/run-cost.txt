@@ -1,0 +1,6 @@
+result.meta.agentMeta.usage {"input": 161, "output": 1174, "cacheRead": 72249, "cacheWrite": 14693, "reasoningTokens": 744, "total": 88277, "cost": {"total": 0.0031622150000000003}}
+result.meta.agentMeta.usage.cost {"total": 0.0031622150000000003}
+result.meta.agentMeta.lastCallUsage.cost {"total": 0.00026967}
+result.meta.agentMeta.lastCallUsage.contextUsage.promptTokens 14716
+result.meta.agentMeta.lastCallUsage.contextUsage.totalTokens 14898
+result.meta.agentMeta.promptTokens 14716

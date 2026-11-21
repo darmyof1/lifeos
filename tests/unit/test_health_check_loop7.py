@@ -19,6 +19,7 @@ def extract(path, names):
 
 status = extract(HC, {"workspace_confined_status"})["workspace_confined_status"]
 coo_status = extract(HC, {"coo_tools_status"})["coo_tools_status"]
+log_hits = extract(HC, {"log_policy_hits"})["log_policy_hits"]
 
 
 def tools(only="absent"):
@@ -109,6 +110,33 @@ class CooReadOnly(unittest.TestCase):
         self.assertEqual(coo_status(["read"], {"workspaceOnly": False})[0], "FAIL")
         for extra in ("write", "edit", "apply_patch", "exec"):
             self.assertEqual(coo_status(["read", extra], {"workspaceOnly": True})[0], "FAIL")
+
+
+class ToolsPolicyLogLine(unittest.TestCase):
+    """APR-0138: the tools-policy log line about the COO is ignored; other agents still warn."""
+    N = "tools policy: profile"
+
+    @staticmethod
+    def line(agent, escaped=True):
+        q = '\\"' if escaped else '"'
+        return ('{"0":"tools policy: profile %smessaging%s (agent %s%s%s) has configured tool sections"}'
+                % (q, q, q, agent, q))
+
+    def test_coo_line_gives_no_warn(self):
+        for esc in (True, False):
+            self.assertEqual(log_hits(self.N, [self.line("coo", esc)] * 5), 0)
+
+    def test_other_agents_still_warn(self):
+        for agent in ("cfo", "cho", "cos", "clo", "solo"):
+            for esc in (True, False):
+                self.assertEqual(log_hits(self.N, [self.line(agent, esc)]), 1, agent)
+
+    def test_mixed_log_counts_only_the_other_agent(self):
+        lines = [self.line("coo")] * 3 + [self.line("cfo")] * 2 + ["unrelated"]
+        self.assertEqual(log_hits(self.N, lines), 2)
+
+    def test_other_needles_unchanged(self):
+        self.assertEqual(log_hits("memory] sync failed", ["a memory] sync failed b", "x"]), 1)
 
 
 if __name__ == "__main__":

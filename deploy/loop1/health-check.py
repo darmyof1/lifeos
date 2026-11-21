@@ -131,6 +131,15 @@ ok_sub = isinstance(sub, dict) and sub.get("maxSpawnDepth") == 1 and sub.get("ma
 rec("PASS" if ok_sub else "FAIL", "sub-agent limits (depth 1, 2 children, 120 s)", json.dumps(sub)[:120],
     "runaway sub-agent chain")
 
+def log_policy_hits(needle, lines):
+    """Count log lines holding needle. The tools-policy line about agent coo is skipped:
+    the COO is read-only on purpose (APR-0137, APR-0138); lines for any other agent still count."""
+    import re
+    if needle == "tools policy: profile":
+        coo = re.compile(r'agent \\?"coo\\?"')
+        return sum(1 for l in lines if needle in l and not coo.search(l))
+    return sum(1 for l in lines if needle in l)
+
 def coo_tools_status(also, fs):
     """APR-0137: the COO has exactly one file tool (read), confined to its own workspace; no write, edit or apply_patch."""
     only = fs.get("workspaceOnly") if isinstance(fs, dict) else None
@@ -280,7 +289,7 @@ if os.path.exists(logpath):
         ("Agent-to-agent messaging denied", "WARN", "expected only in the refused-send test"),
     ]
     for needle, status, why in patterns:
-        hits = sum(1 for l in tail if needle in l)
+        hits = log_policy_hits(needle, tail)
         rec("PASS" if hits == 0 else status, "log: " + needle, str(hits) + " line(s) in the last 4000", why)
 
     # /new control-command-unauthorized: ignore refusals logged before 2026-10-24 19:19 (pre-fix)

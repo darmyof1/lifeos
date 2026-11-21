@@ -1,0 +1,5 @@
+test_coo_line_gives_no_warn (test_health_check_loop7.ToolsPolicyLogLine.test_coo_line_gives_no_warn) ... ok
+test_mixed_log_counts_only_the_other_agent (test_health_check_loop7.ToolsPolicyLogLine.test_mixed_log_counts_only_the_other_agent) ... ok
+test_other_agents_still_warn (test_health_check_loop7.ToolsPolicyLogLine.test_other_agents_still_warn) ... ok
+test_other_needles_unchanged (test_health_check_loop7.ToolsPolicyLogLine.test_other_needles_unchanged) ... ok
+OK
