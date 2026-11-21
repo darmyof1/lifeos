@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-168.sh",
+  "generated_by": "fix-169.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -5758,6 +5758,10 @@
     {
       "path": "research/open-questions.md",
       "status": "planned"
+    },
+    {
+      "path": "research/project-status-and-next-steps-2026-11-20.md",
+      "status": "draft"
     },
     {
       "path": "research/references.md",
