@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-170.sh",
+  "generated_by": "fix-171.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -864,6 +864,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/after-loop7/p51-send-log-design-draft.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/deploy-map.yaml",
       "status": "planned"
     },
@@ -1677,6 +1681,10 @@
     },
     {
       "path": "ops/handover-2026-11-19-claude-code-report-34.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-20-claude-code-report-36.md",
       "status": "draft"
     },
     {
@@ -3853,6 +3861,54 @@
     },
     {
       "path": "ops/p36-channel-session-reset-finding.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/crontab-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/doc-quotes.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/gw-pid-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/health.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/plugin-hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/probe/hook-blocked-lines.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/probe/openclaw.plugin.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/probe/probe-index.js",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/probe/probe-output-masked.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/scenarios/loop36-cfo-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h36-2026-11-20/scenarios/loop36-coo-001.txt",
       "status": "draft"
     },
     {

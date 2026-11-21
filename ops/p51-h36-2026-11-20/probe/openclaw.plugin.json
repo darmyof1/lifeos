@@ -1,0 +1,1 @@
+{"id":"probe36","name":"probe36","description":"Throwaway observe-only probe (handover 36). Never writes message text.","categories":["other"],"activation":{"onStartup":true},"configSchema":{"type":"object","additionalProperties":false}}

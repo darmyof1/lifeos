@@ -1,0 +1,3 @@
+2026-11-20T22:45:27.003-04:00 [gateway] [plugins] typed hook "before_prompt_build" blocked because non-bundled plugins must set plugins.entries.probe36.hooks.allowConversationAccess=true (plugin=probe
+2026-11-20T22:45:27.004-04:00 [gateway] [plugins] typed hook "before_agent_run" blocked because non-bundled plugins must set plugins.entries.probe36.hooks.allowConversationAccess=true (plugin=probe36,
+2026-11-20T22:45:27.004-04:00 [gateway] [plugins] typed hook "agent_end" blocked because non-bundled plugins must set plugins.entries.probe36.hooks.allowConversationAccess=true (plugin=probe36, source
