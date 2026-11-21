@@ -1621,3 +1621,16 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/after-loop7/coo-status-wording-v11012-approved.md; deploy/after-loop7/handover-38-claude-code-vm.md; agent-files/executive/coo/AGENTS.md; decisions/PENDING.md (P-50, P-51)
+
+## APR-0138 - Health check: the COO tools-policy log line no longer counts as a WARN (option A, handover 39)
+Status: approved
+Decided by: CEO
+Your answer: "a" (2026-11-21 15:34), to the health WARN draft with options A, B and C
+Evidence: deploy/after-loop7/health-coo-warn-approved.md; deploy/after-loop7/handover-39-claude-code-vm.md; ops/handover-2026-11-21-claude-code-report-38.md
+Meaning:
+- Option A: the health check rule "tools policy: profile" skips gateway log lines that name agent coo, because the COO is read-only on purpose (APR-0137). Lines for every other agent still count as WARN, so the 2026-10-22 failure is still caught for the chiefs that need write tools.
+- Live change handover 39 may make: the installed health-check.py only. No config, agent, plugin, crontab or restart. The handover also repeats the nothing-exists test with an invented topic and looks read-only at the stray file ~/lifeos-ro/0 (size, git status, no content, no deletion).
+- Options B and C are not chosen. The COO keeps no write or edit tool. Loop 7 stays closed and Loop 8 is not started by this entry. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop1/health-check.py; tests/unit/test_health_check_loop7.py; deploy/after-loop7/health-coo-warn-approved.md; deploy/after-loop7/handover-39-claude-code-vm.md
