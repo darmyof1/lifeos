@@ -1592,3 +1592,17 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/after-loop7/handover-36-claude-code-vm.md; decisions/PENDING.md (P-51)
+
+## APR-0136 - P-51 option A: a code-written send log in the COO workspace, short masked error text (handover 37)
+Status: approved
+Decided by: CEO
+Your answer: "option a approved. kepp masked text as recommended" (2026-11-21 00:23), to the P-51 design draft with options A, B and C
+Evidence: deploy/after-loop7/p51-send-log-design-approved.md (the design, word for word); deploy/after-loop7/handover-37-claude-code-vm.md; ops/handover-2026-11-20-claude-code-report-36.md; ops/p51-h36-2026-11-20/
+Meaning:
+- Option A is approved: a new hook-only, observe-only plugin (send-log) writes one metadata line per sessions_send (time, from, to, run ID, ok or error with a masked error text of at most 80 characters) and one per CEO message in an agent's own Slack channel (time, agent channel, short hash), in a monthly append-only file in the COO workspace. It never writes message text and never uses before_tool_call.
+- The COO is to get a read tool limited to its own workspace (tools.alsoAllow read, tools.fs.workspaceOnly true; no write tool). Staged: handover 37 builds and installs the plugin live, and tests the COO read tool in a scratch gateway only. The COO read tool going live and COO instruction set v1.10.12 (read the log, then ask the agent as v1.10.11 does) each need a later handover; the v1.10.12 wording needs its own APR before it is installed.
+- Live changes handover 37 may make: the plugin folder, its one config entry, one gateway restart, and the installed health-check.py. No COO tool or instruction change, no other agent, no crontab change. Tests are synthetic; the regression suite is not run.
+- Options B and C are not chosen. The log says when and whether, not what. Loop 7 stays closed and Loop 8 is not started by this entry. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/after-loop7/p51-send-log-design-approved.md; deploy/after-loop7/handover-37-claude-code-vm.md; decisions/PENDING.md (P-51)

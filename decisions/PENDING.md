@@ -167,3 +167,5 @@ APR-0134 (2026-11-19): P-52 option A approved (the compaction script ignores Sla
 APR-0135 (2026-11-20): P-51 started, step 1 only (read-only check and a scratch probe, handover 36). Steps 2 and 3 (design, COO read-only tool, live plugin) need a new APR after the report.
 
 Handover 36 (2026-11-20) result: step 1 of P-51 done, nothing live changed. after_tool_call (observe-only) sees every sessions_send with sender, target and the run ID token; message_received covers the CEO's Slack messages; no hook fires for openclaw agent CLI messages; before_tool_call fails closed and must not be used. Design with options A, B, C is in deploy/after-loop7/p51-send-log-design-draft.md and waits for the CEO. The log would say when and whether, not what.
+
+APR-0136 (2026-11-21): P-51 option A approved with the short masked error text; handover 37 prepared (build and install the send-log plugin; COO read tool tested in scratch only). COO read tool live and COO v1.10.12 wording come later, the wording with its own APR.
