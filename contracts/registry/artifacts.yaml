@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-174.sh",
+  "generated_by": "fix-175.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -880,6 +880,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/after-loop7/health-coo-warn-draft.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/after-loop7/p51-send-log-design-approved.md",
       "status": "draft"
     },
@@ -957,6 +961,10 @@
     },
     {
       "path": "deploy/loop1/loop1-v11011-upgrade.sh",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop1/loop1-v11012-upgrade.sh",
       "status": "draft"
     },
     {
@@ -1733,6 +1741,10 @@
     },
     {
       "path": "ops/handover-2026-11-21-claude-code-report-37.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-21-claude-code-report-38.md",
       "status": "draft"
     },
     {
@@ -4113,6 +4125,122 @@
     },
     {
       "path": "ops/p51-h37-2026-11-21/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/ask.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/cmd-1.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/compact-log-tail.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/config-diff.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/coo-agents-diff.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/counts-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/counts-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/crontab-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/gw-process.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/gw38.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/health-after-final.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/health-after-work38.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/health-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/health-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/live-apply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/live-dryrun.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/live-second-run.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/log-shape-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/probe-note.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/scenarios/loop38-x-001.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/scenarios/loop38-x-002.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/scenarios/replies.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/scratch/apply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/scratch/coo-tool-calls.jsonl",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/scratch/second-run.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/scratch/send-log-scratch-lines.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/p51-h38-2026-11-21/slack-probe.txt",
       "status": "draft"
     },
     {

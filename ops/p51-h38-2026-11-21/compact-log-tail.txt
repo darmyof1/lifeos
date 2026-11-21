@@ -1,0 +1,3 @@
+2026-11-20 05:25:01 AST mode=execute result=error COO channel sessions found: 2 (need exactly 1)
+2026-11-20 18:02:04 AST mode=dry-run result=would-compact size=18115; nothing changed
+2026-11-21 05:25:01 AST mode=execute result=compacted size_before=11278 size_after=unknown kept_lines=1

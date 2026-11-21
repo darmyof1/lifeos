@@ -131,6 +131,16 @@ ok_sub = isinstance(sub, dict) and sub.get("maxSpawnDepth") == 1 and sub.get("ma
 rec("PASS" if ok_sub else "FAIL", "sub-agent limits (depth 1, 2 children, 120 s)", json.dumps(sub)[:120],
     "runaway sub-agent chain")
 
+def coo_tools_status(also, fs):
+    """APR-0137: the COO has exactly one file tool (read), confined to its own workspace; no write, edit or apply_patch."""
+    only = fs.get("workspaceOnly") if isinstance(fs, dict) else None
+    if sorted(also or []) != ["read"]:
+        return "FAIL", "alsoAllow = " + repr(also)
+    if only is not True:
+        return "FAIL", "alsoAllow = [read] but workspaceOnly = " + repr(only)
+    return "PASS", "alsoAllow = [read], workspaceOnly = true (no write, edit or apply_patch)"
+
+
 for a in AGENTS:
     s = cfg("agents.entries." + a + ".tools.agentToAgent.send")
     rec("PASS" if sorted(s or []) == sorted(SEND[a]) else "FAIL", a + " send list",
@@ -138,8 +148,8 @@ for a in AGENTS:
     also = cfg("agents.entries." + a + ".tools.alsoAllow") or []
     fs = cfg("agents.entries." + a + ".tools.fs") or {}
     if a == "coo":
-        rec("PASS" if not set(also) & {"read", "write", "edit"} else "WARN", "coo has no file tools",
-            "alsoAllow = " + repr(also), "COO given state access it should not have")
+        st, det = coo_tools_status(also, fs)
+        rec(st, "coo read-only, own workspace", det, "COO tools drifted from read-only, workspace-only (APR-0137)")
     else:
         good = sorted(also) == ["edit", "read", "write"] and isinstance(fs, dict) and fs.get("workspaceOnly") is True
         rec("PASS" if good else "FAIL", a + " file tools limited to workspace",
@@ -494,7 +504,7 @@ except OSError as e:
 rc, out = run(["git", "-C", os.path.join(WS, "cos"), "diff", "--numstat", "HEAD", "--", "state/calendar-journal.md"])
 rec("INFO", "journal vs committed seed (numstat added, removed)", out.strip() or "no change",
     "informational after a run: removed must be 0")
-for agent, ver in (("coo", "v1.10.11"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.11"), ("clo", "v1.1")):
+for agent, ver in (("coo", "v1.10.12"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.11"), ("clo", "v1.1")):
     try:
         has = ("instruction set " + ver) in open(os.path.join(WS, agent, "AGENTS.md"), encoding="utf-8").read()
     except OSError:

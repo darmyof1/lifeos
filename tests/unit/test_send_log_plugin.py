@@ -46,8 +46,8 @@ class SendLogPlugin(unittest.TestCase):
         for want in ('"plugin send-log enabled, hook-only"', '"send-log plugin files equal the repo copy"',
                      '"send-log plugin has no conversation access"', 'plugins.entries.send-log.hooks'):
             self.assertIn(want, hc)
-        # the COO tool line is unchanged in this handover
-        self.assertIn('"coo has no file tools"', hc)
+        # APR-0137: the COO tool line is now read-only, own workspace
+        self.assertIn('"coo read-only, own workspace"', hc)
 
 
 if __name__ == "__main__":

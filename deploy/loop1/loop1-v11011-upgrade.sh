@@ -18,7 +18,7 @@ OLDSTART='- Status questions (instruction set v1.10.10):'
 RULE='- Status questions (instruction set v1.10.11): you cannot see what the CEO says to another agent directly, and you may not remember what other agents routed through you in another session. When the CEO asks what he last told an agent, what an agent did, or whether something was logged, do not answer from your own memory. Send that agent one question: read the last entries in your own state files and tell me what was last logged for the CEO, with the date, in one or two sentences. Do not answer from conversation memory. Relay its answer, naming the agent and the run ID. If the agent finds nothing, say so. Never write a file path or a file name in your answer; say which agent holds the record and that the CEO can ask it directly.'
 
 [ -f "$F" ] || { echo "$F missing. Stop."; exit 1; }
-if grep -q 'instruction set v1.10.11' "$F"; then echo "coo: already v1.10.11, skipped"; exit 0; fi
+if grep -q 'instruction set v1.10.1[12]' "$F"; then echo "coo: already v1.10.11 or later, skipped"; exit 0; fi
 grep -q 'instruction set v1.10.10' "$F" || { echo "coo is not on v1.10.10. Run the earlier upgrades first. Stop."; exit 1; }
 [ "$(grep -c -F -- "$OLDSTART" "$F")" = 1 ] || { echo "coo: the v1.10.10 Status questions rule is not there exactly once. Stop."; exit 1; }
 if [ "$DRY" = 1 ]; then

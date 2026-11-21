@@ -18,6 +18,7 @@ def extract(path, names):
 
 
 status = extract(HC, {"workspace_confined_status"})["workspace_confined_status"]
+coo_status = extract(HC, {"coo_tools_status"})["coo_tools_status"]
 
 
 def tools(only="absent"):
@@ -89,7 +90,7 @@ class CloKnown(unittest.TestCase):
                        '"clo": ["coo", "cos"]}',
                        'for a in ("cho", "cos", "cfo", "clo")})',
                        'expected_slack = ["default", "cho", "cos", "cfo", "clo"]',
-                       '("coo", "v1.10.11")',
+                       '("coo", "v1.10.12")',
                        '("cfo", "v1.11"), ("clo", "v1.1")',
                        '"clo": "department/clo"',
                        '"CLO": "lifestyle-clo"'):
@@ -97,6 +98,17 @@ class CloKnown(unittest.TestCase):
 
     def test_cfo_is_expected_on_v111_not_v110(self):
         self.assertNotIn('("cfo", "v1.10")', self.src)
+
+
+class CooReadOnly(unittest.TestCase):
+    """APR-0137: the COO has exactly the read tool, confined to its workspace."""
+    def test_pass_only_for_read_and_workspace_only(self):
+        self.assertEqual(coo_status(["read"], {"workspaceOnly": True})[0], "PASS")
+        self.assertEqual(coo_status([], {"workspaceOnly": True})[0], "FAIL")
+        self.assertEqual(coo_status(["read"], {})[0], "FAIL")
+        self.assertEqual(coo_status(["read"], {"workspaceOnly": False})[0], "FAIL")
+        for extra in ("write", "edit", "apply_patch", "exec"):
+            self.assertEqual(coo_status(["read", extra], {"workspaceOnly": True})[0], "FAIL")
 
 
 if __name__ == "__main__":

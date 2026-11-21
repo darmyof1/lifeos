@@ -1,0 +1,1 @@
+ 416827 /usr/bin/node --max-old-space-size=8192 /home/ubuntu/.npm-global/lib/node_modules/openclaw/dist/index.js gateway run

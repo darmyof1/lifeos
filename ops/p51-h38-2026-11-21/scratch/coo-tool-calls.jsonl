@@ -1,0 +1,11 @@
+{"tool": "session_status", "err": false, "readsSendLog": null, "paramTarget": null}
+{"tool": "exec", "err": false, "readsSendLog": null, "paramTarget": null}
+{"tool": "sessions_send", "err": false, "readsSendLog": null, "paramTarget": "agent:cfo:main"}
+{"tool": "exec", "err": false, "readsSendLog": null, "paramTarget": null}
+{"tool": "exec", "err": false, "readsSendLog": null, "paramTarget": null}
+{"tool": "exec", "err": false, "readsSendLog": null, "paramTarget": null}
+{"tool": "exec", "err": false, "readsSendLog": null, "paramTarget": null}
+{"tool": "read", "err": false, "readsSendLog": true, "paramTarget": null}
+{"tool": "exec", "err": false, "readsSendLog": null, "paramTarget": null}
+{"tool": "sessions_send", "err": false, "readsSendLog": null, "paramTarget": "agent:cfo:main"}
+{"tool": "exec", "err": false, "readsSendLog": null, "paramTarget": null}

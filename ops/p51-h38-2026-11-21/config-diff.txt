@@ -1,0 +1,2 @@
+/agents/entries/coo/tools/alsoAllow | None -> ["read"]
+/agents/entries/coo/tools/fs/workspaceOnly | None -> true

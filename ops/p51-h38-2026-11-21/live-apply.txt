@@ -1,0 +1,2 @@
+coo: v1.10.12 replaced the status rule
+Done. Start the gateway again: systemctl --user start openclaw-loop1-gateway
