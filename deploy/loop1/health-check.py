@@ -140,6 +140,16 @@ def log_policy_hits(needle, lines):
         return sum(1 for l in lines if needle in l and not coo.search(l))
     return sum(1 for l in lines if needle in l)
 
+def topic_index_status(names, index_text):
+    """APR-0142: every file in a chief state folder (except topics.md) has a line in state/topics.md that names it.
+    Takes file NAMES and the index text only. Returns (status, detail, missing names)."""
+    lines = (index_text or "").splitlines()
+    missing = [n for n in sorted(names) if n != "topics.md" and not any(n in l for l in lines)]
+    if index_text is None:
+        return "WARN", "state/topics.md missing", missing
+    return ("PASS", "%d file(s) indexed" % len([n for n in names if n != "topics.md"]), []) if not missing else \
+        ("WARN", "%d file(s) without an index line" % len(missing), missing)
+
 def coo_tools_status(also, fs):
     """APR-0137: the COO has exactly one file tool (read), confined to its own workspace; no write, edit or apply_patch."""
     only = fs.get("workspaceOnly") if isinstance(fs, dict) else None
@@ -220,7 +230,7 @@ for a in AGENTS:
     if "instruction set " + _first not in text:
         problems.append("instructions older than " + _first)
     rc, log = run(["git", "-C", w, "log", "-1", "--pretty=%s", "--", "AGENTS.md"])
-    if "Loop 1 instructions" not in log and "Loop 7 instructions" not in log:
+    if "Loop 1 instructions" not in log and "Loop 7 instructions" not in log and "Loop 8 topic rule" not in log:
         problems.append("instruction commit missing")
     rec("PASS" if not problems else "FAIL", "workspace ready: " + a, "; ".join(problems) or "ok",
         "agent started without its instructions")
@@ -513,12 +523,24 @@ except OSError as e:
 rc, out = run(["git", "-C", os.path.join(WS, "cos"), "diff", "--numstat", "HEAD", "--", "state/calendar-journal.md"])
 rec("INFO", "journal vs committed seed (numstat added, removed)", out.strip() or "no change",
     "informational after a run: removed must be 0")
-for agent, ver in (("coo", "v1.10.12"), ("cos", "v1.10.2"), ("cho", "v1.9"), ("cfo", "v1.11"), ("clo", "v1.1")):
+for agent, ver in (("coo", "v1.10.12"), ("cos", "v1.10.2"), ("cho", "v1.10"), ("cfo", "v1.12"), ("clo", "v1.2")):
     try:
         has = ("instruction set " + ver) in open(os.path.join(WS, agent, "AGENTS.md"), encoding="utf-8").read()
     except OSError:
         has = False
     rec("PASS" if has else "FAIL", "instructions %s carry %s" % (agent, ver), "", "agent on an older instruction set")
+for agent in ("cho", "cfo", "clo"):
+    sdir = os.path.join(WS, agent, "state")
+    try:
+        names = [n for n in os.listdir(sdir) if os.path.isfile(os.path.join(sdir, n))]
+    except OSError:
+        names = []
+    try:
+        itext = open(os.path.join(sdir, "topics.md"), encoding="utf-8").read()
+    except OSError:
+        itext = None
+    st, det, miss = topic_index_status(names, itext)
+    rec(st, "topic index %s" % agent, det + (": " + ", ".join(miss) if miss else ""), "a topic file has no line in state/topics.md (names only checked)")
 slog = os.path.join(HOME, "loop1", "gcal-sync", "sync.log")
 try:
     heads = [l for l in open(slog, encoding="utf-8", errors="replace") if l.startswith("=== ")]

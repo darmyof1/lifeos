@@ -1,0 +1,9 @@
+{
+ "agent": "cfo",
+ "session": "<sid>",
+ "message": "Yes, use that.",
+ "tools": null,
+ "cost_usd": 0.00029126,
+ "tokens": 10914,
+ "reply": "Great. What synthetic starting balance should I record for **test-gift-fund**?"
+}

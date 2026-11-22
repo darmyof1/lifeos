@@ -1,0 +1,4 @@
+cho: v1.10 added the topic rule; topic index has 1 line(s)
+cfo: v1.12 added the topic rule; topic index has 2 line(s)
+clo: v1.2 added the topic rule; topic index has 4 line(s)
+Done. Start the gateway again: systemctl --user start openclaw-loop1-gateway

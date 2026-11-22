@@ -1,0 +1,12 @@
+{
+ "agent": "coo",
+ "session": "<sid>",
+ "message": "I want to try a new test-restaurant this weekend, add it to my lifestyle list: Test Place Nine.",
+ "tools": [
+  "sessions_send",
+  "exec"
+ ],
+ "cost_usd": 0.0015662249999999999,
+ "tokens": 20162,
+ "reply": "CLO confirmed Test Place Nine was added to the lifestyle list for Nov 21\u201322, 2026, with no time specified, and posted the update in the lifestyle Slack channel.\n\nEvent ID: `coo-20261122-1343-clo-01` \u00b7 Run ID: `coo-20261122-1343`"
+}

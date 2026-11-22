@@ -1,0 +1,16 @@
+cfo-1.json 0.00198 37317
+cfo-2.json 0.00032 10658
+cfo-5.json 0.00158 18392
+cfo-6.json 0.00115 8811
+cho-1.json 0.00179 27557
+cho-2.json 0.00244 78247
+cho-3.json 0.00122 70387
+cho-5.json 0.00175 27535
+cho-6.json 0.00114 8770
+clo-1.json 0.0015 17309
+clo-2.json 0.00206 71685
+clo-3.json 0.00113 64591
+clo-5.json 0.00156 25765
+clo-6.json 0.00108 8263
+coo-1.json 0.00157 20162
+live scenario files total USD 0.0223 (4 runs with raw not saved: each about 0.0014 to 0.0032, see report)

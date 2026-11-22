@@ -1,0 +1,12 @@
+{
+ "agent": "cfo",
+ "session": "<sid>",
+ "message": "I want to start tracking a test-gift-fund.",
+ "tools": [
+  "exec",
+  "read"
+ ],
+ "cost_usd": 0.00198189,
+ "tokens": 37317,
+ "reply": "The investments ledger already covers new funds, so I\u2019ll use `state/investments.md` for the test-gift-fund. What initial balance or first contribution/growth amount should I record?"
+}

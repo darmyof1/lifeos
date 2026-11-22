@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-183.sh",
+  "generated_by": "fix-184.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1436,6 +1436,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop8/loop8-topic-rule-upgrade.sh",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop8/topic-rule-approved.md",
       "status": "draft"
     },
@@ -1805,6 +1809,10 @@
     },
     {
       "path": "ops/handover-2026-11-22-claude-code-report-40.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-22-claude-code-report-41.md",
       "status": "draft"
     },
     {
@@ -4009,6 +4017,294 @@
     },
     {
       "path": "ops/loop7-h34-2026-11-19/validator.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/counts-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/counts-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/crontab-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/gw-pid-after-restart.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/gw-pid-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/gw-pid-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/gw41.sh",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/health-after-first-run-3-FAIL.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/health-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/index-counts.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/live-apply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/live-counts-0.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/live-dryrun.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/live-second-run.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/run-costs.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/run.py",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-2.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-3.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-4.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-5.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-6.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-alt-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-alt-2.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-alt-3.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cfo-alt-4.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cho-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cho-2.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cho-3.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cho-4.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cho-5.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/cho-6.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/clo-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/clo-1b.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/clo-2.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/clo-3.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/clo-4.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/clo-5.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/clo-6.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/coo-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios-scratch/coo-2.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cfo-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cfo-2.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cfo-5.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cfo-6.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cho-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cho-2.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cho-3.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cho-5.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/cho-6.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/clo-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/clo-2.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/clo-3.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/clo-5.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/clo-6.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scenarios/coo-1.json",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/apply.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/counts-0.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/dryrun.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/final/cfo/test-subscriptions.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/final/cfo/topics.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/final/cho/test-water-intake.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/final/cho/topics.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/final/clo/test-houseplants.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/final/clo/topics.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/scratch/second-run.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/sha-equal.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/slack-probe.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/strict-suite-tail.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/loop8-h41-2026-11-22/validator-tail.txt",
       "status": "draft"
     },
     {

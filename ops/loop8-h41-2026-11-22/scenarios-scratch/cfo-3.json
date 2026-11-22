@@ -1,0 +1,9 @@
+{
+ "agent": "cfo",
+ "session": "<sid>",
+ "message": "Add: test-card, 15.00",
+ "tools": null,
+ "cost_usd": 0.0008115850000000001,
+ "tokens": 12312,
+ "reply": "Is **test-card** a separate fund, or should I record a $15 contribution to **test-gift-fund**?"
+}

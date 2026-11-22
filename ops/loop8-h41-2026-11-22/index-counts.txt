@@ -1,0 +1,3 @@
+cho topics.md lines (excluding header): 1
+cfo topics.md lines (excluding header): 2
+clo topics.md lines (excluding header): 4

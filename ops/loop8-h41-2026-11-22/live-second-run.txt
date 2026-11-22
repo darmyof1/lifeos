@@ -1,0 +1,4 @@
+cho: already has the topic rule, skipped
+cfo: already has the topic rule, skipped
+clo: already has the topic rule, skipped
+Done. Start the gateway again: systemctl --user start openclaw-loop1-gateway

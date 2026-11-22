@@ -1,0 +1,12 @@
+{
+ "agent": "clo",
+ "session": "<sid>",
+ "message": "I want to start tracking my houseplants.",
+ "tools": [
+  "exec",
+  "read"
+ ],
+ "cost_usd": 0.001608345,
+ "tokens": 25883,
+ "reply": "Suggested log: `state/houseplants.md` with columns `date, what, plant, care note, run ID, event ID`.\n\nExample: `2026-11-22 | start tracking houseplants | not specified | \u2014 | loop41-s-clo-a1 | loop41-s-clo-a1-clo-01`\n\nDoes that work, or would you like to change the file or columns?"
+}

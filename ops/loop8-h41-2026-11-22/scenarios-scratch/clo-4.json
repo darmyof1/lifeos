@@ -1,0 +1,12 @@
+{
+ "agent": "clo",
+ "session": "<sid>",
+ "message": "What do you track?",
+ "tools": [
+  "exec",
+  "read"
+ ],
+ "cost_usd": 0.00132232,
+ "tokens": 25154,
+ "reply": "I track your shows, travel, hobbies, and home projects, plus vehicle maintenance, parts, and test houseplants."
+}

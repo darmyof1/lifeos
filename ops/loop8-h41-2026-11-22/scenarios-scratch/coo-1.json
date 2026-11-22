@@ -1,0 +1,12 @@
+{
+ "agent": "coo",
+ "session": "<sid>",
+ "message": "I want to try a new test-restaurant this weekend, add it to my lifestyle list: Test Place Nine.",
+ "tools": [
+  "sessions_send",
+  "exec"
+ ],
+ "cost_usd": 0.0015361300000000001,
+ "tokens": 19950,
+ "reply": "CLO confirmed **Test Place Nine** was added to the lifestyle list as a restaurant to try **Nov 28\u201329, 2026**. Event ID: `coo-20261122-1332-clo-01` (run ID: `coo-20261122-1332`).\n\nCLO could not post the required Slack notice because Slack was unavailable."
+}

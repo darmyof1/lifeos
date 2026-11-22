@@ -1,0 +1,12 @@
+{
+ "agent": "cfo",
+ "session": "<sid>",
+ "message": "I want to start tracking my test-subscriptions.",
+ "tools": [
+  "exec",
+  "read"
+ ],
+ "cost_usd": 0.001605795,
+ "tokens": 27247,
+ "reply": "I don\u2019t see test-subscriptions in the topic index. I suggest `state/test-subscriptions.md` with columns: date, what, subscription, amount, run ID, event ID. Example: `2026-11-22 | start tracking test-subscriptions | not specified | not specified | [run ID] | [event ID]`\n\nWould you like me to use that, or change the file name or columns?"
+}

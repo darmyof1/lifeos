@@ -1,0 +1,11 @@
+cho: would add this rule as the new last rule (instruction set v1.10):
+    - New topics (instruction set v1.10): when the CEO asks you to start tracking something that belongs to your own domain and you have no file for it, do not 
+cho: would create state/topics.md with a header and 1 file-name line(s) (names only)
+cfo: would add this rule as the new last rule (instruction set v1.12):
+    - New topics (instruction set v1.12): when the CEO asks you to start tracking something that belongs to your own domain and you have no file for it, do not 
+cfo: would create state/topics.md with a header and 2 file-name line(s) (names only)
+clo: would add this rule as the new last rule (instruction set v1.2):
+    - New topics (instruction set v1.2): when the CEO asks you to start tracking something that belongs to your own domain and you have no file for it, do not r
+clo: would widen the first Role line to: such as the TV shows he follows, travel, hobbies, home projects and vehicle maintenance
+clo: would create state/topics.md with a header and 4 file-name line(s) (names only)
+Dry run only. Nothing was changed.

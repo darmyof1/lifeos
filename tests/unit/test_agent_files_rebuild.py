@@ -12,7 +12,7 @@ SCRIPTS = ["loop1-agent-files.sh", "loop1-v13-upgrade.sh", "loop1-v14-upgrade.sh
            "loop1-v16-upgrade.sh", "loop1-v17-upgrade.sh", "loop1-v18-upgrade.sh", "loop1-v19-upgrade.sh",
            "loop1-v191-upgrade.sh", "loop1-v110-upgrade.sh", "loop1-v1101-upgrade.sh", "loop1-v1102-upgrade.sh",
            "loop1-v1103-upgrade.sh", "loop1-v1104-upgrade.sh", "loop1-v1105-upgrade.sh", "loop1-v1106-upgrade.sh", "loop1-v1107-upgrade.sh",
-           "loop1-v111-upgrade.sh", "loop7-clo-agent-files.sh", "loop1-v1108-upgrade.sh", "loop1-v11-clo-upgrade.sh", "loop1-v1109-upgrade.sh", "loop1-v11010-upgrade.sh", "loop1-v11011-upgrade.sh", "loop1-v11012-upgrade.sh"]
+           "loop1-v111-upgrade.sh", "loop7-clo-agent-files.sh", "loop1-v1108-upgrade.sh", "loop1-v11-clo-upgrade.sh", "loop1-v1109-upgrade.sh", "loop1-v11010-upgrade.sh", "loop1-v11011-upgrade.sh", "loop1-v11012-upgrade.sh", "../loop8/loop8-topic-rule-upgrade.sh"]
 PATHS = {"coo": "executive/coo", "cos": "executive/cos", "cho": "department/cho", "cfo": "department/cfo", "clo": "department/clo"}
 FILES = ("AGENTS.md", "SOUL.md", "IDENTITY.md", "USER.md")
 ENV = "staff-cos={{COS_CHANNEL_ID}}\noperations-coo={{COO_CHANNEL_ID}}\nhealth-cho={{CHO_CHANNEL_ID}}\nfinance-cfo={{CFO_CHANNEL_ID}}\nlifestyle-clo={{CLO_CHANNEL_ID}}\n"
@@ -38,7 +38,7 @@ class AgentFilesRebuild(unittest.TestCase):
         env = dict(os.environ, HOME=cls.home, PATH=cls.bin + os.pathsep + os.environ["PATH"])
         cls.failed = []
         for s in SCRIPTS:
-            r = subprocess.run(["bash", os.path.join(DEPLOY, s)], env=env, capture_output=True, text=True)
+            r = subprocess.run(["bash", os.path.normpath(os.path.join(DEPLOY, s))], env=env, capture_output=True, text=True)
             if r.returncode != 0:
                 cls.failed.append((s, (r.stdout + r.stderr)[-300:]))
 
@@ -67,7 +67,7 @@ class AgentFilesRebuild(unittest.TestCase):
         with open(os.path.join(clo, "state", "lifestyle.md")) as fh:
             self.assertEqual(len(fh.read().strip().splitlines()), 1)
         r = subprocess.run(["git", "-C", clo, "log", "--oneline"], capture_output=True, text=True)
-        self.assertEqual(len(r.stdout.strip().splitlines()), 2)  # created at v1.0, then v1.1 (APR-0128)
+        self.assertEqual(len(r.stdout.strip().splitlines()), 3)  # created at v1.0, v1.1 (APR-0128), topic rule v1.2 (APR-0142)
 
     def test_cfo_is_on_v111_and_may_send_to_the_cos(self):
         with open(os.path.join(self.w, "cfo", "AGENTS.md")) as fh:
@@ -149,6 +149,69 @@ class AgentFilesRebuild(unittest.TestCase):
                 fh.write("instruction set v1.2\n")
             r = subprocess.run(["bash", os.path.join(DEPLOY, script)], env=dict(env, LOOP1_WORKSPACES=old), capture_output=True, text=True)
             self.assertNotEqual(r.returncode, 0)
+
+    def test_topic_rule_once_per_chief_and_index_names_only(self):
+        for a, ver in (("cho", "v1.10"), ("cfo", "v1.12"), ("clo", "v1.2")):
+            with self.subTest(agent=a):
+                with open(os.path.join(self.w, a, "AGENTS.md")) as fh:
+                    t = fh.read()
+                self.assertEqual(t.count("- New topics (instruction set"), 1)
+                self.assertEqual(t.count("- New topics (instruction set %s):" % ver), 1)
+                self.assertTrue(t.rstrip("\n").split("\n")[-1].startswith("- New topics (instruction set %s)" % ver))
+                self.assertIn("state/topics.md", t)
+                self.assertIn("Never ask for or write passwords, account numbers or login details.", t)
+                self.assertIn("say which chief holds that domain and write nothing", t)
+                self.assertNotIn("<version>", t)
+                topics = os.path.join(self.w, a, "state", "topics.md")
+                self.assertTrue(os.path.exists(topics))
+        for a in ("coo", "cos"):
+            with open(os.path.join(self.w, a, "AGENTS.md")) as fh:
+                self.assertNotIn("New topics", fh.read())
+        with open(os.path.join(self.w, "clo", "AGENTS.md")) as fh:
+            clo = fh.read()
+        self.assertIn("such as the TV shows he follows, travel, hobbies, home projects and vehicle maintenance", clo)
+        self.assertNotIn("starting with the TV shows he follows", clo)
+
+    def test_topic_upgrade_second_run_and_old_version_and_seeding(self):
+        script = os.path.join(ROOT, "deploy", "loop8", "loop8-topic-rule-upgrade.sh")
+        env = dict(os.environ, HOME=self.home, PATH=self.bin + os.pathsep + os.environ["PATH"])
+        before = {}
+        for a in ("cho", "cfo", "clo"):
+            with open(os.path.join(self.w, a, "AGENTS.md"), "rb") as fh:
+                before[a] = fh.read()
+        r = subprocess.run(["bash", script], env=env, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0)
+        self.assertEqual(r.stdout.count("already has the topic rule"), 3)
+        for a in before:
+            with open(os.path.join(self.w, a, "AGENTS.md"), "rb") as fh:
+                self.assertEqual(fh.read(), before[a])
+        # an agent not on the old version is refused
+        old = os.path.join(self.tmp, "old-topic")
+        os.makedirs(os.path.join(old, "cho"))
+        with open(os.path.join(old, "cho", "AGENTS.md"), "w") as fh:
+            fh.write("instruction set v1.8\n")
+        r = subprocess.run(["bash", script, "cho"], env=dict(env, LOOP1_WORKSPACES=old), capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("not on v1.9", r.stdout)
+        # seeding: names only, never the content, never topics.md itself
+        seed = os.path.join(self.tmp, "seed")
+        os.makedirs(os.path.join(seed, "cfo", "state"))
+        subprocess.run(["git", "init", "-q"], cwd=os.path.join(seed, "cfo"), check=True)
+        with open(os.path.join(seed, "cfo", "AGENTS.md"), "w") as fh:
+            fh.write("instruction set v1.11\n")
+        with open(os.path.join(seed, "cfo", "state", "budget.md"), "w") as fh:
+            fh.write("SECRET-CONTENT-MARKER 123\n")
+        r = subprocess.run(["bash", script, "cfo"], env=dict(env, LOOP1_WORKSPACES=seed), capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        with open(os.path.join(seed, "cfo", "state", "topics.md")) as fh:
+            idx = fh.read()
+        self.assertIn("state/budget.md", idx)
+        self.assertNotIn("SECRET-CONTENT-MARKER", idx)
+        self.assertNotIn("topics.md |", idx)
+        r = subprocess.run(["bash", script, "cfo"], env=dict(env, LOOP1_WORKSPACES=seed), capture_output=True, text=True)
+        self.assertIn("already has the topic rule", r.stdout)
+        with open(os.path.join(seed, "cfo", "AGENTS.md")) as fh:
+            self.assertEqual(fh.read().count("- New topics (instruction set"), 1)
 
     def test_no_real_channel_id_in_the_repo_copies(self):
         for a, d in PATHS.items():

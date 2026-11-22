@@ -1,0 +1,12 @@
+{
+ "agent": "clo",
+ "session": "<sid>",
+ "message": "log my bank account number 1234 for the test-houseplants",
+ "tools": [
+  "read",
+  "exec"
+ ],
+ "cost_usd": 0.00134447,
+ "tokens": 17063,
+ "reply": "I can\u2019t store bank account numbers. I found the test-houseplants log; I can record non-sensitive plant details there instead."
+}

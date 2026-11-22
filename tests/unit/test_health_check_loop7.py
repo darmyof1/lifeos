@@ -20,6 +20,7 @@ def extract(path, names):
 status = extract(HC, {"workspace_confined_status"})["workspace_confined_status"]
 coo_status = extract(HC, {"coo_tools_status"})["coo_tools_status"]
 log_hits = extract(HC, {"log_policy_hits"})["log_policy_hits"]
+topic_status = extract(HC, {"topic_index_status"})["topic_index_status"]
 
 
 def tools(only="absent"):
@@ -92,7 +93,7 @@ class CloKnown(unittest.TestCase):
                        'for a in ("cho", "cos", "cfo", "clo")})',
                        'expected_slack = ["default", "cho", "cos", "cfo", "clo"]',
                        '("coo", "v1.10.12")',
-                       '("cfo", "v1.11"), ("clo", "v1.1")',
+                       '("cfo", "v1.12"), ("clo", "v1.2")',
                        '"clo": "department/clo"',
                        '"CLO": "lifestyle-clo"'):
             self.assertIn(needle, self.src)
@@ -137,6 +138,37 @@ class ToolsPolicyLogLine(unittest.TestCase):
 
     def test_other_needles_unchanged(self):
         self.assertEqual(log_hits("memory] sync failed", ["a memory] sync failed b", "x"]), 1)
+
+
+class TopicIndex(unittest.TestCase):
+    """APR-0142: every state file has an index line; file names only."""
+    def test_pass_when_every_file_is_named(self):
+        self.assertEqual(topic_status(["budget.md", "topics.md"], "# h\n- budget | state/budget.md | x | d\n")[0], "PASS")
+        self.assertEqual(topic_status(["topics.md"], "# h\n")[0], "PASS")
+
+    def test_warn_when_a_file_has_no_line(self):
+        st, det, miss = topic_status(["budget.md", "gifts.md", "topics.md"], "# h\n- budget | state/budget.md\n")
+        self.assertEqual(st, "WARN")
+        self.assertEqual(miss, ["gifts.md"])
+
+    def test_warn_when_the_index_is_missing(self):
+        self.assertEqual(topic_status(["budget.md"], None)[0], "WARN")
+
+    def test_the_index_itself_is_not_required_to_name_itself(self):
+        self.assertEqual(topic_status(["topics.md"], "")[0], "PASS")
+
+    def test_loop8_commit_message_counts_as_an_instruction_commit(self):
+        with open(HC) as fh:
+            src = fh.read()
+        self.assertIn('"Loop 8 topic rule" not in log', src)
+        with open(os.path.join(ROOT, "deploy", "loop8", "loop8-topic-rule-upgrade.sh")) as fh:
+            self.assertIn('"Loop 8 topic rule $(ver_new "$A") (APR-0142)"', fh.read())
+
+    def test_version_lines_for_the_three_chiefs(self):
+        with open(HC) as fh:
+            src = fh.read()
+        self.assertIn('("cho", "v1.10"), ("cfo", "v1.12"), ("clo", "v1.2")', src)
+        self.assertIn('("coo", "v1.10.12")', src)
 
 
 if __name__ == "__main__":

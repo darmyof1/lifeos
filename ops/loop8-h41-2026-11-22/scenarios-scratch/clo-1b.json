@@ -1,0 +1,12 @@
+{
+ "agent": "clo",
+ "session": "<sid>",
+ "message": "I want to start tracking my test-houseplants.",
+ "tools": [
+  "read",
+  "exec"
+ ],
+ "cost_usd": 0.001401565,
+ "tokens": 17049,
+ "reply": "Suggested log: `state/test-houseplants.md`  \nColumns: date, what, plant, status, run ID, event ID  \nExample: `2026-11-22, start tracking, test-houseplants, status not provided, <run ID>, <event ID>`\n\nDoes that setup work, or would you like different columns?"
+}

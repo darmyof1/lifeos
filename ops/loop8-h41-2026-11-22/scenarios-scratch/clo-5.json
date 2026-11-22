@@ -1,0 +1,12 @@
+{
+ "agent": "clo",
+ "session": "<sid>",
+ "message": "start tracking my sleep",
+ "tools": [
+  "exec",
+  "read"
+ ],
+ "cost_usd": 0.00158233,
+ "tokens": 25839,
+ "reply": "Suggested log: `state/sleep.md`  \nColumns: date, what, hours slept, run ID, event ID. Example: `2026-11-22, start tracking sleep, not provided, loop41-s-clo-d, loop41-s-clo-d-clo-01`\n\nConfirm or tell me what you\u2019d change."
+}
