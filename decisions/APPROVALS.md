@@ -1662,3 +1662,17 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop8/loop8-scope-approved.md; deploy/loop8/definition-of-done-draft.md; decisions/PENDING.md (P-54)
+
+## APR-0141 - Loop 8 step 1: the definition of done, approved as written
+Status: approved
+Decided by: CEO
+Your answer: "approve a written" (2026-11-21 17:26), about the definition of done draft
+Evidence: deploy/loop8/definition-of-done-approved.md (the text, word for word); ops/real-request-log.md; ops/success-metrics.md
+Meaning:
+- The text in deploy/loop8/definition-of-done-approved.md is adopted as the definition of done: the scope (five live chiefs; a new topic needs no handover; a new chief takes one handover), quality (at least 18 of the last 20 real requests pass; every failure recorded; zero wrong deletes; status questions answered for items typed in an agent's channel), safety (the four preconditions of ops/success-metrics.md: gate wired and blocking, kill switch drilled, full-state restore drilled, identity-and-access contract accepted), operations (health with no FAIL and no unexplained WARN, weekly backup, cost limits, APR and handover for every change) and what happens when it is done (stop opening loops, a monthly review, the one-time P-49 review after 20 scored requests).
+- Where the document shows a "today" value, that value is a status note, not part of the definition. The numbers (18 of 20, the cost limits) may be changed by a new APR entry.
+- This is not an instruction to any agent and changes nothing on the VM. The topic rule wording is the next step of Loop 8 (draft deploy/loop8/topic-rule-draft.md) and needs its own approval.
+- Loop 8 stays open under APR-0140. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop8/definition-of-done-approved.md; deploy/loop8/loop8-scope-approved.md; decisions/PENDING.md (P-54)

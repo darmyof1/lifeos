@@ -186,3 +186,5 @@ P-50 item 2 (2026-11-21): draft with options A (thread follow-ups only, recommen
 Draft scope (definition of done, one generic topic rule for CHO, CFO and CLO, proof with synthetic then real topics, a written chief recipe, a review at 20 scored requests) is in deploy/loop8/loop8-scope-draft.md and waits for the CEO. Nothing is started.
 
 APR-0139 (2026-11-21): P-50 item 2 option A approved as intent; handover 40 prepared (read-only look at the Slack mention and thread settings; the config change needs its own APR). APR-0140 (2026-11-21): Loop 8 scope approved as written (P-54 open); step 1, the definition of done, is drafted in deploy/loop8/definition-of-done-draft.md and waits for the CEO.
+
+APR-0141 (2026-11-21): Loop 8 step 1 done, the definition of done is approved as written. Step 2, the topic rule wording for the CHO, CFO and CLO, is drafted in deploy/loop8/topic-rule-draft.md and waits for the CEO.

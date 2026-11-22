@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-179.sh",
+  "generated_by": "fix-180.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1412,6 +1412,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop8/definition-of-done-approved.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop8/definition-of-done-draft.md",
       "status": "draft"
     },
@@ -1421,6 +1425,10 @@
     },
     {
       "path": "deploy/loop8/loop8-scope-draft.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop8/topic-rule-draft.md",
       "status": "draft"
     },
     {
