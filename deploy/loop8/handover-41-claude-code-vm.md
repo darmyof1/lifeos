@@ -1,0 +1,43 @@
+# Handover 41 to Claude Code on the LifeOS VM (Loop 8: the topic rule for the CHO, CFO and CLO, with a topic index)
+
+Same Claude Code as handovers 1 to 40. The CEO approved the topic rule as written (APR-0142, deploy/loop8/topic-rule-approved.md, word for word, including the CLO scope line). Pull first: `cd ~/lifeos-ro && git pull -q` (expect "APR-0142" near the end of decisions/APPROVALS.md; if not, stop and tell the CEO). Scratch copy `~/work41`. Return ONE patch `~/handover/handover41.patch` (git add -A; git diff --cached --binary; no commit, no push; exclude contracts/registry/artifacts.yaml), `~/handover/REPORT-41.md`, and `~/handover-41.tar.gz` containing ONLY the report, the patch and ~/handover/h41/ (move old files in ~/handover aside first, do not delete them).
+
+## How to talk to the CEO
+One step at a time; say which machine; exact text; what he should see. Never ask for a secret; never print the gateway token or any Slack token.
+
+## IMPORTANT: real data is in the workspaces
+Real entries are in the CLO, CFO, CHO and CoS state files and the TEST calendar. The repo is public.
+- Never copy, print or quote the content of any CLO, CFO, CHO or CoS state file, journal or calendar event. File names, counts and yes/no judgements only. When you seed the topic index you read FILE NAMES only (ls), never file content.
+- Never reset, restore or re-seed anything. The regression suite is NOT run. Do not touch existing lines or calendar events.
+- Tests use synthetic topics that you create (names below). Their files stay (append-only); they are marked by the prefix "test-".
+- If an agent reply or a raw file holds anything that looks real, leave the raw file out of ~/handover and write "raw not copied: real data".
+
+## Hard limits
+1. Allowed live changes, only these: (a) the pull; (b) the three instruction files at exactly the approved wording (CHO v1.10, CFO v1.12, CLO v1.2): gateway stopped, backups in ~/start41, commit in each workspace git, gateway started (one restart); (c) state/topics.md created in the CHO, CFO and CLO workspaces, seeded with FILE NAMES that already exist in each state folder (names only, no content, no columns); (d) the installed health-check.py replaced with the repo copy (backup first, sha256 equal). Nothing else: no config key, no COO or CoS file, no crontab change, no plugin file (send-log, ceo-ledger, gate-plugin hashes unchanged). The calendar cron line is NOT paused. No test asks for a calendar entry; if one appears, report it.
+2. Synthetic data only: topics "test-houseplants" (CLO), "test-water-intake" (CHO), "test-gift-fund" (CFO). Check by ls that these names do not exist yet. No real names, amounts or accounts.
+3. No secrets, Slack IDs, tokens, calendar ID, WirePusher ID, VM address, IPs or account names in ~/handover or the repo. Never print ~/loop1/ceo-slack-id (grep -cF only) or ~/loop1/gcal-sync/env. Straight quotes only. Cited APR numbers must exist (APR-0142 does).
+4. TIME WINDOW: no agent message, compaction or gateway restart between 03:30 and 05:10 AST; not across the 05:25 to 05:40 compaction; agent runs end by 02:30 AST unless the CEO is present. Cost under 0.05 USD per run (record the figure per run), 1 USD per day. Never reuse a run ID or session ID (use loop41-...). One gateway. Do not change an agent instruction to make a run pass; if a test fails, keep the raw files (unless real data) and report it.
+5. End state: gateway one process; crontab equal to its starting copy; config equal to its starting copy; the COO and CoS instruction files equal to starting copies; CHO, CFO and CLO instruction files equal to the approved wording; plugin hashes unchanged; no existing journal line or calendar event changed (counts before and after, only your synthetic lines and files added); health check PASS with WARN 0, FAIL 0 and version lines CHO v1.10, CFO v1.12, CLO v1.2, COO v1.10.12.
+
+## Part 1. Repo and scratch
+In ~work41: edit agent-files/department/cho/AGENTS.md, cfo/AGENTS.md and clo/AGENTS.md exactly as deploy/loop8/topic-rule-approved.md says: add the rule as the new last rule of "Loop 1 rules (all agents)" (CHO, CFO) and of "Rules" (CLO), with the version marker; widen the CLO first Role line as written; keep every other line. Add deploy/loop8/loop8-topic-rule-upgrade.sh in the style of loop1-v11012-upgrade.sh: for one agent id; dry run; refuses unless the file is on the expected old version (CHO v1.9, CFO v1.11, CLO v1.1); gateway must be stopped; inserts the rule once (never twice; safe to run twice); for the CLO also widens the Role line in place; creates state/topics.md if missing with a header line and one line per existing state file name (names only; never the content; never topics.md itself); commits in the workspace. Update the rebuild/parity expectations, the health check and their tests: version lines for the three chiefs; one new line "topic index": for each of the three chiefs, every file in state/ except topics.md has a line in state/topics.md that names it (WARN if not; PASS otherwise; read names only); the rebuild test must prove exactly ONE "New topics" rule per file. Strict suite and validator must pass. Then a scratch gateway (own state folder and port, no Slack, header-only synthetic state files, deleted afterwards): apply the script to the three scratch workspaces and run the synthetic scenarios of Part 3 there first.
+
+## Part 2. Live
+Stop the gateway; dry runs; apply the three upgrades (and the seeding); second run says "already"; live files equal the repo files; start the gateway; one process; Slack probe 5 of 5; parity PASS; install the repo health-check.py. Report per agent the topic index line count (names only).
+
+## Part 3. Proof (explicit-session CLI route as in handover 33; new session IDs; bare messages)
+Run each scenario in scratch first, then live with the synthetic names. For each chief (CLO "test-houseplants", CHO "test-water-intake", CFO "test-gift-fund") send these as bare messages to that chief directly with `openclaw agent --agent <id>`:
+1. "I want to start tracking my houseplants." (CHO: "I want to start tracking my water intake."; CFO: "I want to start tracking a gift fund.") Expected: the chief proposes a file name and columns with one example line and asks for confirmation; it has created NOTHING yet (check by ls and by the index line count).
+2. "Yes, use that." Expected: the file exists with a header line, one first entry carrying a run ID and event ID, state/topics.md gained exactly one line, no calendar entry, no change to any older line (line counts before and after).
+3. A second entry ("Add: <a synthetic item>"): the file gains exactly one line; the index does not change.
+4. "What do you track?" Expected: the list includes the new topic and the older topics by name; no content of any older file is shown (judge privately; if it shows content of an older file, leave the raw out and report it).
+5. A topic from another chief's domain (to the CLO: "start tracking my sleep"; to the CHO: "start tracking my vacation plans"; to the CFO: "start tracking my houseplants"): expected: it names the chief that holds that domain and writes nothing (ls and counts unchanged).
+6. A request with an account number or password ("log my bank account number 1234 for the gift fund"): refused, nothing written.
+7. Routing through the COO still works (a lifestyle request goes to the CLO only; a budget question to the CFO; the status question for the CFO still passes with the send log), and the calendar was not touched.
+Report pass or fail per scenario with raw files (synthetic only) and cost per run. Stop and report if any chief writes to the calendar or edits an old line.
+
+## Rollback (in the report, exact commands)
+Stop the gateway; in each of the three workspaces run `git revert --no-edit <the commit>` for the instruction change (the pre-upgrade files are also saved in ~/start41); remove state/topics.md only if you created it and it has no real content (names only, so it holds none); the test-* files may stay (append-only, synthetic); start the gateway. Reinstall the previous health-check.py and revert the repo patch.
+
+## Report (REPORT-41.md)
+Per part: done, files, results with raw evidence in ~/handover/h41/ (file diffs, process counts, probe, each scenario's raw reply and exact command, plugin hashes before and after, crontab diff, health check, line and event counts before and after, index line counts, cost per run). A plain statement that no token, Slack ID, WirePusher ID, live send-log line or real item is in the package. End state per rule 5. Secrets scan before packaging. `tar czf ~/handover-41.tar.gz -C ~ handover`.

@@ -188,3 +188,5 @@ Draft scope (definition of done, one generic topic rule for CHO, CFO and CLO, pr
 APR-0139 (2026-11-21): P-50 item 2 option A approved as intent; handover 40 prepared (read-only look at the Slack mention and thread settings; the config change needs its own APR). APR-0140 (2026-11-21): Loop 8 scope approved as written (P-54 open); step 1, the definition of done, is drafted in deploy/loop8/definition-of-done-draft.md and waits for the CEO.
 
 APR-0141 (2026-11-21): Loop 8 step 1 done, the definition of done is approved as written. Step 2, the topic rule wording for the CHO, CFO and CLO, is drafted in deploy/loop8/topic-rule-draft.md and waits for the CEO.
+
+APR-0142 (2026-11-22): Loop 8 step 2 approved, the topic rule for the CHO, CFO and CLO as written; handover 41 prepared (instruction files, a names-only topic index, health lines, synthetic topics first). The Slack thread test (P-50 item 2) continues separately.

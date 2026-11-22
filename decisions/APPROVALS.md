@@ -1676,3 +1676,17 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop8/definition-of-done-approved.md; deploy/loop8/loop8-scope-approved.md; decisions/PENDING.md (P-54)
+
+## APR-0142 - Loop 8 step 2: the topic rule for the CHO, CFO and CLO, approved as written (handover 41)
+Status: approved
+Decided by: CEO
+Your answer: "approved as written for the draft topic before" (2026-11-22 02:13), about the topic rule draft
+Evidence: deploy/loop8/topic-rule-approved.md (the wording, word for word); deploy/loop8/handover-41-claude-code-vm.md; deploy/loop8/loop8-scope-approved.md; ops/real-request-log.md
+Meaning:
+- The wording in deploy/loop8/topic-rule-approved.md is APPROVED as written for the CHO (v1.10), CFO (v1.12) and CLO (v1.2): when you ask a chief to track something new in its own domain, it proposes a file name and columns with one example line, asks once, then creates the file and one line in state/topics.md, and appends only (run ID and event ID on every entry, the usual one-line post, no calendar entry unless you ask). It never asks for or writes passwords or account numbers, and a topic from another chief's domain is declined with the chief named. The CLO first Role line is widened as written. Pets, trips, hobbies, home projects and e-commerce orders default to the CLO; you can name another owner when you ask.
+- Live changes handover 41 may make: the three chiefs' instruction files, a topic index file (state/topics.md, file names only) in each of the three workspaces, the installed health-check.py (version lines and a topic-index check), and one gateway restart. No config, COO, CoS, crontab or plugin change. Tests use synthetic topics (test-houseplants, test-water-intake, test-gift-fund) and never read, copy or change your real entries; their files stay (append-only); the regression suite is not run.
+- This is a behaviour rule and can be ignored by a chief; the request log is the check. Real topics (nutrition, dogs, orders, trips) are asked by you in Slack afterwards and scored; no handover per topic. Nutrition is real health data while the privacy gate only watches; you decide when to start it.
+- Loop 8 stays open under APR-0140. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: deploy/loop8/topic-rule-approved.md; deploy/loop8/handover-41-claude-code-vm.md; agent-files/department/cho/AGENTS.md; agent-files/department/cfo/AGENTS.md; agent-files/department/clo/AGENTS.md; decisions/PENDING.md (P-54)

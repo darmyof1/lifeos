@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-180.sh",
+  "generated_by": "fix-181.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1420,11 +1420,19 @@
       "status": "draft"
     },
     {
+      "path": "deploy/loop8/handover-41-claude-code-vm.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/loop8/loop8-scope-approved.md",
       "status": "draft"
     },
     {
       "path": "deploy/loop8/loop8-scope-draft.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop8/topic-rule-approved.md",
       "status": "draft"
     },
     {
