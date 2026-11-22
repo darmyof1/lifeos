@@ -1690,3 +1690,17 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: deploy/loop8/topic-rule-approved.md; deploy/loop8/handover-41-claude-code-vm.md; agent-files/department/cho/AGENTS.md; agent-files/department/cfo/AGENTS.md; agent-files/department/clo/AGENTS.md; decisions/PENDING.md (P-54)
+
+## APR-0143 - P-50 item 2: requireMentionInBotThreads false for the five Slack accounts (handover 42)
+Status: approved
+Decided by: CEO
+Your answer: "approved" to record the requireMentionInBotThreads = false change for all five agents (2026-11-22 02:29)
+Evidence: ops/handover-2026-11-22-claude-code-report-40.md; ops/slack-h40-2026-11-22/ (docs quotes, the gateway source check, the validate results, the thread test log); deploy/after-loop7/handover-42-claude-code-vm.md; APR-0139
+Meaning:
+- The config key channels.slack.accounts.<id>.requireMentionInBotThreads is set to false for coo, cho, cos, cfo and clo. In a Slack thread whose first message the agent sent, your replies need no @mention. Top-level channel messages still need a mention; direct messages are unaffected; a thread under one of your own messages keeps the normal policy. This replaces the mention rule of APR-0063 for those bot threads only.
+- Live changes handover 42 may make: these five config keys (config backed up first, key-path diff shows only these five), one gateway restart, and the installed health-check.py (one new line). No agent file, plugin, crontab or other key. A live thread test with you present follows (COO channel). The other four Slack apps still subscribe only to app_mention; you add message.channels and message.groups to each and reinstall when you choose, and the same test is then run per agent.
+- The repo records the key in the rebuild template and the guide for new agents (guides/slack-new-agent-app.md). The mention rule for top-level messages stays.
+- P-50 item 2 is closed only after the live test result is recorded. Loop 7 stays closed. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: the Slack account entries in the live config (five keys); deploy/after-loop7/handover-42-claude-code-vm.md; guides/slack-new-agent-app.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-50)
