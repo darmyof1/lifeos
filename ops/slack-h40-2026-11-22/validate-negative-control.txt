@@ -1,0 +1,3 @@
+
+Run `openclaw doctor --fix` to repair, or fix the keys above manually.
+Run openclaw config schema to inspect supported settings and values, then rerun openclaw config validate.

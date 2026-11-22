@@ -1,0 +1,15 @@
+# root-level slack keys present (names only): ['accounts', 'mode']
+coo.account.channels.count 1
+cho.account.channels.count 1
+cos.account.channels.count 1
+cfo.account.channels.count 1
+clo.account.channels.count 1
+# key NAMES present (no values)
+slack root: ['accounts', 'enabled', 'mode']
+account keys: ['channels', 'enabled', 'mode'] | channel entry keys: ['enabled', 'users']
+account keys: ['channels', 'enabled', 'mode'] | channel entry keys: ['enabled', 'users']
+account keys: ['channels', 'enabled', 'mode'] | channel entry keys: ['enabled', 'users']
+account keys: ['channels', 'enabled', 'mode'] | channel entry keys: ['enabled', 'users']
+account keys: ['channels', 'enabled', 'mode'] | channel entry keys: ['enabled', 'users']
+messages keys: []
+channels keys: ['slack']

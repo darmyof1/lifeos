@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-181.sh",
+  "generated_by": "fix-182.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -1797,6 +1797,10 @@
     },
     {
       "path": "ops/handover-2026-11-21-claude-code-report-39.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/handover-2026-11-22-claude-code-report-40.md",
       "status": "draft"
     },
     {
@@ -5681,6 +5685,66 @@
     },
     {
       "path": "ops/session-reset-options.md",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/doc-access-control-mentions.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/doc-groups-implicit.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/doc-hot-reload.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/doc-shared-policies.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/doc-threads-sessions.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/gw-pid-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/gw-pid-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/hashes-after.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/hashes-before.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/live-values.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/slack-test-2026-11-22.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/src-slack-gate.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/validate-base.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/validate-negative-control.txt",
+      "status": "draft"
+    },
+    {
+      "path": "ops/slack-h40-2026-11-22/validate-proposed.txt",
       "status": "draft"
     },
     {

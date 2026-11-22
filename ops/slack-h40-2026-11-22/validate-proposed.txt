@@ -1,0 +1,3 @@
+Config valid: /home/ubuntu/scratch40/proposed.json
+1 warning(s):
+  ! plugins.entries.slack: plugin not installed: slack — install the official external plugin with: openclaw plugins install @openclaw/slack

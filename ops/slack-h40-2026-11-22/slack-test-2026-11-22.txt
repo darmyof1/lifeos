@@ -1,0 +1,17 @@
+Slack thread test, COO channel, 2026-11-22 (AST). Counts and reasons only; no text, no IDs.
+Before the tests: message.channels and message.groups added to the COO Slack app and the app reinstalled by the CEO.
+
+Test 1, 02:00: @COO ping (top-level), COO answered at top level; CEO replied "ping again" in the thread under the COO answer, no mention.
+  gateway log: 1 Inbound app_mention (the @COO ping); 1 "Slack inbound event rejected during preparation", reason missing-mention, source message, account COO, parentUserId field absent (the thread reply).
+  send log: 1 ceo-message line at 02:00 (the @COO ping only).
+
+Test 2, 02:09 to 02:10:
+  02:09:53 "hey", top-level, no mention      -> 1 inbound event, rejected, reason missing-mention, parentUserId absent; send log: no line
+  02:10:25 message with @COO                 -> 1 Inbound app_mention; send log: 1 ceo-message line (02:10)
+  02:10:55 "ping" in the thread, no mention  -> 1 inbound event, rejected, reason missing-mention, parentUserId absent; send log: no line
+Result: all three messages reached the gateway (Slack subscription now works). The two unmentioned messages were dropped by the gateway's mention gate. The send log records only accepted messages.
+
+Thread-participation table (stored plugin state, read-only count): 1 entry in total (dated 2026-11-17, agent coo). No entry was added at 02:00 or 02:10 on 2026-11-22. So the plugin did not count the COO's answer as a reply inside a thread.
+Before the Slack change (2026-11-21 17:32): the unmentioned thread reply left no gateway log line at all (never delivered by Slack).
+
+Side event 2026-11-22 01:53: the COO answered "Couldn't sign in to the AI service". Cause: the OpenAI key had expired (OpenAI returned expired_secret_key). The CEO created a new key and saved it to a new file without showing it; after a check (HTTP 200) I swapped it in (old file kept as openai.env.pre-newkey) and restarted the gateway once (5 of 5 Slack accounts connected). The key was never printed. This is outside Handover 40's read-only scope and was done after the CEO's request in this chat.

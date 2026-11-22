@@ -1,0 +1,13 @@
+	}
+	const requireMentionInBotThreads = channelConfig?.requireMentionInBotThreads ?? account.config.requireMentionInBotThreads;
+	let isBotOwnedThread = false;
+	if (isRoom && thread.isThreadReply && requireMentionInBotThreads !== void 0) {
+		const parentUserId = normalizeOptionalString(message.parent_user_id);
+		if (parentUserId) isBotOwnedThread = Boolean(ctx.botUserId && parentUserId === ctx.botUserId);
+		else {
+			const starter = await params.getThreadStarter();
+			isBotOwnedThread = Boolean(starter && starter.ts === thread.threadTs && isSlackThreadAuthorCurrentBot({
+				identity: ctx,
+				author: starter
+			}));
+		}
