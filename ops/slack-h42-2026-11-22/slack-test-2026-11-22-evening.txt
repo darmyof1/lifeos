@@ -1,0 +1,6 @@
+Live thread test after the config change (COO channel, 2026-11-22, AST). Counts and reasons only; no text, no IDs.
+Step 1 20:07 "@COO ping" (top-level): 1 Inbound app_mention; the COO answered (CEO report); send log: 1 ceo-message line (20:07).
+Step 2 20:07 "ping again" in the thread under the COO answer, no mention: no rejection logged; the COO answered "pong" in the thread (CEO report); send log: a second ceo-message line (20:07). History or scope errors in the log: 0 (phrases counted: history, missing_scope, not_in_channel, thread lookup error). Accepted by the thread rule (no missing-mention rejection).
+Step 3 20:08 "ping three" (top-level, no mention): 1 rejection, reason missing-mention; no answer; no send-log line.
+Step 4 20:09 CEO's own top-level message, no mention: 1 rejection missing-mention (as step 3). 20:10 reply in a thread under that message of the CEO, no mention: 1 rejection missing-mention, parentUserId absent; no answer; no send-log line. Policy unchanged for threads the CEO starts: the limit is recorded, not a failure.
+Gateway log window: exactly 1 Inbound app_mention and 3 missing-mention rejections for the five messages that were typed in steps 1 to 4 (step 2 left no inbound line of its own because it was accepted without being an app mention).

@@ -150,6 +150,19 @@ def topic_index_status(names, index_text):
     return ("PASS", "%d file(s) indexed" % len([n for n in names if n != "topics.md"]), []) if not missing else \
         ("WARN", "%d file(s) without an index line" % len(missing), missing)
 
+def bot_thread_mention_status(accounts, expected):
+    """APR-0143: requireMentionInBotThreads must be false on each expected Slack account. Reads only that key (true/false/unset).
+    Returns (status, detail); the detail holds counts and account labels only."""
+    bad = []
+    for a in expected:
+        ac = accounts.get(a) if isinstance(accounts, dict) else None
+        if not isinstance(ac, dict) or ac.get("requireMentionInBotThreads") is not False:
+            bad.append(a)
+    n = len(expected) - len(bad)
+    if not bad:
+        return "PASS", "false for %d of %d accounts" % (n, len(expected))
+    return "WARN", "false for %d of %d accounts; unset or true: %s" % (n, len(expected), ", ".join(bad))
+
 def coo_tools_status(also, fs):
     """APR-0137: the COO has exactly one file tool (read), confined to its own workspace; no write, edit or apply_patch."""
     only = fs.get("workspaceOnly") if isinstance(fs, dict) else None
@@ -267,6 +280,9 @@ for s_acc in expected_slack:
 rec("PASS" if acc_ok else "FAIL", "slack accounts configured (5 accounts)",
     "ok (default, cho, cos, cfo, clo)" if acc_ok else "; ".join(acc_details),
     "slack app configuration incomplete or not socket mode")
+_st, _det = bot_thread_mention_status(slack_accounts, expected_slack)
+rec(_st, "slack bot-thread mention: requireMentionInBotThreads false for 5 of 5 accounts", _det,
+    "threads under a bot message need an @mention again (APR-0143)")
 rec("PASS" if users_ok else "FAIL", "slack channel users allowlists",
     "ok (explicit users list in all channels)" if users_ok else "; ".join(user_details),
     "control commands unauthorized (/new refused)")

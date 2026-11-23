@@ -1,0 +1,6 @@
+add /channels/slack/accounts/cfo/requireMentionInBotThreads = false
+add /channels/slack/accounts/cho/requireMentionInBotThreads = false
+add /channels/slack/accounts/clo/requireMentionInBotThreads = false
+add /channels/slack/accounts/coo/requireMentionInBotThreads = false
+add /channels/slack/accounts/cos/requireMentionInBotThreads = false
+written; backup: c.json.pre-mentionthreads

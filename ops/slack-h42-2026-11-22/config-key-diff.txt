@@ -1,0 +1,8 @@
+added:
+  /channels/slack/accounts/cfo/requireMentionInBotThreads=false
+  /channels/slack/accounts/cho/requireMentionInBotThreads=false
+  /channels/slack/accounts/clo/requireMentionInBotThreads=false
+  /channels/slack/accounts/coo/requireMentionInBotThreads=false
+  /channels/slack/accounts/cos/requireMentionInBotThreads=false
+removed: []
+changed: []

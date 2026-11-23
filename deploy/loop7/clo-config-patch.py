@@ -36,7 +36,7 @@ def apply(cfg, workspace, agent_dir, slack=None):
     if slack:
         cid, users = slack
         new["channels"]["slack"]["accounts"]["clo"] = {
-            "enabled": True, "mode": "socket",
+            "enabled": True, "mode": "socket", "requireMentionInBotThreads": False,
             "botToken": {"source": "env", "provider": "default", "id": "SLACK_BOT_TOKEN_CLO"},
             "appToken": {"source": "env", "provider": "default", "id": "SLACK_APP_TOKEN_CLO"},
             "channels": {cid: {"enabled": True, "users": list(users)}},

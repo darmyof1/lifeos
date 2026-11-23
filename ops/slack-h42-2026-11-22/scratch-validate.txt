@@ -1,0 +1,1 @@
+Config valid: /home/ubuntu/scratch42/c.json
