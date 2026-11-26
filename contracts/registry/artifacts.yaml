@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_by": "fix-186.sh",
+  "generated_by": "fix-187.sh",
   "note": "Generated from the tracked tree. No entry is approved here. Approvals live in decisions/APPROVALS.md.",
   "artifacts": [
     {
@@ -896,6 +896,10 @@
       "status": "draft"
     },
     {
+      "path": "deploy/after-loop7/handover-43-claude-code-vm.md",
+      "status": "draft"
+    },
+    {
       "path": "deploy/after-loop7/health-coo-warn-approved.md",
       "status": "draft"
     },
@@ -1425,6 +1429,10 @@
     },
     {
       "path": "deploy/loop8/definition-of-done-draft.md",
+      "status": "draft"
+    },
+    {
+      "path": "deploy/loop8/domain-rule-approved.md",
       "status": "draft"
     },
     {

@@ -202,3 +202,5 @@ Handover 42 (2026-11-22) result: requireMentionInBotThreads false is live for th
 P-50 item 2 closed (2026-11-22, evening): after handover 42 the CEO changed the Slack apps of the CHO, CoS, CFO and CLO (message.channels and message.groups, reinstalled) and tested a thread reply with no mention in each agent's channel; each agent replied in the thread. Evidence: the CEO's report in the planning chat; the gateway log shows no missing-mention rejection for those four agents (counts only; the log search cannot count accepted messages per agent). The COO result is in ops/slack-h42-2026-11-22/. Known limit, unchanged: a thread under one of the CEO's own messages still needs a mention.
 
 Loop 8 step 3 drafted (2026-11-22): the domain split and the CFO savings case, deploy/loop8/domain-rule-draft.md; waits for the CEO. It answers the two open wording gaps from handover 41.
+
+APR-0144 (2026-11-25): Loop 8 step 3 approved as written, Option A (the domain rule and the CFO savings sentence); handover 43 prepared (scratch first, then live, synthetic topics only).

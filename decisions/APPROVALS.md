@@ -1704,3 +1704,17 @@ Meaning:
 Closes: none
 Changeable: yes. A change is a new APR entry.
 Applies to: the Slack account entries in the live config (five keys); deploy/after-loop7/handover-42-claude-code-vm.md; guides/slack-new-agent-app.md; deploy/loop1/health-check.py; decisions/PENDING.md (P-50)
+
+## APR-0144 - Loop 8 step 3: the domain rule for the CHO, CFO and CLO, and the CFO savings sentence (handover 43)
+Status: approved
+Decided by: CEO
+Your answer: "approved as written. A" (2026-11-25 02:38)
+Evidence: deploy/loop8/domain-rule-approved.md; ops/handover-2026-11-22-claude-code-report-41.md (the other-chief test failed in all three chiefs; the CFO treated a gift fund as an investment); APR-0142
+Meaning:
+- The CHO, CFO and CLO each get one new last rule, Domains, that says who holds what (CHO health, sleep and nutrition; CFO money, budgets, investments and savings; CLO everything else personal; CoS the calendar). A chief asked to track a topic outside its domain names the right chief in one sentence and writes nothing.
+- Option A: the CFO also gets one sentence that money set aside for a purpose (a gift fund, a trip fund) is a saving with its own topic file, not an investment.
+- Versions: CHO v1.10 to v1.11, CFO v1.12 to v1.13, CLO v1.2 to v1.3. The CoS and COO files do not change. Nothing else in any file changes. The approved topic rule (APR-0142) and the investments rule (APR-0126) stay.
+- Live changes handover 43 may make: the three instruction files (gateway stopped, backup, one restart) and the installed health-check.py. Synthetic tests only; no config, plugin, crontab or calendar change. The repo stays public (APR-0114).
+Closes: none
+Changeable: yes. A change is a new APR entry.
+Applies to: agent-files/department/cho, cfo and clo AGENTS.md; deploy/loop8/domain-rule-approved.md; deploy/after-loop7/handover-43-claude-code-vm.md; deploy/loop1/health-check.py
